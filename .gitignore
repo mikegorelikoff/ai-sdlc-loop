@@ -1,4 +1,5 @@
 .ai-sdlc-loop/
+site/
 __pycache__/
 *.py[cod]
 .DS_Store

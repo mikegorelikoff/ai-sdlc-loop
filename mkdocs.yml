@@ -1,0 +1,37 @@
+site_name: AI SDLC Loop
+site_description: A smaller approval-gated AI SDLC delivery cycle with deterministic TOON evidence.
+site_url: https://mikegorelikoff.github.io/ai-sdlc-loop/
+repo_url: https://github.com/mikegorelikoff/ai-sdlc-loop
+repo_name: mikegorelikoff/ai-sdlc-loop
+
+theme:
+  name: material
+  language: en
+  features:
+    - navigation.footer
+    - navigation.indexes
+    - navigation.sections
+    - navigation.top
+    - content.code.copy
+
+extra_css:
+  - assets/stylesheets/ai-sdlc.css
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - md_in_html
+  - pymdownx.details
+  - pymdownx.highlight
+  - pymdownx.superfences
+
+nav:
+  - Home: index.md
+  - Start here: start-here.md
+  - How it works: how-it-works.md
+  - Guides:
+      - guides/index.md
+  - Reference:
+      - reference/index.md
+  - Project:
+      - project/index.md

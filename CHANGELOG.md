@@ -17,6 +17,8 @@ All notable changes follow Keep a Changelog. This project uses semantic versioni
 
 ### Added
 
+- Add a six-section MkDocs Material site, strict documentation build, and
+  GitHub Pages deployment workflow.
 - Initial one-skill Specify → Implement → Verify workflow.
 - Portable three-profile installer and offline verification.
 - Fingerprint-bound Implement and commit approvals.

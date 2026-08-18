@@ -6,6 +6,7 @@ Use a focused branch and keep the repository limited to the fixed Loop skill gra
 python3 -m unittest discover -s tests -v
 python3 -m compileall -q install.py skills tests
 sh -n install.sh
+mkdocs build --strict
 git diff --check
 ```
 

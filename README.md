@@ -3,6 +3,7 @@
 **Ship a bounded change through Specify → Implement → Verify with explicit approval before code mutation and commit.**
 
 [![CI](https://github.com/mikegorelikoff/ai-sdlc-loop/actions/workflows/ci.yml/badge.svg)](https://github.com/mikegorelikoff/ai-sdlc-loop/actions/workflows/ci.yml)
+[![Docs](https://github.com/mikegorelikoff/ai-sdlc-loop/actions/workflows/docs.yml/badge.svg)](https://mikegorelikoff.github.io/ai-sdlc-loop/)
 [![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
 
 AI SDLC Loop is the focused delivery member of the AI SDLC product family. It installs a fixed stage workflow, eleven proven delivery-control skills, and one shared runtime while keeping deterministic TOON specs, requirements reviews, approvals, QA plans, verification evidence, release decisions, and promotion artifacts in the local project. It is compatible with Codex project skills, Claude Code project skills, and agents that support a project-relative skills root.
@@ -53,6 +54,13 @@ python3 .agents/skills/ai-sdlc-loop-shared-runtime/scripts/loop.py --help
 ## Scope
 
 Loop controls a small local delivery cycle. It does not reduce or cap model requests, replace human review, provide hosted orchestration, or automatically push, release, deploy, or open pull requests.
+
+## Documentation
+
+- [Start here](https://mikegorelikoff.github.io/ai-sdlc-loop/start-here/) for installation and the first run.
+- [How it works](https://mikegorelikoff.github.io/ai-sdlc-loop/how-it-works/) for lifecycle, authority, and evidence.
+- [Reference](https://mikegorelikoff.github.io/ai-sdlc-loop/reference/) for exact profiles, skills, commands, and formats.
+- [Project](https://mikegorelikoff.github.io/ai-sdlc-loop/project/) for status, limitations, security, and governance.
 
 ## Harness compatibility
 

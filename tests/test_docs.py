@@ -207,6 +207,36 @@ class DocumentedCommandTests(unittest.TestCase):
                     pattern = rf"(?<![a-z0-9-]){re.escape(old_name)}(?!-[a-z0-9])"
                     self.assertIsNone(re.search(pattern, text))
 
+    def test_tc031_mkdocs_surface_matches_source_contracts(self) -> None:
+        config = (ROOT / "mkdocs.yml").read_text(encoding="utf-8")
+        expected_nav = ("Home:", "Start here:", "How it works:", "Guides:", "Reference:", "Project:")
+        positions = [config.index(item) for item in expected_nav]
+        self.assertEqual(sorted(positions), positions)
+
+        for relative in (
+            "docs/index.md",
+            "docs/start-here.md",
+            "docs/how-it-works.md",
+            "docs/guides/index.md",
+            "docs/reference/index.md",
+            "docs/project/index.md",
+        ):
+            self.assertTrue((ROOT / relative).is_file(), relative)
+
+        reference = (ROOT / "docs/reference/index.md").read_text(encoding="utf-8")
+        skill_names = sorted(path.name for path in (ROOT / "skills").iterdir() if path.is_dir())
+        self.assertEqual(17, len(skill_names))
+        for name in skill_names:
+            self.assertIn(f"`{name}`", reference)
+
+        install_command = (
+            "curl -fsSL https://raw.githubusercontent.com/mikegorelikoff/"
+            "ai-sdlc-loop/v0.1.1/install.sh | sh -s -- codex-project"
+        )
+        for relative in ("README.md", "docs/index.md", "docs/start-here.md"):
+            text = (ROOT / relative).read_text(encoding="utf-8")
+            self.assertEqual(1, text.count(install_command), relative)
+
 
 if __name__ == "__main__":
     unittest.main()
