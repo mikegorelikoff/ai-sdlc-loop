@@ -1,6 +1,6 @@
 # Contributing
 
-Use a focused branch and keep the repository limited to the one-skill Loop contract. Add or update tests before changing behavior. Run:
+Use a focused branch and keep the repository limited to the fixed Loop skill graph and shared runtime. Add or update tests before changing behavior. Keep all Loop-owned durable machine artifacts in canonical TOON. Run:
 
 ```sh
 python3 -m unittest discover -s tests -v

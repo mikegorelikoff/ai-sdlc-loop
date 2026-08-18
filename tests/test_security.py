@@ -4,7 +4,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from tests.helpers import git, init_repo, read_json, run_cli
+from tests.helpers import git, init_repo, read_toon, run_cli
 
 
 class SecurityTests(unittest.TestCase):
@@ -32,11 +32,11 @@ class SecurityTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             repo = init_repo(Path(tmp) / "repo")
             run_cli(repo, "specify", "--feature", "demo", "--request", "Change app", "--allow", "app.txt")
-            fp = read_json(repo / ".ai-sdlc-loop/demo/spec.json")["fingerprint"]
+            fp = read_toon(repo / ".ai-sdlc-loop/demo/spec.toon")["fingerprint"]
             run_cli(repo, "approve", "--feature", "demo", "--action", "implement", "--decision", "approve", "--fingerprint", fp, "--reviewer", "human")
             (repo / "app.txt").write_text("after\n", encoding="utf-8")
             run_cli(repo, "verify", "--feature", "demo", "--command", f"{__import__('sys').executable} -c 'print(\"TOKEN=synthetic-secret\")'")
-            raw = (repo / ".ai-sdlc-loop/demo/evidence.json").read_text(encoding="utf-8")
+            raw = (repo / ".ai-sdlc-loop/demo/evidence.toon").read_text(encoding="utf-8")
             self.assertNotIn("synthetic-secret", raw)
             self.assertIn("[REDACTED]", raw)
 
@@ -44,7 +44,7 @@ class SecurityTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             repo = init_repo(Path(tmp) / "repo")
             run_cli(repo, "specify", "--feature", "demo", "--request", "Change app", "--allow", "app.txt")
-            fp = read_json(repo / ".ai-sdlc-loop/demo/spec.json")["fingerprint"]
+            fp = read_toon(repo / ".ai-sdlc-loop/demo/spec.toon")["fingerprint"]
             run_cli(repo, "approve", "--feature", "demo", "--action", "implement", "--decision", "approve", "--fingerprint", fp, "--reviewer", "human")
             (repo / "app.txt").write_text("after\n", encoding="utf-8")
             run_cli(repo, "verify", "--feature", "demo", "--command", f"{__import__('sys').executable} -c pass")
@@ -59,11 +59,11 @@ class SecurityTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             repo = init_repo(Path(tmp) / "repo")
             run_cli(repo, "specify", "--feature", "demo", "--request", "Change app", "--allow", "app.txt")
-            fp = read_json(repo / ".ai-sdlc-loop/demo/spec.json")["fingerprint"]
+            fp = read_toon(repo / ".ai-sdlc-loop/demo/spec.toon")["fingerprint"]
             run_cli(repo, "approve", "--feature", "demo", "--action", "implement", "--decision", "approve", "--fingerprint", fp, "--reviewer", "human")
             (repo / "app.txt").write_text("verified\n", encoding="utf-8")
             run_cli(repo, "verify", "--feature", "demo", "--command", f"{__import__('sys').executable} -c pass")
-            verified = read_json(repo / ".ai-sdlc-loop/demo/evidence.json")["verified_fingerprint"]
+            verified = read_toon(repo / ".ai-sdlc-loop/demo/evidence.toon")["verified_fingerprint"]
             run_cli(repo, "approve", "--feature", "demo", "--action", "commit", "--decision", "approve", "--fingerprint", verified, "--reviewer", "human")
             (repo / "app.txt").write_text("drifted\n", encoding="utf-8")
             head = git(repo, "rev-parse", "HEAD")

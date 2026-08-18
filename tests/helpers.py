@@ -1,12 +1,13 @@
 from __future__ import annotations
 
-import json
 import subprocess
 import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 CLI = ROOT / "skills" / "ai-sdlc" / "scripts" / "loop.py"
+sys.path.insert(0, str(ROOT / "skills" / "ai-sdlc-shared-runtime" / "scripts"))
+from toon import decode_toon
 
 
 def run_cli(project: Path, *args: str, ok: bool = True) -> subprocess.CompletedProcess[str]:
@@ -39,5 +40,8 @@ def init_repo(path: Path) -> Path:
     return path
 
 
-def read_json(path: Path) -> dict:
-    return json.loads(path.read_text(encoding="utf-8"))
+def read_toon(path: Path) -> dict:
+    value = decode_toon(path.read_text(encoding="utf-8"))
+    if not isinstance(value, dict):
+        raise AssertionError(f"expected TOON mapping: {path}")
+    return value

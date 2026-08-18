@@ -5,11 +5,11 @@
 [![CI](https://github.com/mikegorelikoff/ai-sdlc-loop/actions/workflows/ci.yml/badge.svg)](https://github.com/mikegorelikoff/ai-sdlc-loop/actions/workflows/ci.yml)
 [![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
 
-AI SDLC Loop is the minimal member of the AI SDLC product family. It installs exactly one `ai-sdlc` skill and keeps deterministic specs, approvals, verification evidence, and promotion artifacts in the local project. It is compatible with Codex project skills, Claude Code project skills, and agents that support a project-relative skills root.
+AI SDLC Loop is the focused delivery member of the AI SDLC product family. It installs a fixed stage workflow, nine proven delivery-control skills, and one shared runtime while keeping deterministic TOON specs, approvals, QA plans, verification evidence, and promotion artifacts in the local project. It is compatible with Codex project skills, Claude Code project skills, and agents that support a project-relative skills root.
 
 ## Why use it?
 
-- One skill and one small standard-library runtime to support.
+- Five stage entrypoints, nine focused delivery-control skills, and one shared standard-library runtime.
 - Explicit Implement and commit approvals tied to current fingerprints.
 - Bounded paths, local evidence, secret redaction, and no runtime network or telemetry.
 - Versioned artifacts that can be promoted into AI SDLC Harness workflows.
@@ -19,7 +19,7 @@ AI SDLC Loop is the minimal member of the AI SDLC product family. It installs ex
 Install for a Codex project with one shell command:
 
 ```sh
-curl -fsSL https://raw.githubusercontent.com/mikegorelikoff/ai-sdlc-loop/v0.1.0/install.sh | sh -s -- codex-project
+curl -fsSL https://raw.githubusercontent.com/mikegorelikoff/ai-sdlc-loop/v0.1.1/install.sh | sh -s -- codex-project
 ```
 
 Then verify separately:
@@ -32,11 +32,11 @@ For a local checkout, use `python3 install.py codex-project`. Claude Code uses `
 
 ## Expected result
 
-The installer contributes exactly one skill directory, `ai-sdlc/`, including `SKILL.md` and the local workflow script. Existing unrelated skills remain untouched. The install record and reusable verifier are written below `.ai-sdlc-loop/install/`.
+The installer contributes the five Loop entrypoints, `ai-sdlc-approvals-sandbox`, `ai-sdlc-branching`, `ai-sdlc-test-cases`, `ai-sdlc-qa`, `ai-sdlc-validation`, `ai-sdlc-code-review`, `ai-sdlc-security-testing`, `ai-sdlc-commit-prep`, `ai-sdlc-conventional-commit`, and `ai-sdlc-shared-runtime`. Each working skill has a canonical `steps/manifest.toon` and bounded step documents. Existing unrelated skills remain untouched. The TOON install record and reusable verifier are written below `.ai-sdlc-loop/install/`.
 
 ## Workflow
 
-Ask the agent to use the `ai-sdlc` skill. It will:
+Ask the agent to use the `ai-sdlc` router. It delegates each stage to its owning skill:
 
 1. Specify the request and allowed paths, then show a stable fingerprint.
 2. Request explicit approval before Implement.
@@ -47,7 +47,7 @@ Ask the agent to use the `ai-sdlc` skill. It will:
 The CLI contract is available with:
 
 ```sh
-python3 .agents/skills/ai-sdlc/scripts/loop.py --help
+python3 .agents/skills/ai-sdlc-shared-runtime/scripts/loop.py --help
 ```
 
 ## Scope
@@ -56,7 +56,7 @@ Loop controls a small local delivery cycle. It does not reduce or cap model requ
 
 ## Harness compatibility
 
-`promote` emits `ai-sdlc-harness-promotion/v1` JSON while preserving request, allowed paths, trace IDs, fingerprints, approvals, state, commands, and evidence. Consumers must reject unsupported schema versions.
+`promote` emits `ai-sdlc-harness-promotion/v1` TOON while preserving request, allowed paths, trace IDs, fingerprints, approvals, state, commands, and evidence. Consumers must reject unsupported schema versions.
 
 ## Security and privacy
 

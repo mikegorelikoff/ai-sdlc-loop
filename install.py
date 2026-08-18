@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
-"""Install or verify the single AI SDLC Loop skill."""
+"""Install or verify the AI SDLC Loop skill package."""
 
 from __future__ import annotations
 
 import argparse
 import hashlib
-import json
+import importlib.util
 import os
 import shutil
 import sys
@@ -13,6 +13,42 @@ import tempfile
 from pathlib import Path
 
 PROFILES = {"codex-project": Path(".agents/skills"), "claude-code-project": Path(".claude/skills")}
+SKILLS = (
+    "ai-sdlc",
+    "ai-sdlc-specify",
+    "ai-sdlc-implement",
+    "ai-sdlc-verify",
+    "ai-sdlc-commit",
+    "ai-sdlc-approvals-sandbox",
+    "ai-sdlc-branching",
+    "ai-sdlc-test-cases",
+    "ai-sdlc-qa",
+    "ai-sdlc-validation",
+    "ai-sdlc-code-review",
+    "ai-sdlc-security-testing",
+    "ai-sdlc-commit-prep",
+    "ai-sdlc-conventional-commit",
+    "ai-sdlc-shared-runtime",
+)
+
+
+def load_codec():
+    candidates = (
+        Path(__file__).resolve().parent / "toon.py",
+        Path(__file__).resolve().parent / "skills" / "ai-sdlc-shared-runtime" / "scripts" / "toon.py",
+    )
+    path = next((candidate for candidate in candidates if candidate.is_file()), None)
+    if path is None:
+        raise RuntimeError("AI SDLC Loop TOON codec is missing")
+    spec = importlib.util.spec_from_file_location("ai_sdlc_loop_toon", path)
+    if spec is None or spec.loader is None:
+        raise RuntimeError(f"cannot load TOON codec: {path}")
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+TOON = load_codec()
 
 
 class InstallError(RuntimeError):
@@ -21,7 +57,11 @@ class InstallError(RuntimeError):
 
 def digest_tree(root: Path) -> str:
     digest = hashlib.sha256()
-    for path in sorted(item for item in root.rglob("*") if item.is_file()):
+    entries = sorted(root.rglob("*"))
+    linked = [path for path in entries if path.is_symlink()]
+    if linked:
+        raise InstallError(f"skill tree contains a symlink: {linked[0].relative_to(root)}")
+    for path in (item for item in entries if item.is_file()):
         digest.update(path.relative_to(root).as_posix().encode() + b"\0")
         digest.update(path.read_bytes())
     return "sha256:" + digest.hexdigest()
@@ -81,7 +121,7 @@ def record_path(project: Path, profile: str) -> Path:
         resolved = directory.resolve(strict=False)
         if project not in resolved.parents:
             raise InstallError("install state path escapes project")
-    record = directory / f"{profile}.json"
+    record = directory / f"{profile}.toon"
     if record.is_symlink():
         raise InstallError(f"install record is a symlink: {record}")
     return record
@@ -89,46 +129,75 @@ def record_path(project: Path, profile: str) -> Path:
 
 def verify(args: argparse.Namespace) -> None:
     project, root = target_for(args)
-    target = root / "ai-sdlc"
-    record = json.loads(record_path(project, args.profile).read_text(encoding="utf-8"))
+    record = TOON.decode_toon(record_path(project, args.profile).read_text(encoding="utf-8"))
+    if not isinstance(record, dict):
+        raise InstallError("invalid install record")
     if record.get("schema") != "ai-sdlc-loop-install/v1" or record.get("profile") != args.profile:
         raise InstallError("invalid install record")
-    if not target.is_dir() or digest_tree(target) != record.get("digest"):
-        raise InstallError("installed skill is missing or drifted")
-    print(f"verified {args.profile}: {target}")
+    expected = record.get("skills")
+    if not isinstance(expected, list) or [item.get("name") for item in expected if isinstance(item, dict)] != list(SKILLS):
+        raise InstallError("install record has the wrong Loop skill inventory")
+    for item in expected:
+        name = item["name"]
+        target = root / name
+        if not target.is_dir() or digest_tree(target) != item.get("digest"):
+            raise InstallError(f"installed skill is missing or drifted: {name}")
+    print(f"verified {args.profile}: {len(SKILLS)} Loop skills in {root}")
 
 
 def install(args: argparse.Namespace) -> None:
     project, root = target_for(args)
-    source = Path(__file__).resolve().parent / "skills" / "ai-sdlc"
-    target = root / "ai-sdlc"
+    source_root = Path(__file__).resolve().parent / "skills"
     record_file = record_path(project, args.profile)
     verifier_file = record_file.parent / "install.py"
+    codec_file = record_file.parent / "toon.py"
     if verifier_file.is_symlink():
         raise InstallError(f"installed verifier is a symlink: {verifier_file}")
-    if target.exists():
+    if codec_file.is_symlink():
+        raise InstallError(f"installed TOON codec is a symlink: {codec_file}")
+    targets = {name: root / name for name in SKILLS}
+    if any(target.exists() for target in targets.values()):
         if record_file.exists():
             verify(args)
             return
-        raise InstallError(f"unmanaged target already exists: {target}")
+        occupied = ", ".join(name for name, target in targets.items() if target.exists())
+        raise InstallError(f"unmanaged Loop target already exists: {occupied}")
     root.mkdir(parents=True, exist_ok=True)
     staging = Path(tempfile.mkdtemp(prefix=".ai-sdlc-stage-", dir=root))
+    installed: list[Path] = []
     try:
-        shutil.copytree(source, staging / "ai-sdlc")
-        os.replace(staging / "ai-sdlc", target)
+        for name in SKILLS:
+            source = source_root / name
+            if not source.is_dir():
+                raise InstallError(f"packaged skill is missing: {name}")
+            shutil.copytree(source, staging / name)
+        for name in SKILLS:
+            os.replace(staging / name, targets[name])
+            installed.append(targets[name])
+    except Exception:
+        for target in reversed(installed):
+            shutil.rmtree(target, ignore_errors=True)
+        raise
     finally:
         shutil.rmtree(staging, ignore_errors=True)
-    record = {"schema": "ai-sdlc-loop-install/v1", "profile": args.profile, "skills_root": root.relative_to(project).as_posix(), "skill": "ai-sdlc", "digest": digest_tree(target)}
+    record = {
+        "schema": "ai-sdlc-loop-install/v1",
+        "profile": args.profile,
+        "skills_root": root.relative_to(project).as_posix(),
+        "skills": [{"name": name, "digest": digest_tree(targets[name])} for name in SKILLS],
+    }
     try:
-        atomic_write(record_file, (json.dumps(record, indent=2, sort_keys=True) + "\n").encode())
+        atomic_write(record_file, TOON.encode_toon(record).encode("utf-8"))
         atomic_write(verifier_file, Path(__file__).resolve().read_bytes())
+        atomic_write(codec_file, (source_root / "ai-sdlc-shared-runtime" / "scripts" / "toon.py").read_bytes())
     except Exception:
-        shutil.rmtree(target, ignore_errors=True)
-        for state_file in (record_file, verifier_file):
+        for target in targets.values():
+            shutil.rmtree(target, ignore_errors=True)
+        for state_file in (record_file, verifier_file, codec_file):
             if state_file.exists() and not state_file.is_symlink():
                 state_file.unlink()
         raise
-    print(f"installed {args.profile}: {target}")
+    print(f"installed {args.profile}: {len(SKILLS)} Loop skills in {root}")
 
 
 def parser() -> argparse.ArgumentParser:
@@ -156,7 +225,7 @@ def main() -> int:
     args = parser().parse_args(normalize_argv(sys.argv[1:]))
     try:
         (verify if args.action == "verify" else install)(args)
-    except (InstallError, OSError, json.JSONDecodeError) as exc:
+    except (InstallError, OSError, RuntimeError, ValueError, TypeError) as exc:
         print(f"error: {exc}", file=sys.stderr)
         return 2
     return 0

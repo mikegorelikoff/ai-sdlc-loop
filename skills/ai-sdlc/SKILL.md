@@ -1,22 +1,19 @@
 ---
 name: ai-sdlc
-description: Run a minimal approval-gated Specify, Implement, Verify workflow with deterministic local evidence and Harness-compatible promotion.
+description: Route the complete AI SDLC Loop across its Specify, Implement, Verify, and Commit skills with TOON evidence and explicit approval gates.
 ---
 
 # AI SDLC Loop
 
-Use this skill when a user asks to change code through AI SDLC Loop or requests the minimal Harness-compatible delivery flow.
+Use this skill when a user asks to change code through AI SDLC Loop or requests the minimal Harness-compatible delivery flow. Resolve the next step through `steps/manifest.toon`; stage ownership remains with the named skill.
 
 ## Contract
 
-1. Identify the project root, a lowercase hyphenated feature name, the bounded request, and the smallest allowed path set.
-2. Run `scripts/loop.py specify`. Show the resulting spec fingerprint to the user.
-3. Before editing source, ask the user to approve or reject Implement for that exact fingerprint. Never record approval on the user's behalf.
-4. After explicit approval, run `approve --action implement`, then `implement-check`. Only then edit files, and only below the allowed paths. Preserve unrelated work.
-5. Run `verify` with explicit relevant commands. Report failures and do not imply readiness when any command fails.
-6. If the user requests a commit, show the verified fingerprint and ask for a separate explicit commit approval. Never infer it from Implement approval.
-7. After approval, record `approve --action commit` and run `commit`. Do not push, tag, publish, or open a pull request unless separately requested.
-8. Use `promote` when Harness-compatible evidence is requested.
+1. Route specification work to `ai-sdlc-specify`.
+2. Route authorized source changes to `ai-sdlc-implement`.
+3. Route evidence collection and promotion to `ai-sdlc-verify`.
+4. Route commit preparation and execution to `ai-sdlc-commit`.
+5. Never perform a stage-owned action from this router when the owning skill or shared runtime is unavailable.
 
 ## Safety
 

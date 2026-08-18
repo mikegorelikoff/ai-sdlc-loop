@@ -1,0 +1,151 @@
+budgets:
+  context_max_tokens: 8000
+  min_context_savings_percent: 15
+  step_max_tokens: 3000
+entrypoints:
+  clarify[1]: context
+  complete[1]: signoff
+  execute[1]: artifact
+  handoff[1]: signoff
+  prepare[1]: plan
+  route[1]: context
+  validate[1]: evidence
+schema: ai-sdlc-skill-steps/v2
+skill: ai-sdlc-qa
+steps[5]:
+  - capabilities[1]: filesystem.read
+    commit_boundary: none
+    condition:
+      actions[0]:
+      phases[1]: prepare
+      roles[1]: qa-engineer
+    context:
+      budget_tokens: 8000
+      critical_anchors[3]: ## Entry,## Procedure,## Exit
+      fallback: direct_read
+      mandatory[1]: step_document
+      min_savings_percent: 15
+      required: true
+      selectors[4]: step,repository-instructions,feature-traces,changed-path-topology
+    depends_on[0]:
+    gates[2]: inputs,scope
+    id: plan
+    load: required
+    max_attempts: 1
+    max_tokens: 3000
+    on_failure: block
+    operation: inspect-and-plan
+    outputs[2]: qa-scope,risk-inventory
+    path: steps/01-plan.md
+    reason: define observable acceptance and regression scope
+    side_effect: none
+    type: analysis
+  - capabilities[1]: filesystem.read
+    commit_boundary: none
+    condition:
+      actions[0]:
+      phases[2]: clarify,route
+      roles[1]: qa-engineer
+    context:
+      budget_tokens: 8000
+      critical_anchors[3]: ## Entry,## Procedure,## Exit
+      fallback: direct_read
+      mandatory[1]: step_document
+      min_savings_percent: 15
+      required: true
+      selectors[4]: step,repository-instructions,feature-traces,changed-path-topology
+    depends_on[1]: plan
+    gates[2]: context-sufficiency,source-traceability
+    id: context
+    load: required
+    max_attempts: 1
+    max_tokens: 3000
+    on_failure: block
+    operation: compile-context
+    outputs[2]: context-set,source-inventory
+    path: steps/02-context.md
+    reason: select minimum sufficient QA evidence
+    side_effect: none
+    type: context
+  - capabilities[2]: filesystem.read,filesystem.write
+    commit_boundary: after-step
+    condition:
+      actions[0]:
+      phases[1]: execute
+      roles[1]: qa-engineer
+    context:
+      budget_tokens: 8000
+      critical_anchors[3]: ## Entry,## Procedure,## Exit
+      fallback: direct_read
+      mandatory[1]: step_document
+      min_savings_percent: 15
+      required: true
+      selectors[4]: step,repository-instructions,feature-traces,changed-path-topology
+    depends_on[1]: context
+    gates[3]: dependencies,context-sufficiency,authorization
+    id: artifact
+    load: on-demand
+    max_attempts: 1
+    max_tokens: 3000
+    on_failure: block
+    operation: emit-qa-plan
+    outputs[2]: qa-plan,artifact-fingerprint
+    path: steps/02-artifact.md
+    reason: create a canonical TOON QA artifact
+    side_effect: workspace-write
+    type: action
+  - capabilities[1]: filesystem.read
+    commit_boundary: none
+    condition:
+      actions[0]:
+      phases[1]: validate
+      roles[1]: qa-engineer
+    context:
+      budget_tokens: 8000
+      critical_anchors[3]: ## Entry,## Procedure,## Exit
+      fallback: direct_read
+      mandatory[1]: step_document
+      min_savings_percent: 15
+      required: true
+      selectors[4]: step,repository-instructions,feature-traces,changed-path-topology
+    depends_on[1]: artifact
+    gates[3]: acceptance,evidence,residual-risk
+    id: evidence
+    load: before-completion
+    max_attempts: 1
+    max_tokens: 3000
+    on_failure: block
+    operation: validate-evidence
+    outputs[2]: coverage-result,evidence-gaps
+    path: steps/04-evidence.md
+    reason: validate coverage without promoting planned checks to evidence
+    side_effect: none
+    type: validation
+  - capabilities[1]: filesystem.read
+    commit_boundary: none
+    condition:
+      actions[0]:
+      phases[2]: complete,handoff
+      roles[1]: qa-engineer
+    context:
+      budget_tokens: 8000
+      critical_anchors[3]: ## Entry,## Procedure,## Exit
+      fallback: direct_read
+      mandatory[1]: step_document
+      min_savings_percent: 15
+      required: true
+      selectors[4]: step,repository-instructions,feature-traces,changed-path-topology
+    depends_on[1]: evidence
+    gates[2]: terminal-evidence,next-owner
+    id: signoff
+    load: before-completion
+    max_attempts: 1
+    max_tokens: 3000
+    on_failure: handoff
+    operation: handoff-result
+    outputs[2]: signoff,next-action
+    path: steps/03-signoff.md
+    reason: return evidence-backed QA readiness and next ownership
+    side_effect: none
+    type: handoff
+version: 4.1.0

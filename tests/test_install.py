@@ -8,9 +8,27 @@ from pathlib import Path
 
 from tests.helpers import ROOT
 
+LOOP_SKILLS = [
+    "ai-sdlc",
+    "ai-sdlc-approvals-sandbox",
+    "ai-sdlc-branching",
+    "ai-sdlc-code-review",
+    "ai-sdlc-commit",
+    "ai-sdlc-commit-prep",
+    "ai-sdlc-conventional-commit",
+    "ai-sdlc-implement",
+    "ai-sdlc-qa",
+    "ai-sdlc-security-testing",
+    "ai-sdlc-shared-runtime",
+    "ai-sdlc-specify",
+    "ai-sdlc-test-cases",
+    "ai-sdlc-validation",
+    "ai-sdlc-verify",
+]
+
 
 class InstallProfileTests(unittest.TestCase):
-    def test_tc001_all_profiles_install_exactly_one_skill(self) -> None:
+    def test_tc001_all_profiles_install_exact_loop_skill_set(self) -> None:
         profiles = {
             "codex-project": Path(".agents/skills"),
             "claude-code-project": Path(".claude/skills"),
@@ -23,7 +41,7 @@ class InstallProfileTests(unittest.TestCase):
                     args += ["--skills-root", str(target)]
                 subprocess.run(args, check=True, text=True, capture_output=True)
                 installed = Path(tmp) / target
-                self.assertEqual(["ai-sdlc"], sorted(p.name for p in installed.iterdir()))
+                self.assertEqual(LOOP_SKILLS, sorted(p.name for p in installed.iterdir()))
                 subprocess.run(
                     [sys.executable, str(ROOT / "install.py"), "verify", profile, "--project-root", tmp]
                     + (["--skills-root", str(target)] if profile == "agent-project" else []),
@@ -38,6 +56,18 @@ class InstallProfileTests(unittest.TestCase):
                     text=True,
                     capture_output=True,
                 )
+                self.assertTrue((Path(tmp) / f".ai-sdlc-loop/install/{profile}.toon").is_file())
+                self.assertEqual([], list((Path(tmp) / ".ai-sdlc-loop/install").glob("*." + "json")))
+                selector = installed / "ai-sdlc-shared-runtime/scripts/ai_sdlc_steps.py"
+                selected = subprocess.run(
+                    [sys.executable, str(selector), "--skill", "ai-sdlc-validation", "--phase", "prepare", "--quick-flow"],
+                    cwd=tmp,
+                    text=True,
+                    capture_output=True,
+                    check=False,
+                )
+                self.assertEqual(0, selected.returncode, selected.stderr)
+                self.assertIn("schema: ai-sdlc-skill-step-selection/v2", selected.stdout)
 
     def test_tc001_existing_unrelated_skill_is_preserved(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
@@ -52,6 +82,7 @@ class InstallProfileTests(unittest.TestCase):
             )
             self.assertEqual("existing\n", (unrelated / "SKILL.md").read_text(encoding="utf-8"))
             self.assertTrue((Path(tmp) / ".agents/skills/ai-sdlc/SKILL.md").is_file())
+            self.assertEqual(LOOP_SKILLS + ["existing"], sorted(p.name for p in unrelated.parent.iterdir()))
 
     def test_tc002_unsafe_custom_root_is_rejected(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
@@ -97,6 +128,22 @@ class InstallProfileTests(unittest.TestCase):
             result = subprocess.run(args, text=True, capture_output=True)
             self.assertNotEqual(0, result.returncode)
             self.assertEqual("local edit\n", skill.read_text(encoding="utf-8"))
+
+    def test_tc003_linked_skill_content_is_rejected(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            args = [sys.executable, str(ROOT / "install.py"), "codex-project", "--project-root", tmp]
+            subprocess.run(args, check=True, text=True, capture_output=True)
+            skill = Path(tmp) / ".agents/skills/ai-sdlc"
+            outside = Path(tmp) / "outside.txt"
+            outside.write_text("outside\n", encoding="utf-8")
+            link = skill / "linked.txt"
+            try:
+                link.symlink_to(outside)
+            except (OSError, NotImplementedError):
+                self.skipTest("file symlinks are unavailable")
+            result = subprocess.run(args, text=True, capture_output=True)
+            self.assertNotEqual(0, result.returncode)
+            self.assertIn("symlink", result.stderr)
 
 
 if __name__ == "__main__":
