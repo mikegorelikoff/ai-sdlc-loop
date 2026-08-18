@@ -6,7 +6,7 @@ from tests.helpers import ROOT
 
 import sys
 
-sys.path.insert(0, str(ROOT / "skills" / "ai-sdlc-shared-runtime" / "scripts"))
+sys.path.insert(0, str(ROOT / "skills" / "ai-sdlc-loop-shared-runtime" / "scripts"))
 from toon import ToonDecodeError, decode_toon, encode_toon
 
 

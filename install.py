@@ -14,28 +14,30 @@ from pathlib import Path
 
 PROFILES = {"codex-project": Path(".agents/skills"), "claude-code-project": Path(".claude/skills")}
 SKILLS = (
-    "ai-sdlc",
-    "ai-sdlc-specify",
-    "ai-sdlc-implement",
-    "ai-sdlc-verify",
-    "ai-sdlc-commit",
-    "ai-sdlc-approvals-sandbox",
-    "ai-sdlc-branching",
-    "ai-sdlc-test-cases",
-    "ai-sdlc-qa",
-    "ai-sdlc-validation",
-    "ai-sdlc-code-review",
-    "ai-sdlc-security-testing",
-    "ai-sdlc-commit-prep",
-    "ai-sdlc-conventional-commit",
-    "ai-sdlc-shared-runtime",
+    "ai-sdlc-loop-orchestrate",
+    "ai-sdlc-loop-specify",
+    "ai-sdlc-loop-implement",
+    "ai-sdlc-loop-verify",
+    "ai-sdlc-loop-commit",
+    "ai-sdlc-loop-approvals-sandbox",
+    "ai-sdlc-loop-branching",
+    "ai-sdlc-loop-test-cases",
+    "ai-sdlc-loop-qa",
+    "ai-sdlc-loop-requirements-review",
+    "ai-sdlc-loop-validation",
+    "ai-sdlc-loop-code-review",
+    "ai-sdlc-loop-security-testing",
+    "ai-sdlc-loop-commit-prep",
+    "ai-sdlc-loop-conventional-commit",
+    "ai-sdlc-loop-release-readiness",
+    "ai-sdlc-loop-shared-runtime",
 )
 
 
 def load_codec():
     candidates = (
         Path(__file__).resolve().parent / "toon.py",
-        Path(__file__).resolve().parent / "skills" / "ai-sdlc-shared-runtime" / "scripts" / "toon.py",
+        Path(__file__).resolve().parent / "skills" / "ai-sdlc-loop-shared-runtime" / "scripts" / "toon.py",
     )
     path = next((candidate for candidate in candidates if candidate.is_file()), None)
     if path is None:
@@ -189,7 +191,7 @@ def install(args: argparse.Namespace) -> None:
     try:
         atomic_write(record_file, TOON.encode_toon(record).encode("utf-8"))
         atomic_write(verifier_file, Path(__file__).resolve().read_bytes())
-        atomic_write(codec_file, (source_root / "ai-sdlc-shared-runtime" / "scripts" / "toon.py").read_bytes())
+        atomic_write(codec_file, (source_root / "ai-sdlc-loop-shared-runtime" / "scripts" / "toon.py").read_bytes())
     except Exception:
         for target in targets.values():
             shutil.rmtree(target, ignore_errors=True)

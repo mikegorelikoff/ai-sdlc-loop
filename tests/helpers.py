@@ -5,8 +5,8 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-CLI = ROOT / "skills" / "ai-sdlc" / "scripts" / "loop.py"
-sys.path.insert(0, str(ROOT / "skills" / "ai-sdlc-shared-runtime" / "scripts"))
+CLI = ROOT / "skills" / "ai-sdlc-loop-orchestrate" / "scripts" / "loop.py"
+sys.path.insert(0, str(ROOT / "skills" / "ai-sdlc-loop-shared-runtime" / "scripts"))
 from toon import decode_toon
 
 

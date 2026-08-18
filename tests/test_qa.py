@@ -9,7 +9,7 @@ from pathlib import Path
 from tests.helpers import ROOT, read_toon
 
 
-SCRIPT = ROOT / "skills/ai-sdlc-qa/scripts/qa_plan.py"
+SCRIPT = ROOT / "skills/ai-sdlc-loop-qa/scripts/qa_plan.py"
 
 
 class QaPlanTests(unittest.TestCase):

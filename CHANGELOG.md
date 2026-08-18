@@ -7,6 +7,9 @@
 - Replace JSON durable artifacts and install records with canonical TOON.
 - Add eight self-contained Harness delivery-control skills for branching, test design, validation, review, security, approval planning, and commit quality.
 - Add a compact QA skill for risk-based acceptance, regression, manual checks, signoff, and canonical TOON QA plans.
+- Add compact requirements-gap and release-readiness skills with typed TOON review artifacts.
+- Force shared helper output to UTF-8 and regression-test Windows `cp1252` compatibility.
+- Namespace every installed skill as `ai-sdlc-loop-{slug}` and expose the root router as `ai-sdlc-loop-orchestrate`.
 
 All notable changes follow Keep a Changelog. This project uses semantic versioning.
 

@@ -9,21 +9,23 @@ from pathlib import Path
 from tests.helpers import ROOT
 
 LOOP_SKILLS = [
-    "ai-sdlc",
-    "ai-sdlc-approvals-sandbox",
-    "ai-sdlc-branching",
-    "ai-sdlc-code-review",
-    "ai-sdlc-commit",
-    "ai-sdlc-commit-prep",
-    "ai-sdlc-conventional-commit",
-    "ai-sdlc-implement",
-    "ai-sdlc-qa",
-    "ai-sdlc-security-testing",
-    "ai-sdlc-shared-runtime",
-    "ai-sdlc-specify",
-    "ai-sdlc-test-cases",
-    "ai-sdlc-validation",
-    "ai-sdlc-verify",
+    "ai-sdlc-loop-approvals-sandbox",
+    "ai-sdlc-loop-branching",
+    "ai-sdlc-loop-code-review",
+    "ai-sdlc-loop-commit",
+    "ai-sdlc-loop-commit-prep",
+    "ai-sdlc-loop-conventional-commit",
+    "ai-sdlc-loop-implement",
+    "ai-sdlc-loop-orchestrate",
+    "ai-sdlc-loop-qa",
+    "ai-sdlc-loop-release-readiness",
+    "ai-sdlc-loop-requirements-review",
+    "ai-sdlc-loop-security-testing",
+    "ai-sdlc-loop-shared-runtime",
+    "ai-sdlc-loop-specify",
+    "ai-sdlc-loop-test-cases",
+    "ai-sdlc-loop-validation",
+    "ai-sdlc-loop-verify",
 ]
 
 
@@ -58,9 +60,9 @@ class InstallProfileTests(unittest.TestCase):
                 )
                 self.assertTrue((Path(tmp) / f".ai-sdlc-loop/install/{profile}.toon").is_file())
                 self.assertEqual([], list((Path(tmp) / ".ai-sdlc-loop/install").glob("*." + "json")))
-                selector = installed / "ai-sdlc-shared-runtime/scripts/ai_sdlc_steps.py"
+                selector = installed / "ai-sdlc-loop-shared-runtime/scripts/ai_sdlc_steps.py"
                 selected = subprocess.run(
-                    [sys.executable, str(selector), "--skill", "ai-sdlc-validation", "--phase", "prepare", "--quick-flow"],
+                    [sys.executable, str(selector), "--skill", "ai-sdlc-loop-validation", "--phase", "prepare", "--quick-flow"],
                     cwd=tmp,
                     text=True,
                     capture_output=True,
@@ -81,7 +83,7 @@ class InstallProfileTests(unittest.TestCase):
                 capture_output=True,
             )
             self.assertEqual("existing\n", (unrelated / "SKILL.md").read_text(encoding="utf-8"))
-            self.assertTrue((Path(tmp) / ".agents/skills/ai-sdlc/SKILL.md").is_file())
+            self.assertTrue((Path(tmp) / ".agents/skills/ai-sdlc-loop-orchestrate/SKILL.md").is_file())
             self.assertEqual(LOOP_SKILLS + ["existing"], sorted(p.name for p in unrelated.parent.iterdir()))
 
     def test_tc002_unsafe_custom_root_is_rejected(self) -> None:
@@ -92,7 +94,7 @@ class InstallProfileTests(unittest.TestCase):
                 capture_output=True,
             )
             self.assertNotEqual(0, result.returncode)
-            self.assertFalse((Path(tmp).parent / "escape" / "ai-sdlc").exists())
+            self.assertFalse((Path(tmp).parent / "escape" / "ai-sdlc-loop-orchestrate").exists())
             for protected in (".git/skills", ".ai-sdlc-loop/skills"):
                 result = subprocess.run(
                     [sys.executable, str(ROOT / "install.py"), "agent-project", "--project-root", tmp, "--skills-root", protected],
@@ -123,7 +125,7 @@ class InstallProfileTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             args = [sys.executable, str(ROOT / "install.py"), "codex-project", "--project-root", tmp]
             subprocess.run(args, check=True, text=True, capture_output=True)
-            skill = Path(tmp) / ".agents/skills/ai-sdlc/SKILL.md"
+            skill = Path(tmp) / ".agents/skills/ai-sdlc-loop-orchestrate/SKILL.md"
             skill.write_text("local edit\n", encoding="utf-8")
             result = subprocess.run(args, text=True, capture_output=True)
             self.assertNotEqual(0, result.returncode)
@@ -133,7 +135,7 @@ class InstallProfileTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             args = [sys.executable, str(ROOT / "install.py"), "codex-project", "--project-root", tmp]
             subprocess.run(args, check=True, text=True, capture_output=True)
-            skill = Path(tmp) / ".agents/skills/ai-sdlc"
+            skill = Path(tmp) / ".agents/skills/ai-sdlc-loop-orchestrate"
             outside = Path(tmp) / "outside.txt"
             outside.write_text("outside\n", encoding="utf-8")
             link = skill / "linked.txt"

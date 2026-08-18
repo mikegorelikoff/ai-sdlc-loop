@@ -5,11 +5,11 @@
 [![CI](https://github.com/mikegorelikoff/ai-sdlc-loop/actions/workflows/ci.yml/badge.svg)](https://github.com/mikegorelikoff/ai-sdlc-loop/actions/workflows/ci.yml)
 [![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
 
-AI SDLC Loop is the focused delivery member of the AI SDLC product family. It installs a fixed stage workflow, nine proven delivery-control skills, and one shared runtime while keeping deterministic TOON specs, approvals, QA plans, verification evidence, and promotion artifacts in the local project. It is compatible with Codex project skills, Claude Code project skills, and agents that support a project-relative skills root.
+AI SDLC Loop is the focused delivery member of the AI SDLC product family. It installs a fixed stage workflow, eleven proven delivery-control skills, and one shared runtime while keeping deterministic TOON specs, requirements reviews, approvals, QA plans, verification evidence, release decisions, and promotion artifacts in the local project. It is compatible with Codex project skills, Claude Code project skills, and agents that support a project-relative skills root.
 
 ## Why use it?
 
-- Five stage entrypoints, nine focused delivery-control skills, and one shared standard-library runtime.
+- Five stage entrypoints, eleven focused delivery-control skills, and one shared standard-library runtime.
 - Explicit Implement and commit approvals tied to current fingerprints.
 - Bounded paths, local evidence, secret redaction, and no runtime network or telemetry.
 - Versioned artifacts that can be promoted into AI SDLC Harness workflows.
@@ -32,11 +32,11 @@ For a local checkout, use `python3 install.py codex-project`. Claude Code uses `
 
 ## Expected result
 
-The installer contributes the five Loop entrypoints, `ai-sdlc-approvals-sandbox`, `ai-sdlc-branching`, `ai-sdlc-test-cases`, `ai-sdlc-qa`, `ai-sdlc-validation`, `ai-sdlc-code-review`, `ai-sdlc-security-testing`, `ai-sdlc-commit-prep`, `ai-sdlc-conventional-commit`, and `ai-sdlc-shared-runtime`. Each working skill has a canonical `steps/manifest.toon` and bounded step documents. Existing unrelated skills remain untouched. The TOON install record and reusable verifier are written below `.ai-sdlc-loop/install/`.
+The installer contributes `ai-sdlc-loop-orchestrate`, `ai-sdlc-loop-specify`, `ai-sdlc-loop-implement`, `ai-sdlc-loop-verify`, `ai-sdlc-loop-commit`, `ai-sdlc-loop-approvals-sandbox`, `ai-sdlc-loop-branching`, `ai-sdlc-loop-requirements-review`, `ai-sdlc-loop-test-cases`, `ai-sdlc-loop-qa`, `ai-sdlc-loop-validation`, `ai-sdlc-loop-code-review`, `ai-sdlc-loop-security-testing`, `ai-sdlc-loop-commit-prep`, `ai-sdlc-loop-conventional-commit`, `ai-sdlc-loop-release-readiness`, and `ai-sdlc-loop-shared-runtime`. Each working skill has a canonical `steps/manifest.toon` and bounded step documents. Lifecycle entrypoints use the compact Loop v1 graph; delivery-control skills use the strict Harness-compatible v2 graph, with Loop-local dependency adaptations rather than byte-for-byte copies. Existing unrelated skills remain untouched. The TOON install record and reusable verifier are written below `.ai-sdlc-loop/install/`.
 
 ## Workflow
 
-Ask the agent to use the `ai-sdlc` router. It delegates each stage to its owning skill:
+Ask the agent to use the `ai-sdlc-loop-orchestrate` router. It delegates each stage to its owning skill:
 
 1. Specify the request and allowed paths, then show a stable fingerprint.
 2. Request explicit approval before Implement.
@@ -47,7 +47,7 @@ Ask the agent to use the `ai-sdlc` router. It delegates each stage to its owning
 The CLI contract is available with:
 
 ```sh
-python3 .agents/skills/ai-sdlc-shared-runtime/scripts/loop.py --help
+python3 .agents/skills/ai-sdlc-loop-shared-runtime/scripts/loop.py --help
 ```
 
 ## Scope
