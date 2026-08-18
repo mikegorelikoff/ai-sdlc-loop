@@ -193,7 +193,13 @@ class DocumentedCommandTests(unittest.TestCase):
             "ai-sdlc-verify",
         )
         targets = [ROOT / "README.md", ROOT / "install.py"]
-        targets.extend(path for skill in skills for path in skill.rglob("*") if path.is_file())
+        text_suffixes = {".md", ".py", ".toon", ".txt", ".yaml", ".yml"}
+        targets.extend(
+            path
+            for skill in skills
+            for path in skill.rglob("*")
+            if path.is_file() and path.suffix in text_suffixes
+        )
         for path in targets:
             text = path.read_text(encoding="utf-8")
             for old_name in superseded:
