@@ -17,6 +17,10 @@ All notable changes follow Keep a Changelog. This project uses semantic versioni
 
 ### Added
 
+- Add `ai-sdlc-loop-flow` with read-only Explore and fingerprinted, non-authorizing Apply.
+- Add `ai-sdlc-loop-doctor` with read-only installation diagnostics and upgrade planning.
+- Expand the product documentation into source-backed Start here, How it works, Guides, Reference, and Project paths with strict validation.
+- Lock documentation dependencies with hashes for reproducible Python 3.9+ builds.
 - Add a six-section MkDocs Material site, strict documentation build, and
   GitHub Pages deployment workflow.
 - Initial one-skill Specify → Implement → Verify workflow.

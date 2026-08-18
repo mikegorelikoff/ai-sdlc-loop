@@ -4,9 +4,12 @@ Use a focused branch and keep the repository limited to the fixed Loop skill gra
 
 ```sh
 python3 -m unittest discover -s tests -v
-python3 -m compileall -q install.py skills tests
+PYTHONPYCACHEPREFIX=/tmp/ai-sdlc-loop-pycache python3 -m compileall -q install.py skills tests docs/scripts
 sh -n install.sh
+python3 docs/scripts/build_catalog.py --check
+python3 docs/scripts/validate_docs.py
 mkdocs build --strict
+python3 docs/scripts/validate_rendered.py site
 git diff --check
 ```
 

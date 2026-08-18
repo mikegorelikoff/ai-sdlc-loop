@@ -7,7 +7,7 @@ This is the canonical first-run path for AI SDLC Loop.
 From the project that should receive the skills, run one command:
 
 ```sh
-curl -fsSL https://raw.githubusercontent.com/mikegorelikoff/ai-sdlc-loop/v0.1.1/install.sh | sh -s -- codex-project
+curl -fsSL https://raw.githubusercontent.com/mikegorelikoff/ai-sdlc-loop/v0.2.0/install.sh | sh -s -- codex-project
 ```
 
 Then verify separately:
@@ -20,7 +20,7 @@ Claude Code projects use `claude-code-project`. Another compatible agent uses `a
 
 ## Run the first loop
 
-Ask the agent to use `ai-sdlc-loop-orchestrate` for a bounded repository change. Provide the intended outcome and relevant paths. The agent should:
+Ask the agent to use `ai-sdlc-loop-flow` for a bounded repository change. Provide the intended outcome and relevant paths. The agent should:
 
 1. create a deterministic specification and fingerprint;
 2. request approval before implementation;
@@ -30,7 +30,7 @@ Ask the agent to use `ai-sdlc-loop-orchestrate` for a bounded repository change.
 
 ## Expected result
 
-The selected project skill root contains 17 `ai-sdlc-loop-*` directories. Local workflow state appears below `.ai-sdlc-loop/<feature>/` and durable machine artifacts use TOON.
+The selected project skill root contains 19 `ai-sdlc-loop-*` directories. Local workflow state appears below `.ai-sdlc-loop/<feature>/` and durable machine artifacts use TOON.
 
 ## If installation stops
 

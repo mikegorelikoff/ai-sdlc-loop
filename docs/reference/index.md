@@ -14,6 +14,11 @@ Install locally with `python3 install.py PROFILE`. Verify with `python3 install.
 
 ## Installed inventory
 
+Guided entry and diagnostics:
+
+- `ai-sdlc-loop-flow`
+- `ai-sdlc-loop-doctor`
+
 Lifecycle skills:
 
 - `ai-sdlc-loop-orchestrate`
@@ -37,6 +42,8 @@ Delivery-control skills:
 - `ai-sdlc-loop-release-readiness`
 
 Internal runtime: `ai-sdlc-loop-shared-runtime`.
+
+The generated [skill catalog](skills.md) derives names and descriptions from each `SKILL.md`. Exact commands are in [Command reference](commands.md); schemas and authority boundaries are in [Contracts](contracts.md).
 
 ## Runtime commands
 

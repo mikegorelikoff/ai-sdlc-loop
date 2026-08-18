@@ -4,7 +4,7 @@ Loop separates lifecycle ownership from reusable delivery controls.
 
 ## Lifecycle
 
-1. `ai-sdlc-loop-orchestrate` routes the request.
+1. `ai-sdlc-loop-flow` explores and fingerprints one route; `ai-sdlc-loop-orchestrate` remains the direct stage router.
 2. `ai-sdlc-loop-specify` normalizes scope and writes the specification fingerprint.
 3. `ai-sdlc-loop-implement` checks current approval before source mutation.
 4. `ai-sdlc-loop-verify` collects command evidence and computes readiness.
@@ -13,6 +13,8 @@ Loop separates lifecycle ownership from reusable delivery controls.
 ## Delivery controls
 
 Eleven focused skills own approvals, branching, requirements review, test cases, QA, validation, code review, security testing, commit preparation, Conventional Commit validation, and release readiness. They share one standard-library runtime and do not require the full Harness refinement catalog.
+
+`ai-sdlc-loop-doctor` independently diagnoses the installed inventory and previews non-authorizing upgrade plans. See [Flow](guides/flow.md) and [Doctor](guides/doctor.md) for procedures.
 
 ## Authority model
 

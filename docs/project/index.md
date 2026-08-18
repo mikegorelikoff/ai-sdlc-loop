@@ -2,7 +2,7 @@
 
 ## Status
 
-AI SDLC Loop is experimental. The current release is `v0.1.1`; schema changes require a new version and migration notes.
+AI SDLC Loop is experimental. The source tree is preparing `v0.2.0`; schema changes require a new version and migration notes.
 
 ## Scope and limitations
 
@@ -18,6 +18,8 @@ Runtime state is local, commands run without a shell, paths are contained, and c
 - [Contributing](https://github.com/mikegorelikoff/ai-sdlc-loop/blob/main/CONTRIBUTING.md)
 - [License](https://github.com/mikegorelikoff/ai-sdlc-loop/blob/main/LICENSE)
 - [Report a vulnerability](https://github.com/mikegorelikoff/ai-sdlc-loop/security/advisories/new)
+- [Decision log](decision-log.md)
+- [Roadmap](roadmap.md)
 
 ## AI SDLC product family
 

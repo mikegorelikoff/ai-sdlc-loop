@@ -48,6 +48,8 @@ class DocumentedCommandTests(unittest.TestCase):
             "ai-sdlc-loop-security-testing",
             "ai-sdlc-loop-commit-prep",
             "ai-sdlc-loop-conventional-commit",
+            "ai-sdlc-loop-flow",
+            "ai-sdlc-loop-doctor",
         ):
             skill = ROOT / "skills" / name
             self.assertTrue((skill / "SKILL.md").is_file(), name)
@@ -88,6 +90,8 @@ class DocumentedCommandTests(unittest.TestCase):
             "ai-sdlc-loop-security-testing": "security_review_matrix.py",
             "ai-sdlc-loop-commit-prep": "check_commit_ready.py",
             "ai-sdlc-loop-conventional-commit": "validate_commit_msg.py",
+            "ai-sdlc-loop-flow": "flow.py",
+            "ai-sdlc-loop-doctor": "doctor.py",
         }
         for skill, script in scripts.items():
             with self.subTest(skill=skill):
@@ -113,6 +117,8 @@ class DocumentedCommandTests(unittest.TestCase):
             "ai-sdlc-loop-security-testing",
             "ai-sdlc-loop-commit-prep",
             "ai-sdlc-loop-conventional-commit",
+            "ai-sdlc-loop-flow",
+            "ai-sdlc-loop-doctor",
         ):
             with self.subTest(skill=skill):
                 result = subprocess.run(
@@ -139,6 +145,8 @@ class DocumentedCommandTests(unittest.TestCase):
             "ai-sdlc-loop-security-testing",
             "ai-sdlc-loop-commit-prep",
             "ai-sdlc-loop-conventional-commit",
+            "ai-sdlc-loop-flow",
+            "ai-sdlc-loop-doctor",
         ):
             with self.subTest(skill=skill):
                 result = subprocess.run(
@@ -165,7 +173,7 @@ class DocumentedCommandTests(unittest.TestCase):
 
     def test_tc030_all_distributed_skills_use_loop_namespace(self) -> None:
         skills = sorted(path for path in (ROOT / "skills").iterdir() if path.is_dir())
-        self.assertEqual(17, len(skills))
+        self.assertEqual(19, len(skills))
         for skill in skills:
             with self.subTest(skill=skill.name):
                 self.assertRegex(skill.name, r"^ai-sdlc-loop-[a-z0-9]+(?:-[a-z0-9]+)*$")
@@ -225,17 +233,33 @@ class DocumentedCommandTests(unittest.TestCase):
 
         reference = (ROOT / "docs/reference/index.md").read_text(encoding="utf-8")
         skill_names = sorted(path.name for path in (ROOT / "skills").iterdir() if path.is_dir())
-        self.assertEqual(17, len(skill_names))
+        self.assertEqual(19, len(skill_names))
         for name in skill_names:
             self.assertIn(f"`{name}`", reference)
 
         install_command = (
             "curl -fsSL https://raw.githubusercontent.com/mikegorelikoff/"
-            "ai-sdlc-loop/v0.1.1/install.sh | sh -s -- codex-project"
+            "ai-sdlc-loop/v0.2.0/install.sh | sh -s -- codex-project"
         )
         for relative in ("README.md", "docs/index.md", "docs/start-here.md"):
             text = (ROOT / relative).read_text(encoding="utf-8")
             self.assertEqual(1, text.count(install_command), relative)
+        self.assertIn('ref="${AI_SDLC_LOOP_REF:-v0.2.0}"', (ROOT / "install.sh").read_text(encoding="utf-8"))
+
+    def test_tc036_generated_catalog_and_source_docs_are_current(self) -> None:
+        for script, arguments in (
+            ("build_catalog.py", ["--check"]),
+            ("validate_docs.py", []),
+        ):
+            with self.subTest(script=script):
+                result = subprocess.run(
+                    [sys.executable, str(ROOT / "docs/scripts" / script), *arguments],
+                    cwd=ROOT,
+                    text=True,
+                    capture_output=True,
+                    check=False,
+                )
+                self.assertEqual(0, result.returncode, result.stderr)
 
 
 if __name__ == "__main__":

@@ -27,11 +27,29 @@ markdown_extensions:
 
 nav:
   - Home: index.md
-  - Start here: start-here.md
-  - How it works: how-it-works.md
+  - Start here:
+      - start-here.md
+      - Prerequisites: prerequisites.md
+      - First run: first-run.md
+  - How it works:
+      - how-it-works.md
+      - Workflow: workflow.md
+      - Authority and evidence: authority-evidence.md
   - Guides:
       - guides/index.md
+      - Install Loop: guides/install.md
+      - Deliver a first change: guides/first-change.md
+      - Use guided Flow: guides/flow.md
+      - Diagnose an installation: guides/doctor.md
+      - Prepare a release: guides/release.md
   - Reference:
       - reference/index.md
+      - Skills: reference/skills.md
+      - Commands: reference/commands.md
+      - Contracts: reference/contracts.md
+      - Supported environments: reference/environments.md
   - Project:
       - project/index.md
+      - Security and privacy: project/security.md
+      - Decision log: project/decision-log.md
+      - Roadmap: project/roadmap.md

@@ -14,6 +14,8 @@ from pathlib import Path
 
 PROFILES = {"codex-project": Path(".agents/skills"), "claude-code-project": Path(".claude/skills")}
 SKILLS = (
+    "ai-sdlc-loop-flow",
+    "ai-sdlc-loop-doctor",
     "ai-sdlc-loop-orchestrate",
     "ai-sdlc-loop-specify",
     "ai-sdlc-loop-implement",

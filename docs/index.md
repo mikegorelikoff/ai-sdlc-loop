@@ -2,7 +2,7 @@
 
 **Ship a bounded change through Specify → Implement → Verify with explicit approval before code mutation and commit.**
 
-AI SDLC Loop is the focused delivery member of the AI SDLC product family. It installs 16 working `ai-sdlc-loop-{slug}` skills and one shared runtime while keeping specifications, approvals, QA plans, evidence, and release decisions in deterministic local TOON artifacts.
+AI SDLC Loop is the focused delivery member of the AI SDLC product family. It installs 18 working `ai-sdlc-loop-{slug}` skills and one shared runtime while keeping decisions and evidence in deterministic local TOON artifacts.
 
 [Start with a project-scoped install](start-here.md){ .md-button .md-button--primary }
 [Read the workflow model](how-it-works.md){ .md-button }
@@ -20,7 +20,7 @@ AI SDLC Loop is the focused delivery member of the AI SDLC product family. It in
 Install for a Codex project:
 
 ```sh
-curl -fsSL https://raw.githubusercontent.com/mikegorelikoff/ai-sdlc-loop/v0.1.1/install.sh | sh -s -- codex-project
+curl -fsSL https://raw.githubusercontent.com/mikegorelikoff/ai-sdlc-loop/v0.2.0/install.sh | sh -s -- codex-project
 ```
 
 Verify in a separate step:
