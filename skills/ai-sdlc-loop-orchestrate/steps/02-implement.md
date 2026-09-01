@@ -10,4 +10,5 @@ Load `ai-sdlc-loop-implement`; it owns receipt validation, scope enforcement, an
 
 ## Exit
 
-Hand changed paths to `ai-sdlc-loop-verify` without implying readiness.
+Hand the bounded changed paths to `ai-sdlc-loop-engineering-quality-gate`
+without implying correctness or readiness.

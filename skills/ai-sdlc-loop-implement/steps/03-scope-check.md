@@ -10,4 +10,6 @@ Inspect Git changes and confirm every path is inside the specification. Any esca
 
 ## Exit
 
-Return the bounded changed-path set without claiming verification passed.
+Return the bounded changed-path set to
+`ai-sdlc-loop-engineering-quality-gate` without claiming review or verification
+passed.

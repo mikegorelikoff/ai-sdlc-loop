@@ -12,7 +12,10 @@ This page summarizes exact public contracts. Source files and `--help` output re
 
 Install locally with `python3 install.py PROFILE`. Verify with `python3 install.py verify PROFILE`. Named profiles reject `--skills-root`; the generic profile requires it.
 
-## Installed inventory
+## Current source inventory
+
+The current unreleased source installs the 20 entries below. Immutable
+`v0.1.1` retains its previous 17-member inventory.
 
 Guided entry and diagnostics:
 
@@ -24,6 +27,7 @@ Lifecycle skills:
 - `ai-sdlc-loop-orchestrate`
 - `ai-sdlc-loop-specify`
 - `ai-sdlc-loop-implement`
+- `ai-sdlc-loop-engineering-quality-gate`
 - `ai-sdlc-loop-verify`
 - `ai-sdlc-loop-commit`
 
@@ -53,6 +57,23 @@ The shared CLI exposes `specify`, `approve`, `implement-check`, `verify`, `commi
 python3 .agents/skills/ai-sdlc-loop-shared-runtime/scripts/loop.py --help
 ```
 
+## Engineering quality gate commands
+
+The quality-gate helper exposes deterministic `context`, `finalize`, and
+read-only `verify` actions:
+
+```sh
+python3 .agents/skills/ai-sdlc-loop-engineering-quality-gate/scripts/engineering_quality_gate.py context --help
+python3 .agents/skills/ai-sdlc-loop-engineering-quality-gate/scripts/engineering_quality_gate.py finalize --help
+python3 .agents/skills/ai-sdlc-loop-engineering-quality-gate/scripts/engineering_quality_gate.py verify --help
+```
+
+Run `context` against the current repository and feature, finalize one
+repository-relative TOON draft against that context, then run `verify` on
+`.ai-sdlc-loop/<feature>/quality-gate.toon` before entering Loop Verify. Exact
+arguments and output invariants live in the installed skill's step documents
+and schemas; these helper actions grant no source-mutation authority.
+
 ## Durable formats
 
-Loop-owned specifications, state, approvals, evidence, install records, review artifacts, release decisions, and promotion output use canonical TOON. JSON-named durable output is rejected.
+Loop-owned specifications, state, approvals, engineering quality context and reports, evidence, install records, review artifacts, release decisions, and promotion output use canonical TOON. JSON-named durable output is rejected. The engineering report uses `ai-sdlc-engineering-quality-gate/v1`; Verify accepts only a current `PASS` or `PASS_WITH_FINDINGS` report whose `final_decision.ready_for_next_stage` is true.

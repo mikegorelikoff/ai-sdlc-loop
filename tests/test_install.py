@@ -16,6 +16,7 @@ LOOP_SKILLS = [
     "ai-sdlc-loop-commit-prep",
     "ai-sdlc-loop-conventional-commit",
     "ai-sdlc-loop-doctor",
+    "ai-sdlc-loop-engineering-quality-gate",
     "ai-sdlc-loop-flow",
     "ai-sdlc-loop-implement",
     "ai-sdlc-loop-orchestrate",

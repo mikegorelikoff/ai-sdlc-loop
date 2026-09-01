@@ -4,7 +4,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from tests.helpers import init_repo, read_toon, run_cli
+from tests.helpers import create_quality_gate, init_repo, read_toon, run_cli
 
 
 class PromotionTests(unittest.TestCase):
@@ -38,6 +38,35 @@ class PromotionTests(unittest.TestCase):
             self.assertNotEqual(0, result.returncode)
             self.assertIn(".toon", result.stderr)
             self.assertFalse(output.exists())
+
+    def test_tc038_promotion_includes_quality_gate(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            repo = init_repo(Path(tmp) / "repo")
+            run_cli(repo, "specify", "--feature", "demo", "--request", "Document", "--allow", "app.txt")
+            fingerprint = read_toon(repo / ".ai-sdlc-loop/demo/spec.toon")["fingerprint"]
+            run_cli(
+                repo,
+                "approve",
+                "--feature",
+                "demo",
+                "--action",
+                "implement",
+                "--decision",
+                "approve",
+                "--fingerprint",
+                fingerprint,
+                "--reviewer",
+                "human",
+            )
+            (repo / "app.txt").write_text("after\n", encoding="utf-8")
+            report = create_quality_gate(repo)
+            output = repo / "promoted.toon"
+            run_cli(repo, "promote", "--feature", "demo", "--output", str(output))
+            promoted = read_toon(output)
+            self.assertEqual(
+                report["report_fingerprint"],
+                promoted["quality_gate"]["report_fingerprint"],
+            )
 
 
 if __name__ == "__main__":

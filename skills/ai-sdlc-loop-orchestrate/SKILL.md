@@ -1,6 +1,6 @@
 ---
 name: ai-sdlc-loop-orchestrate
-description: Route the complete AI SDLC Loop across its Specify, Implement, Verify, and Commit skills with TOON evidence and explicit approval gates.
+description: Route the complete AI SDLC Loop across Specify, Implement, Engineering Quality Gate, Verify, and Commit with deterministic TOON evidence and explicit approval gates.
 ---
 
 # AI SDLC Loop
@@ -11,14 +11,16 @@ Use this skill when a user asks to change code through AI SDLC Loop or requests 
 
 1. Route specification work to `ai-sdlc-loop-specify`.
 2. Route authorized source changes to `ai-sdlc-loop-implement`.
-3. Route evidence collection and promotion to `ai-sdlc-loop-verify`.
-4. Route commit preparation and execution to `ai-sdlc-loop-commit`.
-5. Never perform a stage-owned action from this router when the owning skill or shared runtime is unavailable.
+3. Route every completed implementation to `ai-sdlc-loop-engineering-quality-gate`.
+4. Route evidence collection and promotion to `ai-sdlc-loop-verify` only after a current ready quality report exists.
+5. Route commit preparation and execution to `ai-sdlc-loop-commit`.
+6. Never perform a stage-owned action from this router when the owning skill or shared runtime is unavailable.
 
 ## Safety
 
 - Treat `.ai-sdlc-loop/` as generated local workflow state, not source scope.
 - Do not bypass a missing, rejected, stale, or mismatched receipt.
 - Do not add extra commands to verification without stating them.
+- Do not bypass, synthesize, or reuse a stale engineering quality report.
 - Stop when changed paths escape the specification.
 - Keep secrets out of requests, approval reviewer fields, commit messages, and artifacts.

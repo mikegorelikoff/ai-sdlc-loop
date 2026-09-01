@@ -18,7 +18,7 @@ Use the one-command install from [Start here](../start-here.md). Run its separat
 
 ## Verify
 
-The verifier reports 19 Loop skills and the selected project root contains the exact inventory from the [skill catalog](../reference/skills.md).
+The verifier reports 20 Loop directories and the selected project root contains the exact inventory from the [skill catalog](../reference/skills.md).
 
 ## Troubleshooting
 

@@ -35,6 +35,7 @@ class DocumentedCommandTests(unittest.TestCase):
             "ai-sdlc-loop-orchestrate",
             "ai-sdlc-loop-specify",
             "ai-sdlc-loop-implement",
+            "ai-sdlc-loop-engineering-quality-gate",
             "ai-sdlc-loop-verify",
             "ai-sdlc-loop-commit",
             "ai-sdlc-loop-approvals-sandbox",
@@ -92,6 +93,7 @@ class DocumentedCommandTests(unittest.TestCase):
             "ai-sdlc-loop-conventional-commit": "validate_commit_msg.py",
             "ai-sdlc-loop-flow": "flow.py",
             "ai-sdlc-loop-doctor": "doctor.py",
+            "ai-sdlc-loop-engineering-quality-gate": "engineering_quality_gate.py",
         }
         for skill, script in scripts.items():
             with self.subTest(skill=skill):
@@ -119,6 +121,7 @@ class DocumentedCommandTests(unittest.TestCase):
             "ai-sdlc-loop-conventional-commit",
             "ai-sdlc-loop-flow",
             "ai-sdlc-loop-doctor",
+            "ai-sdlc-loop-engineering-quality-gate",
         ):
             with self.subTest(skill=skill):
                 result = subprocess.run(
@@ -147,6 +150,7 @@ class DocumentedCommandTests(unittest.TestCase):
             "ai-sdlc-loop-conventional-commit",
             "ai-sdlc-loop-flow",
             "ai-sdlc-loop-doctor",
+            "ai-sdlc-loop-engineering-quality-gate",
         ):
             with self.subTest(skill=skill):
                 result = subprocess.run(
@@ -173,7 +177,7 @@ class DocumentedCommandTests(unittest.TestCase):
 
     def test_tc030_all_distributed_skills_use_loop_namespace(self) -> None:
         skills = sorted(path for path in (ROOT / "skills").iterdir() if path.is_dir())
-        self.assertEqual(19, len(skills))
+        self.assertEqual(20, len(skills))
         for skill in skills:
             with self.subTest(skill=skill.name):
                 self.assertRegex(skill.name, r"^ai-sdlc-loop-[a-z0-9]+(?:-[a-z0-9]+)*$")
@@ -233,7 +237,7 @@ class DocumentedCommandTests(unittest.TestCase):
 
         reference = (ROOT / "docs/reference/index.md").read_text(encoding="utf-8")
         skill_names = sorted(path.name for path in (ROOT / "skills").iterdir() if path.is_dir())
-        self.assertEqual(19, len(skill_names))
+        self.assertEqual(20, len(skill_names))
         for name in skill_names:
             self.assertIn(f"`{name}`", reference)
 

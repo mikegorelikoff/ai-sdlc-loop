@@ -21,6 +21,13 @@ All notable changes follow Keep a Changelog. This project uses semantic versioni
 - Add `ai-sdlc-loop-doctor` with read-only installation diagnostics and upgrade planning.
 - Expand the product documentation into source-backed Start here, How it works, Guides, Reference, and Project paths with strict validation.
 - Lock documentation dependencies with hashes for reproducible Python 3.9+ builds.
+- Add `ai-sdlc-loop-engineering-quality-gate` as a mandatory stage between
+  Implement and Verify, with bounded repository-pattern discovery, typed
+  adversarial findings, safe localized High and Medium fixes, deterministic
+  verification reruns, and fingerprinted TOON readiness reports.
+- Expand every installation profile to the exact twenty-member package and
+  fail Verify closed when quality evidence is missing, non-ready, invalid, or
+  stale for the current change.
 - Add a six-section MkDocs Material site, strict documentation build, and
   GitHub Pages deployment workflow.
 - Initial one-skill Specify → Implement → Verify workflow.

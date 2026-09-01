@@ -4,7 +4,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from tests.helpers import git, init_repo, read_toon, run_cli
+from tests.helpers import create_quality_gate, git, init_repo, read_toon, run_cli
 
 
 class SecurityTests(unittest.TestCase):
@@ -35,6 +35,7 @@ class SecurityTests(unittest.TestCase):
             fp = read_toon(repo / ".ai-sdlc-loop/demo/spec.toon")["fingerprint"]
             run_cli(repo, "approve", "--feature", "demo", "--action", "implement", "--decision", "approve", "--fingerprint", fp, "--reviewer", "human")
             (repo / "app.txt").write_text("after\n", encoding="utf-8")
+            create_quality_gate(repo)
             run_cli(repo, "verify", "--feature", "demo", "--command", f"{__import__('sys').executable} -c 'print(\"TOKEN=synthetic-secret\")'")
             raw = (repo / ".ai-sdlc-loop/demo/evidence.toon").read_text(encoding="utf-8")
             self.assertNotIn("synthetic-secret", raw)
@@ -47,6 +48,7 @@ class SecurityTests(unittest.TestCase):
             fp = read_toon(repo / ".ai-sdlc-loop/demo/spec.toon")["fingerprint"]
             run_cli(repo, "approve", "--feature", "demo", "--action", "implement", "--decision", "approve", "--fingerprint", fp, "--reviewer", "human")
             (repo / "app.txt").write_text("after\n", encoding="utf-8")
+            create_quality_gate(repo)
             run_cli(repo, "verify", "--feature", "demo", "--command", f"{__import__('sys').executable} -c pass")
             head = git(repo, "rev-parse", "HEAD")
             index = git(repo, "write-tree")
@@ -62,6 +64,7 @@ class SecurityTests(unittest.TestCase):
             fp = read_toon(repo / ".ai-sdlc-loop/demo/spec.toon")["fingerprint"]
             run_cli(repo, "approve", "--feature", "demo", "--action", "implement", "--decision", "approve", "--fingerprint", fp, "--reviewer", "human")
             (repo / "app.txt").write_text("verified\n", encoding="utf-8")
+            create_quality_gate(repo)
             run_cli(repo, "verify", "--feature", "demo", "--command", f"{__import__('sys').executable} -c pass")
             verified = read_toon(repo / ".ai-sdlc-loop/demo/evidence.toon")["verified_fingerprint"]
             run_cli(repo, "approve", "--feature", "demo", "--action", "commit", "--decision", "approve", "--fingerprint", verified, "--reviewer", "human")

@@ -19,6 +19,7 @@ SKILLS = (
     "ai-sdlc-loop-orchestrate",
     "ai-sdlc-loop-specify",
     "ai-sdlc-loop-implement",
+    "ai-sdlc-loop-engineering-quality-gate",
     "ai-sdlc-loop-verify",
     "ai-sdlc-loop-commit",
     "ai-sdlc-loop-approvals-sandbox",

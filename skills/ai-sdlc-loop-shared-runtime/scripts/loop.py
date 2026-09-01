@@ -5,9 +5,11 @@ from __future__ import annotations
 
 import argparse
 import hashlib
+import importlib.util
 import os
 import re
 import shlex
+import stat
 import subprocess
 import sys
 import tempfile
@@ -23,6 +25,12 @@ from toon import ToonDecodeError, decode_toon, encode_toon
 
 SCHEMA = "ai-sdlc-loop/v1"
 PROMOTION_SCHEMA = "ai-sdlc-harness-promotion/v1"
+QUALITY_GATE_SCRIPT = (
+    Path(__file__).resolve().parents[2]
+    / "ai-sdlc-loop-engineering-quality-gate"
+    / "scripts"
+    / "engineering_quality_gate.py"
+)
 FEATURE_RE = re.compile(r"^[a-z0-9][a-z0-9-]{0,62}$")
 SECRET_RE = re.compile(
     r"(?i)(authorization\s*[:=]\s*bearer\s+|token\s*[:=]\s*|password\s*[:=]\s*|secret\s*[:=]\s*)([^\s\"']+)"
@@ -162,7 +170,13 @@ def file_digest(root: Path, path: str) -> dict[str, Any]:
         return {"path": path, "kind": "deleted"}
     if not target.is_file():
         raise LoopError(f"changed path is not a regular file: {path}")
-    return {"path": path, "kind": "file", "sha256": hashlib.sha256(target.read_bytes()).hexdigest()}
+    mode = "100755" if target.stat().st_mode & (stat.S_IXUSR | stat.S_IXGRP | stat.S_IXOTH) else "100644"
+    return {
+        "path": path,
+        "kind": "file",
+        "mode": mode,
+        "sha256": hashlib.sha256(target.read_bytes()).hexdigest(),
+    }
 
 
 def change_snapshot(root: Path, spec: dict[str, Any]) -> dict[str, Any]:
@@ -173,6 +187,49 @@ def change_snapshot(root: Path, spec: dict[str, Any]) -> dict[str, Any]:
     value = {"spec_fingerprint": spec["fingerprint"], "files": [file_digest(root, path) for path in paths]}
     value["fingerprint"] = fingerprint(value)
     return value
+
+
+def require_quality_gate(
+    root: Path,
+    feature: str,
+    snapshot: dict[str, Any],
+) -> dict[str, Any]:
+    """Fail closed unless the canonical quality report is valid and current."""
+    report_path = state_path(root, feature, "quality-gate.toon")
+    if not report_path.is_file():
+        raise LoopError(
+            "current engineering quality-gate evidence is required before Verify: "
+            f".ai-sdlc-loop/{feature}/quality-gate.toon"
+        )
+    if not QUALITY_GATE_SCRIPT.is_file():
+        raise LoopError("the Engineering Quality Gate validator is unavailable")
+    module_spec = importlib.util.spec_from_file_location(
+        "_ai_sdlc_loop_engineering_quality_gate",
+        QUALITY_GATE_SCRIPT,
+    )
+    if module_spec is None or module_spec.loader is None:
+        raise LoopError("the Engineering Quality Gate validator cannot be loaded")
+    module = importlib.util.module_from_spec(module_spec)
+    try:
+        module_spec.loader.exec_module(module)
+    except (ImportError, OSError, SyntaxError) as exc:
+        raise LoopError(f"the Engineering Quality Gate validator cannot be loaded: {exc}") from exc
+    validator = getattr(module, "verify_report_current", None)
+    validation_error = getattr(module, "QualityGateError", None)
+    if not callable(validator) or not isinstance(validation_error, type):
+        raise LoopError("the Engineering Quality Gate validator contract is invalid")
+    try:
+        report = validator(root, report_path)
+    except validation_error as exc:
+        raise LoopError(f"engineering quality-gate evidence is invalid or stale: {exc}") from exc
+    if report.get("status") not in {"PASS", "PASS_WITH_FINDINGS"}:
+        raise LoopError("engineering quality gate did not pass")
+    decision = report.get("final_decision")
+    if not isinstance(decision, dict) or decision.get("ready_for_next_stage") is not True:
+        raise LoopError("engineering quality gate is not ready for Verify")
+    if report.get("change_fingerprint") != snapshot["fingerprint"]:
+        raise LoopError("engineering quality-gate evidence does not match the exact Loop change snapshot")
+    return report
 
 
 def current_spec(root: Path, feature: str) -> dict[str, Any]:
@@ -268,6 +325,7 @@ def cmd_verify(args: argparse.Namespace) -> None:
     spec = current_spec(root, feature)
     require_approval(root, feature, "implement", spec["fingerprint"])
     snapshot = change_snapshot(root, spec)
+    require_quality_gate(root, feature, snapshot)
     records: list[dict[str, Any]] = []
     ready = True
     for command in args.command:
@@ -338,10 +396,10 @@ def cmd_promote(args: argparse.Namespace) -> None:
         "trace_ids": spec["trace_ids"],
         "spec_fingerprint": spec["fingerprint"],
     }
-    for name in ("state", "evidence"):
+    for name in ("state", "evidence", "quality-gate"):
         path = state_path(root, feature, f"{name}.toon")
         if path.exists():
-            payload[name] = load_toon(path)
+            payload[name.replace("-", "_")] = load_toon(path)
     approvals = {}
     for action in ("implement", "commit"):
         path = state_path(root, feature, "approvals", f"{action}.toon")
@@ -361,6 +419,9 @@ def cmd_status(args: argparse.Namespace) -> None:
     root = project_root(args.project_root)
     feature = validate_feature(args.feature)
     result = {"spec": load_toon(state_path(root, feature, "spec.toon")), "state": load_toon(state_path(root, feature, "state.toon"))}
+    quality_gate = state_path(root, feature, "quality-gate.toon")
+    if quality_gate.exists():
+        result["quality_gate"] = load_toon(quality_gate)
     print(encode_toon(result), end="")
 
 

@@ -1,0 +1,151 @@
+budgets:
+  context_max_tokens: 12000
+  min_context_savings_percent: 15
+  step_max_tokens: 5000
+entrypoints:
+  clarify[1]: context
+  complete[1]: handoff
+  execute[1]: execute
+  handoff[1]: handoff
+  prepare[1]: preflight
+  route[1]: context
+  validate[1]: validate
+schema: ai-sdlc-skill-steps/v2
+skill: ai-sdlc-loop-engineering-quality-gate
+steps[5]:
+  - capabilities[1]: filesystem.read
+    commit_boundary: none
+    condition:
+      actions[0]:
+      phases[1]: prepare
+      roles[1]: software-engineer
+    context:
+      budget_tokens: 12000
+      critical_anchors[3]: ## Entry,## Procedure,## Exit
+      fallback: direct_read
+      mandatory[1]: step_document
+      min_savings_percent: 15
+      required: true
+      selectors[4]: step,repository-instructions,feature-traces,changed-path-topology
+    depends_on[0]:
+    gates[4]: git-target,review-boundary,implement-authority,path-containment
+    id: preflight
+    load: required
+    max_attempts: 1
+    max_tokens: 5000
+    on_failure: block
+    operation: inspect-and-authorize
+    outputs[3]: review-boundary,authority-evidence,preservation-baseline
+    path: steps/01-prepare.md
+    reason: bind the review and any remediation to current Loop authority and scope
+    side_effect: none
+    type: analysis
+  - capabilities[2]: filesystem.read,filesystem.write
+    commit_boundary: after-step
+    condition:
+      actions[0]:
+      phases[2]: clarify,route
+      roles[1]: software-engineer
+    context:
+      budget_tokens: 12000
+      critical_anchors[3]: ## Entry,## Procedure,## Exit
+      fallback: direct_read
+      mandatory[1]: step_document
+      min_savings_percent: 15
+      required: true
+      selectors[4]: step,repository-instructions,feature-traces,changed-path-topology
+    depends_on[1]: preflight
+    gates[4]: context-sufficiency,candidate-bounds,critical-anchor-recall,deterministic-output
+    id: context
+    load: required
+    max_attempts: 1
+    max_tokens: 5000
+    on_failure: block
+    operation: profile-repository
+    outputs[3]: context-profile,repository-profile,context-fingerprint
+    path: steps/02-context.md
+    reason: capture the smallest deterministic repository context and comparable examples
+    side_effect: workspace-write
+    type: context
+  - capabilities[3]: filesystem.read,filesystem.write,process.execute
+    commit_boundary: after-step
+    condition:
+      actions[0]:
+      phases[1]: execute
+      roles[1]: software-engineer
+    context:
+      budget_tokens: 12000
+      critical_anchors[3]: ## Entry,## Procedure,## Exit
+      fallback: direct_read
+      mandatory[1]: step_document
+      min_savings_percent: 15
+      required: true
+      selectors[4]: step,repository-instructions,feature-traces,changed-path-topology
+    depends_on[1]: context
+    gates[5]: findings-before-mutation,implement-authority,path-containment,verification-truthfulness,unrelated-work-preservation
+    id: execute
+    load: on-demand
+    max_attempts: 1
+    max_tokens: 5000
+    on_failure: block
+    operation: review-fix-and-rerun
+    outputs[4]: typed-findings,applied-fixes,verification-evidence,report-draft
+    path: steps/02-execute.md
+    reason: "adversarially review, safely fix material findings, and rerun relevant checks"
+    side_effect: workspace-write
+    type: action
+  - capabilities[3]: filesystem.read,filesystem.write,process.execute
+    commit_boundary: after-step
+    condition:
+      actions[0]:
+      phases[1]: validate
+      roles[1]: software-engineer
+    context:
+      budget_tokens: 12000
+      critical_anchors[3]: ## Entry,## Procedure,## Exit
+      fallback: direct_read
+      mandatory[1]: step_document
+      min_savings_percent: 15
+      required: true
+      selectors[4]: step,repository-instructions,feature-traces,changed-path-topology
+    depends_on[1]: execute
+    gates[5]: schema,current-context,decision-invariants,required-verification,atomic-output
+    id: validate
+    load: before-completion
+    max_attempts: 1
+    max_tokens: 5000
+    on_failure: block
+    operation: finalize-and-verify
+    outputs[3]: canonical-report,quality-decision,residual-risk
+    path: steps/03-validate-and-handoff.md
+    reason: "enforce canonical evidence, current fingerprints, and fail-closed readiness"
+    side_effect: workspace-write
+    type: validation
+  - capabilities[1]: filesystem.read
+    commit_boundary: none
+    condition:
+      actions[0]:
+      phases[2]: handoff,complete
+      roles[1]: software-engineer
+    context:
+      budget_tokens: 12000
+      critical_anchors[3]: ## Entry,## Procedure,## Exit
+      fallback: direct_read
+      mandatory[1]: step_document
+      min_savings_percent: 15
+      required: true
+      selectors[4]: step,repository-instructions,feature-traces,changed-path-topology
+    depends_on[1]: validate
+    gates[3]: terminal-evidence,current-report,next-owner
+    id: handoff
+    load: before-completion
+    max_attempts: 1
+    max_tokens: 5000
+    on_failure: handoff
+    operation: handoff-result
+    outputs[2]: handoff,next-action
+    path: steps/04-handoff.md
+    reason: return the current report decision and one evidence-backed next action
+    side_effect: none
+    type: handoff
+version: 4.1.0

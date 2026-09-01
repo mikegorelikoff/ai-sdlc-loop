@@ -1,17 +1,19 @@
 # AI SDLC Loop
 
-**Ship a bounded change through Specify → Implement → Verify with explicit approval before code mutation and commit.**
+**Ship a bounded change through Specify → Implement → Engineering Quality Gate → Verify with explicit approval before code mutation and commit.**
 
 [![CI](https://github.com/mikegorelikoff/ai-sdlc-loop/actions/workflows/ci.yml/badge.svg)](https://github.com/mikegorelikoff/ai-sdlc-loop/actions/workflows/ci.yml)
 [![Docs](https://github.com/mikegorelikoff/ai-sdlc-loop/actions/workflows/docs.yml/badge.svg)](https://mikegorelikoff.github.io/ai-sdlc-loop/)
 [![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
 
-AI SDLC Loop is the focused delivery member of the AI SDLC product family. It installs a guided Flow, an installation Doctor, a fixed stage workflow, eleven proven delivery-control skills, and one shared runtime while keeping deterministic TOON specs, reviews, approvals, QA plans, evidence, release decisions, and promotion artifacts in the local project.
+AI SDLC Loop is the focused delivery member of the AI SDLC product family. It installs a guided Flow, an installation Doctor, a fixed stage workflow with a mandatory engineering quality gate, eleven proven delivery-control skills, and one shared runtime while keeping deterministic TOON specs, reviews, approvals, repository-grounded quality reports, QA plans, evidence, release decisions, and promotion artifacts in the local project. It is compatible with Codex project skills, Claude Code project skills, and agents that support a project-relative skills root.
 
 ## Why use it?
 
-- Guided Flow, read-only Doctor, five stage entrypoints, eleven delivery-control skills, and one shared standard-library runtime.
+- Guided Flow, read-only Doctor, six stage entrypoints, eleven delivery-control skills, and one shared standard-library runtime.
 - Explicit Implement and commit approvals tied to current fingerprints.
+- Mandatory repository-grounded engineering review with deterministic context,
+  safe localized fixes, verification reruns, and a current readiness report.
 - Bounded paths, local evidence, secret redaction, and no runtime network or telemetry.
 - Versioned artifacts that can be promoted into AI SDLC Harness workflows.
 
@@ -29,11 +31,11 @@ Then verify separately:
 python3 .ai-sdlc-loop/install/install.py verify codex-project
 ```
 
-For a local checkout, use `python3 install.py codex-project`. Claude Code uses `claude-code-project`; another compatible agent uses `agent-project --skills-root .agent/skills`.
+For a local checkout, use `python3 install.py codex-project`. Claude Code uses `claude-code-project`; another compatible agent uses `agent-project --skills-root .agent/skills`. Immutable `v0.1.1` retains its 17-member inventory; the current unreleased source installs the 20-member package described below.
 
 ## Expected result
 
-The installer contributes 18 working `ai-sdlc-loop-{slug}` skills and `ai-sdlc-loop-shared-runtime`, for 19 installed directories. Each skill has a canonical `steps/manifest.toon` and bounded step documents. Existing unrelated skills remain untouched. The TOON install record and reusable verifier are written below `.ai-sdlc-loop/install/`. See the generated [skill catalog](https://mikegorelikoff.github.io/ai-sdlc-loop/reference/skills/) for the exact inventory.
+The installer contributes 19 working `ai-sdlc-loop-{slug}` skills and `ai-sdlc-loop-shared-runtime`, for 20 installed directories. Each working skill has a canonical `steps/manifest.toon` and bounded step documents. The router and bounded state stages use the compact Loop v1 graph; the engineering quality gate and delivery-control skills use the strict Harness-compatible v2 graph, with Loop-local dependency adaptations rather than byte-for-byte copies. Existing unrelated skills remain untouched. The TOON install record and reusable verifier are written below `.ai-sdlc-loop/install/`. See the generated [skill catalog](https://mikegorelikoff.github.io/ai-sdlc-loop/reference/skills/) for the exact inventory.
 
 ## Workflow
 
@@ -42,8 +44,10 @@ Ask the agent to use `ai-sdlc-loop-flow` for guided Explore and Apply, or `ai-sd
 1. Specify the request and allowed paths, then show a stable fingerprint.
 2. Request explicit approval before Implement.
 3. Make only the approved bounded change.
-4. Verify with explicit commands and persist redacted evidence.
-5. Request a separate approval before any commit.
+4. Run the engineering quality gate against repository patterns, fix safe High
+   and Medium findings, rerun its checks, and persist a current quality report.
+5. Verify with explicit commands and persist redacted evidence.
+6. Request a separate approval before any commit.
 
 The CLI contract is available with:
 

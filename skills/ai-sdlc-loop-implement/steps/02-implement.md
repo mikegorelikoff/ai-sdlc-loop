@@ -10,4 +10,5 @@ Use `ai-sdlc-loop-branching` when a task branch is required. Edit only paths lis
 
 ## Exit
 
-Summarize changed paths and transfer ownership to `ai-sdlc-loop-verify`.
+Summarize changed paths and transfer ownership to
+`ai-sdlc-loop-engineering-quality-gate`.

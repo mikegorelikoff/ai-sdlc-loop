@@ -2,11 +2,18 @@
 
 ## Status
 
-AI SDLC Loop is experimental. The source tree is preparing `v0.2.0`; schema changes require a new version and migration notes.
+AI SDLC Loop is experimental. The source tree is preparing `v0.2.0`; it adds
+the mandatory engineering quality gate and twenty-member install inventory.
+Immutable `v0.1.1` retains its prior inventory. Schema changes require a new
+version and migration notes.
 
 ## Scope and limitations
 
-Loop controls a small local delivery cycle. It does not reduce or cap model requests, authenticate reviewer identity cryptographically, replace human review, provide hosted orchestration, or automatically push, deploy, release, or open pull requests.
+Loop controls a small local delivery cycle. Deterministic context and report
+fingerprints make evidence reproducible; they do not prove semantic
+correctness. Loop does not reduce or cap model requests, authenticate reviewer
+identity cryptographically, replace human review, provide hosted orchestration,
+or automatically push, deploy, release, or open pull requests.
 
 ## Security and privacy
 
