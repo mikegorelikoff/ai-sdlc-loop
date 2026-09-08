@@ -98,3 +98,5 @@ Return the pre-mutation finding set, applied fixes, remaining findings,
 pre/post-fix verification records, post-fix context fingerprint, unrelated-work
 preservation evidence, and draft path. A failed authority, containment, or
 preservation check makes readiness false.
+
+Apply [D/S/H](../SKILL.md#deterministic-execution-contract).

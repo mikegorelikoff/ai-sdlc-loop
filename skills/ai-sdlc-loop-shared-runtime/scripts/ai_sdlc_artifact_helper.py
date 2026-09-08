@@ -59,11 +59,8 @@ from ai_sdlc_context import (
 from ai_sdlc_specs_index import parse_artifact_metadata
 from ai_sdlc_specs_index import write_indexes_for_roots
 from ai_sdlc_okf import (
-    concept_profile,
-    generated_actor,
-    okf_status,
-    render_frontmatter,
-    utc_now,
+    render_concept,
+    split_frontmatter,
 )
 from ai_sdlc_migrate import MigrationConflict, migrate_workspace
 from ai_sdlc_paths import state_path, atomic_write_text
@@ -198,6 +195,7 @@ def artifact_metadata_lines(
     validation: list[str] | None = None,
     metatags: list[str] | None = None,
     existing_text: str = "",
+    meaningful_change: bool = True,
 ) -> list[str]:
     """Build portable OKF frontmatter plus AI SDLC lifecycle extensions.
 
@@ -206,6 +204,8 @@ def artifact_metadata_lines(
     document body. It does not replace the body, decision log, or state file.
     """
     today = date.today().isoformat()
+    if existing_text and not meaningful_change:
+        today = str(parse_artifact_metadata(existing_text).get("updated_at") or today)
     created_at = created_at or today
     owner = owner or (getattr(state_args, "artifact_owner", None) if state_args is not None else None) or "TBD"
     status = status or (getattr(state_args, "artifact_status", None) if state_args is not None else None) or "draft"
@@ -253,13 +253,15 @@ def artifact_metadata_lines(
     actor_override = (
         getattr(state_args, "generated_by", None) if state_args is not None else None
     )
-    return render_frontmatter(
-        profile=concept_profile(artifact_name),
-        status=okf_status(status),
-        generated_by=generated_actor(existing_text, actor_override),
-        generated_at=utc_now(),
-        extension_lines=extension_lines,
+    _, prior_body = split_frontmatter(existing_text) if existing_text else ([], "")
+    rendered = render_concept(
+        prior_body, profile_key=artifact_name, lifecycle_status=status,
+        generated_by_override=actor_override, existing_text=existing_text,
+        extension_lines=extension_lines, meaningful_change=meaningful_change,
     )
+    frontmatter, _ = split_frontmatter(rendered)
+    return ["---", *frontmatter, "---"]
+
 
 
 def replace_frontmatter(text: str, metadata_lines: list[str]) -> str:
@@ -290,9 +292,20 @@ def refreshed_artifact_metadata(
     state_args: argparse.Namespace | None,
     status: str,
     related_artifacts: list[str] | None = None,
+    prior_text: str | None = None,
 ) -> str:
     """Refresh generated metadata while retaining durable user annotations."""
     existing = parse_artifact_metadata(text)
+    prior = text if prior_text is None else prior_text
+    _, prior_body = split_frontmatter(prior)
+    _, current_body = split_frontmatter(text)
+    meaningful_change = (
+        prior_text is None
+        or prior_body.strip() != current_body.strip()
+        or str(existing.get("status") or "draft") != status
+        or bool(set(related_artifacts or []) - set(existing.get("related_artifacts", [])))
+        or bool(getattr(state_args, "artifact_owner", None) and state_args.artifact_owner != existing.get("owner"))
+    )
     existing_tags = [
         str(tag)
         for tag in existing.get("metatags", ())
@@ -327,7 +340,8 @@ def refreshed_artifact_metadata(
         ),
         validation=[str(value) for value in existing.get("validation", ())],
         metatags=existing_tags,
-        existing_text=text,
+        existing_text=prior,
+        meaningful_change=meaningful_change,
     )
     return replace_frontmatter(text, metadata)
 
@@ -739,6 +753,10 @@ def emit_profile_report(
         }
     )
 
+    if stdin_action and artifact_path != decision_log_path:
+        # The same operation creates this journal; include it on the first write.
+        local_related = sorted(set(local_related) | {decision_log_path})
+
     if stdin_action:
         artifact_file = Path(artifact_path)
         legacy_artifact_file = next(
@@ -790,6 +808,7 @@ def emit_profile_report(
                 updated = replace_or_insert_section(artifact_text, section, content, required_sections)
                 updated = refreshed_artifact_metadata(
                     text=updated,
+                    prior_text=artifact_text,
                     feature=feature,
                     artifact_name=artifact_name,
                     artifact_path=artifact_path,
@@ -872,6 +891,7 @@ def emit_profile_report(
                 raise ValueError("cannot finalize quality gate; " + "; ".join(quality_errors))
             updated = refreshed_artifact_metadata(
                 text=updated,
+                prior_text=artifact_text,
                 feature=feature,
                 artifact_name=artifact_name,
                 artifact_path=artifact_path,

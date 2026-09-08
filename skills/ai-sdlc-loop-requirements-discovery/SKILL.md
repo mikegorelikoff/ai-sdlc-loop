@@ -37,6 +37,13 @@ No duplicate prose. Keep code, commands, commit messages and machine handoffs na
 Apply [this skill’s schema and examples](references/chat-output.toon) before any user-facing result, warning or question.
 Use the sibling `ai-sdlc-loop-shared-runtime/scripts/chat_output.py` to render/check; [shared limits](../ai-sdlc-loop-shared-runtime/references/chat-output.md) bound repair and preserve native outputs.
 
+## Deterministic Execution Contract
+
+- D: use [the owning Python entry point](scripts/requirements_discovery.py) with explicit inputs; success covers only executed checks.
+- S: interpret sources for Source-bound context, validated TOON discovery packet, business options, stakeholder questions, and conditional handoff; cite unresolved decisions.
+- H: validate native outputs before handoff. Runtime owns IDs, counts, routing and completion; confidence/chat grants no approval.
+- Read explicit paths; reuse only current evidence. At most two repairs; then report BLOCKED with failed check, evidence and action.
+
 ## Step Selector
 
 This table is generated from `steps/manifest.toon`. The manifest and linked

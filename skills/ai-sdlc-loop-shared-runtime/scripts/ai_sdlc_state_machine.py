@@ -9,6 +9,8 @@ not invent their own chain rules.
 from __future__ import annotations
 
 import argparse
+import ast
+from ai_sdlc_toon import encode_toon
 import re
 from dataclasses import dataclass
 from datetime import date
@@ -64,7 +66,7 @@ STAGE_BY_ID = {stage.stage_id: stage for stage in STAGES}
 STAGE_BY_SKILL = {stage.skill: stage for stage in STAGES}
 
 
-def initial_state(feature: str, workspace: str, entrypoint: str | None = None) -> dict[str, object]:
+def initial_state(feature: str, workspace: str, entrypoint: str | None = None, *, observed_on: date | None = None) -> dict[str, object]:
     """Create a complete state dictionary with all lifecycle stages."""
     current_stage = entrypoint or ("branching" if workspace == "implementation" else "discovery")
     stages = []
@@ -88,7 +90,7 @@ def initial_state(feature: str, workspace: str, entrypoint: str | None = None) -
         "current_stage": current_stage,
         "active_skill": "",
         "flow_mode": "default",
-        "updated_at": date.today().isoformat(),
+        "updated_at": (observed_on or date.today()).isoformat(),
         "decision_log": f"{workspace_base(workspace)}/{feature}/decision-log.md",
         "upstream_state": state_path(feature, "refinement").as_posix() if workspace == "implementation" else "",
         "stages": stages,
@@ -98,28 +100,29 @@ def initial_state(feature: str, workspace: str, entrypoint: str | None = None) -
 
 
 def csv_escape(value: object) -> str:
-    """Serialize a simple TOON cell without commas or newlines."""
-    text = str(value).replace("\n", " ").replace(",", ";").strip()
-    return text
+    """Use the canonical scalar encoder; never edit semantic punctuation."""
+    return encode_toon(str(value)).rstrip("\n")
 
 
 def to_toon(state: dict[str, object]) -> str:
     """Serialize state using the repository's compact TOON subset."""
+    validate_state_shape(state)
     lines = [
-        f"feature: {state.get('feature', '')}",
-        f"workspace: {state.get('workspace', '')}",
-        f"current_stage: {state.get('current_stage', '')}",
-        f"active_skill: {state.get('active_skill', '')}".rstrip(),
-        f"flow_mode: {state.get('flow_mode', 'default')}",
-        f"updated_at: {state.get('updated_at', '')}",
-        f"decision_log: {state.get('decision_log', '')}",
+        f"feature: {csv_escape(state.get('feature', ''))}",
+        f"workspace: {csv_escape(state.get('workspace', ''))}",
+        f"current_stage: {csv_escape(state.get('current_stage', ''))}",
+        f"active_skill: {csv_escape(state.get('active_skill', ''))}".rstrip(),
+        f"flow_mode: {csv_escape(state.get('flow_mode', 'default'))}",
+        f"updated_at: {csv_escape(state.get('updated_at', ''))}",
+        f"decision_log: {csv_escape(state.get('decision_log', ''))}",
     ]
-    if state.get("upstream_state"):
-        lines.append(f"upstream_state: {state.get('upstream_state')}")
+    if "upstream_state" in state:
+        lines.append(f"upstream_state: {csv_escape(state.get('upstream_state'))}")
 
     lines.append("")
     lines.append("stages[%d]{id,skill,status,workspace,artifacts,decision_ref}:" % len(state.get("stages", [])))
-    for stage in state.get("stages", []):
+    order = {stage.stage_id: index for index, stage in enumerate(STAGES)}
+    for stage in sorted(state.get("stages", []), key=lambda row: order[row["id"]]):
         row = stage if isinstance(stage, dict) else {}
         lines.append(
             "  "
@@ -141,37 +144,101 @@ def to_toon(state: dict[str, object]) -> str:
     return "\n".join(lines).rstrip() + "\n"
 
 
+def _state_scalar(value: str) -> str:
+    """Decode a bounded quoted text scalar; legacy bare empty cells stay readable."""
+    if value.startswith('"'):
+        try:
+            decoded = ast.literal_eval(value)
+        except (SyntaxError, ValueError) as exc:
+            raise ValueError("STATE_PARSE_ERROR: malformed quoted text") from exc
+        if not isinstance(decoded, str):
+            raise ValueError("STATE_PARSE_ERROR: state cells must be text")
+        return decoded
+    return value
+
+
 def parse_row(line: str, columns: tuple[str, ...]) -> dict[str, str]:
-    """Parse one compact TOON array row using fixed columns."""
-    parts = [part.strip() for part in line.strip().split(",")]
-    parts.extend([""] * (len(columns) - len(parts)))
-    return {column: parts[index] for index, column in enumerate(columns)}
+    """Read canonical escaped cells without splitting quoted commas."""
+    fields = []; start = 0; quoted = False; escaped = False
+    source = line.strip()
+    for index, character in enumerate(source):
+        if escaped:
+            escaped = False
+        elif character == "\\" and quoted:
+            escaped = True
+        elif character == '"':
+            quoted = not quoted
+        elif character == ',' and not quoted:
+            fields.append(source[start:index].strip()); start = index + 1
+    if quoted or escaped:
+        raise ValueError("STATE_PARSE_ERROR: unterminated quoted cell")
+    fields.append(source[start:].strip())
+    if len(fields) != len(columns):
+        raise ValueError("STATE_PARSE_ERROR: row width differs from declared columns")
+    return {key: _state_scalar(value) for key, value in zip(columns, fields)}
+
+
+def validate_state_shape(state: dict[str, object]) -> None:
+    """Reject ambiguous state before serialization or lifecycle mutation."""
+    if not isinstance(state, dict):
+        raise ValueError("STATE_SCHEMA_ERROR: state must be a mapping")
+    allowed = {'feature', 'workspace', 'current_stage', 'active_skill', 'flow_mode', 'updated_at', 'decision_log', 'upstream_state', 'stages', 'skips'}
+    if set(state) - allowed:
+        raise ValueError("STATE_SCHEMA_ERROR: unknown root fields")
+    if 'upstream_state' in state and not isinstance(state['upstream_state'], str):
+        raise ValueError("STATE_SCHEMA_ERROR: upstream state must be text")
+    for key in ('feature', 'workspace', 'current_stage', 'active_skill', 'flow_mode', 'updated_at', 'decision_log'):
+        if not isinstance(state.get(key), str):
+            raise ValueError("STATE_SCHEMA_ERROR: missing text field " + key)
+    if state['flow_mode'] not in ('default', 'quick', 'full'):
+        raise ValueError("STATE_SCHEMA_ERROR: invalid flow mode")
+    if state['current_stage'] not in STAGE_BY_ID:
+        raise ValueError("STATE_SCHEMA_ERROR: unknown current stage")
+    identities = set()
+    for key, columns in [('stages', ('id','skill','status','workspace','artifacts','decision_ref')), ('skips', ('stage','reason','decision_ref','flow_mode'))]:
+        if not isinstance(state.get(key), list):
+            raise ValueError("STATE_SCHEMA_ERROR: expected list " + key)
+        for row in state[key]:
+            if not isinstance(row, dict) or set(row) != set(columns) or any(not isinstance(v, str) for v in row.values()):
+                raise ValueError("STATE_SCHEMA_ERROR: invalid " + key + " row")
+            if key == 'stages':
+                if row['id'] in identities or row['id'] not in STAGE_BY_ID or row['status'] not in STATUSES:
+                    raise ValueError("STATE_SCHEMA_ERROR: duplicate/unknown stage or invalid status")
+                definition = STAGE_BY_ID[row['id']]
+                if row['skill'] != definition.skill or row['workspace'] != definition.workspace:
+                    raise ValueError("STATE_SCHEMA_ERROR: stage owner differs from registered policy")
+                identities.add(row['id'])
+    active = [row['skill'] for row in state['stages'] if row['status'] == 'in_progress']
+    if len(active) > 1 or (active and state['active_skill'] != active[0]) or (not active and state['active_skill']):
+        raise ValueError("STATE_SCHEMA_ERROR: active skill and in-progress stage disagree")
 
 
 def from_toon(text: str) -> dict[str, object]:
-    """Parse the repository's own TOON state subset."""
-    state: dict[str, object] = {"stages": [], "skips": []}
-    mode: str | None = None
-    for raw_line in text.splitlines():
-        line = raw_line.rstrip()
-        if not line:
-            continue
-        if line.startswith("stages["):
-            mode = "stages"
-            continue
-        if line.startswith("skips["):
-            mode = "skips"
-            continue
-        if line.startswith("  ") and mode == "stages":
-            state["stages"].append(parse_row(line, ("id", "skill", "status", "workspace", "artifacts", "decision_ref")))  # type: ignore[index]
-            continue
-        if line.startswith("  ") and mode == "skips":
-            state["skips"].append(parse_row(line, ("stage", "reason", "decision_ref", "flow_mode")))  # type: ignore[index]
-            continue
-        if ":" in line:
-            mode = None
-            key, value = line.split(":", 1)
-            state[key.strip()] = value.strip()
+    """Parse current and legacy state tables with exact counts and field identities."""
+    if len(text.encode('utf-8')) > 1_000_000:
+        raise ValueError("STATE_PARSE_ERROR: state exceeds byte budget")
+    state: dict[str, object] = {}; declarations = {}; mode = None
+    columns_by_mode = {'stages': ('id','skill','status','workspace','artifacts','decision_ref'), 'skips': ('stage','reason','decision_ref','flow_mode')}
+    for raw in text.splitlines():
+        if not raw.strip(): continue
+        header = re.fullmatch(r'(stages|skips)\[(\d+)\]\{([^}]+)\}:', raw)
+        if header:
+            mode, count, columns = header.groups()
+            if mode in state or tuple(columns.split(',')) != columns_by_mode[mode]:
+                raise ValueError("STATE_PARSE_ERROR: repeated table or invalid columns")
+            declarations[mode] = int(count); state[mode] = []
+        elif raw.startswith('  ') and mode:
+            state[mode].append(parse_row(raw, columns_by_mode[mode]))
+        elif ':' in raw and not raw[0].isspace():
+            mode = None; key, value = raw.split(':', 1); key = key.strip()
+            if key in state: raise ValueError("STATE_PARSE_ERROR: repeated field " + key)
+            state[key] = _state_scalar(value.strip())
+        else:
+            raise ValueError("STATE_PARSE_ERROR: unrecognized state line")
+    for key in ('stages', 'skips'):
+        if key not in declarations or len(state[key]) != declarations[key]:
+            raise ValueError("STATE_PARSE_ERROR: table count mismatch: " + key)
+    validate_state_shape(state)
     return state
 
 
@@ -222,8 +289,11 @@ def validate_transition(
     assumption: str = "",
 ) -> tuple[list[str], list[str]]:
     """Validate whether a skill may start or complete in the current state."""
+    validate_state_shape(state)
     stage = stage_for_skill(skill)
     errors: list[str] = []
+    if flow_mode not in ("default", "quick", "full"):
+        errors.append("invalid transition flow mode")
     warnings: list[str] = []
 
     in_progress = [row for row in active_stage_rows(state) if row.get("skill") != skill]
@@ -231,6 +301,8 @@ def validate_transition(
         errors.append("another lifecycle skill is in progress: " + ", ".join(row.get("skill", "") for row in in_progress))
 
     row = stage_row(state, stage.stage_id)
+    if row.get("status") == "blocked" and not decision_ref:
+        errors.append("blocked stage requires a decision_ref documenting resolution")
     if row.get("status") == "done":
         warnings.append(f"stage already done: {stage.stage_id}")
 
@@ -253,10 +325,12 @@ def record_skip(state: dict[str, object], stage_id: str, reason: str, decision_r
     """Append a quick-flow skip or assumption record to state."""
     skips = state.setdefault("skips", [])
     assert isinstance(skips, list)
-    skips.append({"stage": stage_id, "reason": reason, "decision_ref": decision_ref, "flow_mode": flow_mode})
+    entry = {"stage": stage_id, "reason": reason, "decision_ref": decision_ref, "flow_mode": flow_mode}
+    if entry not in skips:
+        skips.append(entry)
 
 
-def begin_stage(state: dict[str, object], skill: str, flow_mode: str, decision_ref: str = "", assumption: str = "") -> tuple[list[str], list[str]]:
+def begin_stage(state: dict[str, object], skill: str, flow_mode: str, decision_ref: str = "", assumption: str = "", *, observed_on: date | None = None) -> tuple[list[str], list[str]]:
     """Mark a skill stage in progress after transition validation."""
     errors, warnings = validate_transition(state, skill, flow_mode, decision_ref, assumption)
     if errors:
@@ -269,7 +343,7 @@ def begin_stage(state: dict[str, object], skill: str, flow_mode: str, decision_r
     state["current_stage"] = stage.stage_id
     state["active_skill"] = skill
     state["flow_mode"] = flow_mode
-    state["updated_at"] = date.today().isoformat()
+    state["updated_at"] = (observed_on or date.today()).isoformat()
     if assumption:
         record_skip(state, stage.stage_id, assumption, decision_ref, flow_mode)
     return [], warnings
@@ -282,6 +356,7 @@ def complete_stage(
     decision_ref: str = "",
     flow_mode: str = "default",
     assumption: str = "",
+    *, observed_on: date | None = None,
 ) -> tuple[list[str], list[str]]:
     """Mark a skill stage done and store artifact/decision trace."""
     errors, warnings = validate_transition(state, skill, flow_mode, decision_ref, assumption)
@@ -303,7 +378,7 @@ def complete_stage(
     state["current_stage"] = stage.stage_id
     state["active_skill"] = ""
     state["flow_mode"] = flow_mode
-    state["updated_at"] = date.today().isoformat()
+    state["updated_at"] = (observed_on or date.today()).isoformat()
     if assumption:
         record_skip(state, stage.stage_id, assumption, decision_ref, flow_mode)
     return [], warnings

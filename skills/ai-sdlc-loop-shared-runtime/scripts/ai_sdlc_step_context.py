@@ -560,6 +560,21 @@ def chat_reference(skill_root: Path, text: str) -> tuple[str, str, Path] | None:
     return skill_root.name + "/references/chat-output.toon", content, path
 
 
+
+def determinism_reference(skill_root: Path, text: str) -> tuple[str, str, Path] | None:
+    """Read only the linked local execution boundary, retaining the source hash."""
+    if "](../SKILL.md#deterministic-execution-contract)" not in text:
+        return None
+    content, error, path = _read_text(skill_root, "SKILL.md")
+    if error or content is None or path is None:
+        raise ValueError("STEP_CONTEXT_INSUFFICIENT: missing owning skill contract")
+    marker = "## Deterministic Execution Contract\n"
+    if content.count(marker) != 1:
+        raise ValueError("STEP_CONTEXT_INSUFFICIENT: ambiguous owning skill contract")
+    contract = marker + content.split(marker, 1)[1].split("\n## ", 1)[0].rstrip() + "\n"
+    return skill_root.name + "/SKILL.md", contract, path
+
+
 def compile_step_context(
     *,
     root: Path,
@@ -629,6 +644,18 @@ def compile_step_context(
             authority="skill_instruction", start_line=1, end_line=len(content.splitlines()),
             estimated_tokens=token_estimate(content), strategy="full-source",
             reasons=("mandatory:chat-output-contract",), matched_terms=(), content=content,
+        ))
+
+    boundary = determinism_reference(skill_root, step_text)
+    if boundary:
+        relative, content, path = boundary
+        raw_tokens += token_estimate(content)
+        first_line = path.read_text(encoding="utf-8").splitlines().index("## Deterministic Execution Contract") + 1
+        selected.append(ContextRange(
+            path=relative, sha256=hashlib.sha256(path.read_bytes()).hexdigest(),
+            authority="skill_instruction", start_line=first_line, end_line=first_line + len(content.splitlines()) - 1,
+            estimated_tokens=token_estimate(content), strategy="lexical-range",
+            reasons=("mandatory:owning-determinism-contract",), matched_terms=(), content=content,
         ))
 
     candidates = _repository_candidates(

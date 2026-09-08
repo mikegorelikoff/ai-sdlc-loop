@@ -71,3 +71,5 @@ For updated sources, rebuild context and review/rebase the analysis onto it.
 ## Exit
 
 The packet supports a concrete business discussion and targeted evidence gathering.
+
+Apply [D/S/H](../SKILL.md#deterministic-execution-contract).

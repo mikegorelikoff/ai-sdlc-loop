@@ -34,3 +34,5 @@ separate approval receipt for the verified fingerprint.
 Complete preparation when current evidence and the proposed commit contents
 are explicit. Do not run `git commit`, amend, push, tag or publish here. Return
 one blocked handoff when a required gate fails, with the exact recovery action.
+
+Apply [D/S/H](../SKILL.md#deterministic-execution-contract).

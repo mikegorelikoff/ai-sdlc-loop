@@ -56,3 +56,5 @@ Review AI SDLC diffs, endpoints, workflows, provider integrations, and configs f
 ## Exit
 
 Finish this owning action with evidence for validation. Return control to the authorized coordinator; continue only work already requested by the user and allowed by the next gate.
+
+Apply [D/S/H](../SKILL.md#deterministic-execution-contract).

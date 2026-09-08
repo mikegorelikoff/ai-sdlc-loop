@@ -46,3 +46,5 @@ Validate with:
 ```bash
 python3 skills/ai-sdlc-loop-shared-runtime/scripts/ai_sdlc_okf.py --check <bundle>
 ```
+
+Generated time accepts the existing canonical calendar-date form (`YYYY-MM-DD`) and timezone-bearing timestamps. Preserve the recorded precision on refresh or migration; do not invent midnight or a timezone for old dates. New clock-generated values use UTC timestamps. Verified attestations require a timestamp with a timezone and evidence.

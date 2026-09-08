@@ -9,9 +9,11 @@ knowledge contract shared by feature, change, and runtime bundles.
 from __future__ import annotations
 
 import argparse
+import ast
+from ai_sdlc_toon import _quote
 import re
 from dataclasses import dataclass
-from datetime import datetime, timezone
+from datetime import date, datetime, timezone
 from pathlib import Path
 from typing import Iterable, Sequence
 
@@ -124,18 +126,50 @@ def utc_now() -> str:
 
 
 def yaml_quote(value: object) -> str:
-    text = str(value)
-    return '"' + text.replace("\\", "\\\\").replace('"', '\\"') + '"'
+    """Share the lossless escaped string representation with the native codec."""
+    return _quote(str(value))
+
+
+def _unquote(value: str) -> str:
+    if value.startswith('"'):
+        try:
+            decoded = ast.literal_eval(value)
+        except (SyntaxError, ValueError) as exc:
+            raise ValueError("OKF_PARSE_ERROR: invalid quoted scalar") from exc
+        if not isinstance(decoded, str):
+            raise ValueError("OKF_PARSE_ERROR: text scalar required")
+        return decoded
+    return value
+
+
+def _timestamp(value: str, field: str) -> None:
+    try:
+        parsed = datetime.fromisoformat(value.replace('Z', '+00:00'))
+        if parsed.tzinfo is None: raise ValueError('timezone missing')
+    except (ValueError, TypeError, AttributeError) as exc:
+        raise ValueError(field + ' must be an ISO-8601 timestamp with timezone') from exc
+
+
+def _generated_time(value: str) -> None:
+    """Preserve existing calendar-date precision; never invent a time or zone."""
+    if isinstance(value, str) and re.fullmatch(r"\d{4}-\d{2}-\d{2}", value):
+        try:
+            date.fromisoformat(value)
+        except ValueError as exc:
+            raise ValueError("generated.at must be a valid calendar date") from exc
+        return
+    _timestamp(value, "generated.at")
 
 
 def split_frontmatter(text: str) -> tuple[list[str], str]:
     """Split Markdown into frontmatter lines and visible body."""
     if not text.startswith("---\n"):
         return [], text
-    end = text.find("\n---", 4)
+    delimiter = re.search(r"(?m)^---[ \t]*$", text[4:])
+    end = 4 + delimiter.start() - 1 if delimiter else -1
     if end == -1:
         raise ValueError("unterminated YAML frontmatter")
-    body_start = end + len("\n---")
+    body_start = 4 + delimiter.end()
     while body_start < len(text) and text[body_start] in "\r\n":
         body_start += 1
     return text[4:end].splitlines(), text[body_start:]
@@ -147,9 +181,19 @@ def _top_level_blocks(lines: Sequence[str]) -> dict[str, list[str]]:
     for line in lines:
         if line and not line[0].isspace() and ":" in line:
             active = line.split(":", 1)[0].strip()
+            if active in blocks:
+                raise ValueError("OKF_PARSE_ERROR: duplicate top-level field " + active)
             blocks[active] = [line]
         elif active is not None:
             blocks[active].append(line)
+    for parent in ('generated', 'verified'):
+        seen = set()
+        for line in blocks.get(parent, [])[1:]:
+            match = re.match(r'^  ([a-z_]+):', line)
+            if match:
+                key = match.group(1)
+                if key in seen: raise ValueError('OKF_PARSE_ERROR: duplicate ' + parent + '.' + key)
+                seen.add(key)
     return blocks
 
 
@@ -158,8 +202,7 @@ def _scalar(blocks: dict[str, list[str]], key: str) -> str:
     if not lines:
         return ""
     value = lines[0].split(":", 1)[1].strip()
-    if len(value) >= 2 and value[0] == value[-1] == '"':
-        value = value[1:-1].replace('\\"', '"').replace("\\\\", "\\")
+    value = _unquote(value)
     return value
 
 
@@ -167,8 +210,7 @@ def _nested_scalar(blocks: dict[str, list[str]], parent: str, key: str) -> str:
     for line in blocks.get(parent, ())[1:]:
         if line.startswith("  " + key + ":"):
             value = line.split(":", 1)[1].strip()
-            if len(value) >= 2 and value[0] == value[-1] == '"':
-                value = value[1:-1].replace('\\"', '"').replace("\\\\", "\\")
+            value = _unquote(value)
             return value
     return ""
 
@@ -184,8 +226,7 @@ def _nested_list(
             continue
         if active and line.startswith("    - "):
             value = line[6:].strip()
-            if len(value) >= 2 and value[0] == value[-1] == '"':
-                value = value[1:-1].replace('\\"', '"').replace("\\\\", "\\")
+            value = _unquote(value)
             values.append(value)
     return tuple(values)
 
@@ -225,6 +266,12 @@ def render_frontmatter(
     extension_lines: Sequence[str] = (),
 ) -> list[str]:
     """Render portable OKF fields followed by producer extension blocks."""
+    _generated_time(generated_at)
+    if verified_at: _timestamp(verified_at, 'verified.at')
+    sources = sorted(set(sources))
+    verification_evidence = sorted(set(verification_evidence))
+    if any(key in _top_level_blocks(extension_lines) for key in ('type','title','description','tags','status','generated','verified')):
+        raise ValueError('OKF_SCHEMA_ERROR: producer extension cannot shadow portable fields')
     if status not in OKF_STATUS:
         raise ValueError(f"unsupported OKF status: {status}")
     if not GENERATED_ACTOR.fullmatch(generated_by):
@@ -272,17 +319,23 @@ def render_concept(
     lifecycle_status: str = "draft",
     generated_by_override: str | None = None,
     existing_text: str = "",
-    sources: Sequence[str] = (),
+    sources: Sequence[str] | None = None,
     extension_lines: Sequence[str] = (),
     meaningful_change: bool = True,
+    generated_at: str | None = None,
 ) -> str:
     """Render one concept while preserving actor/time on metadata-only refresh."""
     profile = concept_profile(profile_key)
     actor = generated_actor(existing_text, generated_by_override)
     existing_lines, _ = split_frontmatter(existing_text) if existing_text else ([], "")
     blocks = _top_level_blocks(existing_lines)
+    prior_sources = _nested_list(blocks, 'generated', 'sources')
+    sources = sorted(set(prior_sources if sources is None else sources))
+    if existing_text:
+        _, prior_body = split_frontmatter(existing_text)
+        meaningful_change = meaningful_change or body.strip() != prior_body.strip() or sources != sorted(set(prior_sources)) or actor != _nested_scalar(blocks, 'generated', 'by')
     prior_at = _nested_scalar(blocks, "generated", "at")
-    generated_at = utc_now() if meaningful_change or not prior_at else prior_at
+    generated_at = (generated_at or utc_now()) if meaningful_change or not prior_at else prior_at
     verified_by = None if meaningful_change else _nested_scalar(blocks, "verified", "by") or None
     verified_at = None if meaningful_change else _nested_scalar(blocks, "verified", "at") or None
     verification_evidence = (
@@ -317,6 +370,7 @@ def migrate_concept_text(
     *,
     profile_key: str | Path,
     generated_by_override: str | None = None,
+    generated_at: str | None = None,
 ) -> str:
     """Add or normalize OKF fields while preserving producer extensions/body."""
     profile = concept_profile(profile_key)
@@ -329,7 +383,7 @@ def migrate_concept_text(
         )
     lifecycle_status = _nested_scalar(blocks, "artifact_metadata", "status") or _scalar(blocks, "status")
     actor = generated_actor(text, generated_by_override)
-    generated_at = _nested_scalar(blocks, "generated", "at") or utc_now()
+    generated_at = _nested_scalar(blocks, "generated", "at") or generated_at or utc_now()
     verified_by = _nested_scalar(blocks, "verified", "by") or None
     verified_at = _nested_scalar(blocks, "verified", "at") or None
     verification_evidence = _nested_list(blocks, "verified", "evidence")
@@ -351,6 +405,7 @@ def migrate_concept_text(
         status=okf_status(lifecycle_status),
         generated_by=actor,
         generated_at=generated_at,
+        sources=_nested_list(blocks, "generated", "sources"),
         verified_by=verified_by,
         verified_at=verified_at,
         verification_evidence=verification_evidence,
@@ -363,6 +418,16 @@ def concept_metadata(text: str) -> dict[str, str]:
     """Read the bounded portable fields used by indexes and validators."""
     frontmatter, _ = split_frontmatter(text)
     blocks = _top_level_blocks(frontmatter)
+    generated_at = _nested_scalar(blocks, 'generated', 'at')
+    if generated_at:
+        _generated_time(generated_at)
+    if 'verified' in blocks:
+        by = _nested_scalar(blocks, 'verified', 'by')
+        at = _nested_scalar(blocks, 'verified', 'at')
+        evidence = _nested_list(blocks, 'verified', 'evidence')
+        if not by or not GENERATED_ACTOR.fullmatch(by) or not at or not evidence:
+            raise ValueError('OKF_SCHEMA_ERROR: verified requires actor, timestamp and evidence')
+        _timestamp(at, 'verified.at')
     return {
         "type": _scalar(blocks, "type"),
         "title": _scalar(blocks, "title"),

@@ -88,3 +88,5 @@ runtime as one content-addressed installation set.
 ## Exit
 
 Finish this owning action with evidence for validation. Return control to the authorized coordinator; continue only work already requested by the user and allowed by the next gate.
+
+Apply [D/S/H](../SKILL.md#deterministic-execution-contract).

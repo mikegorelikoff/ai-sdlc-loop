@@ -1,5 +1,14 @@
 # Changelog
 
+## v0.5.0 - 2026-09-08
+
+### Changed
+
+- Add explicit deterministic/semantic boundaries to all 21 skills, linked to their existing Python entry points.
+- Preserve punctuation and control characters in state/TOON, reject ambiguous keys and malformed state, make unchanged atomic writes no-ops, and bound repeated assumptions.
+- Add fixed-date state inputs and hash-seed, working-directory, round-trip and failure-atomicity regressions.
+- Preserve OKF source provenance through refresh/migration; invalidate verification on actual changes and accept explicit generation time. Include local execution boundaries in selected context and fingerprints.
+
 ## v0.4.0 - 2026-09-08
 
 ### Changed

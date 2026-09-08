@@ -51,11 +51,17 @@ def ensure_directory(root: Path, path: Path) -> Path:
 def atomic_write_text(root: Path, path: Path, content: str) -> None:
     """Atomically replace a bounded regular file without following symlinks."""
     candidate = bounded_path(root, path)
+    if candidate.exists():
+        if not candidate.is_file():
+            raise ValueError(f"output is not a regular file: {candidate}")
+        encoded = content.encode("utf-8")
+        if candidate.stat().st_size == len(encoded) and candidate.read_bytes() == encoded:
+            return  # Preserve mtime and avoid replacing an unchanged artifact.
     parent = ensure_directory(root, candidate.parent)
     candidate = bounded_path(root, candidate)
     descriptor, temporary = tempfile.mkstemp(prefix=candidate.name + ".", dir=parent)
     try:
-        with os.fdopen(descriptor, "w", encoding="utf-8") as handle:
+        with os.fdopen(descriptor, "w", encoding="utf-8", newline="\n") as handle:
             handle.write(content)
         bounded_path(root, candidate)
         os.replace(temporary, candidate)

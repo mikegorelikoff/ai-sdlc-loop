@@ -19,7 +19,9 @@ def _primitive(value: Any) -> bool:
 
 
 def _key(value: Any) -> str:
-    text = str(value)
+    if not isinstance(value, str):
+        raise TypeError("TOON mapping keys must be strings")
+    text = value
     return text if _BARE_KEY.fullmatch(text) else _quote(text)
 
 
@@ -38,7 +40,7 @@ def _quote(value: str) -> str:
     for character in value:
         if character in replacements:
             escaped.append(replacements[character])
-        elif ord(character) < 0x20:
+        elif ord(character) < 0x20 or character in "\x85\u2028\u2029":
             escaped.append(f"\\u{ord(character):04x}")
         else:
             escaped.append(character)
@@ -53,6 +55,7 @@ def _string(value: str) -> str:
         or value.lower() in _RESERVED
         or bool(_NUMBER.fullmatch(value))
         or value.startswith("-")
+        or any(ord(character) < 0x20 or character in "\x85\u2028\u2029" for character in value)
         or any(character in value for character in ':,"[]{}\n\r\t\\')
     )
     return _quote(value) if needs_quotes else value

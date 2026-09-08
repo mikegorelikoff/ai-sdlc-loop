@@ -45,6 +45,7 @@ nav:
       - Prepare a release: guides/release.md
   - Reference:
       - reference/index.md
+      - Deterministic execution: reference/determinism.md
       - Skills: reference/skills.md
       - Commands: reference/commands.md
       - Contracts: reference/contracts.md
