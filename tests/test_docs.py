@@ -50,6 +50,7 @@ class DocumentedCommandTests(unittest.TestCase):
             "ai-sdlc-loop-code-review",
             "ai-sdlc-loop-security-testing",
             "ai-sdlc-loop-commit-prep",
+            "ai-sdlc-loop-context-cache",
             "ai-sdlc-loop-conventional-commit",
             "ai-sdlc-loop-flow",
             "ai-sdlc-loop-doctor",
@@ -122,6 +123,7 @@ class DocumentedCommandTests(unittest.TestCase):
             "ai-sdlc-loop-code-review",
             "ai-sdlc-loop-security-testing",
             "ai-sdlc-loop-commit-prep",
+            "ai-sdlc-loop-context-cache",
             "ai-sdlc-loop-conventional-commit",
             "ai-sdlc-loop-flow",
             "ai-sdlc-loop-doctor",
@@ -151,6 +153,7 @@ class DocumentedCommandTests(unittest.TestCase):
             "ai-sdlc-loop-code-review",
             "ai-sdlc-loop-security-testing",
             "ai-sdlc-loop-commit-prep",
+            "ai-sdlc-loop-context-cache",
             "ai-sdlc-loop-conventional-commit",
             "ai-sdlc-loop-flow",
             "ai-sdlc-loop-doctor",
@@ -181,7 +184,7 @@ class DocumentedCommandTests(unittest.TestCase):
 
     def test_tc030_all_distributed_skills_use_loop_namespace(self) -> None:
         skills = sorted(path for path in (ROOT / "skills").iterdir() if path.is_dir())
-        self.assertEqual(22, len(skills))
+        self.assertEqual(23, len(skills))
         for skill in skills:
             with self.subTest(skill=skill.name):
                 self.assertRegex(skill.name, r"^ai-sdlc-loop-[a-z0-9]+(?:-[a-z0-9]+)*$")
@@ -241,18 +244,18 @@ class DocumentedCommandTests(unittest.TestCase):
 
         reference = (ROOT / "docs/reference/index.md").read_text(encoding="utf-8")
         skill_names = sorted(path.name for path in (ROOT / "skills").iterdir() if path.is_dir())
-        self.assertEqual(22, len(skill_names))
+        self.assertEqual(23, len(skill_names))
         for name in skill_names:
             self.assertIn(f"`{name}`", reference)
 
         install_command = (
             "curl -fsSL https://raw.githubusercontent.com/mikegorelikoff/"
-            "ai-sdlc-loop/v0.3.0/install.sh | sh -s -- codex-project"
+            "ai-sdlc-loop/v0.7.0/install.sh | sh -s -- codex-project"
         )
         for relative in ("README.md", "docs/index.md", "docs/start-here.md"):
             text = (ROOT / relative).read_text(encoding="utf-8")
             self.assertEqual(1, text.count(install_command), relative)
-        self.assertIn('ref="${AI_SDLC_LOOP_REF:-v0.3.0}"', (ROOT / "install.sh").read_text(encoding="utf-8"))
+        self.assertIn('ref="${AI_SDLC_LOOP_REF:-v0.7.0}"', (ROOT / "install.sh").read_text(encoding="utf-8"))
 
     def test_tc036_generated_catalog_and_source_docs_are_current(self) -> None:
         for script, arguments in (

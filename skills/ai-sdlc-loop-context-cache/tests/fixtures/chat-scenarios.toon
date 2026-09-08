@@ -1,0 +1,152 @@
+scenarios[8]:
+  - baseline_response: "Result\nStatus: PASS\nDecision: Prepared strategy / freshness entities; listed evidence satisfies this skill check.\nEvidence: context-pack.toon:12\n\nprimary: Budget used: 820 / 2000 tokens; Evidence: context-pack.toon:12; Freshness: Current source hash; Query: payment retries; Strategy: direct_read.\nactions: Owner: Engineer; Next action: Validate context query with its owning workflow; Expected evidence: context-pack.toon:12.\n\nsecondary: Excluded source: Confirm excluded source for payment retry; Reason: Confirm reason for payment retry; Evidence: context-pack.toon:12.\n"
+    id: happy
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-context-cache for payment-retry delivery: happy"
+    required_facts[3]: "context-pack.toon:12",payment retries,820 / 2000 tokens
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        "context-pack.toon:12",Validate context query with its owning workflow,Engineer
+      primary[1]{"Budget used",Evidence,Freshness,Query,Strategy}:
+        820 / 2000 tokens,"context-pack.toon:12",Current source hash,payment retries,direct_read
+      schema: ai-sdlc-chat-result/v1
+      secondary[1]{Evidence,"Excluded source",Reason}:
+        "context-pack.toon:12",build/generated-client.py,Generated duplicate of tracked source
+      summary:
+        Decision: Prepared query result; evidence supports the reported result.
+        Evidence: "context-pack.toon:12"
+        Status: PASS
+  - baseline_response: "Result\nStatus: WARNING\nDecision: Partial strategy / freshness entities coverage; one dependency remains unverified.\nEvidence: context-pack.toon:12\n\nprimary: Budget used: 820 / 2000 tokens; Evidence: context-pack.toon:12; Freshness: Current source hash; Query: payment retries; Strategy: direct_read.\nprimary: Budget used: 820 / 2000 tokens [pending case]; Evidence: context-pack.toon:12; Freshness: Current source hash; Query: payment retries; Strategy: direct_read.\nactions: Owner: Engineer; Next action: Validate context query with its owning workflow; Expected evidence: context-pack.toon:12.\n"
+    id: partial
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-context-cache for payment-retry delivery: partial"
+    required_facts[3]: "context-pack.toon:12",payment retries,820 / 2000 tokens
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        "context-pack.toon:12",Validate context query with its owning workflow,Engineer
+      primary[2]{"Budget used",Evidence,Freshness,Query,Strategy}:
+        820 / 2000 tokens,"context-pack.toon:12",Current source hash,payment retries,direct_read
+        "820 / 2000 tokens [pending case]","context-pack.toon:12",Current source hash,payment retries,direct_read
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: "Partial result: second case is unverified; do not infer full coverage."
+        Evidence: "context-pack.toon:12"
+        Status: WARNING
+  - baseline_response: "Result\nStatus: WARNING\nDecision: Limited strategy / freshness entities review; source freshness must be confirmed.\nEvidence: context-pack.toon:12\n\nprimary: Budget used: 820 / 2000 tokens; Evidence: context-pack.toon:12; Freshness: Current source hash; Query: payment retries; Strategy: direct_read.\nactions: Owner: Engineer; Next action: Validate context query with its owning workflow; Expected evidence: context-pack.toon:12.\n"
+    id: warning
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-context-cache for payment-retry delivery: warning"
+    required_facts[3]: "context-pack.toon:12",payment retries,820 / 2000 tokens
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        "context-pack.toon:12",Validate context query with its owning workflow,Engineer
+      primary[1]{"Budget used",Evidence,Freshness,Query,Strategy}:
+        820 / 2000 tokens,"context-pack.toon:12",Current source hash,payment retries,direct_read
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: Result has limited source freshness; confirm it before downstream use.
+        Evidence: "context-pack.toon:12"
+        Status: WARNING
+  - baseline_response: "Result\nStatus: BLOCKED\nDecision: Context query is unavailable; dependent work has not run.\nEvidence: source-inventory.toon:missing\n\nfailures: Context query: Context query; Status: BLOCKED; Blocker: Required source is absent; Evidence: source-inventory.toon:missing; Required action: Provide context query.\nactions: Owner: Engineer; Next action: Provide context query; Expected evidence: Validated context query.\n"
+    id: blocked
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-context-cache for payment-retry delivery: blocked"
+    required_facts[2]: "source-inventory.toon:missing",Validated context query
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        Validated context query,Provide context query,Engineer
+      failures[1]{Blocker,"Context query",Evidence,"Required action",Status}:
+        Required source is absent,Context query,"source-inventory.toon:missing",Provide context query,BLOCKED
+      primary[0]:
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: Context query is unavailable; dependent work has not run.
+        Evidence: "source-inventory.toon:missing"
+        Status: BLOCKED
+  - baseline_response: "Result\nStatus: BLOCKED\nDecision: Context query is unavailable; dependent work has not run.\nEvidence: source-inventory.toon:missing\n\nfailures: Context query: Context query; Status: BLOCKED; Blocker: Required source is absent; Evidence: source-inventory.toon:missing; Required action: Provide context query.\nclarifications: Missing context query: Context query; Why required: Determines query; Known evidence: No supported assumption; Options: Supply source / narrow requested scope.\nactions: Owner: Engineer; Next action: Provide context query; Expected evidence: Validated context query.\n"
+    id: missing-input
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-context-cache for payment-retry delivery: missing-input"
+    required_facts[2]: "source-inventory.toon:missing",Validated context query
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        Validated context query,Provide context query,Engineer
+      clarifications[1]{"Known evidence","Missing context query",Options,"Why required"}:
+        No supported assumption,Context query,Supply source / narrow requested scope,Determines query
+      failures[1]{Blocker,"Context query",Evidence,"Required action",Status}:
+        Required source is absent,Context query,"source-inventory.toon:missing",Provide context query,BLOCKED
+      primary[0]:
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: Context query is unavailable; dependent work has not run.
+        Evidence: "source-inventory.toon:missing"
+        Status: BLOCKED
+  - baseline_response: "Result\nStatus: PASS\nDecision: 20 strategy / freshness entities rows; showing the first 8; full evidence linked.\nEvidence: context-pack.toon:12\n\nprimary: Budget used: 820 / 2000 tokens #1; Evidence: context-pack.toon:12; Freshness: Current source hash; Query: payment retries; Strategy: direct_read.\nprimary: Budget used: 820 / 2000 tokens #2; Evidence: context-pack.toon:12; Freshness: Current source hash; Query: payment retries; Strategy: direct_read.\nprimary: Budget used: 820 / 2000 tokens #3; Evidence: context-pack.toon:12; Freshness: Current source hash; Query: payment retries; Strategy: direct_read.\nprimary: Budget used: 820 / 2000 tokens #4; Evidence: context-pack.toon:12; Freshness: Current source hash; Query: payment retries; Strategy: direct_read.\nprimary: Budget used: 820 / 2000 tokens #5; Evidence: context-pack.toon:12; Freshness: Current source hash; Query: payment retries; Strategy: direct_read.\nprimary: Budget used: 820 / 2000 tokens #6; Evidence: context-pack.toon:12; Freshness: Current source hash; Query: payment retries; Strategy: direct_read.\nprimary: Budget used: 820 / 2000 tokens #7; Evidence: context-pack.toon:12; Freshness: Current source hash; Query: payment retries; Strategy: direct_read.\nprimary: Budget used: 820 / 2000 tokens #8; Evidence: context-pack.toon:12; Freshness: Current source hash; Query: payment retries; Strategy: direct_read.\nprimary: Budget used: 820 / 2000 tokens #9; Evidence: context-pack.toon:12; Freshness: Current source hash; Query: payment retries; Strategy: direct_read.\nprimary: Budget used: 820 / 2000 tokens #10; Evidence: context-pack.toon:12; Freshness: Current source hash; Query: payment retries; Strategy: direct_read.\nprimary: Budget used: 820 / 2000 tokens #11; Evidence: context-pack.toon:12; Freshness: Current source hash; Query: payment retries; Strategy: direct_read.\nprimary: Budget used: 820 / 2000 tokens #12; Evidence: context-pack.toon:12; Freshness: Current source hash; Query: payment retries; Strategy: direct_read.\nprimary: Budget used: 820 / 2000 tokens #13; Evidence: context-pack.toon:12; Freshness: Current source hash; Query: payment retries; Strategy: direct_read.\nprimary: Budget used: 820 / 2000 tokens #14; Evidence: context-pack.toon:12; Freshness: Current source hash; Query: payment retries; Strategy: direct_read.\nprimary: Budget used: 820 / 2000 tokens #15; Evidence: context-pack.toon:12; Freshness: Current source hash; Query: payment retries; Strategy: direct_read.\nprimary: Budget used: 820 / 2000 tokens #16; Evidence: context-pack.toon:12; Freshness: Current source hash; Query: payment retries; Strategy: direct_read.\nprimary: Budget used: 820 / 2000 tokens #17; Evidence: context-pack.toon:12; Freshness: Current source hash; Query: payment retries; Strategy: direct_read.\nprimary: Budget used: 820 / 2000 tokens #18; Evidence: context-pack.toon:12; Freshness: Current source hash; Query: payment retries; Strategy: direct_read.\nprimary: Budget used: 820 / 2000 tokens #19; Evidence: context-pack.toon:12; Freshness: Current source hash; Query: payment retries; Strategy: direct_read.\nprimary: Budget used: 820 / 2000 tokens #20; Evidence: context-pack.toon:12; Freshness: Current source hash; Query: payment retries; Strategy: direct_read.\nactions: Owner: Engineer; Next action: Validate context query with its owning workflow; Expected evidence: context-pack.toon:12.\n"
+    id: large
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-context-cache for payment-retry delivery: large"
+    required_facts[3]: "context-pack.toon:12",payment retries,820 / 2000 tokens #1
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        "context-pack.toon:12",Validate context query with its owning workflow,Engineer
+      full_artifact: full-result.toon
+      primary[20]{"Budget used",Evidence,Freshness,Query,Strategy}:
+        820 / 2000 tokens #1,"context-pack.toon:12",Current source hash,payment retries,direct_read
+        820 / 2000 tokens #2,"context-pack.toon:12",Current source hash,payment retries,direct_read
+        820 / 2000 tokens #3,"context-pack.toon:12",Current source hash,payment retries,direct_read
+        820 / 2000 tokens #4,"context-pack.toon:12",Current source hash,payment retries,direct_read
+        820 / 2000 tokens #5,"context-pack.toon:12",Current source hash,payment retries,direct_read
+        820 / 2000 tokens #6,"context-pack.toon:12",Current source hash,payment retries,direct_read
+        820 / 2000 tokens #7,"context-pack.toon:12",Current source hash,payment retries,direct_read
+        820 / 2000 tokens #8,"context-pack.toon:12",Current source hash,payment retries,direct_read
+        820 / 2000 tokens #9,"context-pack.toon:12",Current source hash,payment retries,direct_read
+        820 / 2000 tokens #10,"context-pack.toon:12",Current source hash,payment retries,direct_read
+        820 / 2000 tokens #11,"context-pack.toon:12",Current source hash,payment retries,direct_read
+        820 / 2000 tokens #12,"context-pack.toon:12",Current source hash,payment retries,direct_read
+        820 / 2000 tokens #13,"context-pack.toon:12",Current source hash,payment retries,direct_read
+        820 / 2000 tokens #14,"context-pack.toon:12",Current source hash,payment retries,direct_read
+        820 / 2000 tokens #15,"context-pack.toon:12",Current source hash,payment retries,direct_read
+        820 / 2000 tokens #16,"context-pack.toon:12",Current source hash,payment retries,direct_read
+        820 / 2000 tokens #17,"context-pack.toon:12",Current source hash,payment retries,direct_read
+        820 / 2000 tokens #18,"context-pack.toon:12",Current source hash,payment retries,direct_read
+        820 / 2000 tokens #19,"context-pack.toon:12",Current source hash,payment retries,direct_read
+        820 / 2000 tokens #20,"context-pack.toon:12",Current source hash,payment retries,direct_read
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: 20 query records; 8 shown; inspect the linked full artifact.
+        Evidence: "context-pack.toon:12"
+        Status: PASS
+  - baseline_response: "Result\nStatus: PASS\nDecision: One query result; scope and evidence are explicit.\nEvidence: context-pack.toon:12\n\nprimary: Budget used: 820 / 2000 tokens; Evidence: context-pack.toon:12; Freshness: Current source hash; Query: payment retries; Strategy: direct_read.\nactions: Owner: Engineer; Next action: Validate context query with its owning workflow; Expected evidence: context-pack.toon:12.\n"
+    id: small
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-context-cache for payment-retry delivery: small"
+    required_facts[3]: "context-pack.toon:12",payment retries,820 / 2000 tokens
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        "context-pack.toon:12",Validate context query with its owning workflow,Engineer
+      primary[1]{"Budget used",Evidence,Freshness,Query,Strategy}:
+        820 / 2000 tokens,"context-pack.toon:12",Current source hash,payment retries,direct_read
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: One query result; scope and evidence are explicit.
+        Evidence: "context-pack.toon:12"
+        Status: PASS
+  - baseline_response: "Result\nStatus: PASS\nDecision: Prepared strategy / freshness entities; listed evidence satisfies this skill check.\nEvidence: context-pack.toon:12\n\nprimary: Budget used: 820 / 2000 tokens; Evidence: context-pack.toon:12; Freshness: Current source hash; Query: payment retries | перенос\nстроки; Strategy: direct_read.\nactions: Owner: Engineer; Next action: Validate context query with its owning workflow; Expected evidence: context-pack.toon:12.\n\nschema: fixture/v1\nstatus: pending\nsource: \"literal | value\"\n"
+    id: edge
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-context-cache for payment-retry delivery: edge"
+    required_facts[3]: "context-pack.toon:12","payment retries | перенос\nстроки",820 / 2000 tokens
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        "context-pack.toon:12",Validate context query with its owning workflow,Engineer
+      native[1]{content,language}:
+        "schema: fixture/v1\nstatus: pending\nsource: \"literal | value\"",toon
+      primary[1]{"Budget used",Evidence,Freshness,Query,Strategy}:
+        820 / 2000 tokens,"context-pack.toon:12",Current source hash,"payment retries | перенос\nстроки",direct_read
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: Prepared strategy / freshness entities; listed evidence satisfies this skill check.
+        Evidence: "context-pack.toon:12"
+        Status: PASS
+schema: ai-sdlc-chat-scenarios/v1
+skill: ai-sdlc-loop-context-cache

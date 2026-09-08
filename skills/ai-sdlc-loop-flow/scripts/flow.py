@@ -18,6 +18,7 @@ SCHEMA = "ai-sdlc-loop-flow/v1"
 APPLY_SCHEMA = "ai-sdlc-loop-flow-apply/v1"
 
 ROUTES = (
+    (("context-cache", "context-graph", "context graph", "repository graph", "code graph", "graph explorer"), "context", "ai-sdlc-loop-context-cache"),
     (("requirements discovery", "discover requirements", "stakeholder elicitation"), "discovery", "ai-sdlc-loop-requirements-discovery"),
     (("requirements review", "review requirements", "requirement review"), "requirements-review", "ai-sdlc-loop-requirements-review"),
     (("engineering quality gate", "quality gate"), "quality-gate", "ai-sdlc-loop-engineering-quality-gate"),

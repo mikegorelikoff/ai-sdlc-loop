@@ -2,7 +2,7 @@
 
 **Ship a bounded change through Specify → Implement → Engineering Quality Gate → Verify with explicit approval before code mutation and commit.**
 
-AI SDLC Loop is the focused delivery member of the AI SDLC product family. It installs 20 working `ai-sdlc-loop-{slug}` skills and one shared runtime while keeping specifications, approvals, repository-grounded quality reports, QA plans, evidence, and release decisions in deterministic local TOON artifacts.
+AI SDLC Loop is the focused delivery member of the AI SDLC product family. It installs 22 working `ai-sdlc-loop-{slug}` skills and one shared runtime while keeping specifications, approvals, repository-grounded quality reports, QA plans, evidence, and release decisions in deterministic local TOON artifacts.
 
 [Start with a project-scoped install](start-here.md){ .md-button .md-button--primary }
 [Read the workflow model](how-it-works.md){ .md-button }
@@ -21,7 +21,7 @@ AI SDLC Loop is the focused delivery member of the AI SDLC product family. It in
 Install for a Codex project:
 
 ```sh
-curl -fsSL https://raw.githubusercontent.com/mikegorelikoff/ai-sdlc-loop/v0.3.0/install.sh | sh -s -- codex-project
+curl -fsSL https://raw.githubusercontent.com/mikegorelikoff/ai-sdlc-loop/v0.7.0/install.sh | sh -s -- codex-project
 ```
 
 Verify in a separate step:
@@ -31,8 +31,8 @@ python3 .ai-sdlc-loop/install/install.py verify codex-project
 ```
 
 The installer preserves unrelated skills and writes a TOON inventory below `.ai-sdlc-loop/install/`.
-Immutable `v0.1.1` retains its 17-member inventory; the v0.3.0
-source uses the 21-member inventory documented on this site.
+Immutable `v0.1.1` retains its 17-member inventory; the v0.7.0
+source uses the 23-member inventory documented on this site.
 
 ## AI SDLC product family
 

@@ -644,11 +644,11 @@ def _context_cache_root(root: Path) -> Path | None:
 
     packaged = Path(__file__).resolve().parents[2]
     candidates = [
-        root / ".agents/skills/ai-sdlc-context-cache",
-        root / ".claude/skills/ai-sdlc-context-cache",
+        root / ".agents/skills/ai-sdlc-loop-context-cache",
+        root / ".claude/skills/ai-sdlc-loop-context-cache",
     ]
     if packaged.resolve() != (root / "skills").resolve():
-        candidates.append(packaged / "ai-sdlc-context-cache")
+        candidates.append(packaged / "ai-sdlc-loop-context-cache")
     for candidate in candidates:
         script = candidate / "scripts/context_cache.py"
         policy = candidate / "references/runtime-policy.toon"
@@ -671,7 +671,7 @@ def _cache_settings(
 ) -> dict[str, object]:
     paths = [cache_root / "references/runtime-policy.toon"]
     root_resolved = root.resolve()
-    override = root_resolved / ".ai-sdlc-loop-orchestrate/context-cache-policy.toon"
+    override = root_resolved / ".ai-sdlc-loop/context-cache-policy.toon"
     if override.exists():
         cursor = root_resolved
         try:

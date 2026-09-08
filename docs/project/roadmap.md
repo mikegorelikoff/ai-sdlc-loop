@@ -11,3 +11,5 @@
 - Stabilize public schemas only after real project feedback.
 
 Loop intentionally does not absorb the full Harness discovery, refinement, role, adoption, or hosted orchestration surface.
+
+- `v0.7.0`: native context-cache, twelve-language AST graphs, offline explorer, locked parser CI, and a 23-skill installation.

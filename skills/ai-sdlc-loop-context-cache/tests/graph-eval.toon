@@ -1,0 +1,28 @@
+catalog_fingerprint: 7deae2b24c638319c9e617897f133865cca94ccee4a040b68fc310ff8590c22d
+failed: 0
+harness_version: 4.1.0
+items[1]:
+  - failed: 0
+    graph_fingerprint: 370708e2cf0a4f0bfa1da2c06d9a6a99cbe7a495ba25aa3168bf56233912409e
+    manifest_schema: ai-sdlc-skill-steps/v2
+    nodes: 5
+    passed: 9
+    scenarios[9]{evidence,scenario,status}:
+      selection=dec3e4d27bd9876e10c04165722d0f041967d778f69da2c439a185214c547377;plan=e2728faaf175f5ecddcd3627b82637e543b14f119ee510aaa2b83c0c0be74955;ready=1,happy,passed
+      ready=preflight;waiting=2,blocked,passed
+      STEP_UNKNOWN_PHASE rejected before graph execution,invalid,passed
+      waves=preflight>index>retrieve;completed=3,resume,passed
+      strategy=direct_read;context=4aab96e852aa2f2e081a07b896636fa246317404f50e3f30179a110523b39a17,context,passed
+      completion without prerequisite evidence rejected,inconsistent-completion,passed
+      unsupported role rejected without inventing a route,unsupported-role,passed
+      missing optional context recorded; mandatory step remains sufficient,optional-input,passed
+      terminal closure has no pending work; feature approval is not inferred,terminal,passed
+    skill: ai-sdlc-loop-context-cache
+mode: deterministic
+passed: 9
+receipt_fingerprint: 77b5b4f87ecef6a911eb517ff14d7353c6228fa1b3ff16935fae0604b2b00fbd
+result: passed
+scenario_kinds[9]: happy,blocked,invalid,resume,context,inconsistent-completion,unsupported-role,optional-input,terminal
+scenarios: 9
+schema: ai-sdlc-eval-receipt/v1
+skills: 1

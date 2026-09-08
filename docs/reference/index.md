@@ -14,7 +14,7 @@ Install locally with `python3 install.py PROFILE`. Verify with `python3 install.
 
 ## Current source inventory
 
-The v0.3.0 source installs the 21 entries below. Immutable
+The current source installs the 23 entries below. Immutable
 `v0.1.1` retains its previous 17-member inventory.
 
 Guided entry and diagnostics:
@@ -81,3 +81,5 @@ and schemas; these helper actions grant no source-mutation authority.
 Loop-owned specifications, state, approvals, engineering quality context and reports, evidence, install records, review artifacts, release decisions, and promotion output use canonical TOON. JSON-named durable output is rejected. The engineering report uses `ai-sdlc-engineering-quality-gate/v1`; Verify accepts only a current `PASS` or `PASS_WITH_FINDINGS` report whose `final_decision.ready_for_next_stage` is true.
 
 - `ai-sdlc-loop-hierarchical-decomposition`: evidence-backed hierarchy and verified branch packets; see [decomposition](decomposition.md).
+
+- `ai-sdlc-loop-context-cache`: repository AST graph, bounded retrieval and offline explorer; see [context graph](context-graph.md).

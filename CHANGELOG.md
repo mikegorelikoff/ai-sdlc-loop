@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+## v0.7.0 - 2026-09-08
+
+- Port Backbone’s deterministic context-cache, twelve-language AST graph and offline HTML explorer into a native Loop skill; preserve source authority and parser locks.
+
 ## v0.6.0 - 2026-09-08
 
 - Add native hierarchical decomposition with source-bound contracts, five-step execution, deterministic gates, independent review boundaries and regression fixtures.

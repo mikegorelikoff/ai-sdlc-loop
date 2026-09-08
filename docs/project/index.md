@@ -2,8 +2,8 @@
 
 ## Status
 
-AI SDLC Loop is experimental. Release `v0.3.0` is the current source candidate; it adds
-the mandatory engineering quality gate and twenty-one-member install inventory.
+AI SDLC Loop is experimental. Release `v0.7.0` adds native repository context graphs and hierarchical decomposition alongside
+the mandatory engineering quality gate and twenty-three-member install inventory.
 Immutable `v0.1.1` retains its prior inventory. Schema changes require a new
 version and migration notes.
 

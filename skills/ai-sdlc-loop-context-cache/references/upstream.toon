@@ -1,0 +1,10 @@
+adaptations[3]: Loop skill namespace,Loop shared-runtime imports,Loop cache directory
+product: AI SDLC Backbone
+schema: ai-sdlc-loop-context-port/v1
+source_commit: 60fbf519e140e76044f5e3cc29cf8568a2b6c118
+sources[4]{path,sha256}:
+  scripts/context_cache.py,333f7c47ad7e32e912ad4a24c0e6ed778aa47d059fc55fd0a7248e8f0594660c
+  scripts/code_graph.py,092f3e7cdd771bc5691463d17f2d65d836ec04fe1494c18dbc3a2a5aa0ceb623
+  scripts/graph_viewer.py,e06f8effad669c528b47d8220f18604ef6362f32b22fe0e853b0d876a0727dda
+  scripts/install_graph_runtime.py,428586b17c7d8905fc201dd7a142dd940abeefcc86bcd2f91aa6812bd6ebfce6
+version: 5.4.0

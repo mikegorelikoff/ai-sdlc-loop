@@ -72,3 +72,11 @@ Add a bounded utility before owning backlog/SDD or Specify stages. Keep canonica
 ## 2026-09-08 — Release 0.6.0
 
 Publish additive hierarchical decomposition with native steps, source-bound TOON, deterministic validation and verified downstream packets. Existing lifecycle authority and API ranges remain unchanged. User authorized release to main; rollback uses the previous stable tag.
+
+## 2026-09-08 — Native context graph skill
+
+Reuse Backbone context-cache under the Loop namespace, storage root and installer inventory. Preserve the graph engine, TOON contracts and exact parser locks. Compact stage selection remains read-only; cache output does not authorize lifecycle transitions.
+
+## 2026-09-08 — Release 0.7.0
+
+Publish the native context-graph skill after user authorization. Pin the bootstrap installer and first-run commands to v0.7.0 so they install the current 23-skill package. Preserve lifecycle schemas, explicit parser installation and source authority. Rollback uses v0.6.0.

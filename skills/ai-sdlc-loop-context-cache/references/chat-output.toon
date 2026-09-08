@@ -1,0 +1,17 @@
+clarification[4]: Missing context query,Why required,Known evidence,Options
+example:
+  "Budget used": 820 / 2000 tokens
+  Evidence: "context-pack.toon:12"
+  Freshness: Current source hash
+  Query: payment retries
+  Strategy: direct_read
+failure[5]: Context query,Status,Blocker,Evidence,Required action
+hide: "Secrets, raw logs, complete journals and unneeded internal tool steps. Keep full detail in the owning native artifact."
+native_exception: "Keep machine artifacts, code, commands and diffs native; presentation does not replace validation."
+primary[5]: Query,Strategy,Freshness,Budget used,Evidence
+priority: Show the user decision before detail; preserve source order and explicit authority.
+required_input: Context query
+rows: individual query records
+schema: ai-sdlc-chat-contract/v1
+secondary[3]: Excluded source,Reason,Evidence
+skill: ai-sdlc-loop-context-cache

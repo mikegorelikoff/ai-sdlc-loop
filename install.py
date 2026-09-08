@@ -33,6 +33,7 @@ SKILLS = (
     "ai-sdlc-loop-code-review",
     "ai-sdlc-loop-security-testing",
     "ai-sdlc-loop-commit-prep",
+    "ai-sdlc-loop-context-cache",
     "ai-sdlc-loop-conventional-commit",
     "ai-sdlc-loop-release-readiness",
     "ai-sdlc-loop-shared-runtime",
