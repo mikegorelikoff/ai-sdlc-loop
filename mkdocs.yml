@@ -38,6 +38,7 @@ nav:
   - Guides:
       - guides/index.md
       - Install Loop: guides/install.md
+      - Clarify raw requirements: guides/requirements-discovery.md
       - Deliver a first change: guides/first-change.md
       - Use guided Flow: guides/flow.md
       - Diagnose an installation: guides/doctor.md

@@ -1,70 +1,36 @@
-# Execute — ai-sdlc-loop-commit-prep: Commit Preparation
-
-> Selector: execute
+# Prepare the Loop commit handoff
 
 ## Entry
 
-Enter only after the prepare step passes and this skill is the selected owner for the current lifecycle action.
+The user requested commit preparation and the active Loop feature is known.
+A commit request permits preparation; the Commit stage still validates its
+separate approval receipt for the verified fingerprint.
 
 ## Procedure
 
-## References
-
-- Use `scripts/check_commit_ready.py` when deterministic validation, planning, or formatting is required by the workflow; pass the same `--quick-flow` or `--full-flow` flag that was supplied to the skill when supported.
-
-## Script Usage
-
-- Run commit readiness before staging final commit content or writing the final commit summary.
-- Quick flow: `python3 skills/ai-sdlc-loop-commit-prep/scripts/check_commit_ready.py --quick-flow --spec specs/<feature-name> --allow-unstaged --no-require-staged`
-- Full flow: `python3 skills/ai-sdlc-loop-commit-prep/scripts/check_commit_ready.py --full-flow --spec specs/<feature-name>`
-- For an explicitly task-scoped commit in a larger active SDD plan, add
-  `--task TNNN`. The selected task must be present and complete; later pending
-  tasks remain allowed. Without `--task`, every spec task must be complete.
-- Every medium or large traced SDD commit message must include the completed
-  task identity as `Task: TNNN` (or a comma-separated list). `--task` narrows
-  the readiness check; it does not replace the commit-message trailer.
-- Use `--allow-unstaged` only when intentionally checking readiness before final staging.
-- Use `--no-require-staged` only for preflight checks; omit it immediately before commit creation.
-
-## Purpose
-
-Prepare and create a safe AI SDLC commit by reviewing the branch and working tree, staging only related files, validating SDD evidence, using a valid Conventional Commit message, and reporting post-commit traceability.
-
-## Inputs
-
-- Collect the user’s explicit commit request or workflow state showing commit prep is justified.
-- Collect the active spec folder for medium or large work.
-- Collect validation commands and outcomes that are current for the active diff.
-- Collect the current branch and dirty tree from `git status --short --branch`.
-
-## Steps
-
-1. Run `git status --short --branch`.
-2. Run `git diff --stat` and `git diff --cached --stat` when staged changes already exist.
-3. Inspect relevant diffs for scope, accidental edits, generated files, secrets, and unrelated user changes.
-4. Confirm medium or large work has current `requirements.md`, `design.md`, `test-cases.md`, `qa.md`, `tasks.md`, `_ai_sdlc/plan.toon`, and `plan.md`.
-5. For medium or large work, confirm the current branch includes the active spec slug after a typed Git-flow prefix, for example `feature/NNN-short-feature-name`; otherwise report the branch/spec mismatch before committing.
-6. Confirm completed tasks in `tasks.md` match the diff.
-7. Run or confirm current validation before staging.
-8. Ensure the active spec passes structural validation plus clarify,
-   checklist, and analyze before final commit.
-9. Run the readiness checker before final commit:
-
-   ```bash
-   python3 skills/ai-sdlc-loop-commit-prep/scripts/check_commit_ready.py --spec specs/NNN-feature-name --no-require-staged
-   ```
-
-   When the user explicitly requested one commit per SDD task, add
-   `--task TNNN` and verify that the staged diff belongs only to that task.
-
-10. Stage only files belonging to the current change.
-11. Leave unrelated dirty files unstaged and report them.
-12. Use `$ai-sdlc-loop-conventional-commit` to draft and validate the message.
-    Include `Spec:`, `Task:`, and exact `Validation:` evidence for medium or
-    large SDD work.
-13. Commit with a non-interactive command, for example `git commit -F /tmp/message.txt`.
-14. Run `git status --short --branch` after committing.
+1. Read `git status --short --branch`, `git diff --stat` and
+   `git diff --cached --stat`. Identify related and unrelated paths without
+   staging or reverting them.
+2. Run the sibling shared runtime's `loop.py evidence-check --feature <feature>`.
+   This checks specification identity, executed passing commands, exact current
+   changed files and current engineering quality evidence. A missing, failed,
+   invalid or stale receipt blocks the commit handoff; return to Verify or the
+   owning repair stage. Do not substitute a planned command list.
+3. Run `scripts/check_commit_ready.py --allow-unstaged --no-require-staged`
+   for Git preflight. These flags are for preparation before staging; they do
+   not authorize committing unrelated paths.
+4. If the task explicitly includes a Harness SDD package, pass its actual path
+   with `--spec`; use `--task TNNN` only for an explicitly scoped completed task.
+   Missing optional SDD context must not trigger creation of a second lifecycle.
+   An unavailable SDD validator is an uncovered gate, never a passing check.
+5. Use `ai-sdlc-loop-conventional-commit` to draft and validate the message from
+   the actual diff and evidence. Do not invent task IDs or validation outcomes.
+6. Return the exact proposed paths, excluded dirty work, message and verified
+   fingerprint to `ai-sdlc-loop-commit`. That owner performs approval validation,
+   staging, commit execution and post-commit checks.
 
 ## Exit
 
-Stop after the bounded owning-skill action. Preserve evidence, decisions, and traceability needed by validation; do not silently start another skill.
+Complete preparation when current evidence and the proposed commit contents
+are explicit. Do not run `git commit`, amend, push, tag or publish here. Return
+one blocked handoff when a required gate fails, with the exact recovery action.

@@ -17,8 +17,8 @@ description: AI SDLC commit preparation workflow. Use when an AI assistant is as
 - Supporting audience: QA, BA, PM
 - Audience tags: Dev, QA, BA, PM
 - SDLC stage: Commit readiness / traceability
-- Purpose: Prepare and create a safe AI SDLC commit by reviewing the branch and working tree, staging only related files, validating SDD evidence, using a valid Conventional Commit message, and reporting post-commit traceability.
-- Output: Safe staged set, validated commit readiness, conventional commit message, and post-commit traceability
+- Purpose: Prepare a current, scoped Loop commit proposal and hand it to the separately authorized Commit owner.
+- Output: Proposed path set, current Loop evidence, validated message and commit-owner handoff
 
 ## Step Selector
 
@@ -45,4 +45,4 @@ step documents are canonical; regenerate this projection after graph changes.
   including analysis and validation nodes, before advancing the graph.
 - In source use `skills/<skill>/...`; use `.agents/skills/<skill>/...` for
   Codex, `.claude/skills/<skill>/...` for Claude Code, or the project skills
-  root recorded in `.ai-sdlc-loop-orchestrate/harness-install.toon` for `agent-project`.
+  root recorded in `.ai-sdlc-loop/install/<profile>.toon` for `agent-project`.

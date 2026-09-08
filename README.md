@@ -6,11 +6,11 @@
 [![Docs](https://github.com/mikegorelikoff/ai-sdlc-loop/actions/workflows/docs.yml/badge.svg)](https://mikegorelikoff.github.io/ai-sdlc-loop/)
 [![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
 
-AI SDLC Loop is the focused delivery member of the AI SDLC product family. It installs a guided Flow, an installation Doctor, a fixed stage workflow with a mandatory engineering quality gate, eleven proven delivery-control skills, and one shared runtime while keeping deterministic TOON specs, reviews, approvals, repository-grounded quality reports, QA plans, evidence, release decisions, and promotion artifacts in the local project. It is compatible with Codex project skills, Claude Code project skills, and agents that support a project-relative skills root.
+AI SDLC Loop is the focused delivery member of the AI SDLC product family. It installs a guided Flow, an installation Doctor, a fixed stage workflow with a mandatory engineering quality gate, twelve proven delivery-control skills, and one shared runtime while keeping deterministic TOON specs, reviews, approvals, repository-grounded quality reports, QA plans, evidence, release decisions, and promotion artifacts in the local project. It is compatible with Codex project skills, Claude Code project skills, and agents that support a project-relative skills root.
 
 ## Why use it?
 
-- Guided Flow, read-only Doctor, six stage entrypoints, eleven delivery-control skills, and one shared standard-library runtime.
+- Guided Flow, read-only Doctor, six stage entrypoints, twelve delivery-control skills, and one shared standard-library runtime.
 - Explicit Implement and commit approvals tied to current fingerprints.
 - Mandatory repository-grounded engineering review with deterministic context,
   safe localized fixes, verification reruns, and a current readiness report.
@@ -31,11 +31,11 @@ Then verify separately:
 python3 .ai-sdlc-loop/install/install.py verify codex-project
 ```
 
-For a local checkout, use `python3 install.py codex-project`. Claude Code uses `claude-code-project`; another compatible agent uses `agent-project --skills-root .agent/skills`. Immutable `v0.1.1` retains its 17-member inventory; the current unreleased source installs the 20-member package described below.
+For a local checkout, use `python3 install.py codex-project`. Claude Code uses `claude-code-project`; another compatible agent uses `agent-project --skills-root .agent/skills`. Immutable `v0.1.1` retains its 17-member inventory; the current unreleased source installs the 21-member package described below.
 
 ## Expected result
 
-The installer contributes 19 working `ai-sdlc-loop-{slug}` skills and `ai-sdlc-loop-shared-runtime`, for 20 installed directories. Each working skill has a canonical `steps/manifest.toon` and bounded step documents. The router and bounded state stages use the compact Loop v1 graph; the engineering quality gate and delivery-control skills use the strict Harness-compatible v2 graph, with Loop-local dependency adaptations rather than byte-for-byte copies. Existing unrelated skills remain untouched. The TOON install record and reusable verifier are written below `.ai-sdlc-loop/install/`. See the generated [skill catalog](https://mikegorelikoff.github.io/ai-sdlc-loop/reference/skills/) for the exact inventory.
+The installer contributes 20 working `ai-sdlc-loop-{slug}` skills and `ai-sdlc-loop-shared-runtime`, for 21 installed directories. Each working skill has a canonical `steps/manifest.toon` and bounded step documents. The router and bounded state stages use the compact Loop v1 graph; the engineering quality gate and delivery-control skills use the strict Harness-compatible v2 graph, with Loop-local dependency adaptations rather than byte-for-byte copies. Existing unrelated skills remain untouched. The TOON install record and reusable verifier are written below `.ai-sdlc-loop/install/`. See the generated [skill catalog](https://mikegorelikoff.github.io/ai-sdlc-loop/reference/skills/) for the exact inventory.
 
 ## Workflow
 

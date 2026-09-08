@@ -47,7 +47,7 @@ def read_manifest(skill_root: Path) -> dict[str, Any]:
         raise ValueError(f"{path}: cannot decode manifest: {exc}") from exc
     if not isinstance(value, dict):
         raise ValueError(f"{path}: manifest root must be a mapping")
-    if value.get("schema") != steps_runtime.SCHEMA:
+    if value.get("schema") not in {steps_runtime.SCHEMA, "ai-sdlc-loop-skill-steps/v1"}:
         raise ValueError(
             f"{skill_root.name}: expected {steps_runtime.SCHEMA}; "
             "regenerate the skill graph as TOON v2"
@@ -100,7 +100,7 @@ def generate_router(skill_root: Path, manifest: dict[str, Any]) -> str:
             "  including analysis and validation nodes, before advancing the graph.",
             "- In source use `skills/<skill>/...`; use `.agents/skills/<skill>/...` for",
             "  Codex, `.claude/skills/<skill>/...` for Claude Code, or the project skills",
-            "  root recorded in `.ai-sdlc-loop-orchestrate/harness-install.toon` for `agent-project`.",
+            "  root recorded in `.ai-sdlc-loop/install/<profile>.toon` for `agent-project`.",
             "",
         ]
     )
@@ -165,6 +165,13 @@ def main() -> int:
         roots = skill_roots(skills_root, set(args.skill))
         for skill_root in roots:
             manifest = read_manifest(skill_root)
+            if manifest["schema"] == "ai-sdlc-loop-skill-steps/v1":
+                from loop_steps import select_steps
+                for phase in manifest["entrypoints"]:
+                    select_steps(skills_root, skill_root.name, phase)
+                report.append({"skill": skill_root.name, "schema": manifest["schema"],
+                               "nodes": len(manifest["steps"]), "router": "compact-native"})
+                continue
             expected = generate_router(skill_root, manifest)
             router_path = skill_root / "SKILL.md"
             actual = router_path.read_text(encoding="utf-8")

@@ -1,5 +1,17 @@
 # Changelog
 
+## Execution reinforcement — unreleased
+
+- Added read-only deterministic selection of compact Loop graphs with cycle,
+  dependency, missing-source and inconsistent-completion rejection.
+- Validate all 21 skill graphs; include shared execution references in semantic
+  context and graph fingerprints. Consolidate input/recovery rules and remove
+  mandatory Harness lifecycle assumptions from Loop preflight.
+- Reject source drift during verification and stale or invalid evidence before
+  commit approval. Expose read-only `evidence-check`; only Commit creates commits.
+- Match routing keywords at word boundaries and prioritize requirements
+  discovery, requirements review and engineering quality-gate requests.
+
 ## 0.1.1 - 2026-08-17
 
 - Replace the premature monolithic skill with five stage-oriented skills and one shared runtime.
@@ -17,6 +29,13 @@ All notable changes follow Keep a Changelog. This project uses semantic versioni
 
 ### Added
 
+- Add `ai-sdlc-loop-requirements-discovery` for raw feature/task analysis,
+  business alternatives grounded in precedents, and actionable stakeholder
+  questions. The optional assistant expands the current source inventory to
+  21 directories without changing the required Loop stage graph.
+- Back discovery with deterministic source preparation, draft scaffolding,
+  typed validation, canonical TOON finalization and freshness checks. Include
+  malformed-input, repeatability, safe-write and installed-helper coverage.
 - Add `ai-sdlc-loop-flow` with read-only Explore and fingerprinted, non-authorizing Apply.
 - Add `ai-sdlc-loop-doctor` with read-only installation diagnostics and upgrade planning.
 - Expand the product documentation into source-backed Start here, How it works, Guides, Reference, and Project paths with strict validation.

@@ -17,6 +17,9 @@ Use Loop when the request needs a safe coding cycle but does not need the comple
 
 ## Procedure
 
+If the request is still raw, first [clarify the requirements](requirements-discovery.md)
+to compare business options and prepare stakeholder questions.
+
 1. Ask for `ai-sdlc-loop-orchestrate` and describe the bounded outcome.
 2. Review the normalized request, allowed paths, trace IDs, and specification fingerprint.
 3. Approve or reject implementation explicitly.

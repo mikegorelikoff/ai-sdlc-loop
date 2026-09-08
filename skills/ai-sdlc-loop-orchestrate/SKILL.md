@@ -24,3 +24,11 @@ Use this skill when a user asks to change code through AI SDLC Loop or requests 
 - Do not bypass, synthesize, or reuse a stale engineering quality report.
 - Stop when changed paths escape the specification.
 - Keep secrets out of requests, approval reviewer fields, commit messages, and artifacts.
+
+## Deterministic step selection
+
+Use the sibling shared runtime `scripts/loop.py steps --skill ai-sdlc-loop-orchestrate
+--phase <entrypoint>` with each completed ID as `--completed-step <id>`.
+Read only `selected_paths` and `required_references`. The selector validates
+dependencies and returns `authorizes_execution: false`; owning stage receipts
+still gate actions. Use only entrypoints declared in `steps/manifest.toon`.

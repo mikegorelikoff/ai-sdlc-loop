@@ -45,4 +45,4 @@ step documents are canonical; regenerate this projection after graph changes.
   including analysis and validation nodes, before advancing the graph.
 - In source use `skills/<skill>/...`; use `.agents/skills/<skill>/...` for
   Codex, `.claude/skills/<skill>/...` for Claude Code, or the project skills
-  root recorded in `.ai-sdlc-loop-orchestrate/harness-install.toon` for `agent-project`.
+  root recorded in `.ai-sdlc-loop/install/<profile>.toon` for `agent-project`.

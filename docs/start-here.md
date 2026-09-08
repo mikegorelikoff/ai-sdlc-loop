@@ -32,7 +32,7 @@ Ask the agent to use `ai-sdlc-loop-flow` for a bounded repository change. Provid
 
 ## Expected result
 
-A current source-checkout installation contains 20 `ai-sdlc-loop-*`
+A current source-checkout installation contains 21 `ai-sdlc-loop-*`
 directories; immutable `v0.1.1` retains its prior 17-member inventory. Local
 workflow state appears below `.ai-sdlc-loop/<feature>/` and durable machine
 artifacts use TOON. The quality gate writes its current report to

@@ -22,6 +22,7 @@ LOOP_SKILLS = [
     "ai-sdlc-loop-orchestrate",
     "ai-sdlc-loop-qa",
     "ai-sdlc-loop-release-readiness",
+    "ai-sdlc-loop-requirements-discovery",
     "ai-sdlc-loop-requirements-review",
     "ai-sdlc-loop-security-testing",
     "ai-sdlc-loop-shared-runtime",
@@ -73,6 +74,33 @@ class InstallProfileTests(unittest.TestCase):
                 )
                 self.assertEqual(0, selected.returncode, selected.stderr)
                 self.assertIn("schema: ai-sdlc-skill-step-selection/v2", selected.stdout)
+                discovery = subprocess.run(
+                    [sys.executable, str(selector), "--skills-root", str(target),
+                     "--skill", "ai-sdlc-loop-requirements-discovery",
+                     "--phase", "execute", "--role", "business-analyst",
+                     "--completed-step", "preflight", "--completed-step", "context",
+                     "--quick-flow"],
+                    cwd=tmp, text=True, capture_output=True, check=False,
+                )
+                self.assertEqual(0, discovery.returncode, discovery.stderr)
+                self.assertIn("ready_steps[1]: execute", discovery.stdout)
+                helper = installed / "ai-sdlc-loop-requirements-discovery/scripts/requirements_discovery.py"
+                prepared = subprocess.run(
+                    [sys.executable, str(helper), "prepare", "--root", tmp,
+                     "--feature", "installed-example", "--request-stdin", "--quick-flow", "--write"],
+                    input="Reduce approval waiting; clarify the bottleneck before selecting a change.\n",
+                    text=True, capture_output=True, check=False,
+                )
+                self.assertEqual(0, prepared.returncode, prepared.stdout + prepared.stderr)
+                context = ".ai-sdlc-loop/installed-example/requirements-discovery-context.toon"
+                self.assertEqual(prepared.stdout.encode("utf-8"), (Path(tmp) / context).read_bytes())
+                scaffolded = subprocess.run(
+                    [sys.executable, str(helper), "scaffold", "--root", tmp,
+                     "--context", context, "--as-of", "2026-09-07"],
+                    text=True, capture_output=True, check=False,
+                )
+                self.assertEqual(0, scaffolded.returncode, scaffolded.stdout + scaffolded.stderr)
+                self.assertIn("schema: ai-sdlc-requirements-discovery-draft/v1", scaffolded.stdout)
 
     def test_tc001_existing_unrelated_skill_is_preserved(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:

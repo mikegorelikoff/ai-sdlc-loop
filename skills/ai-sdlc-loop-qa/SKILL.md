@@ -18,3 +18,30 @@ Follow `steps/manifest.toon`. Keep acceptance observable, distinguish executed e
 Use `scripts/qa_plan.py` when a deterministic `ai-sdlc-loop-qa/v1` artifact is needed. Read `references/qa-plan.md` for scenario and signoff quality rules.
 
 Route executable command selection to `ai-sdlc-loop-validation`, scenario-to-test design to `ai-sdlc-loop-test-cases`, security abuse coverage to `ai-sdlc-loop-security-testing`, and final readiness evidence back to `ai-sdlc-loop-verify`.
+
+## Step Selector
+
+This table is generated from `steps/manifest.toon`. The manifest and linked
+step documents are canonical; regenerate this projection after graph changes.
+
+| Step | Ready when | Depends on | Operation | Load |
+| --- | --- | --- | --- | --- |
+| `plan` | `prepare` | none | `inspect-and-plan` | [`steps/01-plan.md`](steps/01-plan.md) — `required` |
+| `context` | `clarify`, `route` | `plan` | `compile-context` | [`steps/02-context.md`](steps/02-context.md) — `required` |
+| `artifact` | `execute` | `context` | `emit-qa-plan` | [`steps/02-artifact.md`](steps/02-artifact.md) — `on-demand` |
+| `evidence` | `validate` | `artifact` | `validate-evidence` | [`steps/04-evidence.md`](steps/04-evidence.md) — `before-completion` |
+| `signoff` | `complete`, `handoff` | `evidence` | `handoff-result` | [`steps/03-signoff.md`](steps/03-signoff.md) — `before-completion` |
+
+## Progressive Disclosure Contract
+
+- Resolve the phase entrypoint and dependency-ready set with
+  `ai-sdlc-loop-shared-runtime/scripts/ai_sdlc_steps.py`; never invent a step path.
+- Read only the emitted StepCard and its selected context. Pass completed step
+  IDs back to the selector before requesting the next ready node.
+- Treat `direct_read` as an explicit context strategy. Block only when mandatory
+  evidence or critical anchors are missing.
+- Explore is read-only. After Apply, journal every selected owning-skill step,
+  including analysis and validation nodes, before advancing the graph.
+- In source use `skills/<skill>/...`; use `.agents/skills/<skill>/...` for
+  Codex, `.claude/skills/<skill>/...` for Claude Code, or the project skills
+  root recorded in `.ai-sdlc-loop/install/<profile>.toon` for `agent-project`.

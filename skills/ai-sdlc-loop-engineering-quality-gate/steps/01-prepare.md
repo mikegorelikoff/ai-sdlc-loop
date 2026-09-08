@@ -41,6 +41,15 @@ gate may be called directly, but direct invocation grants no write authority.
    `.ai-sdlc-loop/<feature>/quality-context.toon` and
    `.ai-sdlc-loop/<feature>/quality-gate.toon`.
 
+## Execution contract
+
+Do not use it before a bounded implementation diff and accepted change contract exist. Use `ai-sdlc-loop-specify` or the owning implementation workflow instead. Do not use it only to execute an already defined check list. Use `ai-sdlc-loop-validation` instead.
+
+Read the [shared execution decisions](../../ai-sdlc-loop-shared-runtime/references/execution-contract.md) once for this invocation.
+Apply its required/discoverable/inherited/optional input rules to this step's
+declared inputs. Record the source and status of material facts, then validate
+the owning output contract and current evidence before completion.
+
 ## Exit
 
 Return the exact review target, request/spec evidence, flow mode, changed-path

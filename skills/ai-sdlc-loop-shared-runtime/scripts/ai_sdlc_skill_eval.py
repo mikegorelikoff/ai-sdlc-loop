@@ -19,13 +19,14 @@ import ai_sdlc_steps as steps_runtime  # noqa: E402
 from ai_sdlc_paths import repository_root_from_skills_root  # noqa: E402
 from ai_sdlc_safe_io import atomic_write_text, bounded_path  # noqa: E402
 from ai_sdlc_step_context import validate_step_context_pack  # noqa: E402
-from ai_sdlc_toon import encode_toon  # noqa: E402
+from ai_sdlc_toon import decode_toon, encode_toon  # noqa: E402
 
 
 RECEIPT_SCHEMA = "ai-sdlc-eval-receipt/v1"
 LIVE_PROTOCOL_SCHEMA = "ai-sdlc-live-eval-protocol/v1"
 LIVE_RECEIPT_SCHEMA = "ai-sdlc-live-eval-receipt/v1"
-SCENARIOS = ("happy", "blocked", "invalid", "resume", "context")
+SCENARIOS = ("happy", "blocked", "invalid", "resume", "context",
+             "inconsistent-completion", "unsupported-role", "optional-input", "terminal")
 LIVE_SCENARIOS = (
     {
         "id": "routing",
@@ -250,8 +251,57 @@ def _context(root: Path, skill: str, cache: dict[str, object]) -> str:
     )
 
 
+def _inconsistent_completion(root: Path, skill: str, _cache: dict[str, object]) -> str:
+    _, manifest = steps_runtime.load_manifest(root, skill)
+    dependent = next(step for step in manifest["steps"] if step["depends_on"])
+    try:
+        steps_runtime.select_steps(root, skill, "complete", completed_steps=[dependent["id"]])
+    except ValueError as exc:
+        if str(exc).startswith("STEP_INVALID_COMPLETION:"):
+            return "completion without prerequisite evidence rejected"
+        raise
+    raise ValueError("inconsistent completion was accepted")
+
+
+def _unsupported_role(root: Path, skill: str, _cache: dict[str, object]) -> str:
+    try:
+        steps_runtime.select_steps(root, skill, "prepare", role="unsupported-role")
+    except ValueError as exc:
+        if str(exc).startswith("STEP_UNKNOWN_ROLE:"):
+            return "unsupported role rejected without inventing a route"
+        raise
+    raise ValueError("unsupported role was accepted")
+
+
+def _optional_input(root: Path, skill: str, _cache: dict[str, object]) -> str:
+    # Explicit paths are optional retrieval candidates in context/v4. Missing
+    # required business inputs remain the owning validator's responsibility.
+    missing = "__ai_sdlc_eval_missing_optional__.md"
+    if (root / missing).exists():
+        raise ValueError("optional-input fixture path must be absent")
+    selected = steps_runtime.select_steps(root, skill, "prepare", context_paths=[missing])
+    for card in selected.step_cards:
+        context = card["context"]
+        if not context["sufficient"] or not any(missing in item for item in context["skipped"]):
+            raise ValueError("missing optional context lacks explicit skip evidence")
+    return "missing optional context recorded; mandatory step remains sufficient"
+
+
+def _terminal(root: Path, skill: str, _cache: dict[str, object]) -> str:
+    _, manifest = steps_runtime.load_manifest(root, skill)
+    selected = steps_runtime.select_steps(root, skill, "complete",
+                                         completed_steps=[step["id"] for step in manifest["steps"]])
+    if not selected.complete or selected.ready_steps or selected.step_cards:
+        raise ValueError("terminal selection restarted completed work")
+    return "terminal closure has no pending work; feature approval is not inferred"
+
+
 def evaluate_skill(root: Path, skill: str) -> dict[str, object]:
-    """Run the fixed five-scenario matrix for one skill."""
+    """Run structural execution scenarios; these do not score model judgment."""
+    skill_root = steps_runtime.resolve_skill_root(root, skill)
+    declared = decode_toon((skill_root / "steps/manifest.toon").read_text(encoding="utf-8"))
+    if isinstance(declared, dict) and declared.get("schema") == "ai-sdlc-loop-skill-steps/v1":
+        return evaluate_native_skill(skill_root, declared)
     _skill_root, manifest = steps_runtime.load_manifest(root, skill)
     cache: dict[str, object] = {}
     callbacks = (
@@ -260,6 +310,10 @@ def evaluate_skill(root: Path, skill: str) -> dict[str, object]:
         ("invalid", _invalid),
         ("resume", _resume),
         ("context", _context),
+        ("inconsistent-completion", _inconsistent_completion),
+        ("unsupported-role", _unsupported_role),
+        ("optional-input", _optional_input),
+        ("terminal", _terminal),
     )
     results = [
         _case(name, lambda callback=callback: callback(root, skill, cache))
@@ -275,6 +329,74 @@ def evaluate_skill(root: Path, skill: str) -> dict[str, object]:
         "failed": sum(item["status"] == "failed" for item in results),
         "scenarios": results,
     }
+
+
+def evaluate_native_skill(skill_root: Path, manifest: dict[str, object]) -> dict[str, object]:
+    """Evaluate existing compact Loop graphs without inventing v2 role/context inputs."""
+    from loop_steps import select_steps
+    skill = skill_root.name
+    root = skill_root.parent
+    selections = [select_steps(root, skill, phase) for phase in sorted(manifest["entrypoints"])]
+    first = max(selections, key=lambda item: len(item["execution_order"]))
+    phase = first["phase"]
+
+    def happy():
+        if encode_toon(first) != encode_toon(select_steps(root, skill, phase)):
+            raise ValueError("identical inputs changed selection bytes")
+        return f"selection={first['fingerprint']};entrypoints={len(selections)}"
+
+    def blocked():
+        if len(first["pending_steps"]) <= len(first["ready_steps"]):
+            raise ValueError("downstream nodes were not dependency-gated")
+        return "downstream work waits for completed predecessor evidence"
+
+    def reject(selected_phase, completed, code):
+        try:
+            select_steps(root, skill, selected_phase, completed)
+        except ValueError as exc:
+            if str(exc).startswith(code):
+                return code + " rejected"
+            raise
+        raise ValueError("invalid selection was accepted")
+
+    def resume():
+        for selection in selections:
+            done = []
+            for _ in range(len(manifest["steps"]) + 1):
+                result = select_steps(root, skill, selection["phase"], done)
+                if result["complete"]:
+                    if set(done) != set(result["execution_order"]):
+                        raise ValueError("terminal closure is not exact")
+                    break
+                if not result["ready_steps"]:
+                    raise ValueError("nonterminal graph has no ready node")
+                done.extend(result["ready_steps"])
+            else:
+                raise ValueError("resume exceeded node-count bound")
+        return "all native entrypoints reach exact terminal closure within node count"
+
+    def context():
+        if not first["selected_paths"] or first["authorizes_execution"]:
+            raise ValueError("missing source selection or implied authority")
+        return "selected step paths and mandatory references validated; no execution authority"
+
+    def terminal():
+        result = select_steps(root, skill, phase, first["execution_order"])
+        if not result["complete"] or result["ready_steps"]:
+            raise ValueError("terminal selection restarted work")
+        return "terminal closure does not restart work or grant approval"
+
+    dependent = next(node["id"] for node in manifest["steps"] if node["depends_on"])
+    cases = (("happy", happy), ("blocked", blocked),
+             ("invalid", lambda: reject("outside-contract", [], "STEP_UNKNOWN_PHASE")),
+             ("resume", resume), ("context", context),
+             ("inconsistent-completion", lambda: reject(phase, [dependent], "STEP_INVALID_COMPLETION")),
+             ("terminal", terminal))
+    results = [_case(name, callback) for name, callback in cases]
+    return {"skill": skill, "manifest_schema": manifest["schema"],
+            "nodes": len(manifest["steps"]), "graph_fingerprint": first["graph_fingerprint"],
+            "passed": sum(item["status"] == "passed" for item in results),
+            "failed": sum(item["status"] == "failed" for item in results), "scenarios": results}
 
 
 def deterministic_receipt(
@@ -294,7 +416,7 @@ def deterministic_receipt(
         "harness_version": steps_runtime.VERSION,
         "skills": len(items),
         "scenario_kinds": list(SCENARIOS),
-        "scenarios": len(items) * len(SCENARIOS),
+        "scenarios": sum(len(item["scenarios"]) for item in items),
         "passed": passed,
         "failed": failed,
         "result": "passed" if failed == 0 else "failed",

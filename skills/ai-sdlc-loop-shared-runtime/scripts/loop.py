@@ -238,6 +238,14 @@ def current_spec(root: Path, feature: str) -> dict[str, Any]:
         raise LoopError("unsupported or mismatched spec")
     if spec.get("fingerprint") != fingerprint(spec):
         raise LoopError("spec fingerprint does not match its content")
+    if (not isinstance(spec.get("request"), str) or not spec["request"].strip()
+            or not isinstance(spec.get("allowed_paths"), list) or not spec["allowed_paths"]
+            or any(not isinstance(path, str) for path in spec["allowed_paths"])
+            or not isinstance(spec.get("trace_ids"), list)
+            or any(not isinstance(trace, str) or not trace.strip() for trace in spec["trace_ids"])):
+        raise LoopError("invalid specification input fields")
+    if spec["allowed_paths"] != sorted(set(safe_relative(root, path) for path in spec["allowed_paths"])):
+        raise LoopError("specification paths must be canonical and unique")
     return spec
 
 
@@ -289,9 +297,7 @@ def cmd_approve(args: argparse.Namespace) -> None:
     if args.action == "implement":
         expected = current_spec(root, feature)["fingerprint"]
     else:
-        evidence = load_toon(state_path(root, feature, "evidence.toon"))
-        if not evidence.get("ready"):
-            raise LoopError("verification evidence is not ready")
+        evidence = current_evidence(root, feature, current_spec(root, feature))
         expected = evidence.get("verified_fingerprint")
     if args.fingerprint != expected:
         raise LoopError(f"fingerprint does not match current {args.action} subject")
@@ -340,6 +346,18 @@ def cmd_verify(args: argparse.Namespace) -> None:
             record = {"argv": [redact(item) for item in argv], "exit_code": None, "timed_out": isinstance(exc, subprocess.TimeoutExpired), "stdout": "", "stderr": redact(str(exc))}
             ready = False
         records.append(record)
+    # A passing command may rewrite the files it checks. Never bind that success
+    # to the pre-command snapshot without checking the post-command state.
+    drift_reason = ""
+    try:
+        if current_spec(root, feature)["fingerprint"] != spec["fingerprint"]:
+            raise LoopError("specification changed during verification")
+        if change_snapshot(root, spec)["fingerprint"] != snapshot["fingerprint"]:
+            raise LoopError("changes drifted during verification")
+        require_quality_gate(root, feature, snapshot)
+    except LoopError as exc:
+        ready = False
+        drift_reason = str(exc)
     evidence: dict[str, Any] = {
         "schema": SCHEMA,
         "feature": feature,
@@ -349,26 +367,48 @@ def cmd_verify(args: argparse.Namespace) -> None:
         "commands": records,
         "ready": ready,
     }
+    if drift_reason:
+        evidence["failure_reason"] = drift_reason
     evidence["verified_fingerprint"] = fingerprint(evidence, "verified_fingerprint")
     atomic_toon(state_path(root, feature, "evidence.toon"), evidence)
     atomic_toon(state_path(root, feature, "state.toon"), {"schema": SCHEMA, "feature": feature, "stage": "verified" if ready else "verification-failed", "spec_fingerprint": spec["fingerprint"], "verified_fingerprint": evidence["verified_fingerprint"], "ready": ready})
     print(evidence["verified_fingerprint"])
     if not ready:
-        raise LoopError("one or more verification commands failed")
+        raise LoopError(drift_reason or "one or more verification commands failed")
+
+
+def current_evidence(root: Path, feature: str, spec: dict[str, Any]) -> dict[str, Any]:
+    """Reuse one readiness gate for approval and commit; hashes are not approval."""
+    evidence = load_toon(state_path(root, feature, "evidence.toon"))
+    if (evidence.get("schema") != SCHEMA or evidence.get("feature") != feature
+            or evidence.get("ready") is not True
+            or evidence.get("spec_fingerprint") != spec["fingerprint"]):
+        raise LoopError("current passing verification evidence is required")
+    if evidence.get("verified_fingerprint") != fingerprint(evidence, "verified_fingerprint"):
+        raise LoopError("verification evidence fingerprint is invalid")
+    commands = evidence.get("commands")
+    if not isinstance(commands, list) or not commands or any(
+        not isinstance(command, dict)
+        or type(command.get("exit_code")) is not int
+        or command["exit_code"] != 0
+        or command.get("timed_out") is not False
+        or not isinstance(command.get("argv"), list) or not command["argv"]
+        for command in commands
+    ):
+        raise LoopError("verification evidence requires executed passing commands")
+    snapshot = change_snapshot(root, spec)
+    if (snapshot["fingerprint"] != evidence.get("change_fingerprint")
+            or snapshot["files"] != evidence.get("changed_files")):
+        raise LoopError("changes drifted after verification")
+    require_quality_gate(root, feature, snapshot)
+    return evidence
 
 
 def cmd_commit(args: argparse.Namespace) -> None:
     root = project_root(args.project_root)
     feature = validate_feature(args.feature)
     spec = current_spec(root, feature)
-    evidence = load_toon(state_path(root, feature, "evidence.toon"))
-    if not evidence.get("ready") or evidence.get("spec_fingerprint") != spec["fingerprint"]:
-        raise LoopError("current passing verification evidence is required")
-    if evidence.get("verified_fingerprint") != fingerprint(evidence, "verified_fingerprint"):
-        raise LoopError("verification evidence fingerprint is invalid")
-    snapshot = change_snapshot(root, spec)
-    if snapshot["fingerprint"] != evidence.get("change_fingerprint"):
-        raise LoopError("changes drifted after verification")
+    evidence = current_evidence(root, feature, spec)
     require_approval(root, feature, "commit", evidence["verified_fingerprint"])
     paths = [item["path"] for item in evidence["changed_files"]]
     if not paths:
@@ -429,6 +469,11 @@ def parser() -> argparse.ArgumentParser:
     value = argparse.ArgumentParser(description=__doc__)
     value.add_argument("--project-root", default=".")
     commands = value.add_subparsers(dest="command_name", required=True)
+    steps = commands.add_parser("steps", help="select dependency-ready nodes in a compact Loop stage graph; read-only")
+    steps.add_argument("--skill", required=True)
+    steps.add_argument("--phase", required=True)
+    steps.add_argument("--completed-step", action="append", default=[])
+    steps.set_defaults(handler=cmd_steps)
     specify = commands.add_parser("specify", help="persist a bounded deterministic specification")
     specify.add_argument("--feature", required=True)
     specify.add_argument("--request", required=True)
@@ -445,6 +490,9 @@ def parser() -> argparse.ArgumentParser:
     implement = commands.add_parser("implement-check", help="verify Implement authority")
     implement.add_argument("--feature", required=True)
     implement.set_defaults(handler=cmd_implement_check)
+    evidence = commands.add_parser("evidence-check", help="verify current passing evidence without granting commit authority")
+    evidence.add_argument("--feature", required=True)
+    evidence.set_defaults(handler=cmd_evidence_check)
     verify = commands.add_parser("verify", help="run explicit checks and persist evidence")
     verify.add_argument("--feature", required=True)
     verify.add_argument("--command", action="append", required=True)
@@ -462,6 +510,24 @@ def parser() -> argparse.ArgumentParser:
     status.add_argument("--feature", required=True)
     status.set_defaults(handler=cmd_status)
     return value
+
+
+def cmd_steps(args: argparse.Namespace) -> None:
+    from loop_steps import select_steps
+    try:
+        result = select_steps(SHARED_SCRIPTS.parents[1], args.skill, args.phase, args.completed_step)
+    except (OSError, ValueError) as exc:
+        raise LoopError(str(exc)) from exc
+    print(encode_toon(result), end="")
+
+
+def cmd_evidence_check(args: argparse.Namespace) -> None:
+    root = project_root(args.project_root)
+    feature = validate_feature(args.feature)
+    evidence = current_evidence(root, feature, current_spec(root, feature))
+    print(encode_toon({"schema": SCHEMA, "feature": feature, "ready": True,
+                       "verified_fingerprint": evidence["verified_fingerprint"],
+                       "authorizes_commit": False}), end="")
 
 
 def main() -> int:

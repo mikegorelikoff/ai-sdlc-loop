@@ -18,20 +18,14 @@ Confirm the requested scope, flow mode, canonical workspace, required evidence, 
 
 ### 0.2 Clarification Rules
 
-- Ask only when the installed skills root or failing downstream script cannot
-  be located safely.
-- Distinguish a missing runtime package from a corrupt runtime copy, missing
-  Python, an unsupported package revision, and an application-level failure.
-- Never infer that an import failure is permission to download or execute an
-  unreviewed replacement.
+- Resolve discoverable facts and reuse inherited decisions before asking.
+- Missing optional context stays optional; label assumptions explicitly.
+- Pause only work dependent on a missing material input or conflicting requirement.
 
 ### 0.2.1 Flow Mode Flags
 
-- This package has no independent quick/full lifecycle flow.
-- Preserve `--quick-flow` and `--full-flow` flags for the downstream owning
-  skill; this runtime must not reinterpret them.
-- Verification is read-only. Reinstallation or repair requires the same human
-  authority and trusted source used for installation.
+- Support `--quick-flow` and `--full-flow`; full takes precedence. Apply the shared execution contract below.
+
 
 ### 0.3 Output Rules
 
@@ -74,23 +68,34 @@ Confirm the requested scope, flow mode, canonical workspace, required evidence, 
 
 ## 0.5 Feature State Machine
 
-- This runtime is a utility and never begins or completes a feature stage.
-- It may load `ai_sdlc_state_machine` for another skill, but it must not mutate
-  lifecycle state on its own.
-- Use `state.toon` only through the downstream owning workflow.
+Use `.ai-sdlc-loop/<feature>/spec.toon`, `state.toon`, approval receipts,
+`quality-gate.toon` and `evidence.toon` for the fixed Loop lifecycle. Inspect
+with the sibling runtime `loop.py status --feature <feature>`. Do not run the
+Harness refinement state machine or mark optional planning helpers as completed
+Loop stages. Source mutation, verification and commit keep their own gates.
 
 ## 0.6 Artifact Metadata And Metatags
 
-- Runtime verification is ephemeral and carries no `artifact_metadata` or
-  `metatags`.
-- The packaged helpers preserve the downstream skill's existing metadata and
-  authority contracts; they do not create a second source of truth.
+Keep Loop-owned durable machine artifacts in canonical TOON. Let the owning
+helper validate its schema and source fingerprints. Markdown metadata and
+metatags apply only to explicitly requested compatible Harness artifacts; they
+do not replace Loop receipts or require an additional artifact for ordinary work.
 
 ## 0.7 Specs Index
 
-- The runtime exposes feature-local OKF `index.md` and compact workspace TOON
-  helpers but does not rebuild them during read-only routing.
-- Index reads and writes remain owned by the selected lifecycle workflow.
+Read the active feature receipts first. Follow exact source paths, allowed
+paths, changed files and trace IDs; do not scan every feature or require a
+Harness specs index. Consume an existing SDD package only when supplied for
+the task. A missing optional SDD package does not block the fixed Loop cycle.
+
+## Execution contract
+
+Internal dependency for installed Loop helpers; route user-facing work through Loop flow or its owning stage.
+
+Read the [shared execution decisions](../../ai-sdlc-loop-shared-runtime/references/execution-contract.md) once for this invocation.
+Apply its required/discoverable/inherited/optional input rules to this step's
+declared inputs. Record the source and status of material facts, then validate
+the owning output contract and current evidence before completion.
 
 ## Exit
 

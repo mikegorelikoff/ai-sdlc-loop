@@ -21,6 +21,23 @@ def read_toon_text(text: str) -> dict[str, object]:
 
 
 class FlowTests(unittest.TestCase):
+    def test_specific_routes_and_word_boundaries(self) -> None:
+        import importlib.util
+        spec = importlib.util.spec_from_file_location("loop_routing_eval", FLOW)
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        cases = {
+            "requirements discovery": "ai-sdlc-loop-requirements-discovery",
+            "review requirements": "ai-sdlc-loop-requirements-review",
+            "run engineering quality gate": "ai-sdlc-loop-engineering-quality-gate",
+            "fix ownership tracking": "ai-sdlc-loop-implement",
+            "design membership rules": "ai-sdlc-loop-specify",
+            "review the diff": "ai-sdlc-loop-code-review",
+        }
+        for intent, expected in cases.items():
+            with self.subTest(intent=intent):
+                self.assertEqual(module.select_route(intent)[1], expected)
+
     def test_tc032_explore_is_deterministic_and_apply_revalidates(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)

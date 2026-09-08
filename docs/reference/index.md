@@ -14,7 +14,7 @@ Install locally with `python3 install.py PROFILE`. Verify with `python3 install.
 
 ## Current source inventory
 
-The current unreleased source installs the 20 entries below. Immutable
+The current unreleased source installs the 21 entries below. Immutable
 `v0.1.1` retains its previous 17-member inventory.
 
 Guided entry and diagnostics:
@@ -35,6 +35,7 @@ Delivery-control skills:
 
 - `ai-sdlc-loop-approvals-sandbox`
 - `ai-sdlc-loop-branching`
+- `ai-sdlc-loop-requirements-discovery`
 - `ai-sdlc-loop-requirements-review`
 - `ai-sdlc-loop-test-cases`
 - `ai-sdlc-loop-qa`
@@ -51,7 +52,8 @@ The generated [skill catalog](skills.md) derives names and descriptions from eac
 
 ## Runtime commands
 
-The shared CLI exposes `specify`, `approve`, `implement-check`, `verify`, `commit`, `promote`, and `status`:
+The shared CLI exposes `specify`, `approve`, `implement-check`, `verify`,
+`evidence-check`, `steps`, `commit`, `promote`, and `status`:
 
 ```sh
 python3 .agents/skills/ai-sdlc-loop-shared-runtime/scripts/loop.py --help

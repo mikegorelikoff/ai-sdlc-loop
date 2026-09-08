@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import hashlib
+import re
 import subprocess
 import sys
 from pathlib import Path
@@ -17,6 +18,9 @@ SCHEMA = "ai-sdlc-loop-flow/v1"
 APPLY_SCHEMA = "ai-sdlc-loop-flow-apply/v1"
 
 ROUTES = (
+    (("requirements discovery", "discover requirements", "stakeholder elicitation"), "discovery", "ai-sdlc-loop-requirements-discovery"),
+    (("requirements review", "review requirements", "requirement review"), "requirements-review", "ai-sdlc-loop-requirements-review"),
+    (("engineering quality gate", "quality gate"), "quality-gate", "ai-sdlc-loop-engineering-quality-gate"),
     (("doctor", "diagnos", "health", "install drift"), "diagnose", "ai-sdlc-loop-doctor"),
     (("release", "ship", "publish"), "release", "ai-sdlc-loop-release-readiness"),
     (("commit",), "commit", "ai-sdlc-loop-commit-prep"),
@@ -44,7 +48,9 @@ def repository_identity(root: Path) -> str:
 def select_route(intent: str) -> tuple[str, str]:
     normalized = " " + " ".join(intent.lower().split()) + " "
     for tokens, stage, skill in ROUTES:
-        if any(token in normalized for token in tokens):
+        if any(re.search(r"(?<!\w)" + re.escape(token.strip()) +
+                         (r"\w*(?!\w)" if token == "diagnos" else r"(?!\w)"), normalized)
+               for token in tokens):
             return stage, skill
     return "orchestrate", "ai-sdlc-loop-orchestrate"
 
