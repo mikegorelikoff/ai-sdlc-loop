@@ -1,0 +1,18 @@
+clarification[4]: Missing decision,Why required,Known evidence,Options
+example:
+  ID: STORY-example
+  Outcome: Email becomes verified
+  Parent: EPIC-example
+  Status: PENDING
+  Title: Verify email
+  Type: STORY
+failure[5]: Branch,Status,Blocker,Evidence,Required action
+hide: "Secrets, raw logs and unsupported inferred precision."
+native_exception: Keep canonical machine artifacts and commands native.
+primary[6]: ID,Type,Parent,Title,Outcome,Status
+priority: "Show blockers first, then hierarchy level and stable identity."
+required_input: Source-backed scope
+rows: delivery hierarchy nodes
+schema: ai-sdlc-chat-contract/v1
+secondary[3]: Requirement,Source,Work item
+skill: ai-sdlc-loop-hierarchical-decomposition

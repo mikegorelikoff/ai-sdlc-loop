@@ -17,6 +17,10 @@ Apply its required/discoverable/inherited/optional input rules to this step's
 declared inputs. Record the source and status of material facts, then validate
 the owning output contract and current evidence before completion.
 
+## Decomposition input
+
+For initiative/Epic scope, use `ai-sdlc-loop-hierarchical-decomposition` after direction selection. Consume its verified Story branch packet before normal Specify gates; it grants no source mutation or approval.
+
 ## Exit
 
 Proceed only when the request and path boundary are explicit.
@@ -24,3 +28,5 @@ Proceed only when the request and path boundary are explicit.
 ## Chat presentation
 
 Before a result, warning, blocker or question, apply the local [chat schema](../references/chat-output.toon) and the Chat Output Contract in `SKILL.md`. Preserve native artifact and tool-input formats.
+
+Before consuming a branch packet, run the decomposition helper’s `verify-handoff --root <project> --input <handoff.toon> --report <decomposition.toon>`. A missing report, stale source or mismatched packet blocks consumption.

@@ -46,6 +46,7 @@ nav:
   - Reference:
       - reference/index.md
       - Deterministic execution: reference/determinism.md
+      - Hierarchical decomposition: reference/decomposition.md
       - Skills: reference/skills.md
       - Commands: reference/commands.md
       - Contracts: reference/contracts.md

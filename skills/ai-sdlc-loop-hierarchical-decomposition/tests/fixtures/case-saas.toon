@@ -1,0 +1,362 @@
+candidate:
+  acceptance_criteria[4]:
+    - category: ERROR
+      given: An existing valid state
+      key: ac-error-story
+      node: story
+      requirements[1]: R2
+      then: The prior state is preserved
+      verification: Assert rejected operation leaves state unchanged
+      when: An invalid request is submitted
+    - category: ERROR
+      given: An existing valid state
+      key: ac-error-task
+      node: task
+      requirements[1]: R2
+      then: The prior state is preserved
+      verification: Assert rejected operation leaves state unchanged
+      when: An invalid request is submitted
+    - category: HAPPY
+      given: Tenant administrator has a valid scoped request
+      key: ac-story
+      node: story
+      requirements[1]: R1
+      then: An administrator invites a member to their own tenant
+      verification: Assert the observable outcome against a scoped fixture
+      when: The requested behavior is invoked
+    - category: HAPPY
+      given: Tenant administrator has a valid scoped request
+      key: ac-task
+      node: task
+      requirements[1]: R1
+      then: An administrator invites a member to their own tenant
+      verification: Assert the observable outcome against a scoped fixture
+      when: The requested behavior is invoked
+  assumptions[0]:
+  dependencies[0]:
+  input_level: INITIATIVE
+  iteration: 1
+  nfr_exclusions[0]:
+  nodes[4]:
+    - actor: ""
+      assumptions[0]:
+      axis: business-capability
+      behavior: ""
+      delivery_slice: UNKNOWN
+      implementation_obligation: ""
+      key: epic
+      knowledge: KNOWN
+      outcome: An administrator invites a member to their own tenant
+      parent: initiative
+      priority_evidence[0]:
+      requirements[2]: R1,R2
+      technical_justification: ""
+      technical_outcome: false
+      title: Tenant invitation
+      type: EPIC
+      verification: Account fixture assertions
+    - actor: ""
+      assumptions[0]:
+      axis: business-capability
+      behavior: ""
+      delivery_slice: UNKNOWN
+      implementation_obligation: ""
+      key: initiative
+      knowledge: KNOWN
+      outcome: An administrator invites a member to their own tenant
+      parent: ""
+      priority_evidence[0]:
+      requirements[2]: R1,R2
+      technical_justification: ""
+      technical_outcome: false
+      title: Tenant invitation
+      type: INITIATIVE
+      verification: Account fixture assertions
+    - actor: ""
+      assumptions[0]:
+      axis: business-capability
+      behavior: ""
+      delivery_slice: UNKNOWN
+      implementation_obligation: Implement parent acceptance
+      key: task
+      knowledge: KNOWN
+      outcome: An administrator invites a member to their own tenant
+      parent: story
+      priority_evidence[0]:
+      requirements[2]: R1,R2
+      technical_justification: ""
+      technical_outcome: false
+      title: Implement and test tenant invitation
+      type: TASK
+      verification: Account fixture assertions
+    - actor: Tenant administrator
+      assumptions[0]:
+      axis: implementation-obligation
+      behavior: An administrator invites a member to their own tenant
+      delivery_slice: UNKNOWN
+      implementation_obligation: ""
+      key: story
+      knowledge: KNOWN
+      outcome: An administrator invites a member to their own tenant
+      parent: epic
+      priority_evidence[0]:
+      requirements[2]: R1,R2
+      technical_justification: ""
+      technical_outcome: false
+      title: Tenant invitation
+      type: STORY
+      verification: Account fixture assertions
+  requirements[2]{key,kind,knowledge,quote,source,text}:
+    R1,FUNCTIONAL,KNOWN,An administrator invites a member to their own tenant,source,An administrator invites a member to their own tenant
+    R2,FUNCTIONAL,KNOWN,Failed requests preserve prior state.,source,Failed requests preserve prior state
+  reviews[16]:
+    - action: No repair identified in fixture
+      candidate_fingerprint: 4093d068283401b8d86b1ae12e1c0d50e3bc9c6e7095f47924c86d54891e58a2
+      evidence: Synthetic fixture assertion; not a live semantic review
+      granularity: CORRECT
+      invest:
+        Estimable: PASS
+        Independent: PASS
+        Negotiable: PASS
+        Small: PASS
+        Testable: PASS
+        Valuable: PASS
+      node: epic
+      role: Architecture
+      severity: HIGH
+      verdict: PASS
+    - action: No repair identified in fixture
+      candidate_fingerprint: 4093d068283401b8d86b1ae12e1c0d50e3bc9c6e7095f47924c86d54891e58a2
+      evidence: Synthetic fixture assertion; not a live semantic review
+      granularity: CORRECT
+      invest:
+        Estimable: PASS
+        Independent: PASS
+        Negotiable: PASS
+        Small: PASS
+        Testable: PASS
+        Valuable: PASS
+      node: epic
+      role: Delivery
+      severity: HIGH
+      verdict: PASS
+    - action: No repair identified in fixture
+      candidate_fingerprint: 4093d068283401b8d86b1ae12e1c0d50e3bc9c6e7095f47924c86d54891e58a2
+      evidence: Synthetic fixture assertion; not a live semantic review
+      granularity: CORRECT
+      invest:
+        Estimable: PASS
+        Independent: PASS
+        Negotiable: PASS
+        Small: PASS
+        Testable: PASS
+        Valuable: PASS
+      node: epic
+      role: Product
+      severity: HIGH
+      verdict: PASS
+    - action: No repair identified in fixture
+      candidate_fingerprint: 4093d068283401b8d86b1ae12e1c0d50e3bc9c6e7095f47924c86d54891e58a2
+      evidence: Synthetic fixture assertion; not a live semantic review
+      granularity: CORRECT
+      invest:
+        Estimable: PASS
+        Independent: PASS
+        Negotiable: PASS
+        Small: PASS
+        Testable: PASS
+        Valuable: PASS
+      node: epic
+      role: QA
+      severity: HIGH
+      verdict: PASS
+    - action: No repair identified in fixture
+      candidate_fingerprint: 4093d068283401b8d86b1ae12e1c0d50e3bc9c6e7095f47924c86d54891e58a2
+      evidence: Synthetic fixture assertion; not a live semantic review
+      granularity: CORRECT
+      invest:
+        Estimable: PASS
+        Independent: PASS
+        Negotiable: PASS
+        Small: PASS
+        Testable: PASS
+        Valuable: PASS
+      node: initiative
+      role: Architecture
+      severity: HIGH
+      verdict: PASS
+    - action: No repair identified in fixture
+      candidate_fingerprint: 4093d068283401b8d86b1ae12e1c0d50e3bc9c6e7095f47924c86d54891e58a2
+      evidence: Synthetic fixture assertion; not a live semantic review
+      granularity: CORRECT
+      invest:
+        Estimable: PASS
+        Independent: PASS
+        Negotiable: PASS
+        Small: PASS
+        Testable: PASS
+        Valuable: PASS
+      node: initiative
+      role: Delivery
+      severity: HIGH
+      verdict: PASS
+    - action: No repair identified in fixture
+      candidate_fingerprint: 4093d068283401b8d86b1ae12e1c0d50e3bc9c6e7095f47924c86d54891e58a2
+      evidence: Synthetic fixture assertion; not a live semantic review
+      granularity: CORRECT
+      invest:
+        Estimable: PASS
+        Independent: PASS
+        Negotiable: PASS
+        Small: PASS
+        Testable: PASS
+        Valuable: PASS
+      node: initiative
+      role: Product
+      severity: HIGH
+      verdict: PASS
+    - action: No repair identified in fixture
+      candidate_fingerprint: 4093d068283401b8d86b1ae12e1c0d50e3bc9c6e7095f47924c86d54891e58a2
+      evidence: Synthetic fixture assertion; not a live semantic review
+      granularity: CORRECT
+      invest:
+        Estimable: PASS
+        Independent: PASS
+        Negotiable: PASS
+        Small: PASS
+        Testable: PASS
+        Valuable: PASS
+      node: initiative
+      role: QA
+      severity: HIGH
+      verdict: PASS
+    - action: No repair identified in fixture
+      candidate_fingerprint: 4093d068283401b8d86b1ae12e1c0d50e3bc9c6e7095f47924c86d54891e58a2
+      evidence: Synthetic fixture assertion; not a live semantic review
+      granularity: CORRECT
+      invest:
+        Estimable: PASS
+        Independent: PASS
+        Negotiable: PASS
+        Small: PASS
+        Testable: PASS
+        Valuable: PASS
+      node: story
+      role: Architecture
+      severity: HIGH
+      verdict: PASS
+    - action: No repair identified in fixture
+      candidate_fingerprint: 4093d068283401b8d86b1ae12e1c0d50e3bc9c6e7095f47924c86d54891e58a2
+      evidence: Synthetic fixture assertion; not a live semantic review
+      granularity: CORRECT
+      invest:
+        Estimable: PASS
+        Independent: PASS
+        Negotiable: PASS
+        Small: PASS
+        Testable: PASS
+        Valuable: PASS
+      node: story
+      role: Delivery
+      severity: HIGH
+      verdict: PASS
+    - action: No repair identified in fixture
+      candidate_fingerprint: 4093d068283401b8d86b1ae12e1c0d50e3bc9c6e7095f47924c86d54891e58a2
+      evidence: Synthetic fixture assertion; not a live semantic review
+      granularity: CORRECT
+      invest:
+        Estimable: PASS
+        Independent: PASS
+        Negotiable: PASS
+        Small: PASS
+        Testable: PASS
+        Valuable: PASS
+      node: story
+      role: Product
+      severity: HIGH
+      verdict: PASS
+    - action: No repair identified in fixture
+      candidate_fingerprint: 4093d068283401b8d86b1ae12e1c0d50e3bc9c6e7095f47924c86d54891e58a2
+      evidence: Synthetic fixture assertion; not a live semantic review
+      granularity: CORRECT
+      invest:
+        Estimable: PASS
+        Independent: PASS
+        Negotiable: PASS
+        Small: PASS
+        Testable: PASS
+        Valuable: PASS
+      node: story
+      role: QA
+      severity: HIGH
+      verdict: PASS
+    - action: No repair identified in fixture
+      candidate_fingerprint: 4093d068283401b8d86b1ae12e1c0d50e3bc9c6e7095f47924c86d54891e58a2
+      evidence: Synthetic fixture assertion; not a live semantic review
+      granularity: CORRECT
+      invest:
+        Estimable: PASS
+        Independent: PASS
+        Negotiable: PASS
+        Small: PASS
+        Testable: PASS
+        Valuable: PASS
+      node: task
+      role: Architecture
+      severity: HIGH
+      verdict: PASS
+    - action: No repair identified in fixture
+      candidate_fingerprint: 4093d068283401b8d86b1ae12e1c0d50e3bc9c6e7095f47924c86d54891e58a2
+      evidence: Synthetic fixture assertion; not a live semantic review
+      granularity: CORRECT
+      invest:
+        Estimable: PASS
+        Independent: PASS
+        Negotiable: PASS
+        Small: PASS
+        Testable: PASS
+        Valuable: PASS
+      node: task
+      role: Delivery
+      severity: HIGH
+      verdict: PASS
+    - action: No repair identified in fixture
+      candidate_fingerprint: 4093d068283401b8d86b1ae12e1c0d50e3bc9c6e7095f47924c86d54891e58a2
+      evidence: Synthetic fixture assertion; not a live semantic review
+      granularity: CORRECT
+      invest:
+        Estimable: PASS
+        Independent: PASS
+        Negotiable: PASS
+        Small: PASS
+        Testable: PASS
+        Valuable: PASS
+      node: task
+      role: Product
+      severity: HIGH
+      verdict: PASS
+    - action: No repair identified in fixture
+      candidate_fingerprint: 4093d068283401b8d86b1ae12e1c0d50e3bc9c6e7095f47924c86d54891e58a2
+      evidence: Synthetic fixture assertion; not a live semantic review
+      granularity: CORRECT
+      invest:
+        Estimable: PASS
+        Independent: PASS
+        Negotiable: PASS
+        Small: PASS
+        Testable: PASS
+        Valuable: PASS
+      node: task
+      role: QA
+      severity: HIGH
+      verdict: PASS
+  schema: ai-sdlc-decomposition-candidate/v1
+  scope: registration
+  sources[1]{content,key,path,sha256}:
+    An administrator invites a member to their own tenant. Failed requests preserve prior state.,source,request.md,46a1221cdb66cf2b440966d4cb852e70b991c1bdc8904cea4a41afe3da8a3e04
+  target_level: TASK
+  unknowns[0]:
+expected_codes[0]:
+expected_status: PASS
+mode: simulated-property-fixture
+name: saas

@@ -1,0 +1,362 @@
+candidate:
+  acceptance_criteria[4]:
+    - category: ERROR
+      given: An existing valid state
+      key: ac-error-story
+      node: story
+      requirements[1]: R2
+      then: The prior state is preserved
+      verification: Assert rejected operation leaves state unchanged
+      when: An invalid request is submitted
+    - category: ERROR
+      given: An existing valid state
+      key: ac-error-task
+      node: task
+      requirements[1]: R2
+      then: The prior state is preserved
+      verification: Assert rejected operation leaves state unchanged
+      when: An invalid request is submitted
+    - category: HAPPY
+      given: Approver has a valid scoped request
+      key: ac-story
+      node: story
+      requirements[1]: R1
+      then: An approver accepts a submitted expense
+      verification: Assert the observable outcome against a scoped fixture
+      when: The requested behavior is invoked
+    - category: HAPPY
+      given: Approver has a valid scoped request
+      key: ac-task
+      node: task
+      requirements[1]: R1
+      then: An approver accepts a submitted expense
+      verification: Assert the observable outcome against a scoped fixture
+      when: The requested behavior is invoked
+  assumptions[0]:
+  dependencies[0]:
+  input_level: INITIATIVE
+  iteration: 1
+  nfr_exclusions[0]:
+  nodes[4]:
+    - actor: ""
+      assumptions[0]:
+      axis: business-capability
+      behavior: ""
+      delivery_slice: UNKNOWN
+      implementation_obligation: ""
+      key: epic
+      knowledge: KNOWN
+      outcome: An approver accepts a submitted expense
+      parent: initiative
+      priority_evidence[0]:
+      requirements[2]: R1,R2
+      technical_justification: ""
+      technical_outcome: false
+      title: Expense approval
+      type: EPIC
+      verification: Account fixture assertions
+    - actor: ""
+      assumptions[0]:
+      axis: business-capability
+      behavior: ""
+      delivery_slice: UNKNOWN
+      implementation_obligation: ""
+      key: initiative
+      knowledge: KNOWN
+      outcome: An approver accepts a submitted expense
+      parent: ""
+      priority_evidence[0]:
+      requirements[2]: R1,R2
+      technical_justification: ""
+      technical_outcome: false
+      title: Expense approval
+      type: INITIATIVE
+      verification: Account fixture assertions
+    - actor: ""
+      assumptions[0]:
+      axis: business-capability
+      behavior: ""
+      delivery_slice: UNKNOWN
+      implementation_obligation: Implement parent acceptance
+      key: task
+      knowledge: KNOWN
+      outcome: An approver accepts a submitted expense
+      parent: story
+      priority_evidence[0]:
+      requirements[2]: R1,R2
+      technical_justification: ""
+      technical_outcome: false
+      title: Implement and test expense approval
+      type: TASK
+      verification: Account fixture assertions
+    - actor: Approver
+      assumptions[0]:
+      axis: implementation-obligation
+      behavior: An approver accepts a submitted expense
+      delivery_slice: UNKNOWN
+      implementation_obligation: ""
+      key: story
+      knowledge: KNOWN
+      outcome: An approver accepts a submitted expense
+      parent: epic
+      priority_evidence[0]:
+      requirements[2]: R1,R2
+      technical_justification: ""
+      technical_outcome: false
+      title: Expense approval
+      type: STORY
+      verification: Account fixture assertions
+  requirements[2]{key,kind,knowledge,quote,source,text}:
+    R1,FUNCTIONAL,KNOWN,An approver accepts a submitted expense,source,An approver accepts a submitted expense
+    R2,FUNCTIONAL,KNOWN,Failed requests preserve prior state.,source,Failed requests preserve prior state
+  reviews[16]:
+    - action: No repair identified in fixture
+      candidate_fingerprint: 574f580d5c2fe0fad387b99ea4733f5a268fdf51d3fe7fdd6744c7fc72b7ce9e
+      evidence: Synthetic fixture assertion; not a live semantic review
+      granularity: CORRECT
+      invest:
+        Estimable: PASS
+        Independent: PASS
+        Negotiable: PASS
+        Small: PASS
+        Testable: PASS
+        Valuable: PASS
+      node: epic
+      role: Architecture
+      severity: HIGH
+      verdict: PASS
+    - action: No repair identified in fixture
+      candidate_fingerprint: 574f580d5c2fe0fad387b99ea4733f5a268fdf51d3fe7fdd6744c7fc72b7ce9e
+      evidence: Synthetic fixture assertion; not a live semantic review
+      granularity: CORRECT
+      invest:
+        Estimable: PASS
+        Independent: PASS
+        Negotiable: PASS
+        Small: PASS
+        Testable: PASS
+        Valuable: PASS
+      node: epic
+      role: Delivery
+      severity: HIGH
+      verdict: PASS
+    - action: No repair identified in fixture
+      candidate_fingerprint: 574f580d5c2fe0fad387b99ea4733f5a268fdf51d3fe7fdd6744c7fc72b7ce9e
+      evidence: Synthetic fixture assertion; not a live semantic review
+      granularity: CORRECT
+      invest:
+        Estimable: PASS
+        Independent: PASS
+        Negotiable: PASS
+        Small: PASS
+        Testable: PASS
+        Valuable: PASS
+      node: epic
+      role: Product
+      severity: HIGH
+      verdict: PASS
+    - action: No repair identified in fixture
+      candidate_fingerprint: 574f580d5c2fe0fad387b99ea4733f5a268fdf51d3fe7fdd6744c7fc72b7ce9e
+      evidence: Synthetic fixture assertion; not a live semantic review
+      granularity: CORRECT
+      invest:
+        Estimable: PASS
+        Independent: PASS
+        Negotiable: PASS
+        Small: PASS
+        Testable: PASS
+        Valuable: PASS
+      node: epic
+      role: QA
+      severity: HIGH
+      verdict: PASS
+    - action: No repair identified in fixture
+      candidate_fingerprint: 574f580d5c2fe0fad387b99ea4733f5a268fdf51d3fe7fdd6744c7fc72b7ce9e
+      evidence: Synthetic fixture assertion; not a live semantic review
+      granularity: CORRECT
+      invest:
+        Estimable: PASS
+        Independent: PASS
+        Negotiable: PASS
+        Small: PASS
+        Testable: PASS
+        Valuable: PASS
+      node: initiative
+      role: Architecture
+      severity: HIGH
+      verdict: PASS
+    - action: No repair identified in fixture
+      candidate_fingerprint: 574f580d5c2fe0fad387b99ea4733f5a268fdf51d3fe7fdd6744c7fc72b7ce9e
+      evidence: Synthetic fixture assertion; not a live semantic review
+      granularity: CORRECT
+      invest:
+        Estimable: PASS
+        Independent: PASS
+        Negotiable: PASS
+        Small: PASS
+        Testable: PASS
+        Valuable: PASS
+      node: initiative
+      role: Delivery
+      severity: HIGH
+      verdict: PASS
+    - action: No repair identified in fixture
+      candidate_fingerprint: 574f580d5c2fe0fad387b99ea4733f5a268fdf51d3fe7fdd6744c7fc72b7ce9e
+      evidence: Synthetic fixture assertion; not a live semantic review
+      granularity: CORRECT
+      invest:
+        Estimable: PASS
+        Independent: PASS
+        Negotiable: PASS
+        Small: PASS
+        Testable: PASS
+        Valuable: PASS
+      node: initiative
+      role: Product
+      severity: HIGH
+      verdict: PASS
+    - action: No repair identified in fixture
+      candidate_fingerprint: 574f580d5c2fe0fad387b99ea4733f5a268fdf51d3fe7fdd6744c7fc72b7ce9e
+      evidence: Synthetic fixture assertion; not a live semantic review
+      granularity: CORRECT
+      invest:
+        Estimable: PASS
+        Independent: PASS
+        Negotiable: PASS
+        Small: PASS
+        Testable: PASS
+        Valuable: PASS
+      node: initiative
+      role: QA
+      severity: HIGH
+      verdict: PASS
+    - action: No repair identified in fixture
+      candidate_fingerprint: 574f580d5c2fe0fad387b99ea4733f5a268fdf51d3fe7fdd6744c7fc72b7ce9e
+      evidence: Synthetic fixture assertion; not a live semantic review
+      granularity: CORRECT
+      invest:
+        Estimable: PASS
+        Independent: PASS
+        Negotiable: PASS
+        Small: PASS
+        Testable: PASS
+        Valuable: PASS
+      node: story
+      role: Architecture
+      severity: HIGH
+      verdict: PASS
+    - action: No repair identified in fixture
+      candidate_fingerprint: 574f580d5c2fe0fad387b99ea4733f5a268fdf51d3fe7fdd6744c7fc72b7ce9e
+      evidence: Synthetic fixture assertion; not a live semantic review
+      granularity: CORRECT
+      invest:
+        Estimable: PASS
+        Independent: PASS
+        Negotiable: PASS
+        Small: PASS
+        Testable: PASS
+        Valuable: PASS
+      node: story
+      role: Delivery
+      severity: HIGH
+      verdict: PASS
+    - action: No repair identified in fixture
+      candidate_fingerprint: 574f580d5c2fe0fad387b99ea4733f5a268fdf51d3fe7fdd6744c7fc72b7ce9e
+      evidence: Synthetic fixture assertion; not a live semantic review
+      granularity: CORRECT
+      invest:
+        Estimable: PASS
+        Independent: PASS
+        Negotiable: PASS
+        Small: PASS
+        Testable: PASS
+        Valuable: PASS
+      node: story
+      role: Product
+      severity: HIGH
+      verdict: PASS
+    - action: No repair identified in fixture
+      candidate_fingerprint: 574f580d5c2fe0fad387b99ea4733f5a268fdf51d3fe7fdd6744c7fc72b7ce9e
+      evidence: Synthetic fixture assertion; not a live semantic review
+      granularity: CORRECT
+      invest:
+        Estimable: PASS
+        Independent: PASS
+        Negotiable: PASS
+        Small: PASS
+        Testable: PASS
+        Valuable: PASS
+      node: story
+      role: QA
+      severity: HIGH
+      verdict: PASS
+    - action: No repair identified in fixture
+      candidate_fingerprint: 574f580d5c2fe0fad387b99ea4733f5a268fdf51d3fe7fdd6744c7fc72b7ce9e
+      evidence: Synthetic fixture assertion; not a live semantic review
+      granularity: CORRECT
+      invest:
+        Estimable: PASS
+        Independent: PASS
+        Negotiable: PASS
+        Small: PASS
+        Testable: PASS
+        Valuable: PASS
+      node: task
+      role: Architecture
+      severity: HIGH
+      verdict: PASS
+    - action: No repair identified in fixture
+      candidate_fingerprint: 574f580d5c2fe0fad387b99ea4733f5a268fdf51d3fe7fdd6744c7fc72b7ce9e
+      evidence: Synthetic fixture assertion; not a live semantic review
+      granularity: CORRECT
+      invest:
+        Estimable: PASS
+        Independent: PASS
+        Negotiable: PASS
+        Small: PASS
+        Testable: PASS
+        Valuable: PASS
+      node: task
+      role: Delivery
+      severity: HIGH
+      verdict: PASS
+    - action: No repair identified in fixture
+      candidate_fingerprint: 574f580d5c2fe0fad387b99ea4733f5a268fdf51d3fe7fdd6744c7fc72b7ce9e
+      evidence: Synthetic fixture assertion; not a live semantic review
+      granularity: CORRECT
+      invest:
+        Estimable: PASS
+        Independent: PASS
+        Negotiable: PASS
+        Small: PASS
+        Testable: PASS
+        Valuable: PASS
+      node: task
+      role: Product
+      severity: HIGH
+      verdict: PASS
+    - action: No repair identified in fixture
+      candidate_fingerprint: 574f580d5c2fe0fad387b99ea4733f5a268fdf51d3fe7fdd6744c7fc72b7ce9e
+      evidence: Synthetic fixture assertion; not a live semantic review
+      granularity: CORRECT
+      invest:
+        Estimable: PASS
+        Independent: PASS
+        Negotiable: PASS
+        Small: PASS
+        Testable: PASS
+        Valuable: PASS
+      node: task
+      role: QA
+      severity: HIGH
+      verdict: PASS
+  schema: ai-sdlc-decomposition-candidate/v1
+  scope: registration
+  sources[1]{content,key,path,sha256}:
+    An approver accepts a submitted expense. Failed requests preserve prior state.,source,request.md,85f892269a40a437328110dc4a95bf2052afbf0df02fbe85d33eb2c22f4f08b9
+  target_level: TASK
+  unknowns[0]:
+expected_codes[0]:
+expected_status: PASS
+mode: simulated-property-fixture
+name: workflow

@@ -79,3 +79,5 @@ and schemas; these helper actions grant no source-mutation authority.
 ## Durable formats
 
 Loop-owned specifications, state, approvals, engineering quality context and reports, evidence, install records, review artifacts, release decisions, and promotion output use canonical TOON. JSON-named durable output is rejected. The engineering report uses `ai-sdlc-engineering-quality-gate/v1`; Verify accepts only a current `PASS` or `PASS_WITH_FINDINGS` report whose `final_decision.ready_for_next_stage` is true.
+
+- `ai-sdlc-loop-hierarchical-decomposition`: evidence-backed hierarchy and verified branch packets; see [decomposition](decomposition.md).

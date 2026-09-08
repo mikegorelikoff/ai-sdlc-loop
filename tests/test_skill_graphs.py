@@ -39,7 +39,7 @@ class SkillGraphTests(unittest.TestCase):
                         else:
                             self.fail("graph did not terminate within its node count")
                 count += 1
-        self.assertEqual(count, 21)
+        self.assertEqual(count, 22)
         self.assertTrue((ROOT / "skills/ai-sdlc-loop-shared-runtime/references/execution-contract.md").is_file())
 
     def test_compact_graph_rejects_inconsistent_completion_and_unknown_phase(self):

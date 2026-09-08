@@ -23,6 +23,7 @@ SKILLS = (
     "ai-sdlc-loop-commit", "ai-sdlc-loop-approvals-sandbox", "ai-sdlc-loop-branching",
     "ai-sdlc-loop-test-cases", "ai-sdlc-loop-qa", "ai-sdlc-loop-requirements-review",
     "ai-sdlc-loop-requirements-discovery",
+    "ai-sdlc-loop-hierarchical-decomposition",
     "ai-sdlc-loop-validation", "ai-sdlc-loop-code-review", "ai-sdlc-loop-security-testing",
     "ai-sdlc-loop-commit-prep", "ai-sdlc-loop-conventional-commit",
     "ai-sdlc-loop-release-readiness", "ai-sdlc-loop-shared-runtime",

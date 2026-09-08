@@ -18,6 +18,7 @@ LOOP_SKILLS = [
     "ai-sdlc-loop-doctor",
     "ai-sdlc-loop-engineering-quality-gate",
     "ai-sdlc-loop-flow",
+    "ai-sdlc-loop-hierarchical-decomposition",
     "ai-sdlc-loop-implement",
     "ai-sdlc-loop-orchestrate",
     "ai-sdlc-loop-qa",

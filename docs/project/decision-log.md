@@ -64,3 +64,11 @@ Publish the user-authorized determinism reinforcement from feature 026. Keep nat
 ## 2026-09-08 — Windows release gate repair
 
 Windows CI exposed CRLF-sensitive contract heading matching. Normalize line endings only in the selected excerpt; preserve original source bytes for fingerprinting. A reproduced failing fixture now covers LF, CRLF, CR and duplicate headings.
+
+## 2026-09-08 — Hierarchical decomposition utility
+
+Add a bounded utility before owning backlog/SDD or Specify stages. Keep canonical TOON and existing state authority. Optional Feature depth, stable identities and branch packets avoid duplicated requirements interpretation. Mechanical checks and semantic review have separate responsibilities; fixture results are not live-model quality claims. Existing artifact paths remain compatible.
+
+## 2026-09-08 — Release 0.6.0
+
+Publish additive hierarchical decomposition with native steps, source-bound TOON, deterministic validation and verified downstream packets. Existing lifecycle authority and API ranges remain unchanged. User authorized release to main; rollback uses the previous stable tag.

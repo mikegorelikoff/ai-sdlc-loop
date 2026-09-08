@@ -1,0 +1,439 @@
+"$schema": ai-sdlc-toon-contract/v1
+candidate:
+  properties:
+    acceptance_criteria:
+      items:
+        properties:
+          category:
+            enum[6]: HAPPY,VALIDATION,ERROR,PERMISSION,TRANSITION,BOUNDARY
+            maxLength: 180
+            minLength: 1
+            type: string
+          given:
+            maxLength: 180
+            minLength: 1
+            type: string
+          key:
+            maxLength: 80
+            minLength: 1
+            pattern: "[a-zA-Z0-9][a-zA-Z0-9_.-]*"
+            type: string
+          node:
+            maxLength: 80
+            minLength: 1
+            pattern: "[a-zA-Z0-9][a-zA-Z0-9_.-]*"
+            type: string
+          requirements:
+            items:
+              maxLength: 80
+              minLength: 1
+              pattern: "[a-zA-Z0-9][a-zA-Z0-9_.-]*"
+              type: string
+            maxItems: 300
+            minItems: 1
+            type: array
+          then:
+            maxLength: 180
+            minLength: 1
+            type: string
+          verification:
+            maxLength: 180
+            minLength: 1
+            type: string
+          when:
+            maxLength: 180
+            minLength: 1
+            type: string
+        type: object
+      maxItems: 300
+      minItems: 0
+      type: array
+    assumptions:
+      items:
+        properties:
+          confidence:
+            enum[4]: LOW,MEDIUM,HIGH,UNKNOWN
+            maxLength: 180
+            minLength: 1
+            type: string
+          description:
+            maxLength: 180
+            minLength: 1
+            type: string
+          evidence:
+            items:
+              maxLength: 80
+              minLength: 1
+              pattern: "[a-zA-Z0-9][a-zA-Z0-9_.-]*"
+              type: string
+            maxItems: 300
+            minItems: 0
+            type: array
+          impact:
+            maxLength: 180
+            minLength: 1
+            type: string
+          key:
+            maxLength: 80
+            minLength: 1
+            pattern: "[a-zA-Z0-9][a-zA-Z0-9_.-]*"
+            type: string
+          reason:
+            maxLength: 180
+            minLength: 1
+            type: string
+          status:
+            enum[2]: PENDING,VALIDATED
+            maxLength: 180
+            minLength: 1
+            type: string
+          validation:
+            maxLength: 180
+            minLength: 1
+            type: string
+          validation_needed:
+            type: boolean
+        type: object
+      maxItems: 300
+      minItems: 0
+      type: array
+    dependencies:
+      items:
+        properties:
+          from:
+            maxLength: 80
+            minLength: 1
+            pattern: "[a-zA-Z0-9][a-zA-Z0-9_.-]*"
+            type: string
+          reason:
+            maxLength: 180
+            minLength: 1
+            type: string
+          to:
+            maxLength: 80
+            minLength: 1
+            pattern: "[a-zA-Z0-9][a-zA-Z0-9_.-]*"
+            type: string
+          type:
+            enum[5]: BLOCKS,DEPENDS_ON,ENABLES,INTEGRATES_WITH,SHARES_CONTRACT_WITH
+            maxLength: 180
+            minLength: 1
+            type: string
+        type: object
+      maxItems: 300
+      minItems: 0
+      type: array
+    input_level:
+      enum[5]: INITIATIVE,EPIC,FEATURE,STORY,TASK
+      maxLength: 180
+      minLength: 1
+      type: string
+    iteration:
+      maximum: 3
+      minimum: 1
+      type: integer
+    nfr_exclusions:
+      items:
+        properties:
+          evidence:
+            items:
+              maxLength: 80
+              minLength: 1
+              pattern: "[a-zA-Z0-9][a-zA-Z0-9_.-]*"
+              type: string
+            maxItems: 300
+            minItems: 1
+            type: array
+          node:
+            maxLength: 80
+            minLength: 1
+            pattern: "[a-zA-Z0-9][a-zA-Z0-9_.-]*"
+            type: string
+          reason:
+            maxLength: 180
+            minLength: 1
+            type: string
+          requirement:
+            maxLength: 80
+            minLength: 1
+            pattern: "[a-zA-Z0-9][a-zA-Z0-9_.-]*"
+            type: string
+        type: object
+      maxItems: 300
+      minItems: 0
+      type: array
+    nodes:
+      items:
+        properties:
+          actor:
+            maxLength: 180
+            minLength: 0
+            type: string
+          assumptions:
+            items:
+              maxLength: 80
+              minLength: 1
+              pattern: "[a-zA-Z0-9][a-zA-Z0-9_.-]*"
+              type: string
+            maxItems: 300
+            minItems: 0
+            type: array
+          axis:
+            enum[9]: business-capability,user-journey,workflow-stage,domain,lifecycle,integration,operational-outcome,implementation-obligation,UNKNOWN
+            maxLength: 180
+            minLength: 1
+            type: string
+          behavior:
+            maxLength: 180
+            minLength: 0
+            type: string
+          delivery_slice:
+            enum[5]: FOUNDATION,MVP,FOLLOW_UP,OPTIONAL,UNKNOWN
+            maxLength: 180
+            minLength: 1
+            type: string
+          implementation_obligation:
+            maxLength: 180
+            minLength: 0
+            type: string
+          key:
+            maxLength: 80
+            minLength: 1
+            pattern: "[a-zA-Z0-9][a-zA-Z0-9_.-]*"
+            type: string
+          knowledge:
+            enum[4]: KNOWN,INFERRED,ASSUMED,UNKNOWN
+            maxLength: 180
+            minLength: 1
+            type: string
+          outcome:
+            maxLength: 180
+            minLength: 1
+            type: string
+          parent:
+            maxLength: 180
+            minLength: 0
+            type: string
+          priority_evidence:
+            items:
+              maxLength: 80
+              minLength: 1
+              pattern: "[a-zA-Z0-9][a-zA-Z0-9_.-]*"
+              type: string
+            maxItems: 300
+            minItems: 0
+            type: array
+          requirements:
+            items:
+              maxLength: 80
+              minLength: 1
+              pattern: "[a-zA-Z0-9][a-zA-Z0-9_.-]*"
+              type: string
+            maxItems: 300
+            minItems: 0
+            type: array
+          technical_justification:
+            maxLength: 180
+            minLength: 0
+            type: string
+          technical_outcome:
+            type: boolean
+          title:
+            maxLength: 180
+            minLength: 1
+            type: string
+          type:
+            enum[5]: INITIATIVE,EPIC,FEATURE,STORY,TASK
+            maxLength: 180
+            minLength: 1
+            type: string
+          verification:
+            maxLength: 180
+            minLength: 0
+            type: string
+        type: object
+      maxItems: 128
+      minItems: 1
+      type: array
+    requirements:
+      items:
+        properties:
+          key:
+            maxLength: 80
+            minLength: 1
+            pattern: "[a-zA-Z0-9][a-zA-Z0-9_.-]*"
+            type: string
+          kind:
+            enum[3]: FUNCTIONAL,NFR,CONSTRAINT
+            maxLength: 180
+            minLength: 1
+            type: string
+          knowledge:
+            enum[4]: KNOWN,INFERRED,ASSUMED,UNKNOWN
+            maxLength: 180
+            minLength: 1
+            type: string
+          quote:
+            maxLength: 180
+            minLength: 1
+            type: string
+          source:
+            maxLength: 80
+            minLength: 1
+            pattern: "[a-zA-Z0-9][a-zA-Z0-9_.-]*"
+            type: string
+          text:
+            maxLength: 180
+            minLength: 1
+            type: string
+        type: object
+      maxItems: 300
+      minItems: 0
+      type: array
+    reviews:
+      items:
+        properties:
+          action:
+            maxLength: 180
+            minLength: 1
+            type: string
+          candidate_fingerprint:
+            pattern: "[a-f0-9]{64}"
+            type: string
+          evidence:
+            maxLength: 180
+            minLength: 1
+            type: string
+          granularity:
+            enum[4]: TOO_LARGE,CORRECT,TOO_SMALL,UNKNOWN
+            maxLength: 180
+            minLength: 1
+            type: string
+          invest:
+            properties:
+              Estimable:
+                enum[4]: PASS,FAIL,DEPENDENCY,N/A
+                maxLength: 180
+                minLength: 1
+                type: string
+              Independent:
+                enum[4]: PASS,FAIL,DEPENDENCY,N/A
+                maxLength: 180
+                minLength: 1
+                type: string
+              Negotiable:
+                enum[4]: PASS,FAIL,DEPENDENCY,N/A
+                maxLength: 180
+                minLength: 1
+                type: string
+              Small:
+                enum[4]: PASS,FAIL,DEPENDENCY,N/A
+                maxLength: 180
+                minLength: 1
+                type: string
+              Testable:
+                enum[4]: PASS,FAIL,DEPENDENCY,N/A
+                maxLength: 180
+                minLength: 1
+                type: string
+              Valuable:
+                enum[4]: PASS,FAIL,DEPENDENCY,N/A
+                maxLength: 180
+                minLength: 1
+                type: string
+            type: object
+          node:
+            maxLength: 80
+            minLength: 1
+            pattern: "[a-zA-Z0-9][a-zA-Z0-9_.-]*"
+            type: string
+          role:
+            enum[4]: Product,Delivery,Architecture,QA
+            maxLength: 180
+            minLength: 1
+            type: string
+          severity:
+            enum[3]: CRITICAL,HIGH,WARNING
+            maxLength: 180
+            minLength: 1
+            type: string
+          verdict:
+            enum[3]: PASS,FAIL,UNKNOWN
+            maxLength: 180
+            minLength: 1
+            type: string
+        type: object
+      maxItems: 512
+      minItems: 0
+      type: array
+    schema:
+      enum[1]: ai-sdlc-decomposition-candidate/v1
+      maxLength: 180
+      minLength: 1
+      type: string
+    scope:
+      maxLength: 80
+      minLength: 1
+      pattern: "[a-zA-Z0-9][a-zA-Z0-9_.-]*"
+      type: string
+    sources:
+      items:
+        properties:
+          content:
+            maxLength: 64000
+            minLength: 1
+            type: string
+          key:
+            maxLength: 80
+            minLength: 1
+            pattern: "[a-zA-Z0-9][a-zA-Z0-9_.-]*"
+            type: string
+          path:
+            maxLength: 180
+            minLength: 1
+            type: string
+          sha256:
+            pattern: "[a-f0-9]{64}"
+            type: string
+        type: object
+      maxItems: 16
+      minItems: 1
+      type: array
+    target_level:
+      enum[5]: INITIATIVE,EPIC,FEATURE,STORY,TASK
+      maxLength: 180
+      minLength: 1
+      type: string
+    unknowns:
+      items:
+        properties:
+          affected:
+            items:
+              maxLength: 80
+              minLength: 1
+              pattern: "[a-zA-Z0-9][a-zA-Z0-9_.-]*"
+              type: string
+            maxItems: 300
+            minItems: 1
+            type: array
+          blocking:
+            type: boolean
+          impact:
+            maxLength: 180
+            minLength: 1
+            type: string
+          key:
+            maxLength: 80
+            minLength: 1
+            pattern: "[a-zA-Z0-9][a-zA-Z0-9_.-]*"
+            type: string
+          question:
+            maxLength: 180
+            minLength: 1
+            type: string
+        type: object
+      maxItems: 300
+      minItems: 0
+      type: array
+  type: object
+schema: ai-sdlc-decomposition-contract/v1

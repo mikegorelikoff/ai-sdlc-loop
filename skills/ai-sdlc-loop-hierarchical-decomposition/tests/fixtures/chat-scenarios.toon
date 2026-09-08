@@ -1,0 +1,137 @@
+scenarios[8]:
+  - baseline_response: The hierarchy is prepared. Follow the source evidence and resolve any missing decisions.
+    id: happy
+    provenance: Simulated compact chat regression; domain compiler corpus is separate
+    request: Show happy hierarchy result
+    required_facts[1]: decomposition.toon
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        decomposition.toon,Hand off reviewed Story,Delivery owner
+      primary[1]{ID,Outcome,Parent,Status,Title,Type}:
+        STORY-example,Email becomes verified,EPIC-example,PASS,Verify email,STORY
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: Source-backed branch evaluated; execution approval remains separate
+        Evidence: decomposition.toon
+        Status: PASS
+  - baseline_response: The hierarchy is prepared. Follow the source evidence and resolve any missing decisions.
+    id: partial
+    provenance: Simulated compact chat regression; domain compiler corpus is separate
+    request: Show partial hierarchy result
+    required_facts[1]: decomposition.toon
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        decomposition.toon,Hand off reviewed Story,Delivery owner
+      primary[1]{ID,Outcome,Parent,Status,Title,Type}:
+        STORY-example,Email becomes verified,EPIC-example,WARNING,Verify email,STORY
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: Source-backed branch evaluated; execution approval remains separate
+        Evidence: decomposition.toon
+        Status: WARNING
+  - baseline_response: The hierarchy is prepared. Follow the source evidence and resolve any missing decisions.
+    id: warning
+    provenance: Simulated compact chat regression; domain compiler corpus is separate
+    request: Show warning hierarchy result
+    required_facts[1]: decomposition.toon
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        decomposition.toon,Hand off reviewed Story,Delivery owner
+      primary[1]{ID,Outcome,Parent,Status,Title,Type}:
+        STORY-example,Email becomes verified,EPIC-example,WARNING,Verify email,STORY
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: Source-backed branch evaluated; execution approval remains separate
+        Evidence: decomposition.toon
+        Status: WARNING
+  - baseline_response: The hierarchy is prepared. Follow the source evidence and resolve any missing decisions.
+    id: blocked
+    provenance: Simulated compact chat regression; domain compiler corpus is separate
+    request: Show blocked hierarchy result
+    required_facts[1]: decomposition.toon
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        decomposition.toon,Resolve missing identity decision,Delivery owner
+      failures[1]{Blocker,Branch,Evidence,"Required action",Status}:
+        Identity model unknown,EPIC-example,decomposition.toon,Provide owner decision,BLOCKED
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: Resolve identity model before decomposition
+        Evidence: decomposition.toon
+        Status: BLOCKED
+  - baseline_response: The hierarchy is prepared. Follow the source evidence and resolve any missing decisions.
+    id: missing-input
+    provenance: Simulated compact chat regression; domain compiler corpus is separate
+    request: Show missing-input hierarchy result
+    required_facts[1]: decomposition.toon
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        decomposition.toon,Resolve missing identity decision,Delivery owner
+      clarifications[1]{"Known evidence","Missing decision",Options,"Why required"}:
+        No approved identity source,Identity model,Internal / external users,Changes access behavior
+      failures[1]{Blocker,Branch,Evidence,"Required action",Status}:
+        Identity model unknown,EPIC-example,decomposition.toon,Provide owner decision,BLOCKED
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: Resolve identity model before decomposition
+        Evidence: decomposition.toon
+        Status: BLOCKED
+  - baseline_response: The hierarchy is prepared. Follow the source evidence and resolve any missing decisions.
+    id: large
+    provenance: Simulated compact chat regression; domain compiler corpus is separate
+    request: Show large hierarchy result
+    required_facts[1]: decomposition.toon
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        decomposition.toon,Hand off reviewed Story,Delivery owner
+      full_artifact: decomposition.toon
+      primary[12]{ID,Outcome,Parent,Status,Title,Type}:
+        STORY-0,Email becomes verified,EPIC-example,PASS,Verify email,STORY
+        STORY-1,Email becomes verified,EPIC-example,PASS,Verify email,STORY
+        STORY-2,Email becomes verified,EPIC-example,PASS,Verify email,STORY
+        STORY-3,Email becomes verified,EPIC-example,PASS,Verify email,STORY
+        STORY-4,Email becomes verified,EPIC-example,PASS,Verify email,STORY
+        STORY-5,Email becomes verified,EPIC-example,PASS,Verify email,STORY
+        STORY-6,Email becomes verified,EPIC-example,PASS,Verify email,STORY
+        STORY-7,Email becomes verified,EPIC-example,PASS,Verify email,STORY
+        STORY-8,Email becomes verified,EPIC-example,PASS,Verify email,STORY
+        STORY-9,Email becomes verified,EPIC-example,PASS,Verify email,STORY
+        STORY-10,Email becomes verified,EPIC-example,PASS,Verify email,STORY
+        STORY-11,Email becomes verified,EPIC-example,PASS,Verify email,STORY
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: Source-backed branch evaluated; execution approval remains separate
+        Evidence: decomposition.toon
+        Status: PASS
+  - baseline_response: The hierarchy is prepared. Follow the source evidence and resolve any missing decisions.
+    id: small
+    provenance: Simulated compact chat regression; domain compiler corpus is separate
+    request: Show small hierarchy result
+    required_facts[1]: decomposition.toon
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        decomposition.toon,Hand off reviewed Story,Delivery owner
+      primary[1]{ID,Outcome,Parent,Status,Title,Type}:
+        STORY-example,Email becomes verified,EPIC-example,PASS,Verify email,STORY
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: Source-backed branch evaluated; execution approval remains separate
+        Evidence: decomposition.toon
+        Status: PASS
+  - baseline_response: The hierarchy is prepared. Follow the source evidence and resolve any missing decisions.
+    id: edge
+    provenance: Simulated compact chat regression; domain compiler corpus is separate
+    request: Show edge hierarchy result
+    required_facts[1]: decomposition.toon
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        decomposition.toon,Hand off reviewed Story,Delivery owner
+      primary[1]{ID,Outcome,Parent,Status,Title,Type}:
+        STORY-example,Email becomes verified,EPIC-example,PASS,Verify email,STORY
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: Source-backed branch evaluated; execution approval remains separate
+        Evidence: decomposition.toon
+        Status: PASS
+schema: ai-sdlc-chat-scenarios/v1
+skill: ai-sdlc-loop-hierarchical-decomposition

@@ -28,6 +28,7 @@ SKILLS = (
     "ai-sdlc-loop-qa",
     "ai-sdlc-loop-requirements-review",
     "ai-sdlc-loop-requirements-discovery",
+    "ai-sdlc-loop-hierarchical-decomposition",
     "ai-sdlc-loop-validation",
     "ai-sdlc-loop-code-review",
     "ai-sdlc-loop-security-testing",

@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+## v0.6.0 - 2026-09-08
+
+- Add native hierarchical decomposition with source-bound contracts, five-step execution, deterministic gates, independent review boundaries and regression fixtures.
+
 ## v0.5.0 - 2026-09-08
 
 - Normalize CRLF/CR contract excerpts while retaining original source fingerprints; protect Windows selection with regression tests.
