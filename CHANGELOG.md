@@ -1,6 +1,6 @@
 # Changelog
 
-## Execution reinforcement — unreleased
+## 0.3.0 - 2026-09-08
 
 - Added read-only deterministic selection of compact Loop graphs with cycle,
   dependency, missing-source and inconsistent-completion rejection.
@@ -12,20 +12,6 @@
 - Match routing keywords at word boundaries and prioritize requirements
   discovery, requirements review and engineering quality-gate requests.
 
-## 0.1.1 - 2026-08-17
-
-- Replace the premature monolithic skill with five stage-oriented skills and one shared runtime.
-- Add canonical `steps/manifest.toon` graphs and bounded step documents.
-- Replace JSON durable artifacts and install records with canonical TOON.
-- Add eight self-contained Harness delivery-control skills for branching, test design, validation, review, security, approval planning, and commit quality.
-- Add a compact QA skill for risk-based acceptance, regression, manual checks, signoff, and canonical TOON QA plans.
-- Add compact requirements-gap and release-readiness skills with typed TOON review artifacts.
-- Force shared helper output to UTF-8 and regression-test Windows `cp1252` compatibility.
-- Namespace every installed skill as `ai-sdlc-loop-{slug}` and expose the root router as `ai-sdlc-loop-orchestrate`.
-
-All notable changes follow Keep a Changelog. This project uses semantic versioning.
-
-## [Unreleased]
 
 ### Added
 
@@ -53,3 +39,20 @@ All notable changes follow Keep a Changelog. This project uses semantic versioni
 - Portable three-profile installer and offline verification.
 - Fingerprint-bound Implement and commit approvals.
 - Deterministic redacted evidence and Harness-compatible promotion.
+
+## 0.2.0 - 2026-08-18
+
+- Released guided Flow, installation Doctor, and the expanded documentation site.
+
+## 0.1.1 - 2026-08-17
+
+- Replace the premature monolithic skill with five stage-oriented skills and one shared runtime.
+- Add canonical `steps/manifest.toon` graphs and bounded step documents.
+- Replace JSON durable artifacts and install records with canonical TOON.
+- Add eight self-contained Harness delivery-control skills for branching, test design, validation, review, security, approval planning, and commit quality.
+- Add a compact QA skill for risk-based acceptance, regression, manual checks, signoff, and canonical TOON QA plans.
+- Add compact requirements-gap and release-readiness skills with typed TOON review artifacts.
+- Force shared helper output to UTF-8 and regression-test Windows `cp1252` compatibility.
+- Namespace every installed skill as `ai-sdlc-loop-{slug}` and expose the root router as `ai-sdlc-loop-orchestrate`.
+
+All notable changes follow Keep a Changelog. This project uses semantic versioning.

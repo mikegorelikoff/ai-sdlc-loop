@@ -2,7 +2,7 @@
 
 ## Preparing
 
-- `v0.2.0`: guided Flow, installation Doctor, mandatory engineering quality gate, 21-directory package, and expanded strict documentation.
+- `v0.3.0`: guided Flow, installation Doctor, mandatory engineering quality gate, 21-directory package, and expanded strict documentation.
 
 ## Later
 

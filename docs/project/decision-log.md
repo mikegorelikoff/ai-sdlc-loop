@@ -27,3 +27,10 @@ freshness and every distributed skill graph with local regression tests.
 | 2026-08-17 | Namespace every installed skill as `ai-sdlc-loop-{slug}`. | Accepted |
 | 2026-08-18 | Add guided Flow and read-only Doctor without importing the full Harness dependency cascade. | Accepted |
 | 2026-08-18 | Mirror Harness documentation architecture and validation while keeping Loop's content surface focused. | Accepted |
+
+## 2026-09-08 — Release 0.3.0
+
+Publish the 21-skill package with deterministic graph selection, current-evidence
+gates, requirements discovery and engineering review. Pin install defaults and
+first-run commands to v0.3.0. No schema-major migration is introduced; v0.2.0
+remains an immutable rollback target.

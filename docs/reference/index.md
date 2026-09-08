@@ -14,7 +14,7 @@ Install locally with `python3 install.py PROFILE`. Verify with `python3 install.
 
 ## Current source inventory
 
-The current unreleased source installs the 21 entries below. Immutable
+The v0.3.0 source installs the 21 entries below. Immutable
 `v0.1.1` retains its previous 17-member inventory.
 
 Guided entry and diagnostics:

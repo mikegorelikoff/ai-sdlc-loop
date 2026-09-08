@@ -10,7 +10,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 DOCS = ROOT / "docs"
-INSTALL = "curl -fsSL https://raw.githubusercontent.com/mikegorelikoff/ai-sdlc-loop/v0.2.0/install.sh | sh -s -- codex-project"
+INSTALL = "curl -fsSL https://raw.githubusercontent.com/mikegorelikoff/ai-sdlc-loop/v0.3.0/install.sh | sh -s -- codex-project"
 
 
 def fail(message: str) -> None:

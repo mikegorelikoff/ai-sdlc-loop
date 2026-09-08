@@ -22,7 +22,7 @@ AI SDLC Loop is the focused delivery member of the AI SDLC product family. It in
 Install for a Codex project with one shell command:
 
 ```sh
-curl -fsSL https://raw.githubusercontent.com/mikegorelikoff/ai-sdlc-loop/v0.2.0/install.sh | sh -s -- codex-project
+curl -fsSL https://raw.githubusercontent.com/mikegorelikoff/ai-sdlc-loop/v0.3.0/install.sh | sh -s -- codex-project
 ```
 
 Then verify separately:
@@ -31,7 +31,7 @@ Then verify separately:
 python3 .ai-sdlc-loop/install/install.py verify codex-project
 ```
 
-For a local checkout, use `python3 install.py codex-project`. Claude Code uses `claude-code-project`; another compatible agent uses `agent-project --skills-root .agent/skills`. Immutable `v0.1.1` retains its 17-member inventory; the current unreleased source installs the 21-member package described below.
+For a local checkout, use `python3 install.py codex-project`. Claude Code uses `claude-code-project`; another compatible agent uses `agent-project --skills-root .agent/skills`. Immutable `v0.1.1` retains its 17-member inventory; the v0.3.0 source installs the 21-member package described below.
 
 ## Expected result
 

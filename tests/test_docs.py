@@ -245,12 +245,12 @@ class DocumentedCommandTests(unittest.TestCase):
 
         install_command = (
             "curl -fsSL https://raw.githubusercontent.com/mikegorelikoff/"
-            "ai-sdlc-loop/v0.2.0/install.sh | sh -s -- codex-project"
+            "ai-sdlc-loop/v0.3.0/install.sh | sh -s -- codex-project"
         )
         for relative in ("README.md", "docs/index.md", "docs/start-here.md"):
             text = (ROOT / relative).read_text(encoding="utf-8")
             self.assertEqual(1, text.count(install_command), relative)
-        self.assertIn('ref="${AI_SDLC_LOOP_REF:-v0.2.0}"', (ROOT / "install.sh").read_text(encoding="utf-8"))
+        self.assertIn('ref="${AI_SDLC_LOOP_REF:-v0.3.0}"', (ROOT / "install.sh").read_text(encoding="utf-8"))
 
     def test_tc036_generated_catalog_and_source_docs_are_current(self) -> None:
         for script, arguments in (

@@ -21,7 +21,7 @@ AI SDLC Loop is the focused delivery member of the AI SDLC product family. It in
 Install for a Codex project:
 
 ```sh
-curl -fsSL https://raw.githubusercontent.com/mikegorelikoff/ai-sdlc-loop/v0.2.0/install.sh | sh -s -- codex-project
+curl -fsSL https://raw.githubusercontent.com/mikegorelikoff/ai-sdlc-loop/v0.3.0/install.sh | sh -s -- codex-project
 ```
 
 Verify in a separate step:
@@ -31,7 +31,7 @@ python3 .ai-sdlc-loop/install/install.py verify codex-project
 ```
 
 The installer preserves unrelated skills and writes a TOON inventory below `.ai-sdlc-loop/install/`.
-Immutable `v0.1.1` retains its 17-member inventory; the current unreleased
+Immutable `v0.1.1` retains its 17-member inventory; the v0.3.0
 source uses the 21-member inventory documented on this site.
 
 ## AI SDLC product family
