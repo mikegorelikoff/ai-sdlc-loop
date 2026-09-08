@@ -568,6 +568,8 @@ def determinism_reference(skill_root: Path, text: str) -> tuple[str, str, Path] 
     content, error, path = _read_text(skill_root, "SKILL.md")
     if error or content is None or path is None:
         raise ValueError("STEP_CONTEXT_INSUFFICIENT: missing owning skill contract")
+    # Normalize the selected excerpt; source fingerprints still hash original bytes.
+    content = content.replace("\r\n", "\n").replace("\r", "\n")
     marker = "## Deterministic Execution Contract\n"
     if content.count(marker) != 1:
         raise ValueError("STEP_CONTEXT_INSUFFICIENT: ambiguous owning skill contract")

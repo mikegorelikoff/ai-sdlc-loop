@@ -2,6 +2,7 @@
 
 ## v0.5.0 - 2026-09-08
 
+- Normalize CRLF/CR contract excerpts while retaining original source fingerprints; protect Windows selection with regression tests.
 ### Changed
 
 - Add explicit deterministic/semantic boundaries to all 21 skills, linked to their existing Python entry points.

@@ -14,6 +14,22 @@ import ai_sdlc_safe_io as io
 import ai_sdlc_state_machine as state
 
 class DeterminismTests(unittest.TestCase):
+    def test_contract_selection_normalizes_line_endings_and_rejects_duplicates(self):
+        from ai_sdlc_step_context import determinism_reference
+        link = "[contract](../SKILL.md#deterministic-execution-contract)"
+        source = "# Skill\n\n## Deterministic Execution Contract\n\nValidate inputs.\n\n## Other\nExcluded.\n"
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            outputs = []
+            for ending in ("\n", "\r\n", "\r"):
+                (root / "SKILL.md").write_bytes(source.replace("\n", ending).encode("utf-8"))
+                outputs.append(determinism_reference(root, link)[1])
+            self.assertEqual(outputs, [outputs[0]] * 3)
+            self.assertNotIn("Excluded", outputs[0])
+            (root / "SKILL.md").write_bytes((source + source).encode("utf-8"))
+            with self.assertRaisesRegex(ValueError, "ambiguous owning"):
+                determinism_reference(root, link)
+
     def test_control_characters_are_lossless_single_line_scalars(self):
         for char in ('\x00','\x0b','\x1c','\x85','\u2028','\u2029'):
             value={'text':'before'+char+'after'}

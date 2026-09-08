@@ -60,3 +60,7 @@ The canonical execution boundary and product-specific reproducibility limits are
 ## 2026-09-08 — Release 0.5.0
 
 Publish the user-authorized determinism reinforcement from feature 026. Keep native artifact formats and existing approval boundaries. Structural and fixture-based tests do not establish live model reliability. Roll back by pinning 0.4.0; do not rewrite published tags.
+
+## 2026-09-08 — Windows release gate repair
+
+Windows CI exposed CRLF-sensitive contract heading matching. Normalize line endings only in the selected excerpt; preserve original source bytes for fingerprinting. A reproduced failing fixture now covers LF, CRLF, CR and duplicate headings.
