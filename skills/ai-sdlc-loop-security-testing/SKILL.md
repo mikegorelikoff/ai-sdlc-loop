@@ -20,6 +20,18 @@ description: AI SDLC security testing workflow. Use when an AI assistant is aske
 - Purpose: Review AI SDLC diffs, endpoints, workflows, provider integrations, and configs for concrete security findings, abuse paths, trust-boundary failures, and missing security validation. When the output makes OWASP- or standards-based claims, verify them against current primary sources before presenting them as authoritative guidance.
 - Output: Security findings, trust-boundary analysis, standards-backed notes, validation gaps, and fixes
 
+## Chat Output Contract
+
+Primary: Severity / Trust boundary / Finding / Evidence / Remediation; secondary: Source / Supported claim / Freshness / Evidence.
+Rows represent individual severity records. Show unresolved blockers before nonblocking findings; a completed review is not delivery approval.
+Summary: Status / Decision / Evidence. Failure: Trust boundary / Status / Blocker / Evidence / Required action.
+Clarification: Missing trust boundary / Why required / Known evidence / Options. Next action: Owner / Next action / Expected evidence.
+Use PASS, FAIL, WARNING, BLOCKED, PENDING, N/A only for chat statuses; preserve native domain states.
+At most six columns, eight preview rows and 180 characters per cell; link full evidence and state omitted totals.
+No duplicate prose. Keep code, commands, commit messages and machine handoffs native.
+Apply [this skill’s schema and examples](references/chat-output.toon) before any user-facing result, warning or question.
+Use the sibling `ai-sdlc-loop-shared-runtime/scripts/chat_output.py` to render/check; [shared limits](../ai-sdlc-loop-shared-runtime/references/chat-output.md) bound repair and preserve native outputs.
+
 ## Step Selector
 
 This table is generated from `steps/manifest.toon`. The manifest and linked

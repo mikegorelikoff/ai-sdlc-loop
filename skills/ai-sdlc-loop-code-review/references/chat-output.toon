@@ -1,0 +1,17 @@
+clarification[4]: Missing review diff,Why required,Known evidence,Options
+example:
+  Evidence: TC-001 reproduces double charge
+  Finding: Duplicate charge on retry
+  Location: "src/payments.py:84"
+  "Required fix": Reuse idempotency key
+  Severity: HIGH
+failure[5]: Review diff,Status,Blocker,Evidence,Required action
+hide: "Secrets, raw logs, complete journals and unneeded internal tool steps. Keep full detail in the owning native artifact."
+native_exception: "Keep machine artifacts, code, commands and diffs native; presentation does not replace validation."
+primary[5]: Severity,Location,Finding,Evidence,Required fix
+priority: Show unresolved blockers before nonblocking findings; a completed review is not delivery approval.
+required_input: Review diff
+rows: individual severity records
+schema: ai-sdlc-chat-contract/v1
+secondary[4]: Check,Status,Evidence,Coverage gap
+skill: ai-sdlc-loop-code-review

@@ -9,7 +9,7 @@ import re
 from pathlib import Path
 
 from toon import decode_toon, encode_toon
-from ai_sdlc_step_context import execution_reference
+from ai_sdlc_step_context import execution_reference, chat_reference
 
 
 def select_steps(skills_root: Path, skill: str, phase: str, completed=()):
@@ -65,10 +65,10 @@ def select_steps(skills_root: Path, skill: str, phase: str, completed=()):
         if not isinstance(node["path"], str) or node["path"] in documents:
             raise ValueError("STEP_INVALID_MANIFEST: duplicate step path")
         document = read(node["path"])
-        reference = execution_reference(directory, document)
-        if reference:
-            relative, content, _path = reference
-            references[relative] = hashlib.sha256(content.encode()).hexdigest()
+        for reference in (execution_reference(directory, document), chat_reference(directory, document)):
+            if reference:
+                relative, content, _path = reference
+                references[relative] = hashlib.sha256(content.encode()).hexdigest()
         if any(heading not in document for heading in ("## Entry", "## Procedure", "## Exit")):
             raise ValueError("STEP_INVALID_MANIFEST: incomplete step procedure")
         documents[node["path"]] = hashlib.sha256(document.encode()).hexdigest()

@@ -1,0 +1,12 @@
+Result
+Status: PASS
+Decision: Prepared expected / actual entities; listed evidence satisfies this skill check.
+Evidence: smoke.log:4
+
+primary: Actual: Import succeeds; Evidence: smoke.log:4; Expected: Imports sibling runtime; Runtime check: Installed helper import | перенос
+строки; Status: PASS.
+actions: Owner: Maintainer; Next action: Validate installed helper with its owning workflow; Expected evidence: smoke.log:4.
+
+schema: fixture/v1
+status: pending
+source: "literal | value"

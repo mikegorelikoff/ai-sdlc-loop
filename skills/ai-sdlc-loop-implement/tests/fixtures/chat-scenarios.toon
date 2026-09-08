@@ -1,0 +1,152 @@
+scenarios[8]:
+  - baseline_response: "Result\nStatus: PENDING\nDecision: Prepared change / requirement id entities; owner decision or execution remains pending.\nEvidence: diff.patch:12\n\nprimary: Change: Reuse charge by key; Evidence: diff.patch:12; File / component: src/payments.py; Requirement ID: AC-001; Verification: PENDING.\nactions: Owner: Engineer; Next action: Validate implementation approval with its owning workflow; Expected evidence: diff.patch:12.\n\nsecondary: Check: Confirm check for payment retry; Status: PENDING; Evidence: diff.patch:12.\n"
+    id: happy
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-implement for payment-retry delivery: happy"
+    required_facts[3]: "diff.patch:12",src/payments.py,Reuse charge by key
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        "diff.patch:12",Validate implementation approval with its owning workflow,Engineer
+      primary[1]{Change,Evidence,"File / component","Requirement ID",Verification}:
+        Reuse charge by key,"diff.patch:12",src/payments.py,AC-001,PENDING
+      schema: ai-sdlc-chat-result/v1
+      secondary[1]{Check,Evidence,Status}:
+        Retry test,"diff.patch:12",PASS
+      summary:
+        Decision: Prepared file / component result; owner decision or execution remains pending.
+        Evidence: "diff.patch:12"
+        Status: PENDING
+  - baseline_response: "Result\nStatus: WARNING\nDecision: Partial change / requirement id entities coverage; one dependency remains unverified.\nEvidence: diff.patch:12\n\nprimary: Change: Reuse charge by key; Evidence: diff.patch:12; File / component: src/payments.py; Requirement ID: AC-001; Verification: PENDING.\nprimary: Change: Reuse charge by key [pending case]; Evidence: diff.patch:12; File / component: src/payments.py; Requirement ID: AC-001; Verification: PENDING.\nactions: Owner: Engineer; Next action: Validate implementation approval with its owning workflow; Expected evidence: diff.patch:12.\n"
+    id: partial
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-implement for payment-retry delivery: partial"
+    required_facts[3]: "diff.patch:12",src/payments.py,Reuse charge by key
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        "diff.patch:12",Validate implementation approval with its owning workflow,Engineer
+      primary[2]{Change,Evidence,"File / component","Requirement ID",Verification}:
+        Reuse charge by key,"diff.patch:12",src/payments.py,AC-001,PENDING
+        "Reuse charge by key [pending case]","diff.patch:12",src/payments.py,AC-001,PENDING
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: "Partial result: second case is unverified; do not infer full coverage."
+        Evidence: "diff.patch:12"
+        Status: WARNING
+  - baseline_response: "Result\nStatus: WARNING\nDecision: Limited change / requirement id entities review; source freshness must be confirmed.\nEvidence: diff.patch:12\n\nprimary: Change: Reuse charge by key; Evidence: diff.patch:12; File / component: src/payments.py; Requirement ID: AC-001; Verification: PENDING.\nactions: Owner: Engineer; Next action: Validate implementation approval with its owning workflow; Expected evidence: diff.patch:12.\n"
+    id: warning
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-implement for payment-retry delivery: warning"
+    required_facts[3]: "diff.patch:12",src/payments.py,Reuse charge by key
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        "diff.patch:12",Validate implementation approval with its owning workflow,Engineer
+      primary[1]{Change,Evidence,"File / component","Requirement ID",Verification}:
+        Reuse charge by key,"diff.patch:12",src/payments.py,AC-001,PENDING
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: Result has limited source freshness; confirm it before downstream use.
+        Evidence: "diff.patch:12"
+        Status: WARNING
+  - baseline_response: "Result\nStatus: BLOCKED\nDecision: Implementation approval is unavailable; dependent work has not run.\nEvidence: source-inventory.toon:missing\n\nfailures: Implementation approval: Implementation approval; Status: BLOCKED; Blocker: Required source is absent; Evidence: source-inventory.toon:missing; Required action: Provide implementation approval.\nactions: Owner: Engineer; Next action: Provide implementation approval; Expected evidence: Validated implementation approval.\n"
+    id: blocked
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-implement for payment-retry delivery: blocked"
+    required_facts[2]: "source-inventory.toon:missing",Validated implementation approval
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        Validated implementation approval,Provide implementation approval,Engineer
+      failures[1]{Blocker,Evidence,"Implementation approval","Required action",Status}:
+        Required source is absent,"source-inventory.toon:missing",Implementation approval,Provide implementation approval,BLOCKED
+      primary[0]:
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: Implementation approval is unavailable; dependent work has not run.
+        Evidence: "source-inventory.toon:missing"
+        Status: BLOCKED
+  - baseline_response: "Result\nStatus: BLOCKED\nDecision: Implementation approval is unavailable; dependent work has not run.\nEvidence: source-inventory.toon:missing\n\nfailures: Implementation approval: Implementation approval; Status: BLOCKED; Blocker: Required source is absent; Evidence: source-inventory.toon:missing; Required action: Provide implementation approval.\nclarifications: Missing implementation approval: Implementation approval; Why required: Determines file / component; Known evidence: No supported assumption; Options: Supply source / narrow requested scope.\nactions: Owner: Engineer; Next action: Provide implementation approval; Expected evidence: Validated implementation approval.\n"
+    id: missing-input
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-implement for payment-retry delivery: missing-input"
+    required_facts[2]: "source-inventory.toon:missing",Validated implementation approval
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        Validated implementation approval,Provide implementation approval,Engineer
+      clarifications[1]{"Known evidence","Missing implementation approval",Options,"Why required"}:
+        No supported assumption,Implementation approval,Supply source / narrow requested scope,Determines file / component
+      failures[1]{Blocker,Evidence,"Implementation approval","Required action",Status}:
+        Required source is absent,"source-inventory.toon:missing",Implementation approval,Provide implementation approval,BLOCKED
+      primary[0]:
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: Implementation approval is unavailable; dependent work has not run.
+        Evidence: "source-inventory.toon:missing"
+        Status: BLOCKED
+  - baseline_response: "Result\nStatus: PENDING\nDecision: 20 change / requirement id entities rows; showing the first 8; full evidence linked.\nEvidence: diff.patch:12\n\nprimary: Change: Reuse charge by key #1; Evidence: diff.patch:12; File / component: src/payments.py; Requirement ID: AC-001; Verification: PENDING.\nprimary: Change: Reuse charge by key #2; Evidence: diff.patch:12; File / component: src/payments.py; Requirement ID: AC-001; Verification: PENDING.\nprimary: Change: Reuse charge by key #3; Evidence: diff.patch:12; File / component: src/payments.py; Requirement ID: AC-001; Verification: PENDING.\nprimary: Change: Reuse charge by key #4; Evidence: diff.patch:12; File / component: src/payments.py; Requirement ID: AC-001; Verification: PENDING.\nprimary: Change: Reuse charge by key #5; Evidence: diff.patch:12; File / component: src/payments.py; Requirement ID: AC-001; Verification: PENDING.\nprimary: Change: Reuse charge by key #6; Evidence: diff.patch:12; File / component: src/payments.py; Requirement ID: AC-001; Verification: PENDING.\nprimary: Change: Reuse charge by key #7; Evidence: diff.patch:12; File / component: src/payments.py; Requirement ID: AC-001; Verification: PENDING.\nprimary: Change: Reuse charge by key #8; Evidence: diff.patch:12; File / component: src/payments.py; Requirement ID: AC-001; Verification: PENDING.\nprimary: Change: Reuse charge by key #9; Evidence: diff.patch:12; File / component: src/payments.py; Requirement ID: AC-001; Verification: PENDING.\nprimary: Change: Reuse charge by key #10; Evidence: diff.patch:12; File / component: src/payments.py; Requirement ID: AC-001; Verification: PENDING.\nprimary: Change: Reuse charge by key #11; Evidence: diff.patch:12; File / component: src/payments.py; Requirement ID: AC-001; Verification: PENDING.\nprimary: Change: Reuse charge by key #12; Evidence: diff.patch:12; File / component: src/payments.py; Requirement ID: AC-001; Verification: PENDING.\nprimary: Change: Reuse charge by key #13; Evidence: diff.patch:12; File / component: src/payments.py; Requirement ID: AC-001; Verification: PENDING.\nprimary: Change: Reuse charge by key #14; Evidence: diff.patch:12; File / component: src/payments.py; Requirement ID: AC-001; Verification: PENDING.\nprimary: Change: Reuse charge by key #15; Evidence: diff.patch:12; File / component: src/payments.py; Requirement ID: AC-001; Verification: PENDING.\nprimary: Change: Reuse charge by key #16; Evidence: diff.patch:12; File / component: src/payments.py; Requirement ID: AC-001; Verification: PENDING.\nprimary: Change: Reuse charge by key #17; Evidence: diff.patch:12; File / component: src/payments.py; Requirement ID: AC-001; Verification: PENDING.\nprimary: Change: Reuse charge by key #18; Evidence: diff.patch:12; File / component: src/payments.py; Requirement ID: AC-001; Verification: PENDING.\nprimary: Change: Reuse charge by key #19; Evidence: diff.patch:12; File / component: src/payments.py; Requirement ID: AC-001; Verification: PENDING.\nprimary: Change: Reuse charge by key #20; Evidence: diff.patch:12; File / component: src/payments.py; Requirement ID: AC-001; Verification: PENDING.\nactions: Owner: Engineer; Next action: Validate implementation approval with its owning workflow; Expected evidence: diff.patch:12.\n"
+    id: large
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-implement for payment-retry delivery: large"
+    required_facts[3]: "diff.patch:12",src/payments.py,Reuse charge by key #1
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        "diff.patch:12",Validate implementation approval with its owning workflow,Engineer
+      full_artifact: full-result.toon
+      primary[20]{Change,Evidence,"File / component","Requirement ID",Verification}:
+        Reuse charge by key #1,"diff.patch:12",src/payments.py,AC-001,PENDING
+        Reuse charge by key #2,"diff.patch:12",src/payments.py,AC-001,PENDING
+        Reuse charge by key #3,"diff.patch:12",src/payments.py,AC-001,PENDING
+        Reuse charge by key #4,"diff.patch:12",src/payments.py,AC-001,PENDING
+        Reuse charge by key #5,"diff.patch:12",src/payments.py,AC-001,PENDING
+        Reuse charge by key #6,"diff.patch:12",src/payments.py,AC-001,PENDING
+        Reuse charge by key #7,"diff.patch:12",src/payments.py,AC-001,PENDING
+        Reuse charge by key #8,"diff.patch:12",src/payments.py,AC-001,PENDING
+        Reuse charge by key #9,"diff.patch:12",src/payments.py,AC-001,PENDING
+        Reuse charge by key #10,"diff.patch:12",src/payments.py,AC-001,PENDING
+        Reuse charge by key #11,"diff.patch:12",src/payments.py,AC-001,PENDING
+        Reuse charge by key #12,"diff.patch:12",src/payments.py,AC-001,PENDING
+        Reuse charge by key #13,"diff.patch:12",src/payments.py,AC-001,PENDING
+        Reuse charge by key #14,"diff.patch:12",src/payments.py,AC-001,PENDING
+        Reuse charge by key #15,"diff.patch:12",src/payments.py,AC-001,PENDING
+        Reuse charge by key #16,"diff.patch:12",src/payments.py,AC-001,PENDING
+        Reuse charge by key #17,"diff.patch:12",src/payments.py,AC-001,PENDING
+        Reuse charge by key #18,"diff.patch:12",src/payments.py,AC-001,PENDING
+        Reuse charge by key #19,"diff.patch:12",src/payments.py,AC-001,PENDING
+        Reuse charge by key #20,"diff.patch:12",src/payments.py,AC-001,PENDING
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: 20 file / component records; 8 shown; inspect the linked full artifact.
+        Evidence: "diff.patch:12"
+        Status: PENDING
+  - baseline_response: "Result\nStatus: PENDING\nDecision: One file / component result; scope and evidence are explicit.\nEvidence: diff.patch:12\n\nprimary: Change: Reuse charge by key; Evidence: diff.patch:12; File / component: src/payments.py; Requirement ID: AC-001; Verification: PENDING.\nactions: Owner: Engineer; Next action: Validate implementation approval with its owning workflow; Expected evidence: diff.patch:12.\n"
+    id: small
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-implement for payment-retry delivery: small"
+    required_facts[3]: "diff.patch:12",src/payments.py,Reuse charge by key
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        "diff.patch:12",Validate implementation approval with its owning workflow,Engineer
+      primary[1]{Change,Evidence,"File / component","Requirement ID",Verification}:
+        Reuse charge by key,"diff.patch:12",src/payments.py,AC-001,PENDING
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: One file / component result; scope and evidence are explicit.
+        Evidence: "diff.patch:12"
+        Status: PENDING
+  - baseline_response: "Result\nStatus: PENDING\nDecision: Prepared change / requirement id entities; owner decision or execution remains pending.\nEvidence: diff.patch:12\n\nprimary: Change: Reuse charge by key; Evidence: diff.patch:12; File / component: src/payments.py | перенос\nстроки; Requirement ID: AC-001; Verification: PENDING.\nactions: Owner: Engineer; Next action: Validate implementation approval with its owning workflow; Expected evidence: diff.patch:12.\n\nschema: fixture/v1\nstatus: pending\nsource: \"literal | value\"\n"
+    id: edge
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-implement for payment-retry delivery: edge"
+    required_facts[3]: "diff.patch:12","src/payments.py | перенос\nстроки",Reuse charge by key
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        "diff.patch:12",Validate implementation approval with its owning workflow,Engineer
+      native[1]{content,language}:
+        "schema: fixture/v1\nstatus: pending\nsource: \"literal | value\"",toon
+      primary[1]{Change,Evidence,"File / component","Requirement ID",Verification}:
+        Reuse charge by key,"diff.patch:12","src/payments.py | перенос\nстроки",AC-001,PENDING
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: Prepared change / requirement id entities; owner decision or execution remains pending.
+        Evidence: "diff.patch:12"
+        Status: PENDING
+schema: ai-sdlc-chat-scenarios/v1
+skill: ai-sdlc-loop-implement

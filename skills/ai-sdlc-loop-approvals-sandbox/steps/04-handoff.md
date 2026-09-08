@@ -31,3 +31,7 @@ Return the evidence-backed handoff directly in the active response. The result
 must make the next owner and action unambiguous and returns control to the
 coordinator. Continue an explicitly requested cascade only after its next gate
 passes; a standalone skill does not expand into a cascade.
+
+## Chat presentation
+
+Present the result using the owning `SKILL.md` Chat Output Contract and local [chat schema](../references/chat-output.toon). The machine handoff remains native; show its decision, evidence and owned action without dumping the journal.

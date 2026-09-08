@@ -1,0 +1,17 @@
+clarification[4]: Missing task scope,Why required,Known evidence,Options
+example:
+  "Base revision": abc1234
+  "Current branch": feature/025-chat-output
+  Decision: Reuse task branch
+  "Expected branch": feature/025-chat-output
+  Worktree: Clean
+failure[5]: Task scope,Status,Blocker,Evidence,Required action
+hide: "Secrets, raw logs, complete journals and unneeded internal tool steps. Keep full detail in the owning native artifact."
+native_exception: "Keep machine artifacts, code, commands and diffs native; presentation does not replace validation."
+primary[5]: Current branch,Expected branch,Base revision,Worktree,Decision
+priority: Show the user decision before detail; preserve source order and explicit authority.
+required_input: Task scope
+rows: individual current branch records
+schema: ai-sdlc-chat-contract/v1
+secondary[0]:
+skill: ai-sdlc-loop-branching

@@ -1,0 +1,150 @@
+scenarios[8]:
+  - baseline_response: "Result\nStatus: PENDING\nDecision: Prepared selected skill / reason entities; owner decision or execution remains pending.\nEvidence: fixture.toon:1\n\nprimary: Authority: Explore only; Expected artifact: requirements-discovery.toon; Intent: Clarify retry rules; Reason: Business choice unresolved; Selected skill: ai-sdlc-requirements-discovery.\nactions: Owner: Engineer; Next action: Validate user intent with its owning workflow; Expected evidence: fixture.toon:1.\n\nsecondary: Blocked transition: Confirm blocked transition for payment retry; Gate: Confirm gate for payment retry; Evidence: fixture.toon:1; Required action: Confirm required action for payment retry.\n"
+    id: happy
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-flow for payment-retry delivery: happy"
+    required_facts[3]: "fixture.toon:1",Clarify retry rules,Explore only
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        "fixture.toon:1",Validate user intent with its owning workflow,Engineer
+      primary[1]{Authority,"Expected artifact",Intent,Reason,"Selected skill"}:
+        Explore only,requirements-discovery.toon,Clarify retry rules,Business choice unresolved,ai-sdlc-requirements-discovery
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: Prepared intent result; owner decision or execution remains pending.
+        Evidence: "fixture.toon:1"
+        Status: PENDING
+  - baseline_response: "Result\nStatus: WARNING\nDecision: Partial selected skill / reason entities coverage; one dependency remains unverified.\nEvidence: fixture.toon:1\n\nprimary: Authority: Explore only; Expected artifact: requirements-discovery.toon; Intent: Clarify retry rules; Reason: Business choice unresolved; Selected skill: ai-sdlc-requirements-discovery.\nprimary: Authority: Explore only [pending case]; Expected artifact: requirements-discovery.toon; Intent: Clarify retry rules; Reason: Business choice unresolved; Selected skill: ai-sdlc-requirements-discovery.\nactions: Owner: Engineer; Next action: Validate user intent with its owning workflow; Expected evidence: fixture.toon:1.\n"
+    id: partial
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-flow for payment-retry delivery: partial"
+    required_facts[3]: "fixture.toon:1",Clarify retry rules,Explore only
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        "fixture.toon:1",Validate user intent with its owning workflow,Engineer
+      primary[2]{Authority,"Expected artifact",Intent,Reason,"Selected skill"}:
+        Explore only,requirements-discovery.toon,Clarify retry rules,Business choice unresolved,ai-sdlc-requirements-discovery
+        "Explore only [pending case]",requirements-discovery.toon,Clarify retry rules,Business choice unresolved,ai-sdlc-requirements-discovery
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: "Partial result: second case is unverified; do not infer full coverage."
+        Evidence: "fixture.toon:1"
+        Status: WARNING
+  - baseline_response: "Result\nStatus: WARNING\nDecision: Limited selected skill / reason entities review; source freshness must be confirmed.\nEvidence: fixture.toon:1\n\nprimary: Authority: Explore only; Expected artifact: requirements-discovery.toon; Intent: Clarify retry rules; Reason: Business choice unresolved; Selected skill: ai-sdlc-requirements-discovery.\nactions: Owner: Engineer; Next action: Validate user intent with its owning workflow; Expected evidence: fixture.toon:1.\n"
+    id: warning
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-flow for payment-retry delivery: warning"
+    required_facts[3]: "fixture.toon:1",Clarify retry rules,Explore only
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        "fixture.toon:1",Validate user intent with its owning workflow,Engineer
+      primary[1]{Authority,"Expected artifact",Intent,Reason,"Selected skill"}:
+        Explore only,requirements-discovery.toon,Clarify retry rules,Business choice unresolved,ai-sdlc-requirements-discovery
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: Result has limited source freshness; confirm it before downstream use.
+        Evidence: "fixture.toon:1"
+        Status: WARNING
+  - baseline_response: "Result\nStatus: BLOCKED\nDecision: User intent is unavailable; dependent work has not run.\nEvidence: source-inventory.toon:missing\n\nfailures: User intent: User intent; Status: BLOCKED; Blocker: Required source is absent; Evidence: source-inventory.toon:missing; Required action: Provide user intent.\nactions: Owner: Engineer; Next action: Provide user intent; Expected evidence: Validated user intent.\n"
+    id: blocked
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-flow for payment-retry delivery: blocked"
+    required_facts[2]: "source-inventory.toon:missing",Validated user intent
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        Validated user intent,Provide user intent,Engineer
+      failures[1]{Blocker,Evidence,"Required action",Status,"User intent"}:
+        Required source is absent,"source-inventory.toon:missing",Provide user intent,BLOCKED,User intent
+      primary[0]:
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: User intent is unavailable; dependent work has not run.
+        Evidence: "source-inventory.toon:missing"
+        Status: BLOCKED
+  - baseline_response: "Result\nStatus: BLOCKED\nDecision: User intent is unavailable; dependent work has not run.\nEvidence: source-inventory.toon:missing\n\nfailures: User intent: User intent; Status: BLOCKED; Blocker: Required source is absent; Evidence: source-inventory.toon:missing; Required action: Provide user intent.\nclarifications: Missing user intent: User intent; Why required: Determines intent; Known evidence: No supported assumption; Options: Supply source / narrow requested scope.\nactions: Owner: Engineer; Next action: Provide user intent; Expected evidence: Validated user intent.\n"
+    id: missing-input
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-flow for payment-retry delivery: missing-input"
+    required_facts[2]: "source-inventory.toon:missing",Validated user intent
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        Validated user intent,Provide user intent,Engineer
+      clarifications[1]{"Known evidence","Missing user intent",Options,"Why required"}:
+        No supported assumption,User intent,Supply source / narrow requested scope,Determines intent
+      failures[1]{Blocker,Evidence,"Required action",Status,"User intent"}:
+        Required source is absent,"source-inventory.toon:missing",Provide user intent,BLOCKED,User intent
+      primary[0]:
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: User intent is unavailable; dependent work has not run.
+        Evidence: "source-inventory.toon:missing"
+        Status: BLOCKED
+  - baseline_response: "Result\nStatus: PENDING\nDecision: 20 selected skill / reason entities rows; showing the first 8; full evidence linked.\nEvidence: fixture.toon:1\n\nprimary: Authority: Explore only #1; Expected artifact: requirements-discovery.toon; Intent: Clarify retry rules; Reason: Business choice unresolved; Selected skill: ai-sdlc-requirements-discovery.\nprimary: Authority: Explore only #2; Expected artifact: requirements-discovery.toon; Intent: Clarify retry rules; Reason: Business choice unresolved; Selected skill: ai-sdlc-requirements-discovery.\nprimary: Authority: Explore only #3; Expected artifact: requirements-discovery.toon; Intent: Clarify retry rules; Reason: Business choice unresolved; Selected skill: ai-sdlc-requirements-discovery.\nprimary: Authority: Explore only #4; Expected artifact: requirements-discovery.toon; Intent: Clarify retry rules; Reason: Business choice unresolved; Selected skill: ai-sdlc-requirements-discovery.\nprimary: Authority: Explore only #5; Expected artifact: requirements-discovery.toon; Intent: Clarify retry rules; Reason: Business choice unresolved; Selected skill: ai-sdlc-requirements-discovery.\nprimary: Authority: Explore only #6; Expected artifact: requirements-discovery.toon; Intent: Clarify retry rules; Reason: Business choice unresolved; Selected skill: ai-sdlc-requirements-discovery.\nprimary: Authority: Explore only #7; Expected artifact: requirements-discovery.toon; Intent: Clarify retry rules; Reason: Business choice unresolved; Selected skill: ai-sdlc-requirements-discovery.\nprimary: Authority: Explore only #8; Expected artifact: requirements-discovery.toon; Intent: Clarify retry rules; Reason: Business choice unresolved; Selected skill: ai-sdlc-requirements-discovery.\nprimary: Authority: Explore only #9; Expected artifact: requirements-discovery.toon; Intent: Clarify retry rules; Reason: Business choice unresolved; Selected skill: ai-sdlc-requirements-discovery.\nprimary: Authority: Explore only #10; Expected artifact: requirements-discovery.toon; Intent: Clarify retry rules; Reason: Business choice unresolved; Selected skill: ai-sdlc-requirements-discovery.\nprimary: Authority: Explore only #11; Expected artifact: requirements-discovery.toon; Intent: Clarify retry rules; Reason: Business choice unresolved; Selected skill: ai-sdlc-requirements-discovery.\nprimary: Authority: Explore only #12; Expected artifact: requirements-discovery.toon; Intent: Clarify retry rules; Reason: Business choice unresolved; Selected skill: ai-sdlc-requirements-discovery.\nprimary: Authority: Explore only #13; Expected artifact: requirements-discovery.toon; Intent: Clarify retry rules; Reason: Business choice unresolved; Selected skill: ai-sdlc-requirements-discovery.\nprimary: Authority: Explore only #14; Expected artifact: requirements-discovery.toon; Intent: Clarify retry rules; Reason: Business choice unresolved; Selected skill: ai-sdlc-requirements-discovery.\nprimary: Authority: Explore only #15; Expected artifact: requirements-discovery.toon; Intent: Clarify retry rules; Reason: Business choice unresolved; Selected skill: ai-sdlc-requirements-discovery.\nprimary: Authority: Explore only #16; Expected artifact: requirements-discovery.toon; Intent: Clarify retry rules; Reason: Business choice unresolved; Selected skill: ai-sdlc-requirements-discovery.\nprimary: Authority: Explore only #17; Expected artifact: requirements-discovery.toon; Intent: Clarify retry rules; Reason: Business choice unresolved; Selected skill: ai-sdlc-requirements-discovery.\nprimary: Authority: Explore only #18; Expected artifact: requirements-discovery.toon; Intent: Clarify retry rules; Reason: Business choice unresolved; Selected skill: ai-sdlc-requirements-discovery.\nprimary: Authority: Explore only #19; Expected artifact: requirements-discovery.toon; Intent: Clarify retry rules; Reason: Business choice unresolved; Selected skill: ai-sdlc-requirements-discovery.\nprimary: Authority: Explore only #20; Expected artifact: requirements-discovery.toon; Intent: Clarify retry rules; Reason: Business choice unresolved; Selected skill: ai-sdlc-requirements-discovery.\nactions: Owner: Engineer; Next action: Validate user intent with its owning workflow; Expected evidence: fixture.toon:1.\n"
+    id: large
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-flow for payment-retry delivery: large"
+    required_facts[3]: "fixture.toon:1",Clarify retry rules,Explore only #1
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        "fixture.toon:1",Validate user intent with its owning workflow,Engineer
+      full_artifact: full-result.toon
+      primary[20]{Authority,"Expected artifact",Intent,Reason,"Selected skill"}:
+        Explore only #1,requirements-discovery.toon,Clarify retry rules,Business choice unresolved,ai-sdlc-requirements-discovery
+        Explore only #2,requirements-discovery.toon,Clarify retry rules,Business choice unresolved,ai-sdlc-requirements-discovery
+        Explore only #3,requirements-discovery.toon,Clarify retry rules,Business choice unresolved,ai-sdlc-requirements-discovery
+        Explore only #4,requirements-discovery.toon,Clarify retry rules,Business choice unresolved,ai-sdlc-requirements-discovery
+        Explore only #5,requirements-discovery.toon,Clarify retry rules,Business choice unresolved,ai-sdlc-requirements-discovery
+        Explore only #6,requirements-discovery.toon,Clarify retry rules,Business choice unresolved,ai-sdlc-requirements-discovery
+        Explore only #7,requirements-discovery.toon,Clarify retry rules,Business choice unresolved,ai-sdlc-requirements-discovery
+        Explore only #8,requirements-discovery.toon,Clarify retry rules,Business choice unresolved,ai-sdlc-requirements-discovery
+        Explore only #9,requirements-discovery.toon,Clarify retry rules,Business choice unresolved,ai-sdlc-requirements-discovery
+        Explore only #10,requirements-discovery.toon,Clarify retry rules,Business choice unresolved,ai-sdlc-requirements-discovery
+        Explore only #11,requirements-discovery.toon,Clarify retry rules,Business choice unresolved,ai-sdlc-requirements-discovery
+        Explore only #12,requirements-discovery.toon,Clarify retry rules,Business choice unresolved,ai-sdlc-requirements-discovery
+        Explore only #13,requirements-discovery.toon,Clarify retry rules,Business choice unresolved,ai-sdlc-requirements-discovery
+        Explore only #14,requirements-discovery.toon,Clarify retry rules,Business choice unresolved,ai-sdlc-requirements-discovery
+        Explore only #15,requirements-discovery.toon,Clarify retry rules,Business choice unresolved,ai-sdlc-requirements-discovery
+        Explore only #16,requirements-discovery.toon,Clarify retry rules,Business choice unresolved,ai-sdlc-requirements-discovery
+        Explore only #17,requirements-discovery.toon,Clarify retry rules,Business choice unresolved,ai-sdlc-requirements-discovery
+        Explore only #18,requirements-discovery.toon,Clarify retry rules,Business choice unresolved,ai-sdlc-requirements-discovery
+        Explore only #19,requirements-discovery.toon,Clarify retry rules,Business choice unresolved,ai-sdlc-requirements-discovery
+        Explore only #20,requirements-discovery.toon,Clarify retry rules,Business choice unresolved,ai-sdlc-requirements-discovery
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: 20 intent records; 8 shown; inspect the linked full artifact.
+        Evidence: "fixture.toon:1"
+        Status: PENDING
+  - baseline_response: "Result\nStatus: PENDING\nDecision: One intent result; scope and evidence are explicit.\nEvidence: fixture.toon:1\n\nprimary: Authority: Explore only; Expected artifact: requirements-discovery.toon; Intent: Clarify retry rules; Reason: Business choice unresolved; Selected skill: ai-sdlc-requirements-discovery.\nactions: Owner: Engineer; Next action: Validate user intent with its owning workflow; Expected evidence: fixture.toon:1.\n"
+    id: small
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-flow for payment-retry delivery: small"
+    required_facts[3]: "fixture.toon:1",Clarify retry rules,Explore only
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        "fixture.toon:1",Validate user intent with its owning workflow,Engineer
+      primary[1]{Authority,"Expected artifact",Intent,Reason,"Selected skill"}:
+        Explore only,requirements-discovery.toon,Clarify retry rules,Business choice unresolved,ai-sdlc-requirements-discovery
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: One intent result; scope and evidence are explicit.
+        Evidence: "fixture.toon:1"
+        Status: PENDING
+  - baseline_response: "Result\nStatus: PENDING\nDecision: Prepared selected skill / reason entities; owner decision or execution remains pending.\nEvidence: fixture.toon:1\n\nprimary: Authority: Explore only; Expected artifact: requirements-discovery.toon; Intent: Clarify retry rules | перенос\nстроки; Reason: Business choice unresolved; Selected skill: ai-sdlc-requirements-discovery.\nactions: Owner: Engineer; Next action: Validate user intent with its owning workflow; Expected evidence: fixture.toon:1.\n\nschema: fixture/v1\nstatus: pending\nsource: \"literal | value\"\n"
+    id: edge
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-flow for payment-retry delivery: edge"
+    required_facts[3]: "fixture.toon:1","Clarify retry rules | перенос\nстроки",Explore only
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        "fixture.toon:1",Validate user intent with its owning workflow,Engineer
+      native[1]{content,language}:
+        "schema: fixture/v1\nstatus: pending\nsource: \"literal | value\"",toon
+      primary[1]{Authority,"Expected artifact",Intent,Reason,"Selected skill"}:
+        Explore only,requirements-discovery.toon,"Clarify retry rules | перенос\nстроки",Business choice unresolved,ai-sdlc-requirements-discovery
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: Prepared selected skill / reason entities; owner decision or execution remains pending.
+        Evidence: "fixture.toon:1"
+        Status: PENDING
+schema: ai-sdlc-chat-scenarios/v1
+skill: ai-sdlc-loop-flow

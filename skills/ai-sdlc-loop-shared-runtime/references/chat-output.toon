@@ -1,0 +1,17 @@
+clarification[4]: Missing installed helper,Why required,Known evidence,Options
+example:
+  Actual: Import succeeds
+  Evidence: "smoke.log:4"
+  Expected: Imports sibling runtime
+  "Runtime check": Installed helper import
+  Status: PASS
+failure[5]: Installed helper,Status,Blocker,Evidence,Required action
+hide: "Secrets, raw logs, complete journals and unneeded internal tool steps. Keep full detail in the owning native artifact."
+native_exception: "Keep machine artifacts, code, commands and diffs native; presentation does not replace validation."
+primary[5]: Runtime check,Expected,Actual,Status,Evidence
+priority: Show the user decision before detail; preserve source order and explicit authority.
+required_input: Installed helper
+rows: individual runtime check records
+schema: ai-sdlc-chat-contract/v1
+secondary[0]:
+skill: ai-sdlc-loop-shared-runtime

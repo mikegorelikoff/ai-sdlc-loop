@@ -7,6 +7,18 @@ description: Internal AI SDLC Loop TOON codec and deterministic command runtime 
 
 Internal utility skill. Do not select it as the user-facing owner. Stage skills call `scripts/loop.py`; durable Loop-owned machine artifacts must use canonical TOON.
 
+## Chat Output Contract
+
+Primary: Runtime check / Expected / Actual / Status / Evidence.
+Rows represent individual runtime check records. Show the user decision before detail; preserve source order and explicit authority.
+Summary: Status / Decision / Evidence. Failure: Installed helper / Status / Blocker / Evidence / Required action.
+Clarification: Missing installed helper / Why required / Known evidence / Options. Next action: Owner / Next action / Expected evidence.
+Use PASS, FAIL, WARNING, BLOCKED, PENDING, N/A only for chat statuses; preserve native domain states.
+At most six columns, eight preview rows and 180 characters per cell; link full evidence and state omitted totals.
+No duplicate prose. Keep code, commands, commit messages and machine handoffs native.
+Apply [this skill’s schema and examples](references/chat-output.toon) before any user-facing result, warning or question.
+Use the sibling `ai-sdlc-loop-shared-runtime/scripts/chat_output.py` to render/check; [shared limits](../ai-sdlc-loop-shared-runtime/references/chat-output.md) bound repair and preserve native outputs.
+
 ## Step Selector
 
 This table is generated from `steps/manifest.toon`. The manifest and linked

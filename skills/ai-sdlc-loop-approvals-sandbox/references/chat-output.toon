@@ -1,0 +1,16 @@
+clarification[4]: Missing blocked command,Why required,Known evidence,Options
+example:
+  Boundary: External cache write
+  Command: pytest tests/api
+  Escalation: Not required
+  Evidence: "sandbox.log:3"
+failure[5]: Blocked command,Status,Blocker,Evidence,Required action
+hide: "Secrets, raw logs, complete journals and unneeded internal tool steps. Keep full detail in the owning native artifact."
+native_exception: "Keep machine artifacts, code, commands and diffs native; presentation does not replace validation."
+primary[4]: Command,Boundary,Escalation,Evidence
+priority: Show the user decision before detail; preserve source order and explicit authority.
+required_input: Blocked command
+rows: individual command records
+schema: ai-sdlc-chat-contract/v1
+secondary[0]:
+skill: ai-sdlc-loop-approvals-sandbox

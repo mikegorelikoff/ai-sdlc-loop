@@ -1,0 +1,150 @@
+scenarios[8]:
+  - baseline_response: "Result\nStatus: PASS\nDecision: Prepared bounded behavior / allowed path entities; listed evidence satisfies this skill check.\nEvidence: spec.toon\n\nprimary: Acceptance: One charge per key; Allowed path: src/payments.py; Bounded behavior: Idempotent retry; Evidence: spec.toon; Requirement ID: AC-001.\nactions: Owner: Engineer; Next action: Validate allowed scope with its owning workflow; Expected evidence: spec.toon.\n"
+    id: happy
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-specify for payment-retry delivery: happy"
+    required_facts[3]: spec.toon,AC-001,One charge per key
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        spec.toon,Validate allowed scope with its owning workflow,Engineer
+      primary[1]{Acceptance,"Allowed path","Bounded behavior",Evidence,"Requirement ID"}:
+        One charge per key,src/payments.py,Idempotent retry,spec.toon,AC-001
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: Prepared requirement id result; evidence supports the reported result.
+        Evidence: spec.toon
+        Status: PASS
+  - baseline_response: "Result\nStatus: WARNING\nDecision: Partial bounded behavior / allowed path entities coverage; one dependency remains unverified.\nEvidence: spec.toon\n\nprimary: Acceptance: One charge per key; Allowed path: src/payments.py; Bounded behavior: Idempotent retry; Evidence: spec.toon; Requirement ID: AC-001.\nprimary: Acceptance: One charge per key [pending case]; Allowed path: src/payments.py; Bounded behavior: Idempotent retry; Evidence: spec.toon; Requirement ID: AC-001.\nactions: Owner: Engineer; Next action: Validate allowed scope with its owning workflow; Expected evidence: spec.toon.\n"
+    id: partial
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-specify for payment-retry delivery: partial"
+    required_facts[3]: spec.toon,AC-001,One charge per key
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        spec.toon,Validate allowed scope with its owning workflow,Engineer
+      primary[2]{Acceptance,"Allowed path","Bounded behavior",Evidence,"Requirement ID"}:
+        One charge per key,src/payments.py,Idempotent retry,spec.toon,AC-001
+        "One charge per key [pending case]",src/payments.py,Idempotent retry,spec.toon,AC-001
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: "Partial result: second case is unverified; do not infer full coverage."
+        Evidence: spec.toon
+        Status: WARNING
+  - baseline_response: "Result\nStatus: WARNING\nDecision: Limited bounded behavior / allowed path entities review; source freshness must be confirmed.\nEvidence: spec.toon\n\nprimary: Acceptance: One charge per key; Allowed path: src/payments.py; Bounded behavior: Idempotent retry; Evidence: spec.toon; Requirement ID: AC-001.\nactions: Owner: Engineer; Next action: Validate allowed scope with its owning workflow; Expected evidence: spec.toon.\n"
+    id: warning
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-specify for payment-retry delivery: warning"
+    required_facts[3]: spec.toon,AC-001,One charge per key
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        spec.toon,Validate allowed scope with its owning workflow,Engineer
+      primary[1]{Acceptance,"Allowed path","Bounded behavior",Evidence,"Requirement ID"}:
+        One charge per key,src/payments.py,Idempotent retry,spec.toon,AC-001
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: Result has limited source freshness; confirm it before downstream use.
+        Evidence: spec.toon
+        Status: WARNING
+  - baseline_response: "Result\nStatus: BLOCKED\nDecision: Allowed scope is unavailable; dependent work has not run.\nEvidence: source-inventory.toon:missing\n\nfailures: Allowed scope: Allowed scope; Status: BLOCKED; Blocker: Required source is absent; Evidence: source-inventory.toon:missing; Required action: Provide allowed scope.\nactions: Owner: Engineer; Next action: Provide allowed scope; Expected evidence: Validated allowed scope.\n"
+    id: blocked
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-specify for payment-retry delivery: blocked"
+    required_facts[2]: "source-inventory.toon:missing",Validated allowed scope
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        Validated allowed scope,Provide allowed scope,Engineer
+      failures[1]{"Allowed scope",Blocker,Evidence,"Required action",Status}:
+        Allowed scope,Required source is absent,"source-inventory.toon:missing",Provide allowed scope,BLOCKED
+      primary[0]:
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: Allowed scope is unavailable; dependent work has not run.
+        Evidence: "source-inventory.toon:missing"
+        Status: BLOCKED
+  - baseline_response: "Result\nStatus: BLOCKED\nDecision: Allowed scope is unavailable; dependent work has not run.\nEvidence: source-inventory.toon:missing\n\nfailures: Allowed scope: Allowed scope; Status: BLOCKED; Blocker: Required source is absent; Evidence: source-inventory.toon:missing; Required action: Provide allowed scope.\nclarifications: Missing allowed scope: Allowed scope; Why required: Determines requirement id; Known evidence: No supported assumption; Options: Supply source / narrow requested scope.\nactions: Owner: Engineer; Next action: Provide allowed scope; Expected evidence: Validated allowed scope.\n"
+    id: missing-input
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-specify for payment-retry delivery: missing-input"
+    required_facts[2]: "source-inventory.toon:missing",Validated allowed scope
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        Validated allowed scope,Provide allowed scope,Engineer
+      clarifications[1]{"Known evidence","Missing allowed scope",Options,"Why required"}:
+        No supported assumption,Allowed scope,Supply source / narrow requested scope,Determines requirement id
+      failures[1]{"Allowed scope",Blocker,Evidence,"Required action",Status}:
+        Allowed scope,Required source is absent,"source-inventory.toon:missing",Provide allowed scope,BLOCKED
+      primary[0]:
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: Allowed scope is unavailable; dependent work has not run.
+        Evidence: "source-inventory.toon:missing"
+        Status: BLOCKED
+  - baseline_response: "Result\nStatus: PASS\nDecision: 20 bounded behavior / allowed path entities rows; showing the first 8; full evidence linked.\nEvidence: spec.toon\n\nprimary: Acceptance: One charge per key #1; Allowed path: src/payments.py; Bounded behavior: Idempotent retry; Evidence: spec.toon; Requirement ID: AC-001.\nprimary: Acceptance: One charge per key #2; Allowed path: src/payments.py; Bounded behavior: Idempotent retry; Evidence: spec.toon; Requirement ID: AC-001.\nprimary: Acceptance: One charge per key #3; Allowed path: src/payments.py; Bounded behavior: Idempotent retry; Evidence: spec.toon; Requirement ID: AC-001.\nprimary: Acceptance: One charge per key #4; Allowed path: src/payments.py; Bounded behavior: Idempotent retry; Evidence: spec.toon; Requirement ID: AC-001.\nprimary: Acceptance: One charge per key #5; Allowed path: src/payments.py; Bounded behavior: Idempotent retry; Evidence: spec.toon; Requirement ID: AC-001.\nprimary: Acceptance: One charge per key #6; Allowed path: src/payments.py; Bounded behavior: Idempotent retry; Evidence: spec.toon; Requirement ID: AC-001.\nprimary: Acceptance: One charge per key #7; Allowed path: src/payments.py; Bounded behavior: Idempotent retry; Evidence: spec.toon; Requirement ID: AC-001.\nprimary: Acceptance: One charge per key #8; Allowed path: src/payments.py; Bounded behavior: Idempotent retry; Evidence: spec.toon; Requirement ID: AC-001.\nprimary: Acceptance: One charge per key #9; Allowed path: src/payments.py; Bounded behavior: Idempotent retry; Evidence: spec.toon; Requirement ID: AC-001.\nprimary: Acceptance: One charge per key #10; Allowed path: src/payments.py; Bounded behavior: Idempotent retry; Evidence: spec.toon; Requirement ID: AC-001.\nprimary: Acceptance: One charge per key #11; Allowed path: src/payments.py; Bounded behavior: Idempotent retry; Evidence: spec.toon; Requirement ID: AC-001.\nprimary: Acceptance: One charge per key #12; Allowed path: src/payments.py; Bounded behavior: Idempotent retry; Evidence: spec.toon; Requirement ID: AC-001.\nprimary: Acceptance: One charge per key #13; Allowed path: src/payments.py; Bounded behavior: Idempotent retry; Evidence: spec.toon; Requirement ID: AC-001.\nprimary: Acceptance: One charge per key #14; Allowed path: src/payments.py; Bounded behavior: Idempotent retry; Evidence: spec.toon; Requirement ID: AC-001.\nprimary: Acceptance: One charge per key #15; Allowed path: src/payments.py; Bounded behavior: Idempotent retry; Evidence: spec.toon; Requirement ID: AC-001.\nprimary: Acceptance: One charge per key #16; Allowed path: src/payments.py; Bounded behavior: Idempotent retry; Evidence: spec.toon; Requirement ID: AC-001.\nprimary: Acceptance: One charge per key #17; Allowed path: src/payments.py; Bounded behavior: Idempotent retry; Evidence: spec.toon; Requirement ID: AC-001.\nprimary: Acceptance: One charge per key #18; Allowed path: src/payments.py; Bounded behavior: Idempotent retry; Evidence: spec.toon; Requirement ID: AC-001.\nprimary: Acceptance: One charge per key #19; Allowed path: src/payments.py; Bounded behavior: Idempotent retry; Evidence: spec.toon; Requirement ID: AC-001.\nprimary: Acceptance: One charge per key #20; Allowed path: src/payments.py; Bounded behavior: Idempotent retry; Evidence: spec.toon; Requirement ID: AC-001.\nactions: Owner: Engineer; Next action: Validate allowed scope with its owning workflow; Expected evidence: spec.toon.\n"
+    id: large
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-specify for payment-retry delivery: large"
+    required_facts[3]: spec.toon,AC-001,One charge per key #1
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        spec.toon,Validate allowed scope with its owning workflow,Engineer
+      full_artifact: full-result.toon
+      primary[20]{Acceptance,"Allowed path","Bounded behavior",Evidence,"Requirement ID"}:
+        One charge per key #1,src/payments.py,Idempotent retry,spec.toon,AC-001
+        One charge per key #2,src/payments.py,Idempotent retry,spec.toon,AC-001
+        One charge per key #3,src/payments.py,Idempotent retry,spec.toon,AC-001
+        One charge per key #4,src/payments.py,Idempotent retry,spec.toon,AC-001
+        One charge per key #5,src/payments.py,Idempotent retry,spec.toon,AC-001
+        One charge per key #6,src/payments.py,Idempotent retry,spec.toon,AC-001
+        One charge per key #7,src/payments.py,Idempotent retry,spec.toon,AC-001
+        One charge per key #8,src/payments.py,Idempotent retry,spec.toon,AC-001
+        One charge per key #9,src/payments.py,Idempotent retry,spec.toon,AC-001
+        One charge per key #10,src/payments.py,Idempotent retry,spec.toon,AC-001
+        One charge per key #11,src/payments.py,Idempotent retry,spec.toon,AC-001
+        One charge per key #12,src/payments.py,Idempotent retry,spec.toon,AC-001
+        One charge per key #13,src/payments.py,Idempotent retry,spec.toon,AC-001
+        One charge per key #14,src/payments.py,Idempotent retry,spec.toon,AC-001
+        One charge per key #15,src/payments.py,Idempotent retry,spec.toon,AC-001
+        One charge per key #16,src/payments.py,Idempotent retry,spec.toon,AC-001
+        One charge per key #17,src/payments.py,Idempotent retry,spec.toon,AC-001
+        One charge per key #18,src/payments.py,Idempotent retry,spec.toon,AC-001
+        One charge per key #19,src/payments.py,Idempotent retry,spec.toon,AC-001
+        One charge per key #20,src/payments.py,Idempotent retry,spec.toon,AC-001
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: 20 requirement id records; 8 shown; inspect the linked full artifact.
+        Evidence: spec.toon
+        Status: PASS
+  - baseline_response: "Result\nStatus: PASS\nDecision: One requirement id result; scope and evidence are explicit.\nEvidence: spec.toon\n\nprimary: Acceptance: One charge per key; Allowed path: src/payments.py; Bounded behavior: Idempotent retry; Evidence: spec.toon; Requirement ID: AC-001.\nactions: Owner: Engineer; Next action: Validate allowed scope with its owning workflow; Expected evidence: spec.toon.\n"
+    id: small
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-specify for payment-retry delivery: small"
+    required_facts[3]: spec.toon,AC-001,One charge per key
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        spec.toon,Validate allowed scope with its owning workflow,Engineer
+      primary[1]{Acceptance,"Allowed path","Bounded behavior",Evidence,"Requirement ID"}:
+        One charge per key,src/payments.py,Idempotent retry,spec.toon,AC-001
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: One requirement id result; scope and evidence are explicit.
+        Evidence: spec.toon
+        Status: PASS
+  - baseline_response: "Result\nStatus: PASS\nDecision: Prepared bounded behavior / allowed path entities; listed evidence satisfies this skill check.\nEvidence: spec.toon\n\nprimary: Acceptance: One charge per key; Allowed path: src/payments.py; Bounded behavior: Idempotent retry; Evidence: spec.toon; Requirement ID: AC-001 | перенос\nстроки.\nactions: Owner: Engineer; Next action: Validate allowed scope with its owning workflow; Expected evidence: spec.toon.\n\nschema: fixture/v1\nstatus: pending\nsource: \"literal | value\"\n"
+    id: edge
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-specify for payment-retry delivery: edge"
+    required_facts[3]: spec.toon,"AC-001 | перенос\nстроки",One charge per key
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        spec.toon,Validate allowed scope with its owning workflow,Engineer
+      native[1]{content,language}:
+        "schema: fixture/v1\nstatus: pending\nsource: \"literal | value\"",toon
+      primary[1]{Acceptance,"Allowed path","Bounded behavior",Evidence,"Requirement ID"}:
+        One charge per key,src/payments.py,Idempotent retry,spec.toon,"AC-001 | перенос\nстроки"
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: Prepared bounded behavior / allowed path entities; listed evidence satisfies this skill check.
+        Evidence: spec.toon
+        Status: PASS
+schema: ai-sdlc-chat-scenarios/v1
+skill: ai-sdlc-loop-specify

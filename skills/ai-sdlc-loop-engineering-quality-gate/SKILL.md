@@ -79,6 +79,18 @@ project skills root recorded by the Loop installer. In this Harness checkout,
 the source root is `products/ai-sdlc-loop/skills/`. Verify that the chosen root
 contains this skill and `ai-sdlc-loop-shared-runtime` before running helpers.
 
+## Chat Output Contract
+
+Primary: Severity / Location / Finding / Disposition / Verification / Evidence; secondary: Gate / Status / Unresolved count / Evidence.
+Rows represent individual severity records. Show the user decision before detail; preserve source order and explicit authority.
+Summary: Status / Decision / Evidence. Failure: Implementation diff / Status / Blocker / Evidence / Required action.
+Clarification: Missing implementation diff / Why required / Known evidence / Options. Next action: Owner / Next action / Expected evidence.
+Use PASS, FAIL, WARNING, BLOCKED, PENDING, N/A only for chat statuses; preserve native domain states.
+At most six columns, eight preview rows and 180 characters per cell; link full evidence and state omitted totals.
+No duplicate prose. Keep code, commands, commit messages and machine handoffs native.
+Apply [this skill’s schema and examples](references/chat-output.toon) before any user-facing result, warning or question.
+Use the sibling `ai-sdlc-loop-shared-runtime/scripts/chat_output.py` to render/check; [shared limits](../ai-sdlc-loop-shared-runtime/references/chat-output.md) bound repair and preserve native outputs.
+
 ## Step Selector
 
 This table is generated from `steps/manifest.toon`. The manifest and linked

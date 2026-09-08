@@ -1,5 +1,19 @@
 # Changelog
 
+## v0.4.0 - 2026-09-08
+
+### Changed
+
+- Give all 21 Loop skills individual table-first chat contracts, domain-specific
+  result/failure/clarification tables, compact evidence and owned next actions.
+  Keep native artifacts and lifecycle authority unchanged.
+- Add bounded deterministic chat rendering and structural evaluation, eight
+  captured simulation scenarios per skill, negative tests and semantic review.
+  Simulations are explicitly distinguished from live model evaluations.
+- Include local chat contracts in step context and graph fingerprints; fix TOON
+  decoding of quoted content containing named-list headers without weakening hashes.
+
+
 ## 0.3.0 - 2026-09-08
 
 - Added read-only deterministic selection of compact Loop graphs with cycle,

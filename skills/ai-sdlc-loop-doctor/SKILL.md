@@ -34,6 +34,18 @@ Resolve the active procedure through `steps/manifest.toon`. Durable machine outp
 | `validate` | [`steps/04-validate.md`](steps/04-validate.md) |
 | `handoff` | [`steps/05-handoff.md`](steps/05-handoff.md) |
 
+## Chat Output Contract
+
+Primary: Check / Installed state / Expected state / Status / Remediation.
+Rows represent individual check records. Show the user decision before detail; preserve source order and explicit authority.
+Summary: Status / Decision / Evidence. Failure: Installation root / Status / Blocker / Evidence / Required action.
+Clarification: Missing installation root / Why required / Known evidence / Options. Next action: Owner / Next action / Expected evidence.
+Use PASS, FAIL, WARNING, BLOCKED, PENDING, N/A only for chat statuses; preserve native domain states.
+At most six columns, eight preview rows and 180 characters per cell; link full evidence and state omitted totals.
+No duplicate prose. Keep code, commands, commit messages and machine handoffs native.
+Apply [this skill’s schema and examples](references/chat-output.toon) before any user-facing result, warning or question.
+Use the sibling `ai-sdlc-loop-shared-runtime/scripts/chat_output.py` to render/check; [shared limits](../ai-sdlc-loop-shared-runtime/references/chat-output.md) bound repair and preserve native outputs.
+
 ## Step Selector
 
 This table is generated from `steps/manifest.toon`. The manifest and linked

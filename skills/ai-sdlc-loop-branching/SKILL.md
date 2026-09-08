@@ -20,6 +20,18 @@ description: AI SDLC Git-flow branching workflow. Use when an AI assistant start
 - Purpose: Create or verify the correct Git-flow task branch before repo-tracked file mutation, keep branch names aligned with active specs, and hand completed work to validation and commit prep without mixing unrelated changes.
 - Output: Branching decision, branch name, base branch, dirty-tree assessment, and next handoff
 
+## Chat Output Contract
+
+Primary: Current branch / Expected branch / Base revision / Worktree / Decision.
+Rows represent individual current branch records. Show the user decision before detail; preserve source order and explicit authority.
+Summary: Status / Decision / Evidence. Failure: Task scope / Status / Blocker / Evidence / Required action.
+Clarification: Missing task scope / Why required / Known evidence / Options. Next action: Owner / Next action / Expected evidence.
+Use PASS, FAIL, WARNING, BLOCKED, PENDING, N/A only for chat statuses; preserve native domain states.
+At most six columns, eight preview rows and 180 characters per cell; link full evidence and state omitted totals.
+No duplicate prose. Keep code, commands, commit messages and machine handoffs native.
+Apply [this skill’s schema and examples](references/chat-output.toon) before any user-facing result, warning or question.
+Use the sibling `ai-sdlc-loop-shared-runtime/scripts/chat_output.py` to render/check; [shared limits](../ai-sdlc-loop-shared-runtime/references/chat-output.md) bound repair and preserve native outputs.
+
 ## Step Selector
 
 This table is generated from `steps/manifest.toon`. The manifest and linked

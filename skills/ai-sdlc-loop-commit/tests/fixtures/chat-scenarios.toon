@@ -1,0 +1,152 @@
+scenarios[8]:
+  - baseline_response: "Result\nStatus: PASS\nDecision: Prepared branch / included scope entities; listed evidence satisfies this skill check.\nEvidence: commit-receipt.toon\n\nprimary: Approval: Current fingerprint; Branch: feature/payments; Commit: abc1234; Evidence: commit-receipt.toon; Included scope: T001 only.\nactions: Owner: Maintainer; Next action: Validate commit approval with its owning workflow; Expected evidence: commit-receipt.toon.\n\nsecondary: Remaining path: Confirm remaining path for payment retry; Reason: Confirm reason for payment retry; Evidence: commit-receipt.toon.\n"
+    id: happy
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-commit for payment-retry delivery: happy"
+    required_facts[3]: commit-receipt.toon,abc1234,Current fingerprint
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        commit-receipt.toon,Validate commit approval with its owning workflow,Maintainer
+      primary[1]{Approval,Branch,Commit,Evidence,"Included scope"}:
+        Current fingerprint,feature/payments,abc1234,commit-receipt.toon,T001 only
+      schema: ai-sdlc-chat-result/v1
+      secondary[1]{Evidence,Reason,"Remaining path"}:
+        commit-receipt.toon,Generated duplicate of tracked source,Recorded in retry decision DEC-001
+      summary:
+        Decision: Prepared commit result; evidence supports the reported result.
+        Evidence: commit-receipt.toon
+        Status: PASS
+  - baseline_response: "Result\nStatus: WARNING\nDecision: Partial branch / included scope entities coverage; one dependency remains unverified.\nEvidence: commit-receipt.toon\n\nprimary: Approval: Current fingerprint; Branch: feature/payments; Commit: abc1234; Evidence: commit-receipt.toon; Included scope: T001 only.\nprimary: Approval: Current fingerprint [pending case]; Branch: feature/payments; Commit: abc1234; Evidence: commit-receipt.toon; Included scope: T001 only.\nactions: Owner: Maintainer; Next action: Validate commit approval with its owning workflow; Expected evidence: commit-receipt.toon.\n"
+    id: partial
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-commit for payment-retry delivery: partial"
+    required_facts[3]: commit-receipt.toon,abc1234,Current fingerprint
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        commit-receipt.toon,Validate commit approval with its owning workflow,Maintainer
+      primary[2]{Approval,Branch,Commit,Evidence,"Included scope"}:
+        Current fingerprint,feature/payments,abc1234,commit-receipt.toon,T001 only
+        "Current fingerprint [pending case]",feature/payments,abc1234,commit-receipt.toon,T001 only
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: "Partial result: second case is unverified; do not infer full coverage."
+        Evidence: commit-receipt.toon
+        Status: WARNING
+  - baseline_response: "Result\nStatus: WARNING\nDecision: Limited branch / included scope entities review; source freshness must be confirmed.\nEvidence: commit-receipt.toon\n\nprimary: Approval: Current fingerprint; Branch: feature/payments; Commit: abc1234; Evidence: commit-receipt.toon; Included scope: T001 only.\nactions: Owner: Maintainer; Next action: Validate commit approval with its owning workflow; Expected evidence: commit-receipt.toon.\n"
+    id: warning
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-commit for payment-retry delivery: warning"
+    required_facts[3]: commit-receipt.toon,abc1234,Current fingerprint
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        commit-receipt.toon,Validate commit approval with its owning workflow,Maintainer
+      primary[1]{Approval,Branch,Commit,Evidence,"Included scope"}:
+        Current fingerprint,feature/payments,abc1234,commit-receipt.toon,T001 only
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: Result has limited source freshness; confirm it before downstream use.
+        Evidence: commit-receipt.toon
+        Status: WARNING
+  - baseline_response: "Result\nStatus: BLOCKED\nDecision: Commit approval is unavailable; dependent work has not run.\nEvidence: source-inventory.toon:missing\n\nfailures: Commit approval: Commit approval; Status: BLOCKED; Blocker: Required source is absent; Evidence: source-inventory.toon:missing; Required action: Provide commit approval.\nactions: Owner: Maintainer; Next action: Provide commit approval; Expected evidence: Validated commit approval.\n"
+    id: blocked
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-commit for payment-retry delivery: blocked"
+    required_facts[2]: "source-inventory.toon:missing",Validated commit approval
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        Validated commit approval,Provide commit approval,Maintainer
+      failures[1]{Blocker,"Commit approval",Evidence,"Required action",Status}:
+        Required source is absent,Commit approval,"source-inventory.toon:missing",Provide commit approval,BLOCKED
+      primary[0]:
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: Commit approval is unavailable; dependent work has not run.
+        Evidence: "source-inventory.toon:missing"
+        Status: BLOCKED
+  - baseline_response: "Result\nStatus: BLOCKED\nDecision: Commit approval is unavailable; dependent work has not run.\nEvidence: source-inventory.toon:missing\n\nfailures: Commit approval: Commit approval; Status: BLOCKED; Blocker: Required source is absent; Evidence: source-inventory.toon:missing; Required action: Provide commit approval.\nclarifications: Missing commit approval: Commit approval; Why required: Determines commit; Known evidence: No supported assumption; Options: Supply source / narrow requested scope.\nactions: Owner: Maintainer; Next action: Provide commit approval; Expected evidence: Validated commit approval.\n"
+    id: missing-input
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-commit for payment-retry delivery: missing-input"
+    required_facts[2]: "source-inventory.toon:missing",Validated commit approval
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        Validated commit approval,Provide commit approval,Maintainer
+      clarifications[1]{"Known evidence","Missing commit approval",Options,"Why required"}:
+        No supported assumption,Commit approval,Supply source / narrow requested scope,Determines commit
+      failures[1]{Blocker,"Commit approval",Evidence,"Required action",Status}:
+        Required source is absent,Commit approval,"source-inventory.toon:missing",Provide commit approval,BLOCKED
+      primary[0]:
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: Commit approval is unavailable; dependent work has not run.
+        Evidence: "source-inventory.toon:missing"
+        Status: BLOCKED
+  - baseline_response: "Result\nStatus: PASS\nDecision: 20 branch / included scope entities rows; showing the first 8; full evidence linked.\nEvidence: commit-receipt.toon\n\nprimary: Approval: Current fingerprint #1; Branch: feature/payments; Commit: abc1234; Evidence: commit-receipt.toon; Included scope: T001 only.\nprimary: Approval: Current fingerprint #2; Branch: feature/payments; Commit: abc1234; Evidence: commit-receipt.toon; Included scope: T001 only.\nprimary: Approval: Current fingerprint #3; Branch: feature/payments; Commit: abc1234; Evidence: commit-receipt.toon; Included scope: T001 only.\nprimary: Approval: Current fingerprint #4; Branch: feature/payments; Commit: abc1234; Evidence: commit-receipt.toon; Included scope: T001 only.\nprimary: Approval: Current fingerprint #5; Branch: feature/payments; Commit: abc1234; Evidence: commit-receipt.toon; Included scope: T001 only.\nprimary: Approval: Current fingerprint #6; Branch: feature/payments; Commit: abc1234; Evidence: commit-receipt.toon; Included scope: T001 only.\nprimary: Approval: Current fingerprint #7; Branch: feature/payments; Commit: abc1234; Evidence: commit-receipt.toon; Included scope: T001 only.\nprimary: Approval: Current fingerprint #8; Branch: feature/payments; Commit: abc1234; Evidence: commit-receipt.toon; Included scope: T001 only.\nprimary: Approval: Current fingerprint #9; Branch: feature/payments; Commit: abc1234; Evidence: commit-receipt.toon; Included scope: T001 only.\nprimary: Approval: Current fingerprint #10; Branch: feature/payments; Commit: abc1234; Evidence: commit-receipt.toon; Included scope: T001 only.\nprimary: Approval: Current fingerprint #11; Branch: feature/payments; Commit: abc1234; Evidence: commit-receipt.toon; Included scope: T001 only.\nprimary: Approval: Current fingerprint #12; Branch: feature/payments; Commit: abc1234; Evidence: commit-receipt.toon; Included scope: T001 only.\nprimary: Approval: Current fingerprint #13; Branch: feature/payments; Commit: abc1234; Evidence: commit-receipt.toon; Included scope: T001 only.\nprimary: Approval: Current fingerprint #14; Branch: feature/payments; Commit: abc1234; Evidence: commit-receipt.toon; Included scope: T001 only.\nprimary: Approval: Current fingerprint #15; Branch: feature/payments; Commit: abc1234; Evidence: commit-receipt.toon; Included scope: T001 only.\nprimary: Approval: Current fingerprint #16; Branch: feature/payments; Commit: abc1234; Evidence: commit-receipt.toon; Included scope: T001 only.\nprimary: Approval: Current fingerprint #17; Branch: feature/payments; Commit: abc1234; Evidence: commit-receipt.toon; Included scope: T001 only.\nprimary: Approval: Current fingerprint #18; Branch: feature/payments; Commit: abc1234; Evidence: commit-receipt.toon; Included scope: T001 only.\nprimary: Approval: Current fingerprint #19; Branch: feature/payments; Commit: abc1234; Evidence: commit-receipt.toon; Included scope: T001 only.\nprimary: Approval: Current fingerprint #20; Branch: feature/payments; Commit: abc1234; Evidence: commit-receipt.toon; Included scope: T001 only.\nactions: Owner: Maintainer; Next action: Validate commit approval with its owning workflow; Expected evidence: commit-receipt.toon.\n"
+    id: large
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-commit for payment-retry delivery: large"
+    required_facts[3]: commit-receipt.toon,abc1234,Current fingerprint #1
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        commit-receipt.toon,Validate commit approval with its owning workflow,Maintainer
+      full_artifact: full-result.toon
+      primary[20]{Approval,Branch,Commit,Evidence,"Included scope"}:
+        Current fingerprint #1,feature/payments,abc1234,commit-receipt.toon,T001 only
+        Current fingerprint #2,feature/payments,abc1234,commit-receipt.toon,T001 only
+        Current fingerprint #3,feature/payments,abc1234,commit-receipt.toon,T001 only
+        Current fingerprint #4,feature/payments,abc1234,commit-receipt.toon,T001 only
+        Current fingerprint #5,feature/payments,abc1234,commit-receipt.toon,T001 only
+        Current fingerprint #6,feature/payments,abc1234,commit-receipt.toon,T001 only
+        Current fingerprint #7,feature/payments,abc1234,commit-receipt.toon,T001 only
+        Current fingerprint #8,feature/payments,abc1234,commit-receipt.toon,T001 only
+        Current fingerprint #9,feature/payments,abc1234,commit-receipt.toon,T001 only
+        Current fingerprint #10,feature/payments,abc1234,commit-receipt.toon,T001 only
+        Current fingerprint #11,feature/payments,abc1234,commit-receipt.toon,T001 only
+        Current fingerprint #12,feature/payments,abc1234,commit-receipt.toon,T001 only
+        Current fingerprint #13,feature/payments,abc1234,commit-receipt.toon,T001 only
+        Current fingerprint #14,feature/payments,abc1234,commit-receipt.toon,T001 only
+        Current fingerprint #15,feature/payments,abc1234,commit-receipt.toon,T001 only
+        Current fingerprint #16,feature/payments,abc1234,commit-receipt.toon,T001 only
+        Current fingerprint #17,feature/payments,abc1234,commit-receipt.toon,T001 only
+        Current fingerprint #18,feature/payments,abc1234,commit-receipt.toon,T001 only
+        Current fingerprint #19,feature/payments,abc1234,commit-receipt.toon,T001 only
+        Current fingerprint #20,feature/payments,abc1234,commit-receipt.toon,T001 only
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: 20 commit records; 8 shown; inspect the linked full artifact.
+        Evidence: commit-receipt.toon
+        Status: PASS
+  - baseline_response: "Result\nStatus: PASS\nDecision: One commit result; scope and evidence are explicit.\nEvidence: commit-receipt.toon\n\nprimary: Approval: Current fingerprint; Branch: feature/payments; Commit: abc1234; Evidence: commit-receipt.toon; Included scope: T001 only.\nactions: Owner: Maintainer; Next action: Validate commit approval with its owning workflow; Expected evidence: commit-receipt.toon.\n"
+    id: small
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-commit for payment-retry delivery: small"
+    required_facts[3]: commit-receipt.toon,abc1234,Current fingerprint
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        commit-receipt.toon,Validate commit approval with its owning workflow,Maintainer
+      primary[1]{Approval,Branch,Commit,Evidence,"Included scope"}:
+        Current fingerprint,feature/payments,abc1234,commit-receipt.toon,T001 only
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: One commit result; scope and evidence are explicit.
+        Evidence: commit-receipt.toon
+        Status: PASS
+  - baseline_response: "Result\nStatus: PASS\nDecision: Prepared branch / included scope entities; listed evidence satisfies this skill check.\nEvidence: commit-receipt.toon\n\nprimary: Approval: Current fingerprint; Branch: feature/payments; Commit: abc1234 | перенос\nстроки; Evidence: commit-receipt.toon; Included scope: T001 only.\nactions: Owner: Maintainer; Next action: Validate commit approval with its owning workflow; Expected evidence: commit-receipt.toon.\n\nschema: fixture/v1\nstatus: pending\nsource: \"literal | value\"\n"
+    id: edge
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-commit for payment-retry delivery: edge"
+    required_facts[3]: commit-receipt.toon,"abc1234 | перенос\nстроки",Current fingerprint
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        commit-receipt.toon,Validate commit approval with its owning workflow,Maintainer
+      native[1]{content,language}:
+        "schema: fixture/v1\nstatus: pending\nsource: \"literal | value\"",toon
+      primary[1]{Approval,Branch,Commit,Evidence,"Included scope"}:
+        Current fingerprint,feature/payments,"abc1234 | перенос\nстроки",commit-receipt.toon,T001 only
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: Prepared branch / included scope entities; listed evidence satisfies this skill check.
+        Evidence: commit-receipt.toon
+        Status: PASS
+schema: ai-sdlc-chat-scenarios/v1
+skill: ai-sdlc-loop-commit

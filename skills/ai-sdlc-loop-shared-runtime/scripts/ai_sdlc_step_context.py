@@ -550,6 +550,16 @@ def execution_reference(skill_root: Path, text: str) -> tuple[str, str, Path] | 
     return relative, content, path
 
 
+def chat_reference(skill_root: Path, text: str) -> tuple[str, str, Path] | None:
+    """Load only the owning skill's explicitly declared presentation schema."""
+    if "](../references/chat-output.toon)" not in text:
+        return None
+    content, error, path = _read_text(skill_root, "references/chat-output.toon")
+    if error or content is None or path is None:
+        raise ValueError(f"STEP_CONTEXT_INSUFFICIENT: chat-output.toon: {error or 'missing'}")
+    return skill_root.name + "/references/chat-output.toon", content, path
+
+
 def compile_step_context(
     *,
     root: Path,
@@ -608,6 +618,17 @@ def compile_step_context(
             authority="skill_instruction", start_line=1, end_line=len(content.splitlines()),
             estimated_tokens=token_estimate(content), strategy="full-source",
             reasons=("mandatory:declared-execution-contract",), matched_terms=(), content=content,
+        ))
+
+    chat = chat_reference(skill_root, step_text)
+    if chat:
+        relative, content, path = chat
+        raw_tokens += token_estimate(content)
+        selected.append(ContextRange(
+            path=relative, sha256=hashlib.sha256(path.read_bytes()).hexdigest(),
+            authority="skill_instruction", start_line=1, end_line=len(content.splitlines()),
+            estimated_tokens=token_estimate(content), strategy="full-source",
+            reasons=("mandatory:chat-output-contract",), matched_terms=(), content=content,
         ))
 
     candidates = _repository_candidates(

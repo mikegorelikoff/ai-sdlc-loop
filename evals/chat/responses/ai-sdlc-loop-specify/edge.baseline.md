@@ -1,0 +1,12 @@
+Result
+Status: PASS
+Decision: Prepared bounded behavior / allowed path entities; listed evidence satisfies this skill check.
+Evidence: spec.toon
+
+primary: Acceptance: One charge per key; Allowed path: src/payments.py; Bounded behavior: Idempotent retry; Evidence: spec.toon; Requirement ID: AC-001 | перенос
+строки.
+actions: Owner: Engineer; Next action: Validate allowed scope with its owning workflow; Expected evidence: spec.toon.
+
+schema: fixture/v1
+status: pending
+source: "literal | value"

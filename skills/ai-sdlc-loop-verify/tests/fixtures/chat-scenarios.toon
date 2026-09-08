@@ -1,0 +1,152 @@
+scenarios[8]:
+  - baseline_response: "Result\nStatus: PASS\nDecision: Prepared expected / actual entities; listed evidence satisfies this skill check.\nEvidence: evidence.toon\n\nprimary: Actual: One charge observed; Check: pytest tests/payments; Evidence: evidence.toon; Expected: No duplicate charge; Status: PASS.\nactions: Owner: QA; Next action: Validate current quality evidence with its owning workflow; Expected evidence: evidence.toon.\n\nsecondary: Artifact: Confirm artifact for payment retry; Freshness: Confirm freshness for payment retry; Evidence: evidence.toon.\n"
+    id: happy
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-verify for payment-retry delivery: happy"
+    required_facts[3]: evidence.toon,pytest tests/payments,One charge observed
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        evidence.toon,Validate current quality evidence with its owning workflow,QA
+      primary[1]{Actual,Check,Evidence,Expected,Status}:
+        One charge observed,pytest tests/payments,evidence.toon,No duplicate charge,PASS
+      schema: ai-sdlc-chat-result/v1
+      secondary[1]{Artifact,Evidence,Freshness}:
+        Recorded in retry decision DEC-001,evidence.toon,Snapshot supplied for this scenario
+      summary:
+        Decision: Prepared check result; evidence supports the reported result.
+        Evidence: evidence.toon
+        Status: PASS
+  - baseline_response: "Result\nStatus: WARNING\nDecision: Partial expected / actual entities coverage; one dependency remains unverified.\nEvidence: evidence.toon\n\nprimary: Actual: One charge observed; Check: pytest tests/payments; Evidence: evidence.toon; Expected: No duplicate charge; Status: PASS.\nprimary: Actual: One charge observed [pending case]; Check: pytest tests/payments; Evidence: evidence.toon; Expected: No duplicate charge; Status: PASS.\nactions: Owner: QA; Next action: Validate current quality evidence with its owning workflow; Expected evidence: evidence.toon.\n"
+    id: partial
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-verify for payment-retry delivery: partial"
+    required_facts[3]: evidence.toon,pytest tests/payments,One charge observed
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        evidence.toon,Validate current quality evidence with its owning workflow,QA
+      primary[2]{Actual,Check,Evidence,Expected,Status}:
+        One charge observed,pytest tests/payments,evidence.toon,No duplicate charge,PASS
+        "One charge observed [pending case]",pytest tests/payments,evidence.toon,No duplicate charge,PASS
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: "Partial result: second case is unverified; do not infer full coverage."
+        Evidence: evidence.toon
+        Status: WARNING
+  - baseline_response: "Result\nStatus: WARNING\nDecision: Limited expected / actual entities review; source freshness must be confirmed.\nEvidence: evidence.toon\n\nprimary: Actual: One charge observed; Check: pytest tests/payments; Evidence: evidence.toon; Expected: No duplicate charge; Status: PASS.\nactions: Owner: QA; Next action: Validate current quality evidence with its owning workflow; Expected evidence: evidence.toon.\n"
+    id: warning
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-verify for payment-retry delivery: warning"
+    required_facts[3]: evidence.toon,pytest tests/payments,One charge observed
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        evidence.toon,Validate current quality evidence with its owning workflow,QA
+      primary[1]{Actual,Check,Evidence,Expected,Status}:
+        One charge observed,pytest tests/payments,evidence.toon,No duplicate charge,PASS
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: Result has limited source freshness; confirm it before downstream use.
+        Evidence: evidence.toon
+        Status: WARNING
+  - baseline_response: "Result\nStatus: BLOCKED\nDecision: Current quality evidence is unavailable; dependent work has not run.\nEvidence: source-inventory.toon:missing\n\nfailures: Current quality evidence: Current quality evidence; Status: BLOCKED; Blocker: Required source is absent; Evidence: source-inventory.toon:missing; Required action: Provide current quality evidence.\nactions: Owner: QA; Next action: Provide current quality evidence; Expected evidence: Validated current quality evidence.\n"
+    id: blocked
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-verify for payment-retry delivery: blocked"
+    required_facts[2]: "source-inventory.toon:missing",Validated current quality evidence
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        Validated current quality evidence,Provide current quality evidence,QA
+      failures[1]{Blocker,"Current quality evidence",Evidence,"Required action",Status}:
+        Required source is absent,Current quality evidence,"source-inventory.toon:missing",Provide current quality evidence,BLOCKED
+      primary[0]:
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: Current quality evidence is unavailable; dependent work has not run.
+        Evidence: "source-inventory.toon:missing"
+        Status: BLOCKED
+  - baseline_response: "Result\nStatus: BLOCKED\nDecision: Current quality evidence is unavailable; dependent work has not run.\nEvidence: source-inventory.toon:missing\n\nfailures: Current quality evidence: Current quality evidence; Status: BLOCKED; Blocker: Required source is absent; Evidence: source-inventory.toon:missing; Required action: Provide current quality evidence.\nclarifications: Missing current quality evidence: Current quality evidence; Why required: Determines check; Known evidence: No supported assumption; Options: Supply source / narrow requested scope.\nactions: Owner: QA; Next action: Provide current quality evidence; Expected evidence: Validated current quality evidence.\n"
+    id: missing-input
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-verify for payment-retry delivery: missing-input"
+    required_facts[2]: "source-inventory.toon:missing",Validated current quality evidence
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        Validated current quality evidence,Provide current quality evidence,QA
+      clarifications[1]{"Known evidence","Missing current quality evidence",Options,"Why required"}:
+        No supported assumption,Current quality evidence,Supply source / narrow requested scope,Determines check
+      failures[1]{Blocker,"Current quality evidence",Evidence,"Required action",Status}:
+        Required source is absent,Current quality evidence,"source-inventory.toon:missing",Provide current quality evidence,BLOCKED
+      primary[0]:
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: Current quality evidence is unavailable; dependent work has not run.
+        Evidence: "source-inventory.toon:missing"
+        Status: BLOCKED
+  - baseline_response: "Result\nStatus: PASS\nDecision: 20 expected / actual entities rows; showing the first 8; full evidence linked.\nEvidence: evidence.toon\n\nprimary: Actual: One charge observed #1; Check: pytest tests/payments; Evidence: evidence.toon; Expected: No duplicate charge; Status: PASS.\nprimary: Actual: One charge observed #2; Check: pytest tests/payments; Evidence: evidence.toon; Expected: No duplicate charge; Status: PASS.\nprimary: Actual: One charge observed #3; Check: pytest tests/payments; Evidence: evidence.toon; Expected: No duplicate charge; Status: PASS.\nprimary: Actual: One charge observed #4; Check: pytest tests/payments; Evidence: evidence.toon; Expected: No duplicate charge; Status: PASS.\nprimary: Actual: One charge observed #5; Check: pytest tests/payments; Evidence: evidence.toon; Expected: No duplicate charge; Status: PASS.\nprimary: Actual: One charge observed #6; Check: pytest tests/payments; Evidence: evidence.toon; Expected: No duplicate charge; Status: PASS.\nprimary: Actual: One charge observed #7; Check: pytest tests/payments; Evidence: evidence.toon; Expected: No duplicate charge; Status: PASS.\nprimary: Actual: One charge observed #8; Check: pytest tests/payments; Evidence: evidence.toon; Expected: No duplicate charge; Status: PASS.\nprimary: Actual: One charge observed #9; Check: pytest tests/payments; Evidence: evidence.toon; Expected: No duplicate charge; Status: PASS.\nprimary: Actual: One charge observed #10; Check: pytest tests/payments; Evidence: evidence.toon; Expected: No duplicate charge; Status: PASS.\nprimary: Actual: One charge observed #11; Check: pytest tests/payments; Evidence: evidence.toon; Expected: No duplicate charge; Status: PASS.\nprimary: Actual: One charge observed #12; Check: pytest tests/payments; Evidence: evidence.toon; Expected: No duplicate charge; Status: PASS.\nprimary: Actual: One charge observed #13; Check: pytest tests/payments; Evidence: evidence.toon; Expected: No duplicate charge; Status: PASS.\nprimary: Actual: One charge observed #14; Check: pytest tests/payments; Evidence: evidence.toon; Expected: No duplicate charge; Status: PASS.\nprimary: Actual: One charge observed #15; Check: pytest tests/payments; Evidence: evidence.toon; Expected: No duplicate charge; Status: PASS.\nprimary: Actual: One charge observed #16; Check: pytest tests/payments; Evidence: evidence.toon; Expected: No duplicate charge; Status: PASS.\nprimary: Actual: One charge observed #17; Check: pytest tests/payments; Evidence: evidence.toon; Expected: No duplicate charge; Status: PASS.\nprimary: Actual: One charge observed #18; Check: pytest tests/payments; Evidence: evidence.toon; Expected: No duplicate charge; Status: PASS.\nprimary: Actual: One charge observed #19; Check: pytest tests/payments; Evidence: evidence.toon; Expected: No duplicate charge; Status: PASS.\nprimary: Actual: One charge observed #20; Check: pytest tests/payments; Evidence: evidence.toon; Expected: No duplicate charge; Status: PASS.\nactions: Owner: QA; Next action: Validate current quality evidence with its owning workflow; Expected evidence: evidence.toon.\n"
+    id: large
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-verify for payment-retry delivery: large"
+    required_facts[3]: evidence.toon,pytest tests/payments,One charge observed #1
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        evidence.toon,Validate current quality evidence with its owning workflow,QA
+      full_artifact: full-result.toon
+      primary[20]{Actual,Check,Evidence,Expected,Status}:
+        One charge observed #1,pytest tests/payments,evidence.toon,No duplicate charge,PASS
+        One charge observed #2,pytest tests/payments,evidence.toon,No duplicate charge,PASS
+        One charge observed #3,pytest tests/payments,evidence.toon,No duplicate charge,PASS
+        One charge observed #4,pytest tests/payments,evidence.toon,No duplicate charge,PASS
+        One charge observed #5,pytest tests/payments,evidence.toon,No duplicate charge,PASS
+        One charge observed #6,pytest tests/payments,evidence.toon,No duplicate charge,PASS
+        One charge observed #7,pytest tests/payments,evidence.toon,No duplicate charge,PASS
+        One charge observed #8,pytest tests/payments,evidence.toon,No duplicate charge,PASS
+        One charge observed #9,pytest tests/payments,evidence.toon,No duplicate charge,PASS
+        One charge observed #10,pytest tests/payments,evidence.toon,No duplicate charge,PASS
+        One charge observed #11,pytest tests/payments,evidence.toon,No duplicate charge,PASS
+        One charge observed #12,pytest tests/payments,evidence.toon,No duplicate charge,PASS
+        One charge observed #13,pytest tests/payments,evidence.toon,No duplicate charge,PASS
+        One charge observed #14,pytest tests/payments,evidence.toon,No duplicate charge,PASS
+        One charge observed #15,pytest tests/payments,evidence.toon,No duplicate charge,PASS
+        One charge observed #16,pytest tests/payments,evidence.toon,No duplicate charge,PASS
+        One charge observed #17,pytest tests/payments,evidence.toon,No duplicate charge,PASS
+        One charge observed #18,pytest tests/payments,evidence.toon,No duplicate charge,PASS
+        One charge observed #19,pytest tests/payments,evidence.toon,No duplicate charge,PASS
+        One charge observed #20,pytest tests/payments,evidence.toon,No duplicate charge,PASS
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: 20 check records; 8 shown; inspect the linked full artifact.
+        Evidence: evidence.toon
+        Status: PASS
+  - baseline_response: "Result\nStatus: PASS\nDecision: One check result; scope and evidence are explicit.\nEvidence: evidence.toon\n\nprimary: Actual: One charge observed; Check: pytest tests/payments; Evidence: evidence.toon; Expected: No duplicate charge; Status: PASS.\nactions: Owner: QA; Next action: Validate current quality evidence with its owning workflow; Expected evidence: evidence.toon.\n"
+    id: small
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-verify for payment-retry delivery: small"
+    required_facts[3]: evidence.toon,pytest tests/payments,One charge observed
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        evidence.toon,Validate current quality evidence with its owning workflow,QA
+      primary[1]{Actual,Check,Evidence,Expected,Status}:
+        One charge observed,pytest tests/payments,evidence.toon,No duplicate charge,PASS
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: One check result; scope and evidence are explicit.
+        Evidence: evidence.toon
+        Status: PASS
+  - baseline_response: "Result\nStatus: PASS\nDecision: Prepared expected / actual entities; listed evidence satisfies this skill check.\nEvidence: evidence.toon\n\nprimary: Actual: One charge observed; Check: pytest tests/payments | перенос\nстроки; Evidence: evidence.toon; Expected: No duplicate charge; Status: PASS.\nactions: Owner: QA; Next action: Validate current quality evidence with its owning workflow; Expected evidence: evidence.toon.\n\nschema: fixture/v1\nstatus: pending\nsource: \"literal | value\"\n"
+    id: edge
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-verify for payment-retry delivery: edge"
+    required_facts[3]: evidence.toon,"pytest tests/payments | перенос\nстроки",One charge observed
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        evidence.toon,Validate current quality evidence with its owning workflow,QA
+      native[1]{content,language}:
+        "schema: fixture/v1\nstatus: pending\nsource: \"literal | value\"",toon
+      primary[1]{Actual,Check,Evidence,Expected,Status}:
+        One charge observed,"pytest tests/payments | перенос\nстроки",evidence.toon,No duplicate charge,PASS
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: Prepared expected / actual entities; listed evidence satisfies this skill check.
+        Evidence: evidence.toon
+        Status: PASS
+schema: ai-sdlc-chat-scenarios/v1
+skill: ai-sdlc-loop-verify

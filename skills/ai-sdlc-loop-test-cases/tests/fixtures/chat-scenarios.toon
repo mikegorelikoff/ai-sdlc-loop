@@ -1,0 +1,150 @@
+scenarios[8]:
+  - baseline_response: "Result\nStatus: PASS\nDecision: Prepared requirement id / setup / trigger entities; listed evidence satisfies this skill check.\nEvidence: test-cases.md:12\n\nprimary: Evidence: test-cases.md:12; Expected result: Original charge returned; Layer: Service; Requirement ID: AC-001; Setup / trigger: Existing key; repeat callback; Test ID: TC-001.\nactions: Owner: QA; Next action: Validate acceptance criterion with its owning workflow; Expected evidence: test-cases.md:12.\n"
+    id: happy
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-test-cases for payment-retry delivery: happy"
+    required_facts[2]: "test-cases.md:12",TC-001
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        "test-cases.md:12",Validate acceptance criterion with its owning workflow,QA
+      primary[1]{Evidence,"Expected result",Layer,"Requirement ID","Setup / trigger","Test ID"}:
+        "test-cases.md:12",Original charge returned,Service,AC-001,Existing key; repeat callback,TC-001
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: Prepared test id result; evidence supports the reported result.
+        Evidence: "test-cases.md:12"
+        Status: PASS
+  - baseline_response: "Result\nStatus: WARNING\nDecision: Partial requirement id / setup / trigger entities coverage; one dependency remains unverified.\nEvidence: test-cases.md:12\n\nprimary: Evidence: test-cases.md:12; Expected result: Original charge returned; Layer: Service; Requirement ID: AC-001; Setup / trigger: Existing key; repeat callback; Test ID: TC-001.\nprimary: Evidence: test-cases.md:12 [pending case]; Expected result: Original charge returned; Layer: Service; Requirement ID: AC-001; Setup / trigger: Existing key; repeat callback; Test ID: TC-001.\nactions: Owner: QA; Next action: Validate acceptance criterion with its owning workflow; Expected evidence: test-cases.md:12.\n"
+    id: partial
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-test-cases for payment-retry delivery: partial"
+    required_facts[2]: "test-cases.md:12",TC-001
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        "test-cases.md:12",Validate acceptance criterion with its owning workflow,QA
+      primary[2]{Evidence,"Expected result",Layer,"Requirement ID","Setup / trigger","Test ID"}:
+        "test-cases.md:12",Original charge returned,Service,AC-001,Existing key; repeat callback,TC-001
+        "test-cases.md:12 [pending case]",Original charge returned,Service,AC-001,Existing key; repeat callback,TC-001
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: "Partial result: second case is unverified; do not infer full coverage."
+        Evidence: "test-cases.md:12"
+        Status: WARNING
+  - baseline_response: "Result\nStatus: WARNING\nDecision: Limited requirement id / setup / trigger entities review; source freshness must be confirmed.\nEvidence: test-cases.md:12\n\nprimary: Evidence: test-cases.md:12; Expected result: Original charge returned; Layer: Service; Requirement ID: AC-001; Setup / trigger: Existing key; repeat callback; Test ID: TC-001.\nactions: Owner: QA; Next action: Validate acceptance criterion with its owning workflow; Expected evidence: test-cases.md:12.\n"
+    id: warning
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-test-cases for payment-retry delivery: warning"
+    required_facts[2]: "test-cases.md:12",TC-001
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        "test-cases.md:12",Validate acceptance criterion with its owning workflow,QA
+      primary[1]{Evidence,"Expected result",Layer,"Requirement ID","Setup / trigger","Test ID"}:
+        "test-cases.md:12",Original charge returned,Service,AC-001,Existing key; repeat callback,TC-001
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: Result has limited source freshness; confirm it before downstream use.
+        Evidence: "test-cases.md:12"
+        Status: WARNING
+  - baseline_response: "Result\nStatus: BLOCKED\nDecision: Acceptance criterion is unavailable; dependent work has not run.\nEvidence: source-inventory.toon:missing\n\nfailures: Acceptance criterion: Acceptance criterion; Status: BLOCKED; Blocker: Required source is absent; Evidence: source-inventory.toon:missing; Required action: Provide acceptance criterion.\nactions: Owner: QA; Next action: Provide acceptance criterion; Expected evidence: Validated acceptance criterion.\n"
+    id: blocked
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-test-cases for payment-retry delivery: blocked"
+    required_facts[2]: "source-inventory.toon:missing",Validated acceptance criterion
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        Validated acceptance criterion,Provide acceptance criterion,QA
+      failures[1]{"Acceptance criterion",Blocker,Evidence,"Required action",Status}:
+        Acceptance criterion,Required source is absent,"source-inventory.toon:missing",Provide acceptance criterion,BLOCKED
+      primary[0]:
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: Acceptance criterion is unavailable; dependent work has not run.
+        Evidence: "source-inventory.toon:missing"
+        Status: BLOCKED
+  - baseline_response: "Result\nStatus: BLOCKED\nDecision: Acceptance criterion is unavailable; dependent work has not run.\nEvidence: source-inventory.toon:missing\n\nfailures: Acceptance criterion: Acceptance criterion; Status: BLOCKED; Blocker: Required source is absent; Evidence: source-inventory.toon:missing; Required action: Provide acceptance criterion.\nclarifications: Missing acceptance criterion: Acceptance criterion; Why required: Determines test id; Known evidence: No supported assumption; Options: Supply source / narrow requested scope.\nactions: Owner: QA; Next action: Provide acceptance criterion; Expected evidence: Validated acceptance criterion.\n"
+    id: missing-input
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-test-cases for payment-retry delivery: missing-input"
+    required_facts[2]: "source-inventory.toon:missing",Validated acceptance criterion
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        Validated acceptance criterion,Provide acceptance criterion,QA
+      clarifications[1]{"Known evidence","Missing acceptance criterion",Options,"Why required"}:
+        No supported assumption,Acceptance criterion,Supply source / narrow requested scope,Determines test id
+      failures[1]{"Acceptance criterion",Blocker,Evidence,"Required action",Status}:
+        Acceptance criterion,Required source is absent,"source-inventory.toon:missing",Provide acceptance criterion,BLOCKED
+      primary[0]:
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: Acceptance criterion is unavailable; dependent work has not run.
+        Evidence: "source-inventory.toon:missing"
+        Status: BLOCKED
+  - baseline_response: "Result\nStatus: PASS\nDecision: 20 requirement id / setup / trigger entities rows; showing the first 8; full evidence linked.\nEvidence: test-cases.md:12\n\nprimary: Evidence: test-cases.md:12 #1; Expected result: Original charge returned; Layer: Service; Requirement ID: AC-001; Setup / trigger: Existing key; repeat callback; Test ID: TC-001.\nprimary: Evidence: test-cases.md:12 #2; Expected result: Original charge returned; Layer: Service; Requirement ID: AC-001; Setup / trigger: Existing key; repeat callback; Test ID: TC-001.\nprimary: Evidence: test-cases.md:12 #3; Expected result: Original charge returned; Layer: Service; Requirement ID: AC-001; Setup / trigger: Existing key; repeat callback; Test ID: TC-001.\nprimary: Evidence: test-cases.md:12 #4; Expected result: Original charge returned; Layer: Service; Requirement ID: AC-001; Setup / trigger: Existing key; repeat callback; Test ID: TC-001.\nprimary: Evidence: test-cases.md:12 #5; Expected result: Original charge returned; Layer: Service; Requirement ID: AC-001; Setup / trigger: Existing key; repeat callback; Test ID: TC-001.\nprimary: Evidence: test-cases.md:12 #6; Expected result: Original charge returned; Layer: Service; Requirement ID: AC-001; Setup / trigger: Existing key; repeat callback; Test ID: TC-001.\nprimary: Evidence: test-cases.md:12 #7; Expected result: Original charge returned; Layer: Service; Requirement ID: AC-001; Setup / trigger: Existing key; repeat callback; Test ID: TC-001.\nprimary: Evidence: test-cases.md:12 #8; Expected result: Original charge returned; Layer: Service; Requirement ID: AC-001; Setup / trigger: Existing key; repeat callback; Test ID: TC-001.\nprimary: Evidence: test-cases.md:12 #9; Expected result: Original charge returned; Layer: Service; Requirement ID: AC-001; Setup / trigger: Existing key; repeat callback; Test ID: TC-001.\nprimary: Evidence: test-cases.md:12 #10; Expected result: Original charge returned; Layer: Service; Requirement ID: AC-001; Setup / trigger: Existing key; repeat callback; Test ID: TC-001.\nprimary: Evidence: test-cases.md:12 #11; Expected result: Original charge returned; Layer: Service; Requirement ID: AC-001; Setup / trigger: Existing key; repeat callback; Test ID: TC-001.\nprimary: Evidence: test-cases.md:12 #12; Expected result: Original charge returned; Layer: Service; Requirement ID: AC-001; Setup / trigger: Existing key; repeat callback; Test ID: TC-001.\nprimary: Evidence: test-cases.md:12 #13; Expected result: Original charge returned; Layer: Service; Requirement ID: AC-001; Setup / trigger: Existing key; repeat callback; Test ID: TC-001.\nprimary: Evidence: test-cases.md:12 #14; Expected result: Original charge returned; Layer: Service; Requirement ID: AC-001; Setup / trigger: Existing key; repeat callback; Test ID: TC-001.\nprimary: Evidence: test-cases.md:12 #15; Expected result: Original charge returned; Layer: Service; Requirement ID: AC-001; Setup / trigger: Existing key; repeat callback; Test ID: TC-001.\nprimary: Evidence: test-cases.md:12 #16; Expected result: Original charge returned; Layer: Service; Requirement ID: AC-001; Setup / trigger: Existing key; repeat callback; Test ID: TC-001.\nprimary: Evidence: test-cases.md:12 #17; Expected result: Original charge returned; Layer: Service; Requirement ID: AC-001; Setup / trigger: Existing key; repeat callback; Test ID: TC-001.\nprimary: Evidence: test-cases.md:12 #18; Expected result: Original charge returned; Layer: Service; Requirement ID: AC-001; Setup / trigger: Existing key; repeat callback; Test ID: TC-001.\nprimary: Evidence: test-cases.md:12 #19; Expected result: Original charge returned; Layer: Service; Requirement ID: AC-001; Setup / trigger: Existing key; repeat callback; Test ID: TC-001.\nprimary: Evidence: test-cases.md:12 #20; Expected result: Original charge returned; Layer: Service; Requirement ID: AC-001; Setup / trigger: Existing key; repeat callback; Test ID: TC-001.\nactions: Owner: QA; Next action: Validate acceptance criterion with its owning workflow; Expected evidence: test-cases.md:12.\n"
+    id: large
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-test-cases for payment-retry delivery: large"
+    required_facts[3]: "test-cases.md:12",TC-001,"test-cases.md:12 #1"
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        "test-cases.md:12",Validate acceptance criterion with its owning workflow,QA
+      full_artifact: full-result.toon
+      primary[20]{Evidence,"Expected result",Layer,"Requirement ID","Setup / trigger","Test ID"}:
+        "test-cases.md:12 #1",Original charge returned,Service,AC-001,Existing key; repeat callback,TC-001
+        "test-cases.md:12 #2",Original charge returned,Service,AC-001,Existing key; repeat callback,TC-001
+        "test-cases.md:12 #3",Original charge returned,Service,AC-001,Existing key; repeat callback,TC-001
+        "test-cases.md:12 #4",Original charge returned,Service,AC-001,Existing key; repeat callback,TC-001
+        "test-cases.md:12 #5",Original charge returned,Service,AC-001,Existing key; repeat callback,TC-001
+        "test-cases.md:12 #6",Original charge returned,Service,AC-001,Existing key; repeat callback,TC-001
+        "test-cases.md:12 #7",Original charge returned,Service,AC-001,Existing key; repeat callback,TC-001
+        "test-cases.md:12 #8",Original charge returned,Service,AC-001,Existing key; repeat callback,TC-001
+        "test-cases.md:12 #9",Original charge returned,Service,AC-001,Existing key; repeat callback,TC-001
+        "test-cases.md:12 #10",Original charge returned,Service,AC-001,Existing key; repeat callback,TC-001
+        "test-cases.md:12 #11",Original charge returned,Service,AC-001,Existing key; repeat callback,TC-001
+        "test-cases.md:12 #12",Original charge returned,Service,AC-001,Existing key; repeat callback,TC-001
+        "test-cases.md:12 #13",Original charge returned,Service,AC-001,Existing key; repeat callback,TC-001
+        "test-cases.md:12 #14",Original charge returned,Service,AC-001,Existing key; repeat callback,TC-001
+        "test-cases.md:12 #15",Original charge returned,Service,AC-001,Existing key; repeat callback,TC-001
+        "test-cases.md:12 #16",Original charge returned,Service,AC-001,Existing key; repeat callback,TC-001
+        "test-cases.md:12 #17",Original charge returned,Service,AC-001,Existing key; repeat callback,TC-001
+        "test-cases.md:12 #18",Original charge returned,Service,AC-001,Existing key; repeat callback,TC-001
+        "test-cases.md:12 #19",Original charge returned,Service,AC-001,Existing key; repeat callback,TC-001
+        "test-cases.md:12 #20",Original charge returned,Service,AC-001,Existing key; repeat callback,TC-001
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: 20 test id records; 8 shown; inspect the linked full artifact.
+        Evidence: "test-cases.md:12"
+        Status: PASS
+  - baseline_response: "Result\nStatus: PASS\nDecision: One test id result; scope and evidence are explicit.\nEvidence: test-cases.md:12\n\nprimary: Evidence: test-cases.md:12; Expected result: Original charge returned; Layer: Service; Requirement ID: AC-001; Setup / trigger: Existing key; repeat callback; Test ID: TC-001.\nactions: Owner: QA; Next action: Validate acceptance criterion with its owning workflow; Expected evidence: test-cases.md:12.\n"
+    id: small
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-test-cases for payment-retry delivery: small"
+    required_facts[2]: "test-cases.md:12",TC-001
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        "test-cases.md:12",Validate acceptance criterion with its owning workflow,QA
+      primary[1]{Evidence,"Expected result",Layer,"Requirement ID","Setup / trigger","Test ID"}:
+        "test-cases.md:12",Original charge returned,Service,AC-001,Existing key; repeat callback,TC-001
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: One test id result; scope and evidence are explicit.
+        Evidence: "test-cases.md:12"
+        Status: PASS
+  - baseline_response: "Result\nStatus: PASS\nDecision: Prepared requirement id / setup / trigger entities; listed evidence satisfies this skill check.\nEvidence: test-cases.md:12\n\nprimary: Evidence: test-cases.md:12; Expected result: Original charge returned; Layer: Service; Requirement ID: AC-001; Setup / trigger: Existing key; repeat callback; Test ID: TC-001 | перенос\nстроки.\nactions: Owner: QA; Next action: Validate acceptance criterion with its owning workflow; Expected evidence: test-cases.md:12.\n\nschema: fixture/v1\nstatus: pending\nsource: \"literal | value\"\n"
+    id: edge
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-test-cases for payment-retry delivery: edge"
+    required_facts[2]: "test-cases.md:12","TC-001 | перенос\nстроки"
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        "test-cases.md:12",Validate acceptance criterion with its owning workflow,QA
+      native[1]{content,language}:
+        "schema: fixture/v1\nstatus: pending\nsource: \"literal | value\"",toon
+      primary[1]{Evidence,"Expected result",Layer,"Requirement ID","Setup / trigger","Test ID"}:
+        "test-cases.md:12",Original charge returned,Service,AC-001,Existing key; repeat callback,"TC-001 | перенос\nстроки"
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: Prepared requirement id / setup / trigger entities; listed evidence satisfies this skill check.
+        Evidence: "test-cases.md:12"
+        Status: PASS
+schema: ai-sdlc-chat-scenarios/v1
+skill: ai-sdlc-loop-test-cases

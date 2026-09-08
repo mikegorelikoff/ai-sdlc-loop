@@ -1,0 +1,17 @@
+clarification[4]: Missing raw request,Why required,Known evidence,Options
+example:
+  "Business option": Reuse payment ledger
+  "Decision status": Proposed
+  "Option ID": OPT-001
+  Precedent: DEC-001
+  Trade-off: Lower effort; existing retention
+failure[5]: Raw request,Status,Blocker,Evidence,Required action
+hide: "Secrets, raw logs, complete journals and unneeded internal tool steps. Keep full detail in the owning native artifact."
+native_exception: "Keep machine artifacts, code, commands and diffs native; presentation does not replace validation."
+primary[5]: Option ID,Business option,Precedent,Trade-off,Decision status
+priority: Show the user decision before detail; preserve source order and explicit authority.
+required_input: Raw request
+rows: individual option id records
+schema: ai-sdlc-chat-contract/v1
+secondary[5]: Question ID,Question,Owner,Evidence method,Decision impact
+skill: ai-sdlc-loop-requirements-discovery

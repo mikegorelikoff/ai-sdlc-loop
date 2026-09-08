@@ -1,0 +1,150 @@
+scenarios[8]:
+  - baseline_response: "Result\nStatus: PASS\nDecision: Prepared expected / actual entities; listed evidence satisfies this skill check.\nEvidence: smoke.log:4\n\nprimary: Actual: Import succeeds; Evidence: smoke.log:4; Expected: Imports sibling runtime; Runtime check: Installed helper import; Status: PASS.\nactions: Owner: Maintainer; Next action: Validate installed helper with its owning workflow; Expected evidence: smoke.log:4.\n"
+    id: happy
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-shared-runtime for payment-retry delivery: happy"
+    required_facts[3]: "smoke.log:4",Installed helper import,Import succeeds
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        "smoke.log:4",Validate installed helper with its owning workflow,Maintainer
+      primary[1]{Actual,Evidence,Expected,"Runtime check",Status}:
+        Import succeeds,"smoke.log:4",Imports sibling runtime,Installed helper import,PASS
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: Prepared runtime check result; evidence supports the reported result.
+        Evidence: "smoke.log:4"
+        Status: PASS
+  - baseline_response: "Result\nStatus: WARNING\nDecision: Partial expected / actual entities coverage; one dependency remains unverified.\nEvidence: smoke.log:4\n\nprimary: Actual: Import succeeds; Evidence: smoke.log:4; Expected: Imports sibling runtime; Runtime check: Installed helper import; Status: PASS.\nprimary: Actual: Import succeeds [pending case]; Evidence: smoke.log:4; Expected: Imports sibling runtime; Runtime check: Installed helper import; Status: PASS.\nactions: Owner: Maintainer; Next action: Validate installed helper with its owning workflow; Expected evidence: smoke.log:4.\n"
+    id: partial
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-shared-runtime for payment-retry delivery: partial"
+    required_facts[3]: "smoke.log:4",Installed helper import,Import succeeds
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        "smoke.log:4",Validate installed helper with its owning workflow,Maintainer
+      primary[2]{Actual,Evidence,Expected,"Runtime check",Status}:
+        Import succeeds,"smoke.log:4",Imports sibling runtime,Installed helper import,PASS
+        "Import succeeds [pending case]","smoke.log:4",Imports sibling runtime,Installed helper import,PASS
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: "Partial result: second case is unverified; do not infer full coverage."
+        Evidence: "smoke.log:4"
+        Status: WARNING
+  - baseline_response: "Result\nStatus: WARNING\nDecision: Limited expected / actual entities review; source freshness must be confirmed.\nEvidence: smoke.log:4\n\nprimary: Actual: Import succeeds; Evidence: smoke.log:4; Expected: Imports sibling runtime; Runtime check: Installed helper import; Status: PASS.\nactions: Owner: Maintainer; Next action: Validate installed helper with its owning workflow; Expected evidence: smoke.log:4.\n"
+    id: warning
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-shared-runtime for payment-retry delivery: warning"
+    required_facts[3]: "smoke.log:4",Installed helper import,Import succeeds
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        "smoke.log:4",Validate installed helper with its owning workflow,Maintainer
+      primary[1]{Actual,Evidence,Expected,"Runtime check",Status}:
+        Import succeeds,"smoke.log:4",Imports sibling runtime,Installed helper import,PASS
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: Result has limited source freshness; confirm it before downstream use.
+        Evidence: "smoke.log:4"
+        Status: WARNING
+  - baseline_response: "Result\nStatus: BLOCKED\nDecision: Installed helper is unavailable; dependent work has not run.\nEvidence: source-inventory.toon:missing\n\nfailures: Installed helper: Installed helper; Status: BLOCKED; Blocker: Required source is absent; Evidence: source-inventory.toon:missing; Required action: Provide installed helper.\nactions: Owner: Maintainer; Next action: Provide installed helper; Expected evidence: Validated installed helper.\n"
+    id: blocked
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-shared-runtime for payment-retry delivery: blocked"
+    required_facts[2]: "source-inventory.toon:missing",Validated installed helper
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        Validated installed helper,Provide installed helper,Maintainer
+      failures[1]{Blocker,Evidence,"Installed helper","Required action",Status}:
+        Required source is absent,"source-inventory.toon:missing",Installed helper,Provide installed helper,BLOCKED
+      primary[0]:
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: Installed helper is unavailable; dependent work has not run.
+        Evidence: "source-inventory.toon:missing"
+        Status: BLOCKED
+  - baseline_response: "Result\nStatus: BLOCKED\nDecision: Installed helper is unavailable; dependent work has not run.\nEvidence: source-inventory.toon:missing\n\nfailures: Installed helper: Installed helper; Status: BLOCKED; Blocker: Required source is absent; Evidence: source-inventory.toon:missing; Required action: Provide installed helper.\nclarifications: Missing installed helper: Installed helper; Why required: Determines runtime check; Known evidence: No supported assumption; Options: Supply source / narrow requested scope.\nactions: Owner: Maintainer; Next action: Provide installed helper; Expected evidence: Validated installed helper.\n"
+    id: missing-input
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-shared-runtime for payment-retry delivery: missing-input"
+    required_facts[2]: "source-inventory.toon:missing",Validated installed helper
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        Validated installed helper,Provide installed helper,Maintainer
+      clarifications[1]{"Known evidence","Missing installed helper",Options,"Why required"}:
+        No supported assumption,Installed helper,Supply source / narrow requested scope,Determines runtime check
+      failures[1]{Blocker,Evidence,"Installed helper","Required action",Status}:
+        Required source is absent,"source-inventory.toon:missing",Installed helper,Provide installed helper,BLOCKED
+      primary[0]:
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: Installed helper is unavailable; dependent work has not run.
+        Evidence: "source-inventory.toon:missing"
+        Status: BLOCKED
+  - baseline_response: "Result\nStatus: PASS\nDecision: 20 expected / actual entities rows; showing the first 8; full evidence linked.\nEvidence: smoke.log:4\n\nprimary: Actual: Import succeeds #1; Evidence: smoke.log:4; Expected: Imports sibling runtime; Runtime check: Installed helper import; Status: PASS.\nprimary: Actual: Import succeeds #2; Evidence: smoke.log:4; Expected: Imports sibling runtime; Runtime check: Installed helper import; Status: PASS.\nprimary: Actual: Import succeeds #3; Evidence: smoke.log:4; Expected: Imports sibling runtime; Runtime check: Installed helper import; Status: PASS.\nprimary: Actual: Import succeeds #4; Evidence: smoke.log:4; Expected: Imports sibling runtime; Runtime check: Installed helper import; Status: PASS.\nprimary: Actual: Import succeeds #5; Evidence: smoke.log:4; Expected: Imports sibling runtime; Runtime check: Installed helper import; Status: PASS.\nprimary: Actual: Import succeeds #6; Evidence: smoke.log:4; Expected: Imports sibling runtime; Runtime check: Installed helper import; Status: PASS.\nprimary: Actual: Import succeeds #7; Evidence: smoke.log:4; Expected: Imports sibling runtime; Runtime check: Installed helper import; Status: PASS.\nprimary: Actual: Import succeeds #8; Evidence: smoke.log:4; Expected: Imports sibling runtime; Runtime check: Installed helper import; Status: PASS.\nprimary: Actual: Import succeeds #9; Evidence: smoke.log:4; Expected: Imports sibling runtime; Runtime check: Installed helper import; Status: PASS.\nprimary: Actual: Import succeeds #10; Evidence: smoke.log:4; Expected: Imports sibling runtime; Runtime check: Installed helper import; Status: PASS.\nprimary: Actual: Import succeeds #11; Evidence: smoke.log:4; Expected: Imports sibling runtime; Runtime check: Installed helper import; Status: PASS.\nprimary: Actual: Import succeeds #12; Evidence: smoke.log:4; Expected: Imports sibling runtime; Runtime check: Installed helper import; Status: PASS.\nprimary: Actual: Import succeeds #13; Evidence: smoke.log:4; Expected: Imports sibling runtime; Runtime check: Installed helper import; Status: PASS.\nprimary: Actual: Import succeeds #14; Evidence: smoke.log:4; Expected: Imports sibling runtime; Runtime check: Installed helper import; Status: PASS.\nprimary: Actual: Import succeeds #15; Evidence: smoke.log:4; Expected: Imports sibling runtime; Runtime check: Installed helper import; Status: PASS.\nprimary: Actual: Import succeeds #16; Evidence: smoke.log:4; Expected: Imports sibling runtime; Runtime check: Installed helper import; Status: PASS.\nprimary: Actual: Import succeeds #17; Evidence: smoke.log:4; Expected: Imports sibling runtime; Runtime check: Installed helper import; Status: PASS.\nprimary: Actual: Import succeeds #18; Evidence: smoke.log:4; Expected: Imports sibling runtime; Runtime check: Installed helper import; Status: PASS.\nprimary: Actual: Import succeeds #19; Evidence: smoke.log:4; Expected: Imports sibling runtime; Runtime check: Installed helper import; Status: PASS.\nprimary: Actual: Import succeeds #20; Evidence: smoke.log:4; Expected: Imports sibling runtime; Runtime check: Installed helper import; Status: PASS.\nactions: Owner: Maintainer; Next action: Validate installed helper with its owning workflow; Expected evidence: smoke.log:4.\n"
+    id: large
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-shared-runtime for payment-retry delivery: large"
+    required_facts[3]: "smoke.log:4",Installed helper import,Import succeeds #1
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        "smoke.log:4",Validate installed helper with its owning workflow,Maintainer
+      full_artifact: full-result.toon
+      primary[20]{Actual,Evidence,Expected,"Runtime check",Status}:
+        Import succeeds #1,"smoke.log:4",Imports sibling runtime,Installed helper import,PASS
+        Import succeeds #2,"smoke.log:4",Imports sibling runtime,Installed helper import,PASS
+        Import succeeds #3,"smoke.log:4",Imports sibling runtime,Installed helper import,PASS
+        Import succeeds #4,"smoke.log:4",Imports sibling runtime,Installed helper import,PASS
+        Import succeeds #5,"smoke.log:4",Imports sibling runtime,Installed helper import,PASS
+        Import succeeds #6,"smoke.log:4",Imports sibling runtime,Installed helper import,PASS
+        Import succeeds #7,"smoke.log:4",Imports sibling runtime,Installed helper import,PASS
+        Import succeeds #8,"smoke.log:4",Imports sibling runtime,Installed helper import,PASS
+        Import succeeds #9,"smoke.log:4",Imports sibling runtime,Installed helper import,PASS
+        Import succeeds #10,"smoke.log:4",Imports sibling runtime,Installed helper import,PASS
+        Import succeeds #11,"smoke.log:4",Imports sibling runtime,Installed helper import,PASS
+        Import succeeds #12,"smoke.log:4",Imports sibling runtime,Installed helper import,PASS
+        Import succeeds #13,"smoke.log:4",Imports sibling runtime,Installed helper import,PASS
+        Import succeeds #14,"smoke.log:4",Imports sibling runtime,Installed helper import,PASS
+        Import succeeds #15,"smoke.log:4",Imports sibling runtime,Installed helper import,PASS
+        Import succeeds #16,"smoke.log:4",Imports sibling runtime,Installed helper import,PASS
+        Import succeeds #17,"smoke.log:4",Imports sibling runtime,Installed helper import,PASS
+        Import succeeds #18,"smoke.log:4",Imports sibling runtime,Installed helper import,PASS
+        Import succeeds #19,"smoke.log:4",Imports sibling runtime,Installed helper import,PASS
+        Import succeeds #20,"smoke.log:4",Imports sibling runtime,Installed helper import,PASS
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: 20 runtime check records; 8 shown; inspect the linked full artifact.
+        Evidence: "smoke.log:4"
+        Status: PASS
+  - baseline_response: "Result\nStatus: PASS\nDecision: One runtime check result; scope and evidence are explicit.\nEvidence: smoke.log:4\n\nprimary: Actual: Import succeeds; Evidence: smoke.log:4; Expected: Imports sibling runtime; Runtime check: Installed helper import; Status: PASS.\nactions: Owner: Maintainer; Next action: Validate installed helper with its owning workflow; Expected evidence: smoke.log:4.\n"
+    id: small
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-shared-runtime for payment-retry delivery: small"
+    required_facts[3]: "smoke.log:4",Installed helper import,Import succeeds
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        "smoke.log:4",Validate installed helper with its owning workflow,Maintainer
+      primary[1]{Actual,Evidence,Expected,"Runtime check",Status}:
+        Import succeeds,"smoke.log:4",Imports sibling runtime,Installed helper import,PASS
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: One runtime check result; scope and evidence are explicit.
+        Evidence: "smoke.log:4"
+        Status: PASS
+  - baseline_response: "Result\nStatus: PASS\nDecision: Prepared expected / actual entities; listed evidence satisfies this skill check.\nEvidence: smoke.log:4\n\nprimary: Actual: Import succeeds; Evidence: smoke.log:4; Expected: Imports sibling runtime; Runtime check: Installed helper import | перенос\nстроки; Status: PASS.\nactions: Owner: Maintainer; Next action: Validate installed helper with its owning workflow; Expected evidence: smoke.log:4.\n\nschema: fixture/v1\nstatus: pending\nsource: \"literal | value\"\n"
+    id: edge
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-shared-runtime for payment-retry delivery: edge"
+    required_facts[3]: "smoke.log:4","Installed helper import | перенос\nстроки",Import succeeds
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        "smoke.log:4",Validate installed helper with its owning workflow,Maintainer
+      native[1]{content,language}:
+        "schema: fixture/v1\nstatus: pending\nsource: \"literal | value\"",toon
+      primary[1]{Actual,Evidence,Expected,"Runtime check",Status}:
+        Import succeeds,"smoke.log:4",Imports sibling runtime,"Installed helper import | перенос\nстроки",PASS
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: Prepared expected / actual entities; listed evidence satisfies this skill check.
+        Evidence: "smoke.log:4"
+        Status: PASS
+schema: ai-sdlc-chat-scenarios/v1
+skill: ai-sdlc-loop-shared-runtime

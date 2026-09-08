@@ -10,7 +10,7 @@ Enter after execution has produced the expected artifact, code, plan, decision, 
 
 ## Output Spec
 
-Return a complete commit message, not a paragraph about the message:
+Return the complete commit message unchanged in a native text block, with the local chat summary when framing is requested:
 
 ````text
 type(scope): imperative summary
@@ -104,3 +104,7 @@ Reject this because the subject is not Conventional Commit syntax, traceability 
 ## Exit
 
 Report outcome, validation evidence, unresolved risks, and the next required or optional owner directly in the active response.
+
+## Chat presentation
+
+Present the result using the owning `SKILL.md` Chat Output Contract and local [chat schema](../references/chat-output.toon). The machine handoff remains native; show its decision, evidence and owned action without dumping the journal.

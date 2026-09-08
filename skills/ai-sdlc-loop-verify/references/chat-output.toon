@@ -1,0 +1,17 @@
+clarification[4]: Missing current quality evidence,Why required,Known evidence,Options
+example:
+  Actual: One charge observed
+  Check: pytest tests/payments
+  Evidence: evidence.toon
+  Expected: No duplicate charge
+  Status: PASS
+failure[5]: Current quality evidence,Status,Blocker,Evidence,Required action
+hide: "Secrets, raw logs, complete journals and unneeded internal tool steps. Keep full detail in the owning native artifact."
+native_exception: "Keep machine artifacts, code, commands and diffs native; presentation does not replace validation."
+primary[5]: Check,Expected,Actual,Status,Evidence
+priority: Show the user decision before detail; preserve source order and explicit authority.
+required_input: Current quality evidence
+rows: individual check records
+schema: ai-sdlc-chat-contract/v1
+secondary[3]: Artifact,Freshness,Evidence
+skill: ai-sdlc-loop-verify

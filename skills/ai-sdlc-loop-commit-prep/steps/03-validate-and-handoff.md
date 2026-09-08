@@ -22,3 +22,7 @@ Loop receipts; never fabricate a full SDD package to make preparation pass.
 
 Return ready-for-commit-review or blocked, with evidence and one next required
 owner/action. Preserve all existing user changes and separate approval.
+
+## Chat presentation
+
+Present the result using the owning `SKILL.md` Chat Output Contract and local [chat schema](../references/chat-output.toon). The machine handoff remains native; show its decision, evidence and owned action without dumping the journal.

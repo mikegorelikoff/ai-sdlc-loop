@@ -1,0 +1,18 @@
+clarification[4]: Missing acceptance outcome,Why required,Known evidence,Options
+example:
+  Action: Replay callback
+  "Actor / setup": Operator with failed callback
+  Evidence: "qa.md:20"
+  "Execution status": PENDING
+  "Expected result": One ledger entry
+  "Scenario ID": QA-001
+failure[5]: Acceptance outcome,Status,Blocker,Evidence,Required action
+hide: "Secrets, raw logs, complete journals and unneeded internal tool steps. Keep full detail in the owning native artifact."
+native_exception: "Keep machine artifacts, code, commands and diffs native; presentation does not replace validation."
+primary[6]: Scenario ID,Actor / setup,Action,Expected result,Execution status,Evidence
+priority: Show the user decision before detail; preserve source order and explicit authority.
+required_input: Acceptance outcome
+rows: individual scenario id records
+schema: ai-sdlc-chat-contract/v1
+secondary[4]: Regression target,Risk,Execution status,Evidence
+skill: ai-sdlc-loop-qa

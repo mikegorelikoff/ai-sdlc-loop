@@ -1,0 +1,18 @@
+clarification[4]: Missing requirement package,Why required,Known evidence,Options
+example:
+  Evidence: "spec.toon:12"
+  "Gap category": Business rule
+  Impact: Timeout untestable
+  "Requirement ID": AC-002
+  Resolution: Define deadline
+  Severity: HIGH
+failure[5]: Requirement package,Status,Blocker,Evidence,Required action
+hide: "Secrets, raw logs, complete journals and unneeded internal tool steps. Keep full detail in the owning native artifact."
+native_exception: "Keep machine artifacts, code, commands and diffs native; presentation does not replace validation."
+primary[6]: Requirement ID,Gap category,Severity,Impact,Evidence,Resolution
+priority: Show unresolved blockers before nonblocking findings; a completed review is not delivery approval.
+required_input: Requirement package
+rows: individual requirement id records
+schema: ai-sdlc-chat-contract/v1
+secondary[0]:
+skill: ai-sdlc-loop-requirements-review

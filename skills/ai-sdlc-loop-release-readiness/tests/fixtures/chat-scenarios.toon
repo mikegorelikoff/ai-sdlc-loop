@@ -1,0 +1,152 @@
+scenarios[8]:
+  - baseline_response: "Result\nStatus: PASS\nDecision: Prepared candidate commit / status entities; listed evidence satisfies this skill check.\nEvidence: ci.log:7\n\nprimary: Candidate commit: abc1234; Evidence: ci.log:7; Release gate: CI; Required action: None; Status: PASS.\nactions: Owner: Engineer; Next action: Validate candidate commit with its owning workflow; Expected evidence: ci.log:7.\n\nsecondary: Residual risk: Confirm residual risk for payment retry; Owner: Delivery owner; Mitigation: Persist idempotency key; Evidence: ci.log:7.\n"
+    id: happy
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-release-readiness for payment-retry delivery: happy"
+    required_facts[3]: "ci.log:7",CI,abc1234
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        "ci.log:7",None,Engineer
+      primary[1]{"Candidate commit",Evidence,"Release gate","Required action",Status}:
+        abc1234,"ci.log:7",CI,None,PASS
+      schema: ai-sdlc-chat-result/v1
+      secondary[1]{Evidence,Mitigation,Owner,"Residual risk"}:
+        "ci.log:7",Recorded in retry decision DEC-001,Product owner,Recorded in retry decision DEC-001
+      summary:
+        Decision: Prepared release gate result; evidence supports the reported result.
+        Evidence: "ci.log:7"
+        Status: PASS
+  - baseline_response: "Result\nStatus: WARNING\nDecision: Partial candidate commit / status entities coverage; one dependency remains unverified.\nEvidence: ci.log:7\n\nprimary: Candidate commit: abc1234; Evidence: ci.log:7; Release gate: CI; Required action: None; Status: PASS.\nprimary: Candidate commit: abc1234 [pending case]; Evidence: ci.log:7; Release gate: CI; Required action: None; Status: PASS.\nactions: Owner: Engineer; Next action: Validate candidate commit with its owning workflow; Expected evidence: ci.log:7.\n"
+    id: partial
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-release-readiness for payment-retry delivery: partial"
+    required_facts[3]: "ci.log:7",CI,abc1234
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        "ci.log:7",None,Engineer
+      primary[2]{"Candidate commit",Evidence,"Release gate","Required action",Status}:
+        abc1234,"ci.log:7",CI,None,PASS
+        "abc1234 [pending case]","ci.log:7",CI,None,PASS
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: "Partial result: second case is unverified; do not infer full coverage."
+        Evidence: "ci.log:7"
+        Status: WARNING
+  - baseline_response: "Result\nStatus: WARNING\nDecision: Limited candidate commit / status entities review; source freshness must be confirmed.\nEvidence: ci.log:7\n\nprimary: Candidate commit: abc1234; Evidence: ci.log:7; Release gate: CI; Required action: None; Status: PASS.\nactions: Owner: Engineer; Next action: Validate candidate commit with its owning workflow; Expected evidence: ci.log:7.\n"
+    id: warning
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-release-readiness for payment-retry delivery: warning"
+    required_facts[3]: "ci.log:7",CI,abc1234
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        "ci.log:7",None,Engineer
+      primary[1]{"Candidate commit",Evidence,"Release gate","Required action",Status}:
+        abc1234,"ci.log:7",CI,None,PASS
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: Result has limited source freshness; confirm it before downstream use.
+        Evidence: "ci.log:7"
+        Status: WARNING
+  - baseline_response: "Result\nStatus: BLOCKED\nDecision: Candidate commit is unavailable; dependent work has not run.\nEvidence: source-inventory.toon:missing\n\nfailures: Candidate commit: Candidate commit; Status: BLOCKED; Blocker: Required source is absent; Evidence: source-inventory.toon:missing; Required action: Provide candidate commit.\nactions: Owner: Engineer; Next action: Provide candidate commit; Expected evidence: Validated candidate commit.\n"
+    id: blocked
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-release-readiness for payment-retry delivery: blocked"
+    required_facts[2]: "source-inventory.toon:missing",Validated candidate commit
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        Validated candidate commit,Provide candidate commit,Engineer
+      failures[1]{Blocker,"Candidate commit",Evidence,"Required action",Status}:
+        Required source is absent,Candidate commit,"source-inventory.toon:missing",Provide candidate commit,BLOCKED
+      primary[0]:
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: Candidate commit is unavailable; dependent work has not run.
+        Evidence: "source-inventory.toon:missing"
+        Status: BLOCKED
+  - baseline_response: "Result\nStatus: BLOCKED\nDecision: Candidate commit is unavailable; dependent work has not run.\nEvidence: source-inventory.toon:missing\n\nfailures: Candidate commit: Candidate commit; Status: BLOCKED; Blocker: Required source is absent; Evidence: source-inventory.toon:missing; Required action: Provide candidate commit.\nclarifications: Missing candidate commit: Candidate commit; Why required: Determines release gate; Known evidence: No supported assumption; Options: Supply source / narrow requested scope.\nactions: Owner: Engineer; Next action: Provide candidate commit; Expected evidence: Validated candidate commit.\n"
+    id: missing-input
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-release-readiness for payment-retry delivery: missing-input"
+    required_facts[2]: "source-inventory.toon:missing",Validated candidate commit
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        Validated candidate commit,Provide candidate commit,Engineer
+      clarifications[1]{"Known evidence","Missing candidate commit",Options,"Why required"}:
+        No supported assumption,Candidate commit,Supply source / narrow requested scope,Determines release gate
+      failures[1]{Blocker,"Candidate commit",Evidence,"Required action",Status}:
+        Required source is absent,Candidate commit,"source-inventory.toon:missing",Provide candidate commit,BLOCKED
+      primary[0]:
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: Candidate commit is unavailable; dependent work has not run.
+        Evidence: "source-inventory.toon:missing"
+        Status: BLOCKED
+  - baseline_response: "Result\nStatus: PASS\nDecision: 20 candidate commit / status entities rows; showing the first 8; full evidence linked.\nEvidence: ci.log:7\n\nprimary: Candidate commit: abc1234 #1; Evidence: ci.log:7; Release gate: CI; Required action: None; Status: PASS.\nprimary: Candidate commit: abc1234 #2; Evidence: ci.log:7; Release gate: CI; Required action: None; Status: PASS.\nprimary: Candidate commit: abc1234 #3; Evidence: ci.log:7; Release gate: CI; Required action: None; Status: PASS.\nprimary: Candidate commit: abc1234 #4; Evidence: ci.log:7; Release gate: CI; Required action: None; Status: PASS.\nprimary: Candidate commit: abc1234 #5; Evidence: ci.log:7; Release gate: CI; Required action: None; Status: PASS.\nprimary: Candidate commit: abc1234 #6; Evidence: ci.log:7; Release gate: CI; Required action: None; Status: PASS.\nprimary: Candidate commit: abc1234 #7; Evidence: ci.log:7; Release gate: CI; Required action: None; Status: PASS.\nprimary: Candidate commit: abc1234 #8; Evidence: ci.log:7; Release gate: CI; Required action: None; Status: PASS.\nprimary: Candidate commit: abc1234 #9; Evidence: ci.log:7; Release gate: CI; Required action: None; Status: PASS.\nprimary: Candidate commit: abc1234 #10; Evidence: ci.log:7; Release gate: CI; Required action: None; Status: PASS.\nprimary: Candidate commit: abc1234 #11; Evidence: ci.log:7; Release gate: CI; Required action: None; Status: PASS.\nprimary: Candidate commit: abc1234 #12; Evidence: ci.log:7; Release gate: CI; Required action: None; Status: PASS.\nprimary: Candidate commit: abc1234 #13; Evidence: ci.log:7; Release gate: CI; Required action: None; Status: PASS.\nprimary: Candidate commit: abc1234 #14; Evidence: ci.log:7; Release gate: CI; Required action: None; Status: PASS.\nprimary: Candidate commit: abc1234 #15; Evidence: ci.log:7; Release gate: CI; Required action: None; Status: PASS.\nprimary: Candidate commit: abc1234 #16; Evidence: ci.log:7; Release gate: CI; Required action: None; Status: PASS.\nprimary: Candidate commit: abc1234 #17; Evidence: ci.log:7; Release gate: CI; Required action: None; Status: PASS.\nprimary: Candidate commit: abc1234 #18; Evidence: ci.log:7; Release gate: CI; Required action: None; Status: PASS.\nprimary: Candidate commit: abc1234 #19; Evidence: ci.log:7; Release gate: CI; Required action: None; Status: PASS.\nprimary: Candidate commit: abc1234 #20; Evidence: ci.log:7; Release gate: CI; Required action: None; Status: PASS.\nactions: Owner: Engineer; Next action: Validate candidate commit with its owning workflow; Expected evidence: ci.log:7.\n"
+    id: large
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-release-readiness for payment-retry delivery: large"
+    required_facts[3]: "ci.log:7",CI,abc1234 #1
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        "ci.log:7",None,Engineer
+      full_artifact: full-result.toon
+      primary[20]{"Candidate commit",Evidence,"Release gate","Required action",Status}:
+        abc1234 #1,"ci.log:7",CI,None,PASS
+        abc1234 #2,"ci.log:7",CI,None,PASS
+        abc1234 #3,"ci.log:7",CI,None,PASS
+        abc1234 #4,"ci.log:7",CI,None,PASS
+        abc1234 #5,"ci.log:7",CI,None,PASS
+        abc1234 #6,"ci.log:7",CI,None,PASS
+        abc1234 #7,"ci.log:7",CI,None,PASS
+        abc1234 #8,"ci.log:7",CI,None,PASS
+        abc1234 #9,"ci.log:7",CI,None,PASS
+        abc1234 #10,"ci.log:7",CI,None,PASS
+        abc1234 #11,"ci.log:7",CI,None,PASS
+        abc1234 #12,"ci.log:7",CI,None,PASS
+        abc1234 #13,"ci.log:7",CI,None,PASS
+        abc1234 #14,"ci.log:7",CI,None,PASS
+        abc1234 #15,"ci.log:7",CI,None,PASS
+        abc1234 #16,"ci.log:7",CI,None,PASS
+        abc1234 #17,"ci.log:7",CI,None,PASS
+        abc1234 #18,"ci.log:7",CI,None,PASS
+        abc1234 #19,"ci.log:7",CI,None,PASS
+        abc1234 #20,"ci.log:7",CI,None,PASS
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: 20 release gate records; 8 shown; inspect the linked full artifact.
+        Evidence: "ci.log:7"
+        Status: PASS
+  - baseline_response: "Result\nStatus: PASS\nDecision: One release gate result; scope and evidence are explicit.\nEvidence: ci.log:7\n\nprimary: Candidate commit: abc1234; Evidence: ci.log:7; Release gate: CI; Required action: None; Status: PASS.\nactions: Owner: Engineer; Next action: Validate candidate commit with its owning workflow; Expected evidence: ci.log:7.\n"
+    id: small
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-release-readiness for payment-retry delivery: small"
+    required_facts[3]: "ci.log:7",CI,abc1234
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        "ci.log:7",None,Engineer
+      primary[1]{"Candidate commit",Evidence,"Release gate","Required action",Status}:
+        abc1234,"ci.log:7",CI,None,PASS
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: One release gate result; scope and evidence are explicit.
+        Evidence: "ci.log:7"
+        Status: PASS
+  - baseline_response: "Result\nStatus: PASS\nDecision: Prepared candidate commit / status entities; listed evidence satisfies this skill check.\nEvidence: ci.log:7\n\nprimary: Candidate commit: abc1234; Evidence: ci.log:7; Release gate: CI | перенос\nстроки; Required action: None; Status: PASS.\nactions: Owner: Engineer; Next action: Validate candidate commit with its owning workflow; Expected evidence: ci.log:7.\n\nschema: fixture/v1\nstatus: pending\nsource: \"literal | value\"\n"
+    id: edge
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-release-readiness for payment-retry delivery: edge"
+    required_facts[3]: "ci.log:7","CI | перенос\nстроки",abc1234
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        "ci.log:7",None,Engineer
+      native[1]{content,language}:
+        "schema: fixture/v1\nstatus: pending\nsource: \"literal | value\"",toon
+      primary[1]{"Candidate commit",Evidence,"Release gate","Required action",Status}:
+        abc1234,"ci.log:7","CI | перенос\nстроки",None,PASS
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: Prepared candidate commit / status entities; listed evidence satisfies this skill check.
+        Evidence: "ci.log:7"
+        Status: PASS
+schema: ai-sdlc-chat-scenarios/v1
+skill: ai-sdlc-loop-release-readiness

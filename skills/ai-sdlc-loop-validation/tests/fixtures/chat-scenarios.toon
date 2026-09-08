@@ -1,0 +1,150 @@
+scenarios[8]:
+  - baseline_response: "Result\nStatus: PASS\nDecision: Prepared expected / actual entities; listed evidence satisfies this skill check.\nEvidence: validation.log:5\n\nprimary: Actual: 12 passed; Check: pytest tests/payments; Evidence: validation.log:5; Expected: All assertions pass; Status: PASS.\nactions: Owner: QA; Next action: Validate verification command with its owning workflow; Expected evidence: validation.log:5.\n"
+    id: happy
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-validation for payment-retry delivery: happy"
+    required_facts[3]: "validation.log:5",pytest tests/payments,12 passed
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        "validation.log:5",Validate verification command with its owning workflow,QA
+      primary[1]{Actual,Check,Evidence,Expected,Status}:
+        12 passed,pytest tests/payments,"validation.log:5",All assertions pass,PASS
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: Prepared check result; evidence supports the reported result.
+        Evidence: "validation.log:5"
+        Status: PASS
+  - baseline_response: "Result\nStatus: WARNING\nDecision: Partial expected / actual entities coverage; one dependency remains unverified.\nEvidence: validation.log:5\n\nprimary: Actual: 12 passed; Check: pytest tests/payments; Evidence: validation.log:5; Expected: All assertions pass; Status: PASS.\nprimary: Actual: 12 passed [pending case]; Check: pytest tests/payments; Evidence: validation.log:5; Expected: All assertions pass; Status: PASS.\nactions: Owner: QA; Next action: Validate verification command with its owning workflow; Expected evidence: validation.log:5.\n"
+    id: partial
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-validation for payment-retry delivery: partial"
+    required_facts[3]: "validation.log:5",pytest tests/payments,12 passed
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        "validation.log:5",Validate verification command with its owning workflow,QA
+      primary[2]{Actual,Check,Evidence,Expected,Status}:
+        12 passed,pytest tests/payments,"validation.log:5",All assertions pass,PASS
+        "12 passed [pending case]",pytest tests/payments,"validation.log:5",All assertions pass,PASS
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: "Partial result: second case is unverified; do not infer full coverage."
+        Evidence: "validation.log:5"
+        Status: WARNING
+  - baseline_response: "Result\nStatus: WARNING\nDecision: Limited expected / actual entities review; source freshness must be confirmed.\nEvidence: validation.log:5\n\nprimary: Actual: 12 passed; Check: pytest tests/payments; Evidence: validation.log:5; Expected: All assertions pass; Status: PASS.\nactions: Owner: QA; Next action: Validate verification command with its owning workflow; Expected evidence: validation.log:5.\n"
+    id: warning
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-validation for payment-retry delivery: warning"
+    required_facts[3]: "validation.log:5",pytest tests/payments,12 passed
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        "validation.log:5",Validate verification command with its owning workflow,QA
+      primary[1]{Actual,Check,Evidence,Expected,Status}:
+        12 passed,pytest tests/payments,"validation.log:5",All assertions pass,PASS
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: Result has limited source freshness; confirm it before downstream use.
+        Evidence: "validation.log:5"
+        Status: WARNING
+  - baseline_response: "Result\nStatus: BLOCKED\nDecision: Verification command is unavailable; dependent work has not run.\nEvidence: source-inventory.toon:missing\n\nfailures: Verification command: Verification command; Status: BLOCKED; Blocker: Required source is absent; Evidence: source-inventory.toon:missing; Required action: Provide verification command.\nactions: Owner: QA; Next action: Provide verification command; Expected evidence: Validated verification command.\n"
+    id: blocked
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-validation for payment-retry delivery: blocked"
+    required_facts[2]: "source-inventory.toon:missing",Validated verification command
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        Validated verification command,Provide verification command,QA
+      failures[1]{Blocker,Evidence,"Required action",Status,"Verification command"}:
+        Required source is absent,"source-inventory.toon:missing",Provide verification command,BLOCKED,Verification command
+      primary[0]:
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: Verification command is unavailable; dependent work has not run.
+        Evidence: "source-inventory.toon:missing"
+        Status: BLOCKED
+  - baseline_response: "Result\nStatus: BLOCKED\nDecision: Verification command is unavailable; dependent work has not run.\nEvidence: source-inventory.toon:missing\n\nfailures: Verification command: Verification command; Status: BLOCKED; Blocker: Required source is absent; Evidence: source-inventory.toon:missing; Required action: Provide verification command.\nclarifications: Missing verification command: Verification command; Why required: Determines check; Known evidence: No supported assumption; Options: Supply source / narrow requested scope.\nactions: Owner: QA; Next action: Provide verification command; Expected evidence: Validated verification command.\n"
+    id: missing-input
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-validation for payment-retry delivery: missing-input"
+    required_facts[2]: "source-inventory.toon:missing",Validated verification command
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        Validated verification command,Provide verification command,QA
+      clarifications[1]{"Known evidence","Missing verification command",Options,"Why required"}:
+        No supported assumption,Verification command,Supply source / narrow requested scope,Determines check
+      failures[1]{Blocker,Evidence,"Required action",Status,"Verification command"}:
+        Required source is absent,"source-inventory.toon:missing",Provide verification command,BLOCKED,Verification command
+      primary[0]:
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: Verification command is unavailable; dependent work has not run.
+        Evidence: "source-inventory.toon:missing"
+        Status: BLOCKED
+  - baseline_response: "Result\nStatus: PASS\nDecision: 20 expected / actual entities rows; showing the first 8; full evidence linked.\nEvidence: validation.log:5\n\nprimary: Actual: 12 passed #1; Check: pytest tests/payments; Evidence: validation.log:5; Expected: All assertions pass; Status: PASS.\nprimary: Actual: 12 passed #2; Check: pytest tests/payments; Evidence: validation.log:5; Expected: All assertions pass; Status: PASS.\nprimary: Actual: 12 passed #3; Check: pytest tests/payments; Evidence: validation.log:5; Expected: All assertions pass; Status: PASS.\nprimary: Actual: 12 passed #4; Check: pytest tests/payments; Evidence: validation.log:5; Expected: All assertions pass; Status: PASS.\nprimary: Actual: 12 passed #5; Check: pytest tests/payments; Evidence: validation.log:5; Expected: All assertions pass; Status: PASS.\nprimary: Actual: 12 passed #6; Check: pytest tests/payments; Evidence: validation.log:5; Expected: All assertions pass; Status: PASS.\nprimary: Actual: 12 passed #7; Check: pytest tests/payments; Evidence: validation.log:5; Expected: All assertions pass; Status: PASS.\nprimary: Actual: 12 passed #8; Check: pytest tests/payments; Evidence: validation.log:5; Expected: All assertions pass; Status: PASS.\nprimary: Actual: 12 passed #9; Check: pytest tests/payments; Evidence: validation.log:5; Expected: All assertions pass; Status: PASS.\nprimary: Actual: 12 passed #10; Check: pytest tests/payments; Evidence: validation.log:5; Expected: All assertions pass; Status: PASS.\nprimary: Actual: 12 passed #11; Check: pytest tests/payments; Evidence: validation.log:5; Expected: All assertions pass; Status: PASS.\nprimary: Actual: 12 passed #12; Check: pytest tests/payments; Evidence: validation.log:5; Expected: All assertions pass; Status: PASS.\nprimary: Actual: 12 passed #13; Check: pytest tests/payments; Evidence: validation.log:5; Expected: All assertions pass; Status: PASS.\nprimary: Actual: 12 passed #14; Check: pytest tests/payments; Evidence: validation.log:5; Expected: All assertions pass; Status: PASS.\nprimary: Actual: 12 passed #15; Check: pytest tests/payments; Evidence: validation.log:5; Expected: All assertions pass; Status: PASS.\nprimary: Actual: 12 passed #16; Check: pytest tests/payments; Evidence: validation.log:5; Expected: All assertions pass; Status: PASS.\nprimary: Actual: 12 passed #17; Check: pytest tests/payments; Evidence: validation.log:5; Expected: All assertions pass; Status: PASS.\nprimary: Actual: 12 passed #18; Check: pytest tests/payments; Evidence: validation.log:5; Expected: All assertions pass; Status: PASS.\nprimary: Actual: 12 passed #19; Check: pytest tests/payments; Evidence: validation.log:5; Expected: All assertions pass; Status: PASS.\nprimary: Actual: 12 passed #20; Check: pytest tests/payments; Evidence: validation.log:5; Expected: All assertions pass; Status: PASS.\nactions: Owner: QA; Next action: Validate verification command with its owning workflow; Expected evidence: validation.log:5.\n"
+    id: large
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-validation for payment-retry delivery: large"
+    required_facts[3]: "validation.log:5",pytest tests/payments,12 passed #1
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        "validation.log:5",Validate verification command with its owning workflow,QA
+      full_artifact: full-result.toon
+      primary[20]{Actual,Check,Evidence,Expected,Status}:
+        12 passed #1,pytest tests/payments,"validation.log:5",All assertions pass,PASS
+        12 passed #2,pytest tests/payments,"validation.log:5",All assertions pass,PASS
+        12 passed #3,pytest tests/payments,"validation.log:5",All assertions pass,PASS
+        12 passed #4,pytest tests/payments,"validation.log:5",All assertions pass,PASS
+        12 passed #5,pytest tests/payments,"validation.log:5",All assertions pass,PASS
+        12 passed #6,pytest tests/payments,"validation.log:5",All assertions pass,PASS
+        12 passed #7,pytest tests/payments,"validation.log:5",All assertions pass,PASS
+        12 passed #8,pytest tests/payments,"validation.log:5",All assertions pass,PASS
+        12 passed #9,pytest tests/payments,"validation.log:5",All assertions pass,PASS
+        12 passed #10,pytest tests/payments,"validation.log:5",All assertions pass,PASS
+        12 passed #11,pytest tests/payments,"validation.log:5",All assertions pass,PASS
+        12 passed #12,pytest tests/payments,"validation.log:5",All assertions pass,PASS
+        12 passed #13,pytest tests/payments,"validation.log:5",All assertions pass,PASS
+        12 passed #14,pytest tests/payments,"validation.log:5",All assertions pass,PASS
+        12 passed #15,pytest tests/payments,"validation.log:5",All assertions pass,PASS
+        12 passed #16,pytest tests/payments,"validation.log:5",All assertions pass,PASS
+        12 passed #17,pytest tests/payments,"validation.log:5",All assertions pass,PASS
+        12 passed #18,pytest tests/payments,"validation.log:5",All assertions pass,PASS
+        12 passed #19,pytest tests/payments,"validation.log:5",All assertions pass,PASS
+        12 passed #20,pytest tests/payments,"validation.log:5",All assertions pass,PASS
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: 20 check records; 8 shown; inspect the linked full artifact.
+        Evidence: "validation.log:5"
+        Status: PASS
+  - baseline_response: "Result\nStatus: PASS\nDecision: One check result; scope and evidence are explicit.\nEvidence: validation.log:5\n\nprimary: Actual: 12 passed; Check: pytest tests/payments; Evidence: validation.log:5; Expected: All assertions pass; Status: PASS.\nactions: Owner: QA; Next action: Validate verification command with its owning workflow; Expected evidence: validation.log:5.\n"
+    id: small
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-validation for payment-retry delivery: small"
+    required_facts[3]: "validation.log:5",pytest tests/payments,12 passed
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        "validation.log:5",Validate verification command with its owning workflow,QA
+      primary[1]{Actual,Check,Evidence,Expected,Status}:
+        12 passed,pytest tests/payments,"validation.log:5",All assertions pass,PASS
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: One check result; scope and evidence are explicit.
+        Evidence: "validation.log:5"
+        Status: PASS
+  - baseline_response: "Result\nStatus: PASS\nDecision: Prepared expected / actual entities; listed evidence satisfies this skill check.\nEvidence: validation.log:5\n\nprimary: Actual: 12 passed; Check: pytest tests/payments | перенос\nстроки; Evidence: validation.log:5; Expected: All assertions pass; Status: PASS.\nactions: Owner: QA; Next action: Validate verification command with its owning workflow; Expected evidence: validation.log:5.\n\nschema: fixture/v1\nstatus: pending\nsource: \"literal | value\"\n"
+    id: edge
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-validation for payment-retry delivery: edge"
+    required_facts[3]: "validation.log:5","pytest tests/payments | перенос\nстроки",12 passed
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        "validation.log:5",Validate verification command with its owning workflow,QA
+      native[1]{content,language}:
+        "schema: fixture/v1\nstatus: pending\nsource: \"literal | value\"",toon
+      primary[1]{Actual,Check,Evidence,Expected,Status}:
+        12 passed,"pytest tests/payments | перенос\nстроки","validation.log:5",All assertions pass,PASS
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: Prepared expected / actual entities; listed evidence satisfies this skill check.
+        Evidence: "validation.log:5"
+        Status: PASS
+schema: ai-sdlc-chat-scenarios/v1
+skill: ai-sdlc-loop-validation

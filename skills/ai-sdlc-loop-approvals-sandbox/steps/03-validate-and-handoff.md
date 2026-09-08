@@ -10,18 +10,8 @@ Enter after execution has produced the expected artifact, code, plan, decision, 
 
 ## Output Spec
 
-Return this decision record when escalation is requested, denied, or skipped:
-
-```text
-Sandbox decision:
-- Command: sanitized command with every secret-bearing value shown as <redacted>
-- Required for: task-specific reason
-- Sandbox issue: filesystem | network | listener | GUI | external service | destructive | none
-- Escalation: requested | not requested | denied | granted
-- Prefix rule: proposed rule | none and why
-- Result: passed | failed | skipped | blocked
-- Residual risk: none | concrete limitation
-```
+For user-facing chat, use this skill’s Chat Output Contract. Preserve the
+owning artifacts, exact validation evidence, scope and unresolved risks.
 
 Quality gate:
 
@@ -68,3 +58,7 @@ Reject this because the justification is vague and the prefix allows arbitrary s
 ## Exit
 
 Report outcome, validation evidence, unresolved risks, and the next required or optional owner directly in the active response.
+
+## Chat presentation
+
+Present the result using the owning `SKILL.md` Chat Output Contract and local [chat schema](../references/chat-output.toon). The machine handoff remains native; show its decision, evidence and owned action without dumping the journal.

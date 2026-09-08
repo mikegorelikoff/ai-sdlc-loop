@@ -56,3 +56,7 @@ Return the exact review target, request/spec evidence, flow mode, changed-path
 boundary, Implement eligibility, approved paths, unrelated-work baseline, and
 artifact paths. Block mutation unless current Implement authority and path
 containment are proven.
+
+## Chat presentation
+
+Before a result, warning, blocker or question, apply the local [chat schema](../references/chat-output.toon) and the Chat Output Contract in `SKILL.md`. Preserve native artifact and tool-input formats.

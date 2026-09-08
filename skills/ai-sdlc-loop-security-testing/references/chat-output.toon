@@ -1,0 +1,17 @@
+clarification[4]: Missing trust boundary,Why required,Known evidence,Options
+example:
+  Evidence: "handler.py:42"
+  Finding: Ownership check absent
+  Remediation: Constrain lookup to tenant
+  Severity: HIGH
+  "Trust boundary": Tenant lookup
+failure[5]: Trust boundary,Status,Blocker,Evidence,Required action
+hide: "Secrets, raw logs, complete journals and unneeded internal tool steps. Keep full detail in the owning native artifact."
+native_exception: "Keep machine artifacts, code, commands and diffs native; presentation does not replace validation."
+primary[5]: Severity,Trust boundary,Finding,Evidence,Remediation
+priority: Show unresolved blockers before nonblocking findings; a completed review is not delivery approval.
+required_input: Trust boundary
+rows: individual severity records
+schema: ai-sdlc-chat-contract/v1
+secondary[4]: Source,Supported claim,Freshness,Evidence
+skill: ai-sdlc-loop-security-testing

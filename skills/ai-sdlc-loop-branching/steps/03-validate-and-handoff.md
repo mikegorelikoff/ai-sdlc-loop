@@ -10,21 +10,8 @@ Enter after execution has produced the expected artifact, code, plan, decision, 
 
 ## Output Spec
 
-Use this branch handoff report when branch state matters:
-
-```text
-Branching:
-- Task: user-visible task name
-- Change size: small | medium | large
-- Spec: specs/NNN-short-feature-name | none
-- Base branch: resolved branch | blocked with reason
-- Base refresh: pulled latest resolved base | reused existing task branch | blocked
-- Current branch: branch-name
-- Expected branch: branch-name
-- Action: already correct | created | reused with reason | blocked
-- Dirty tree: clean | related files listed | unrelated/unclear blocker
-- Next phase: implementation | validation | commit-prep
-```
+For user-facing chat, use this skill’s Chat Output Contract. Preserve the
+owning artifacts, exact validation evidence, scope and unresolved risks.
 
 Quality gate:
 
@@ -38,35 +25,8 @@ Quality gate:
 
 Valid medium-work start:
 
-```text
-Branching:
-- Task: AI SDLC Git-flow branching skill and workflow update
-- Change size: medium
-- Spec: specs/191-branching-workflow
-- Base branch: main (origin/HEAD)
-- Base refresh: pulled latest resolved base
-- Current branch: main
-- Expected branch: feature/191-branching-workflow
-- Action: created
-- Dirty tree: clean
-- Next phase: implementation
-```
-
-Valid small fix:
-
-```text
-Branching:
-- Task: fix typo in validation warning
-- Change size: small
-- Spec: none
-- Base branch: main (repository default)
-- Base refresh: pulled latest resolved base
-- Current branch: main
-- Expected branch: fix/validation-warning-typo
-- Action: created
-- Dirty tree: clean
-- Next phase: implementation
-```
+Chat example: use the normal, warning and blocked examples in
+`references/chat-examples.md`; their evidence comes from explicit scenario fixtures.
 
 Invalid counter-example:
 
@@ -108,3 +68,7 @@ mutation for implementation work.
 ## Exit
 
 Report outcome, validation evidence, unresolved risks, and the next required or optional owner directly in the active response.
+
+## Chat presentation
+
+Present the result using the owning `SKILL.md` Chat Output Contract and local [chat schema](../references/chat-output.toon). The machine handoff remains native; show its decision, evidence and owned action without dumping the journal.

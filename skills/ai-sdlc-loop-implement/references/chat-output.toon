@@ -1,0 +1,17 @@
+clarification[4]: Missing implementation approval,Why required,Known evidence,Options
+example:
+  Change: Reuse charge by key
+  Evidence: "diff.patch:12"
+  "File / component": src/payments.py
+  "Requirement ID": AC-001
+  Verification: PENDING
+failure[5]: Implementation approval,Status,Blocker,Evidence,Required action
+hide: "Secrets, raw logs, complete journals and unneeded internal tool steps. Keep full detail in the owning native artifact."
+native_exception: "Keep machine artifacts, code, commands and diffs native; presentation does not replace validation."
+primary[5]: File / component,Change,Requirement ID,Verification,Evidence
+priority: Show the user decision before detail; preserve source order and explicit authority.
+required_input: Implementation approval
+rows: individual file / component records
+schema: ai-sdlc-chat-contract/v1
+secondary[3]: Check,Status,Evidence
+skill: ai-sdlc-loop-implement

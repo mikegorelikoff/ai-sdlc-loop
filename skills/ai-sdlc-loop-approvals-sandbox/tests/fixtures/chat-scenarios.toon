@@ -1,0 +1,150 @@
+scenarios[8]:
+  - baseline_response: "Result\nStatus: PASS\nDecision: Prepared boundary / escalation entities; listed evidence satisfies this skill check.\nEvidence: sandbox.log:3\n\nprimary: Boundary: External cache write; Command: pytest tests/api; Escalation: Not required; Evidence: sandbox.log:3.\nactions: Owner: Engineer; Next action: Validate blocked command with its owning workflow; Expected evidence: sandbox.log:3.\n"
+    id: happy
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-approvals-sandbox for payment-retry delivery: happy"
+    required_facts[3]: "sandbox.log:3",pytest tests/api,External cache write
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        "sandbox.log:3",Validate blocked command with its owning workflow,Engineer
+      primary[1]{Boundary,Command,Escalation,Evidence}:
+        External cache write,pytest tests/api,Not required,"sandbox.log:3"
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: Prepared command result; evidence supports the reported result.
+        Evidence: "sandbox.log:3"
+        Status: PASS
+  - baseline_response: "Result\nStatus: WARNING\nDecision: Partial boundary / escalation entities coverage; one dependency remains unverified.\nEvidence: sandbox.log:3\n\nprimary: Boundary: External cache write; Command: pytest tests/api; Escalation: Not required; Evidence: sandbox.log:3.\nprimary: Boundary: External cache write [pending case]; Command: pytest tests/api; Escalation: Not required; Evidence: sandbox.log:3.\nactions: Owner: Engineer; Next action: Validate blocked command with its owning workflow; Expected evidence: sandbox.log:3.\n"
+    id: partial
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-approvals-sandbox for payment-retry delivery: partial"
+    required_facts[3]: "sandbox.log:3",pytest tests/api,External cache write
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        "sandbox.log:3",Validate blocked command with its owning workflow,Engineer
+      primary[2]{Boundary,Command,Escalation,Evidence}:
+        External cache write,pytest tests/api,Not required,"sandbox.log:3"
+        "External cache write [pending case]",pytest tests/api,Not required,"sandbox.log:3"
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: "Partial result: second case is unverified; do not infer full coverage."
+        Evidence: "sandbox.log:3"
+        Status: WARNING
+  - baseline_response: "Result\nStatus: WARNING\nDecision: Limited boundary / escalation entities review; source freshness must be confirmed.\nEvidence: sandbox.log:3\n\nprimary: Boundary: External cache write; Command: pytest tests/api; Escalation: Not required; Evidence: sandbox.log:3.\nactions: Owner: Engineer; Next action: Validate blocked command with its owning workflow; Expected evidence: sandbox.log:3.\n"
+    id: warning
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-approvals-sandbox for payment-retry delivery: warning"
+    required_facts[3]: "sandbox.log:3",pytest tests/api,External cache write
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        "sandbox.log:3",Validate blocked command with its owning workflow,Engineer
+      primary[1]{Boundary,Command,Escalation,Evidence}:
+        External cache write,pytest tests/api,Not required,"sandbox.log:3"
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: Result has limited source freshness; confirm it before downstream use.
+        Evidence: "sandbox.log:3"
+        Status: WARNING
+  - baseline_response: "Result\nStatus: BLOCKED\nDecision: Blocked command is unavailable; dependent work has not run.\nEvidence: source-inventory.toon:missing\n\nfailures: Blocked command: Blocked command; Status: BLOCKED; Blocker: Required source is absent; Evidence: source-inventory.toon:missing; Required action: Provide blocked command.\nactions: Owner: Engineer; Next action: Provide blocked command; Expected evidence: Validated blocked command.\n"
+    id: blocked
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-approvals-sandbox for payment-retry delivery: blocked"
+    required_facts[2]: "source-inventory.toon:missing",Validated blocked command
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        Validated blocked command,Provide blocked command,Engineer
+      failures[1]{"Blocked command",Blocker,Evidence,"Required action",Status}:
+        Blocked command,Required source is absent,"source-inventory.toon:missing",Provide blocked command,BLOCKED
+      primary[0]:
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: Blocked command is unavailable; dependent work has not run.
+        Evidence: "source-inventory.toon:missing"
+        Status: BLOCKED
+  - baseline_response: "Result\nStatus: BLOCKED\nDecision: Blocked command is unavailable; dependent work has not run.\nEvidence: source-inventory.toon:missing\n\nfailures: Blocked command: Blocked command; Status: BLOCKED; Blocker: Required source is absent; Evidence: source-inventory.toon:missing; Required action: Provide blocked command.\nclarifications: Missing blocked command: Blocked command; Why required: Determines command; Known evidence: No supported assumption; Options: Supply source / narrow requested scope.\nactions: Owner: Engineer; Next action: Provide blocked command; Expected evidence: Validated blocked command.\n"
+    id: missing-input
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-approvals-sandbox for payment-retry delivery: missing-input"
+    required_facts[2]: "source-inventory.toon:missing",Validated blocked command
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        Validated blocked command,Provide blocked command,Engineer
+      clarifications[1]{"Known evidence","Missing blocked command",Options,"Why required"}:
+        No supported assumption,Blocked command,Supply source / narrow requested scope,Determines command
+      failures[1]{"Blocked command",Blocker,Evidence,"Required action",Status}:
+        Blocked command,Required source is absent,"source-inventory.toon:missing",Provide blocked command,BLOCKED
+      primary[0]:
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: Blocked command is unavailable; dependent work has not run.
+        Evidence: "source-inventory.toon:missing"
+        Status: BLOCKED
+  - baseline_response: "Result\nStatus: PASS\nDecision: 20 boundary / escalation entities rows; showing the first 8; full evidence linked.\nEvidence: sandbox.log:3\n\nprimary: Boundary: External cache write #1; Command: pytest tests/api; Escalation: Not required; Evidence: sandbox.log:3.\nprimary: Boundary: External cache write #2; Command: pytest tests/api; Escalation: Not required; Evidence: sandbox.log:3.\nprimary: Boundary: External cache write #3; Command: pytest tests/api; Escalation: Not required; Evidence: sandbox.log:3.\nprimary: Boundary: External cache write #4; Command: pytest tests/api; Escalation: Not required; Evidence: sandbox.log:3.\nprimary: Boundary: External cache write #5; Command: pytest tests/api; Escalation: Not required; Evidence: sandbox.log:3.\nprimary: Boundary: External cache write #6; Command: pytest tests/api; Escalation: Not required; Evidence: sandbox.log:3.\nprimary: Boundary: External cache write #7; Command: pytest tests/api; Escalation: Not required; Evidence: sandbox.log:3.\nprimary: Boundary: External cache write #8; Command: pytest tests/api; Escalation: Not required; Evidence: sandbox.log:3.\nprimary: Boundary: External cache write #9; Command: pytest tests/api; Escalation: Not required; Evidence: sandbox.log:3.\nprimary: Boundary: External cache write #10; Command: pytest tests/api; Escalation: Not required; Evidence: sandbox.log:3.\nprimary: Boundary: External cache write #11; Command: pytest tests/api; Escalation: Not required; Evidence: sandbox.log:3.\nprimary: Boundary: External cache write #12; Command: pytest tests/api; Escalation: Not required; Evidence: sandbox.log:3.\nprimary: Boundary: External cache write #13; Command: pytest tests/api; Escalation: Not required; Evidence: sandbox.log:3.\nprimary: Boundary: External cache write #14; Command: pytest tests/api; Escalation: Not required; Evidence: sandbox.log:3.\nprimary: Boundary: External cache write #15; Command: pytest tests/api; Escalation: Not required; Evidence: sandbox.log:3.\nprimary: Boundary: External cache write #16; Command: pytest tests/api; Escalation: Not required; Evidence: sandbox.log:3.\nprimary: Boundary: External cache write #17; Command: pytest tests/api; Escalation: Not required; Evidence: sandbox.log:3.\nprimary: Boundary: External cache write #18; Command: pytest tests/api; Escalation: Not required; Evidence: sandbox.log:3.\nprimary: Boundary: External cache write #19; Command: pytest tests/api; Escalation: Not required; Evidence: sandbox.log:3.\nprimary: Boundary: External cache write #20; Command: pytest tests/api; Escalation: Not required; Evidence: sandbox.log:3.\nactions: Owner: Engineer; Next action: Validate blocked command with its owning workflow; Expected evidence: sandbox.log:3.\n"
+    id: large
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-approvals-sandbox for payment-retry delivery: large"
+    required_facts[3]: "sandbox.log:3",pytest tests/api,External cache write #1
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        "sandbox.log:3",Validate blocked command with its owning workflow,Engineer
+      full_artifact: full-result.toon
+      primary[20]{Boundary,Command,Escalation,Evidence}:
+        External cache write #1,pytest tests/api,Not required,"sandbox.log:3"
+        External cache write #2,pytest tests/api,Not required,"sandbox.log:3"
+        External cache write #3,pytest tests/api,Not required,"sandbox.log:3"
+        External cache write #4,pytest tests/api,Not required,"sandbox.log:3"
+        External cache write #5,pytest tests/api,Not required,"sandbox.log:3"
+        External cache write #6,pytest tests/api,Not required,"sandbox.log:3"
+        External cache write #7,pytest tests/api,Not required,"sandbox.log:3"
+        External cache write #8,pytest tests/api,Not required,"sandbox.log:3"
+        External cache write #9,pytest tests/api,Not required,"sandbox.log:3"
+        External cache write #10,pytest tests/api,Not required,"sandbox.log:3"
+        External cache write #11,pytest tests/api,Not required,"sandbox.log:3"
+        External cache write #12,pytest tests/api,Not required,"sandbox.log:3"
+        External cache write #13,pytest tests/api,Not required,"sandbox.log:3"
+        External cache write #14,pytest tests/api,Not required,"sandbox.log:3"
+        External cache write #15,pytest tests/api,Not required,"sandbox.log:3"
+        External cache write #16,pytest tests/api,Not required,"sandbox.log:3"
+        External cache write #17,pytest tests/api,Not required,"sandbox.log:3"
+        External cache write #18,pytest tests/api,Not required,"sandbox.log:3"
+        External cache write #19,pytest tests/api,Not required,"sandbox.log:3"
+        External cache write #20,pytest tests/api,Not required,"sandbox.log:3"
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: 20 command records; 8 shown; inspect the linked full artifact.
+        Evidence: "sandbox.log:3"
+        Status: PASS
+  - baseline_response: "Result\nStatus: PASS\nDecision: One command result; scope and evidence are explicit.\nEvidence: sandbox.log:3\n\nprimary: Boundary: External cache write; Command: pytest tests/api; Escalation: Not required; Evidence: sandbox.log:3.\nactions: Owner: Engineer; Next action: Validate blocked command with its owning workflow; Expected evidence: sandbox.log:3.\n"
+    id: small
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-approvals-sandbox for payment-retry delivery: small"
+    required_facts[3]: "sandbox.log:3",pytest tests/api,External cache write
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        "sandbox.log:3",Validate blocked command with its owning workflow,Engineer
+      primary[1]{Boundary,Command,Escalation,Evidence}:
+        External cache write,pytest tests/api,Not required,"sandbox.log:3"
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: One command result; scope and evidence are explicit.
+        Evidence: "sandbox.log:3"
+        Status: PASS
+  - baseline_response: "Result\nStatus: PASS\nDecision: Prepared boundary / escalation entities; listed evidence satisfies this skill check.\nEvidence: sandbox.log:3\n\nprimary: Boundary: External cache write; Command: pytest tests/api | перенос\nстроки; Escalation: Not required; Evidence: sandbox.log:3.\nactions: Owner: Engineer; Next action: Validate blocked command with its owning workflow; Expected evidence: sandbox.log:3.\n\nschema: fixture/v1\nstatus: pending\nsource: \"literal | value\"\n"
+    id: edge
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-approvals-sandbox for payment-retry delivery: edge"
+    required_facts[3]: "sandbox.log:3","pytest tests/api | перенос\nстроки",External cache write
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        "sandbox.log:3",Validate blocked command with its owning workflow,Engineer
+      native[1]{content,language}:
+        "schema: fixture/v1\nstatus: pending\nsource: \"literal | value\"",toon
+      primary[1]{Boundary,Command,Escalation,Evidence}:
+        External cache write,"pytest tests/api | перенос\nстроки",Not required,"sandbox.log:3"
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: Prepared boundary / escalation entities; listed evidence satisfies this skill check.
+        Evidence: "sandbox.log:3"
+        Status: PASS
+schema: ai-sdlc-chat-scenarios/v1
+skill: ai-sdlc-loop-approvals-sandbox

@@ -85,3 +85,7 @@ Return a helper-verified canonical TOON report, current fingerprints, final
 status/readiness, exact verification outcomes, and concise human YAML. If the
 finalize or verify action fails, status cannot be `PASS` and the next stage is
 blocked.
+
+## Chat presentation
+
+Present the result using the owning `SKILL.md` Chat Output Contract and local [chat schema](../references/chat-output.toon). The machine handoff remains native; show its decision, evidence and owned action without dumping the journal.

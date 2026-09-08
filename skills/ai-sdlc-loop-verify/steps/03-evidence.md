@@ -17,3 +17,7 @@ command, or trust-boundary risk is present.
 ## Exit
 
 Passing evidence may proceed to separate commit approval; failed or drifted evidence may not.
+
+## Chat presentation
+
+Present the result using the owning `SKILL.md` Chat Output Contract and local [chat schema](../references/chat-output.toon). The machine handoff remains native; show its decision, evidence and owned action without dumping the journal.

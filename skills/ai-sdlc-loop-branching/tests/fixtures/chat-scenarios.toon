@@ -1,0 +1,150 @@
+scenarios[8]:
+  - baseline_response: "Result\nStatus: PASS\nDecision: Prepared expected branch / base revision entities; listed evidence satisfies this skill check.\nEvidence: fixture.toon:1\n\nprimary: Base revision: abc1234; Current branch: feature/025-chat-output; Decision: Reuse task branch; Expected branch: feature/025-chat-output; Worktree: Clean.\nactions: Owner: Maintainer; Next action: Validate task scope with its owning workflow; Expected evidence: fixture.toon:1.\n"
+    id: happy
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-branching for payment-retry delivery: happy"
+    required_facts[3]: "fixture.toon:1",feature/025-chat-output,abc1234
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        "fixture.toon:1",Validate task scope with its owning workflow,Maintainer
+      primary[1]{"Base revision","Current branch",Decision,"Expected branch",Worktree}:
+        abc1234,feature/025-chat-output,Reuse task branch,feature/025-chat-output,Clean
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: Prepared current branch result; evidence supports the reported result.
+        Evidence: "fixture.toon:1"
+        Status: PASS
+  - baseline_response: "Result\nStatus: WARNING\nDecision: Partial expected branch / base revision entities coverage; one dependency remains unverified.\nEvidence: fixture.toon:1\n\nprimary: Base revision: abc1234; Current branch: feature/025-chat-output; Decision: Reuse task branch; Expected branch: feature/025-chat-output; Worktree: Clean.\nprimary: Base revision: abc1234 [pending case]; Current branch: feature/025-chat-output; Decision: Reuse task branch; Expected branch: feature/025-chat-output; Worktree: Clean.\nactions: Owner: Maintainer; Next action: Validate task scope with its owning workflow; Expected evidence: fixture.toon:1.\n"
+    id: partial
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-branching for payment-retry delivery: partial"
+    required_facts[3]: "fixture.toon:1",feature/025-chat-output,abc1234
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        "fixture.toon:1",Validate task scope with its owning workflow,Maintainer
+      primary[2]{"Base revision","Current branch",Decision,"Expected branch",Worktree}:
+        abc1234,feature/025-chat-output,Reuse task branch,feature/025-chat-output,Clean
+        "abc1234 [pending case]",feature/025-chat-output,Reuse task branch,feature/025-chat-output,Clean
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: "Partial result: second case is unverified; do not infer full coverage."
+        Evidence: "fixture.toon:1"
+        Status: WARNING
+  - baseline_response: "Result\nStatus: WARNING\nDecision: Limited expected branch / base revision entities review; source freshness must be confirmed.\nEvidence: fixture.toon:1\n\nprimary: Base revision: abc1234; Current branch: feature/025-chat-output; Decision: Reuse task branch; Expected branch: feature/025-chat-output; Worktree: Clean.\nactions: Owner: Maintainer; Next action: Validate task scope with its owning workflow; Expected evidence: fixture.toon:1.\n"
+    id: warning
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-branching for payment-retry delivery: warning"
+    required_facts[3]: "fixture.toon:1",feature/025-chat-output,abc1234
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        "fixture.toon:1",Validate task scope with its owning workflow,Maintainer
+      primary[1]{"Base revision","Current branch",Decision,"Expected branch",Worktree}:
+        abc1234,feature/025-chat-output,Reuse task branch,feature/025-chat-output,Clean
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: Result has limited source freshness; confirm it before downstream use.
+        Evidence: "fixture.toon:1"
+        Status: WARNING
+  - baseline_response: "Result\nStatus: BLOCKED\nDecision: Task scope is unavailable; dependent work has not run.\nEvidence: source-inventory.toon:missing\n\nfailures: Task scope: Task scope; Status: BLOCKED; Blocker: Required source is absent; Evidence: source-inventory.toon:missing; Required action: Provide task scope.\nactions: Owner: Maintainer; Next action: Provide task scope; Expected evidence: Validated task scope.\n"
+    id: blocked
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-branching for payment-retry delivery: blocked"
+    required_facts[2]: "source-inventory.toon:missing",Validated task scope
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        Validated task scope,Provide task scope,Maintainer
+      failures[1]{Blocker,Evidence,"Required action",Status,"Task scope"}:
+        Required source is absent,"source-inventory.toon:missing",Provide task scope,BLOCKED,Task scope
+      primary[0]:
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: Task scope is unavailable; dependent work has not run.
+        Evidence: "source-inventory.toon:missing"
+        Status: BLOCKED
+  - baseline_response: "Result\nStatus: BLOCKED\nDecision: Task scope is unavailable; dependent work has not run.\nEvidence: source-inventory.toon:missing\n\nfailures: Task scope: Task scope; Status: BLOCKED; Blocker: Required source is absent; Evidence: source-inventory.toon:missing; Required action: Provide task scope.\nclarifications: Missing task scope: Task scope; Why required: Determines current branch; Known evidence: No supported assumption; Options: Supply source / narrow requested scope.\nactions: Owner: Maintainer; Next action: Provide task scope; Expected evidence: Validated task scope.\n"
+    id: missing-input
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-branching for payment-retry delivery: missing-input"
+    required_facts[2]: "source-inventory.toon:missing",Validated task scope
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        Validated task scope,Provide task scope,Maintainer
+      clarifications[1]{"Known evidence","Missing task scope",Options,"Why required"}:
+        No supported assumption,Task scope,Supply source / narrow requested scope,Determines current branch
+      failures[1]{Blocker,Evidence,"Required action",Status,"Task scope"}:
+        Required source is absent,"source-inventory.toon:missing",Provide task scope,BLOCKED,Task scope
+      primary[0]:
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: Task scope is unavailable; dependent work has not run.
+        Evidence: "source-inventory.toon:missing"
+        Status: BLOCKED
+  - baseline_response: "Result\nStatus: PASS\nDecision: 20 expected branch / base revision entities rows; showing the first 8; full evidence linked.\nEvidence: fixture.toon:1\n\nprimary: Base revision: abc1234 #1; Current branch: feature/025-chat-output; Decision: Reuse task branch; Expected branch: feature/025-chat-output; Worktree: Clean.\nprimary: Base revision: abc1234 #2; Current branch: feature/025-chat-output; Decision: Reuse task branch; Expected branch: feature/025-chat-output; Worktree: Clean.\nprimary: Base revision: abc1234 #3; Current branch: feature/025-chat-output; Decision: Reuse task branch; Expected branch: feature/025-chat-output; Worktree: Clean.\nprimary: Base revision: abc1234 #4; Current branch: feature/025-chat-output; Decision: Reuse task branch; Expected branch: feature/025-chat-output; Worktree: Clean.\nprimary: Base revision: abc1234 #5; Current branch: feature/025-chat-output; Decision: Reuse task branch; Expected branch: feature/025-chat-output; Worktree: Clean.\nprimary: Base revision: abc1234 #6; Current branch: feature/025-chat-output; Decision: Reuse task branch; Expected branch: feature/025-chat-output; Worktree: Clean.\nprimary: Base revision: abc1234 #7; Current branch: feature/025-chat-output; Decision: Reuse task branch; Expected branch: feature/025-chat-output; Worktree: Clean.\nprimary: Base revision: abc1234 #8; Current branch: feature/025-chat-output; Decision: Reuse task branch; Expected branch: feature/025-chat-output; Worktree: Clean.\nprimary: Base revision: abc1234 #9; Current branch: feature/025-chat-output; Decision: Reuse task branch; Expected branch: feature/025-chat-output; Worktree: Clean.\nprimary: Base revision: abc1234 #10; Current branch: feature/025-chat-output; Decision: Reuse task branch; Expected branch: feature/025-chat-output; Worktree: Clean.\nprimary: Base revision: abc1234 #11; Current branch: feature/025-chat-output; Decision: Reuse task branch; Expected branch: feature/025-chat-output; Worktree: Clean.\nprimary: Base revision: abc1234 #12; Current branch: feature/025-chat-output; Decision: Reuse task branch; Expected branch: feature/025-chat-output; Worktree: Clean.\nprimary: Base revision: abc1234 #13; Current branch: feature/025-chat-output; Decision: Reuse task branch; Expected branch: feature/025-chat-output; Worktree: Clean.\nprimary: Base revision: abc1234 #14; Current branch: feature/025-chat-output; Decision: Reuse task branch; Expected branch: feature/025-chat-output; Worktree: Clean.\nprimary: Base revision: abc1234 #15; Current branch: feature/025-chat-output; Decision: Reuse task branch; Expected branch: feature/025-chat-output; Worktree: Clean.\nprimary: Base revision: abc1234 #16; Current branch: feature/025-chat-output; Decision: Reuse task branch; Expected branch: feature/025-chat-output; Worktree: Clean.\nprimary: Base revision: abc1234 #17; Current branch: feature/025-chat-output; Decision: Reuse task branch; Expected branch: feature/025-chat-output; Worktree: Clean.\nprimary: Base revision: abc1234 #18; Current branch: feature/025-chat-output; Decision: Reuse task branch; Expected branch: feature/025-chat-output; Worktree: Clean.\nprimary: Base revision: abc1234 #19; Current branch: feature/025-chat-output; Decision: Reuse task branch; Expected branch: feature/025-chat-output; Worktree: Clean.\nprimary: Base revision: abc1234 #20; Current branch: feature/025-chat-output; Decision: Reuse task branch; Expected branch: feature/025-chat-output; Worktree: Clean.\nactions: Owner: Maintainer; Next action: Validate task scope with its owning workflow; Expected evidence: fixture.toon:1.\n"
+    id: large
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-branching for payment-retry delivery: large"
+    required_facts[3]: "fixture.toon:1",feature/025-chat-output,abc1234 #1
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        "fixture.toon:1",Validate task scope with its owning workflow,Maintainer
+      full_artifact: full-result.toon
+      primary[20]{"Base revision","Current branch",Decision,"Expected branch",Worktree}:
+        abc1234 #1,feature/025-chat-output,Reuse task branch,feature/025-chat-output,Clean
+        abc1234 #2,feature/025-chat-output,Reuse task branch,feature/025-chat-output,Clean
+        abc1234 #3,feature/025-chat-output,Reuse task branch,feature/025-chat-output,Clean
+        abc1234 #4,feature/025-chat-output,Reuse task branch,feature/025-chat-output,Clean
+        abc1234 #5,feature/025-chat-output,Reuse task branch,feature/025-chat-output,Clean
+        abc1234 #6,feature/025-chat-output,Reuse task branch,feature/025-chat-output,Clean
+        abc1234 #7,feature/025-chat-output,Reuse task branch,feature/025-chat-output,Clean
+        abc1234 #8,feature/025-chat-output,Reuse task branch,feature/025-chat-output,Clean
+        abc1234 #9,feature/025-chat-output,Reuse task branch,feature/025-chat-output,Clean
+        abc1234 #10,feature/025-chat-output,Reuse task branch,feature/025-chat-output,Clean
+        abc1234 #11,feature/025-chat-output,Reuse task branch,feature/025-chat-output,Clean
+        abc1234 #12,feature/025-chat-output,Reuse task branch,feature/025-chat-output,Clean
+        abc1234 #13,feature/025-chat-output,Reuse task branch,feature/025-chat-output,Clean
+        abc1234 #14,feature/025-chat-output,Reuse task branch,feature/025-chat-output,Clean
+        abc1234 #15,feature/025-chat-output,Reuse task branch,feature/025-chat-output,Clean
+        abc1234 #16,feature/025-chat-output,Reuse task branch,feature/025-chat-output,Clean
+        abc1234 #17,feature/025-chat-output,Reuse task branch,feature/025-chat-output,Clean
+        abc1234 #18,feature/025-chat-output,Reuse task branch,feature/025-chat-output,Clean
+        abc1234 #19,feature/025-chat-output,Reuse task branch,feature/025-chat-output,Clean
+        abc1234 #20,feature/025-chat-output,Reuse task branch,feature/025-chat-output,Clean
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: 20 current branch records; 8 shown; inspect the linked full artifact.
+        Evidence: "fixture.toon:1"
+        Status: PASS
+  - baseline_response: "Result\nStatus: PASS\nDecision: One current branch result; scope and evidence are explicit.\nEvidence: fixture.toon:1\n\nprimary: Base revision: abc1234; Current branch: feature/025-chat-output; Decision: Reuse task branch; Expected branch: feature/025-chat-output; Worktree: Clean.\nactions: Owner: Maintainer; Next action: Validate task scope with its owning workflow; Expected evidence: fixture.toon:1.\n"
+    id: small
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-branching for payment-retry delivery: small"
+    required_facts[3]: "fixture.toon:1",feature/025-chat-output,abc1234
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        "fixture.toon:1",Validate task scope with its owning workflow,Maintainer
+      primary[1]{"Base revision","Current branch",Decision,"Expected branch",Worktree}:
+        abc1234,feature/025-chat-output,Reuse task branch,feature/025-chat-output,Clean
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: One current branch result; scope and evidence are explicit.
+        Evidence: "fixture.toon:1"
+        Status: PASS
+  - baseline_response: "Result\nStatus: PASS\nDecision: Prepared expected branch / base revision entities; listed evidence satisfies this skill check.\nEvidence: fixture.toon:1\n\nprimary: Base revision: abc1234; Current branch: feature/025-chat-output | перенос\nстроки; Decision: Reuse task branch; Expected branch: feature/025-chat-output; Worktree: Clean.\nactions: Owner: Maintainer; Next action: Validate task scope with its owning workflow; Expected evidence: fixture.toon:1.\n\nschema: fixture/v1\nstatus: pending\nsource: \"literal | value\"\n"
+    id: edge
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-branching for payment-retry delivery: edge"
+    required_facts[3]: "fixture.toon:1","feature/025-chat-output | перенос\nстроки",abc1234
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        "fixture.toon:1",Validate task scope with its owning workflow,Maintainer
+      native[1]{content,language}:
+        "schema: fixture/v1\nstatus: pending\nsource: \"literal | value\"",toon
+      primary[1]{"Base revision","Current branch",Decision,"Expected branch",Worktree}:
+        abc1234,"feature/025-chat-output | перенос\nстроки",Reuse task branch,feature/025-chat-output,Clean
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: Prepared expected branch / base revision entities; listed evidence satisfies this skill check.
+        Evidence: "fixture.toon:1"
+        Status: PASS
+schema: ai-sdlc-chat-scenarios/v1
+skill: ai-sdlc-loop-branching

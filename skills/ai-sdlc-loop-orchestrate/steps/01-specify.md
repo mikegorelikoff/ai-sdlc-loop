@@ -20,3 +20,7 @@ the owning output contract and current evidence before completion.
 ## Exit
 
 Stop before source mutation. The next owner is `ai-sdlc-loop-implement` only after explicit approval.
+
+## Chat presentation
+
+Before a result, warning, blocker or question, apply the local [chat schema](../references/chat-output.toon) and the Chat Output Contract in `SKILL.md`. Preserve native artifact and tool-input formats.

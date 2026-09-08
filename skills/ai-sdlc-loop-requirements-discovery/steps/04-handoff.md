@@ -29,3 +29,7 @@ The packet passes the discovery quality checks or clearly identifies remaining g
 
 Return the packet and next owner. Do not start implementation or contact stakeholders
 unless the user has authorized that further work.
+
+## Chat presentation
+
+Present the result using the owning `SKILL.md` Chat Output Contract and local [chat schema](../references/chat-output.toon). The machine handoff remains native; show its decision, evidence and owned action without dumping the journal.

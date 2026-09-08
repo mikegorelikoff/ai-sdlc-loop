@@ -10,28 +10,8 @@ Enter after execution has produced the expected artifact, code, plan, decision, 
 
 ## Output Spec
 
-Use this findings-first format:
-
-```text
-Findings:
-- [CRITICAL|HIGH|MEDIUM|LOW] path:line - concise issue statement.
-  Impact: exploitable outcome.
-  Evidence: code path, input, state, or missing check.
-  Fix: concrete remediation.
-
-Verified sources:
-- Required when the output uses OWASP or standards-based claims.
-- Include the current primary source link and the specific claim it supports.
-
-Open questions:
-- Trust-boundary or exploitability question that blocks severity or fix selection.
-
-Validation gaps:
-- Missing security test, QA check, or command and why it matters.
-
-Summary:
-- Brief security posture summary after findings.
-```
+For user-facing chat, use this skill’s Chat Output Contract. Preserve the
+owning artifacts, exact validation evidence, scope and unresolved risks.
 
 Quality gate:
 
@@ -42,23 +22,8 @@ Quality gate:
 
 Finding example:
 
-```text
-Findings:
-- [HIGH] internal/transport/http/v1/handlers/transfers.go:142 - Transfer lookup does not verify organization ownership before returning wallet metadata.
-  Impact: A user with access to one organization could enumerate another organization's provider wallet labels.
-  Evidence: Handler uses transfer ID from the route and returns provider details before checking org ownership.
-  Fix: Load the transfer through an organization-scoped query or compare `transfer.OrganizationID` before building the response.
-```
-
-No-finding example:
-
-```text
-Findings:
-- None found.
-
-Validation gaps:
-- No automated test covers replay of duplicate webhook IDs; add a service-level idempotency test before release.
-```
+Chat example: use the normal, warning and blocked examples in
+`references/chat-examples.md`; their evidence comes from explicit scenario fixtures.
 
 Invalid counter-example:
 
@@ -88,3 +53,7 @@ Reject this because it omits reviewed boundaries, findings status, and validatio
 ## Exit
 
 Report outcome, validation evidence, unresolved risks, and the next required or optional owner directly in the active response.
+
+## Chat presentation
+
+Present the result using the owning `SKILL.md` Chat Output Contract and local [chat schema](../references/chat-output.toon). The machine handoff remains native; show its decision, evidence and owned action without dumping the journal.

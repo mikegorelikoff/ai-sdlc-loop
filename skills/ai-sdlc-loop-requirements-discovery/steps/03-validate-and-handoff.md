@@ -33,3 +33,7 @@ A draft packet and its sources are available.
 ## Exit
 
 Return quality findings, evidence limitations and remaining decision blockers.
+
+## Chat presentation
+
+Present the result using the owning `SKILL.md` Chat Output Contract and local [chat schema](../references/chat-output.toon). The machine handoff remains native; show its decision, evidence and owned action without dumping the journal.

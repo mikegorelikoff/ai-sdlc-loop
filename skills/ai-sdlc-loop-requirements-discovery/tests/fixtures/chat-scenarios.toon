@@ -1,0 +1,152 @@
+scenarios[8]:
+  - baseline_response: "Result\nStatus: PENDING\nDecision: Prepared business option / precedent entities; owner decision or execution remains pending.\nEvidence: fixture.toon:1\n\nprimary: Business option: Reuse payment ledger; Decision status: Proposed; Option ID: OPT-001; Precedent: DEC-001; Trade-off: Lower effort; existing retention.\nactions: Owner: Product owner; Next action: Validate raw request with its owning workflow; Expected evidence: fixture.toon:1.\n\nsecondary: Question ID: Confirm question id for payment retry; Question: Confirm question for payment retry; Owner: Delivery owner; Evidence method: Confirm evidence method for payment retry; Decision impact: Confirm decision impact for payment retry.\n"
+    id: happy
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-requirements-discovery for payment-retry delivery: happy"
+    required_facts[3]: "fixture.toon:1",OPT-001,Reuse payment ledger
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        "fixture.toon:1",Validate raw request with its owning workflow,Product owner
+      primary[1]{"Business option","Decision status","Option ID",Precedent,Trade-off}:
+        Reuse payment ledger,Proposed,OPT-001,DEC-001,Lower effort; existing retention
+      schema: ai-sdlc-chat-result/v1
+      secondary[1]{"Decision impact","Evidence method",Owner,Question,"Question ID"}:
+        Determines idempotency key retention,Read provider retention contract,Product owner,What retry window must be supported?,Q-001
+      summary:
+        Decision: Prepared option id result; owner decision or execution remains pending.
+        Evidence: "fixture.toon:1"
+        Status: PENDING
+  - baseline_response: "Result\nStatus: WARNING\nDecision: Partial business option / precedent entities coverage; one dependency remains unverified.\nEvidence: fixture.toon:1\n\nprimary: Business option: Reuse payment ledger; Decision status: Proposed; Option ID: OPT-001; Precedent: DEC-001; Trade-off: Lower effort; existing retention.\nprimary: Business option: Reuse payment ledger [pending case]; Decision status: Proposed; Option ID: OPT-001; Precedent: DEC-001; Trade-off: Lower effort; existing retention.\nactions: Owner: Product owner; Next action: Validate raw request with its owning workflow; Expected evidence: fixture.toon:1.\n"
+    id: partial
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-requirements-discovery for payment-retry delivery: partial"
+    required_facts[3]: "fixture.toon:1",OPT-001,Reuse payment ledger
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        "fixture.toon:1",Validate raw request with its owning workflow,Product owner
+      primary[2]{"Business option","Decision status","Option ID",Precedent,Trade-off}:
+        Reuse payment ledger,Proposed,OPT-001,DEC-001,Lower effort; existing retention
+        "Reuse payment ledger [pending case]",Proposed,OPT-001,DEC-001,Lower effort; existing retention
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: "Partial result: second case is unverified; do not infer full coverage."
+        Evidence: "fixture.toon:1"
+        Status: WARNING
+  - baseline_response: "Result\nStatus: WARNING\nDecision: Limited business option / precedent entities review; source freshness must be confirmed.\nEvidence: fixture.toon:1\n\nprimary: Business option: Reuse payment ledger; Decision status: Proposed; Option ID: OPT-001; Precedent: DEC-001; Trade-off: Lower effort; existing retention.\nactions: Owner: Product owner; Next action: Validate raw request with its owning workflow; Expected evidence: fixture.toon:1.\n"
+    id: warning
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-requirements-discovery for payment-retry delivery: warning"
+    required_facts[3]: "fixture.toon:1",OPT-001,Reuse payment ledger
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        "fixture.toon:1",Validate raw request with its owning workflow,Product owner
+      primary[1]{"Business option","Decision status","Option ID",Precedent,Trade-off}:
+        Reuse payment ledger,Proposed,OPT-001,DEC-001,Lower effort; existing retention
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: Result has limited source freshness; confirm it before downstream use.
+        Evidence: "fixture.toon:1"
+        Status: WARNING
+  - baseline_response: "Result\nStatus: BLOCKED\nDecision: Raw request is unavailable; dependent work has not run.\nEvidence: source-inventory.toon:missing\n\nfailures: Raw request: Raw request; Status: BLOCKED; Blocker: Required source is absent; Evidence: source-inventory.toon:missing; Required action: Provide raw request.\nactions: Owner: Product owner; Next action: Provide raw request; Expected evidence: Validated raw request.\n"
+    id: blocked
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-requirements-discovery for payment-retry delivery: blocked"
+    required_facts[2]: "source-inventory.toon:missing",Validated raw request
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        Validated raw request,Provide raw request,Product owner
+      failures[1]{Blocker,Evidence,"Raw request","Required action",Status}:
+        Required source is absent,"source-inventory.toon:missing",Raw request,Provide raw request,BLOCKED
+      primary[0]:
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: Raw request is unavailable; dependent work has not run.
+        Evidence: "source-inventory.toon:missing"
+        Status: BLOCKED
+  - baseline_response: "Result\nStatus: BLOCKED\nDecision: Raw request is unavailable; dependent work has not run.\nEvidence: source-inventory.toon:missing\n\nfailures: Raw request: Raw request; Status: BLOCKED; Blocker: Required source is absent; Evidence: source-inventory.toon:missing; Required action: Provide raw request.\nclarifications: Missing raw request: Raw request; Why required: Determines option id; Known evidence: No supported assumption; Options: Supply source / narrow requested scope.\nactions: Owner: Product owner; Next action: Provide raw request; Expected evidence: Validated raw request.\n"
+    id: missing-input
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-requirements-discovery for payment-retry delivery: missing-input"
+    required_facts[2]: "source-inventory.toon:missing",Validated raw request
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        Validated raw request,Provide raw request,Product owner
+      clarifications[1]{"Known evidence","Missing raw request",Options,"Why required"}:
+        No supported assumption,Raw request,Supply source / narrow requested scope,Determines option id
+      failures[1]{Blocker,Evidence,"Raw request","Required action",Status}:
+        Required source is absent,"source-inventory.toon:missing",Raw request,Provide raw request,BLOCKED
+      primary[0]:
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: Raw request is unavailable; dependent work has not run.
+        Evidence: "source-inventory.toon:missing"
+        Status: BLOCKED
+  - baseline_response: "Result\nStatus: PENDING\nDecision: 20 business option / precedent entities rows; showing the first 8; full evidence linked.\nEvidence: fixture.toon:1\n\nprimary: Business option: Reuse payment ledger #1; Decision status: Proposed; Option ID: OPT-001; Precedent: DEC-001; Trade-off: Lower effort; existing retention.\nprimary: Business option: Reuse payment ledger #2; Decision status: Proposed; Option ID: OPT-001; Precedent: DEC-001; Trade-off: Lower effort; existing retention.\nprimary: Business option: Reuse payment ledger #3; Decision status: Proposed; Option ID: OPT-001; Precedent: DEC-001; Trade-off: Lower effort; existing retention.\nprimary: Business option: Reuse payment ledger #4; Decision status: Proposed; Option ID: OPT-001; Precedent: DEC-001; Trade-off: Lower effort; existing retention.\nprimary: Business option: Reuse payment ledger #5; Decision status: Proposed; Option ID: OPT-001; Precedent: DEC-001; Trade-off: Lower effort; existing retention.\nprimary: Business option: Reuse payment ledger #6; Decision status: Proposed; Option ID: OPT-001; Precedent: DEC-001; Trade-off: Lower effort; existing retention.\nprimary: Business option: Reuse payment ledger #7; Decision status: Proposed; Option ID: OPT-001; Precedent: DEC-001; Trade-off: Lower effort; existing retention.\nprimary: Business option: Reuse payment ledger #8; Decision status: Proposed; Option ID: OPT-001; Precedent: DEC-001; Trade-off: Lower effort; existing retention.\nprimary: Business option: Reuse payment ledger #9; Decision status: Proposed; Option ID: OPT-001; Precedent: DEC-001; Trade-off: Lower effort; existing retention.\nprimary: Business option: Reuse payment ledger #10; Decision status: Proposed; Option ID: OPT-001; Precedent: DEC-001; Trade-off: Lower effort; existing retention.\nprimary: Business option: Reuse payment ledger #11; Decision status: Proposed; Option ID: OPT-001; Precedent: DEC-001; Trade-off: Lower effort; existing retention.\nprimary: Business option: Reuse payment ledger #12; Decision status: Proposed; Option ID: OPT-001; Precedent: DEC-001; Trade-off: Lower effort; existing retention.\nprimary: Business option: Reuse payment ledger #13; Decision status: Proposed; Option ID: OPT-001; Precedent: DEC-001; Trade-off: Lower effort; existing retention.\nprimary: Business option: Reuse payment ledger #14; Decision status: Proposed; Option ID: OPT-001; Precedent: DEC-001; Trade-off: Lower effort; existing retention.\nprimary: Business option: Reuse payment ledger #15; Decision status: Proposed; Option ID: OPT-001; Precedent: DEC-001; Trade-off: Lower effort; existing retention.\nprimary: Business option: Reuse payment ledger #16; Decision status: Proposed; Option ID: OPT-001; Precedent: DEC-001; Trade-off: Lower effort; existing retention.\nprimary: Business option: Reuse payment ledger #17; Decision status: Proposed; Option ID: OPT-001; Precedent: DEC-001; Trade-off: Lower effort; existing retention.\nprimary: Business option: Reuse payment ledger #18; Decision status: Proposed; Option ID: OPT-001; Precedent: DEC-001; Trade-off: Lower effort; existing retention.\nprimary: Business option: Reuse payment ledger #19; Decision status: Proposed; Option ID: OPT-001; Precedent: DEC-001; Trade-off: Lower effort; existing retention.\nprimary: Business option: Reuse payment ledger #20; Decision status: Proposed; Option ID: OPT-001; Precedent: DEC-001; Trade-off: Lower effort; existing retention.\nactions: Owner: Product owner; Next action: Validate raw request with its owning workflow; Expected evidence: fixture.toon:1.\n"
+    id: large
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-requirements-discovery for payment-retry delivery: large"
+    required_facts[3]: "fixture.toon:1",OPT-001,Reuse payment ledger #1
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        "fixture.toon:1",Validate raw request with its owning workflow,Product owner
+      full_artifact: full-result.toon
+      primary[20]{"Business option","Decision status","Option ID",Precedent,Trade-off}:
+        Reuse payment ledger #1,Proposed,OPT-001,DEC-001,Lower effort; existing retention
+        Reuse payment ledger #2,Proposed,OPT-001,DEC-001,Lower effort; existing retention
+        Reuse payment ledger #3,Proposed,OPT-001,DEC-001,Lower effort; existing retention
+        Reuse payment ledger #4,Proposed,OPT-001,DEC-001,Lower effort; existing retention
+        Reuse payment ledger #5,Proposed,OPT-001,DEC-001,Lower effort; existing retention
+        Reuse payment ledger #6,Proposed,OPT-001,DEC-001,Lower effort; existing retention
+        Reuse payment ledger #7,Proposed,OPT-001,DEC-001,Lower effort; existing retention
+        Reuse payment ledger #8,Proposed,OPT-001,DEC-001,Lower effort; existing retention
+        Reuse payment ledger #9,Proposed,OPT-001,DEC-001,Lower effort; existing retention
+        Reuse payment ledger #10,Proposed,OPT-001,DEC-001,Lower effort; existing retention
+        Reuse payment ledger #11,Proposed,OPT-001,DEC-001,Lower effort; existing retention
+        Reuse payment ledger #12,Proposed,OPT-001,DEC-001,Lower effort; existing retention
+        Reuse payment ledger #13,Proposed,OPT-001,DEC-001,Lower effort; existing retention
+        Reuse payment ledger #14,Proposed,OPT-001,DEC-001,Lower effort; existing retention
+        Reuse payment ledger #15,Proposed,OPT-001,DEC-001,Lower effort; existing retention
+        Reuse payment ledger #16,Proposed,OPT-001,DEC-001,Lower effort; existing retention
+        Reuse payment ledger #17,Proposed,OPT-001,DEC-001,Lower effort; existing retention
+        Reuse payment ledger #18,Proposed,OPT-001,DEC-001,Lower effort; existing retention
+        Reuse payment ledger #19,Proposed,OPT-001,DEC-001,Lower effort; existing retention
+        Reuse payment ledger #20,Proposed,OPT-001,DEC-001,Lower effort; existing retention
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: 20 option id records; 8 shown; inspect the linked full artifact.
+        Evidence: "fixture.toon:1"
+        Status: PENDING
+  - baseline_response: "Result\nStatus: PENDING\nDecision: One option id result; scope and evidence are explicit.\nEvidence: fixture.toon:1\n\nprimary: Business option: Reuse payment ledger; Decision status: Proposed; Option ID: OPT-001; Precedent: DEC-001; Trade-off: Lower effort; existing retention.\nactions: Owner: Product owner; Next action: Validate raw request with its owning workflow; Expected evidence: fixture.toon:1.\n"
+    id: small
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-requirements-discovery for payment-retry delivery: small"
+    required_facts[3]: "fixture.toon:1",OPT-001,Reuse payment ledger
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        "fixture.toon:1",Validate raw request with its owning workflow,Product owner
+      primary[1]{"Business option","Decision status","Option ID",Precedent,Trade-off}:
+        Reuse payment ledger,Proposed,OPT-001,DEC-001,Lower effort; existing retention
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: One option id result; scope and evidence are explicit.
+        Evidence: "fixture.toon:1"
+        Status: PENDING
+  - baseline_response: "Result\nStatus: PENDING\nDecision: Prepared business option / precedent entities; owner decision or execution remains pending.\nEvidence: fixture.toon:1\n\nprimary: Business option: Reuse payment ledger; Decision status: Proposed; Option ID: OPT-001 | перенос\nстроки; Precedent: DEC-001; Trade-off: Lower effort; existing retention.\nactions: Owner: Product owner; Next action: Validate raw request with its owning workflow; Expected evidence: fixture.toon:1.\n\nschema: fixture/v1\nstatus: pending\nsource: \"literal | value\"\n"
+    id: edge
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-requirements-discovery for payment-retry delivery: edge"
+    required_facts[3]: "fixture.toon:1","OPT-001 | перенос\nстроки",Reuse payment ledger
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        "fixture.toon:1",Validate raw request with its owning workflow,Product owner
+      native[1]{content,language}:
+        "schema: fixture/v1\nstatus: pending\nsource: \"literal | value\"",toon
+      primary[1]{"Business option","Decision status","Option ID",Precedent,Trade-off}:
+        Reuse payment ledger,Proposed,"OPT-001 | перенос\nстроки",DEC-001,Lower effort; existing retention
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: Prepared business option / precedent entities; owner decision or execution remains pending.
+        Evidence: "fixture.toon:1"
+        Status: PENDING
+schema: ai-sdlc-chat-scenarios/v1
+skill: ai-sdlc-loop-requirements-discovery

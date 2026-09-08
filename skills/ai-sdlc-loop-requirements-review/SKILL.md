@@ -17,6 +17,18 @@ Follow `steps/manifest.toon`. Report evidence-backed gaps without inventing prod
 
 Use `scripts/requirements_review.py` for canonical `ai-sdlc-loop-requirements-review/v1` output and read `references/quality-bar.md` before signoff. Route accepted requirements to `ai-sdlc-loop-specify` and missing scenario design to `ai-sdlc-loop-test-cases`.
 
+## Chat Output Contract
+
+Primary: Requirement ID / Gap category / Severity / Impact / Evidence / Resolution.
+Rows represent individual requirement id records. Show unresolved blockers before nonblocking findings; a completed review is not delivery approval.
+Summary: Status / Decision / Evidence. Failure: Requirement package / Status / Blocker / Evidence / Required action.
+Clarification: Missing requirement package / Why required / Known evidence / Options. Next action: Owner / Next action / Expected evidence.
+Use PASS, FAIL, WARNING, BLOCKED, PENDING, N/A only for chat statuses; preserve native domain states.
+At most six columns, eight preview rows and 180 characters per cell; link full evidence and state omitted totals.
+No duplicate prose. Keep code, commands, commit messages and machine handoffs native.
+Apply [this skill’s schema and examples](references/chat-output.toon) before any user-facing result, warning or question.
+Use the sibling `ai-sdlc-loop-shared-runtime/scripts/chat_output.py` to render/check; [shared limits](../ai-sdlc-loop-shared-runtime/references/chat-output.md) bound repair and preserve native outputs.
+
 ## Step Selector
 
 This table is generated from `steps/manifest.toon`. The manifest and linked

@@ -1,0 +1,17 @@
+clarification[4]: Missing allowed scope,Why required,Known evidence,Options
+example:
+  Acceptance: One charge per key
+  "Allowed path": src/payments.py
+  "Bounded behavior": Idempotent retry
+  Evidence: spec.toon
+  "Requirement ID": AC-001
+failure[5]: Allowed scope,Status,Blocker,Evidence,Required action
+hide: "Secrets, raw logs, complete journals and unneeded internal tool steps. Keep full detail in the owning native artifact."
+native_exception: "Keep machine artifacts, code, commands and diffs native; presentation does not replace validation."
+primary[5]: Requirement ID,Bounded behavior,Allowed path,Acceptance,Evidence
+priority: Show the user decision before detail; preserve source order and explicit authority.
+required_input: Allowed scope
+rows: individual requirement id records
+schema: ai-sdlc-chat-contract/v1
+secondary[0]:
+skill: ai-sdlc-loop-specify

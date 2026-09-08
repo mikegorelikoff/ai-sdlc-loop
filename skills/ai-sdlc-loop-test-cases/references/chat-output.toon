@@ -1,0 +1,18 @@
+clarification[4]: Missing acceptance criterion,Why required,Known evidence,Options
+example:
+  Evidence: "test-cases.md:12"
+  "Expected result": Original charge returned
+  Layer: Service
+  "Requirement ID": AC-001
+  "Setup / trigger": Existing key; repeat callback
+  "Test ID": TC-001
+failure[5]: Acceptance criterion,Status,Blocker,Evidence,Required action
+hide: "Secrets, raw logs, complete journals and unneeded internal tool steps. Keep full detail in the owning native artifact."
+native_exception: "Keep machine artifacts, code, commands and diffs native; presentation does not replace validation."
+primary[6]: Test ID,Requirement ID,Setup / trigger,Expected result,Layer,Evidence
+priority: Show the user decision before detail; preserve source order and explicit authority.
+required_input: Acceptance criterion
+rows: individual test id records
+schema: ai-sdlc-chat-contract/v1
+secondary[0]:
+skill: ai-sdlc-loop-test-cases

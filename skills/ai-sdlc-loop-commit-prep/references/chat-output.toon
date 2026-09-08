@@ -1,0 +1,17 @@
+clarification[4]: Missing commit scope,Why required,Known evidence,Options
+example:
+  Disposition: Include
+  Evidence: "validation.md:8"
+  "Path group": src/payments.py
+  Reason: Implements AC-001
+  Verification: PASS
+failure[5]: Commit scope,Status,Blocker,Evidence,Required action
+hide: "Secrets, raw logs, complete journals and unneeded internal tool steps. Keep full detail in the owning native artifact."
+native_exception: "Keep machine artifacts, code, commands and diffs native; presentation does not replace validation."
+primary[5]: Path group,Disposition,Reason,Verification,Evidence
+priority: Show the user decision before detail; preserve source order and explicit authority.
+required_input: Commit scope
+rows: individual path group records
+schema: ai-sdlc-chat-contract/v1
+secondary[4]: Commit,Branch,Task ID,Evidence
+skill: ai-sdlc-loop-commit-prep

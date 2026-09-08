@@ -1,0 +1,17 @@
+clarification[4]: Missing commit approval,Why required,Known evidence,Options
+example:
+  Approval: Current fingerprint
+  Branch: feature/payments
+  Commit: abc1234
+  Evidence: commit-receipt.toon
+  "Included scope": T001 only
+failure[5]: Commit approval,Status,Blocker,Evidence,Required action
+hide: "Secrets, raw logs, complete journals and unneeded internal tool steps. Keep full detail in the owning native artifact."
+native_exception: "Keep machine artifacts, code, commands and diffs native; presentation does not replace validation."
+primary[5]: Commit,Branch,Included scope,Approval,Evidence
+priority: Show the user decision before detail; preserve source order and explicit authority.
+required_input: Commit approval
+rows: individual commit records
+schema: ai-sdlc-chat-contract/v1
+secondary[3]: Remaining path,Reason,Evidence
+skill: ai-sdlc-loop-commit

@@ -20,6 +20,18 @@ description: AI SDLC test-case-driven testing workflow. Use when an AI assistant
 - Purpose: Derive executable AI SDLC test scenarios from requirements or delivery context and place QA refinement artifacts under `specs-refiniment/<feature-name>/<file.md>` when writing files.
 - Output: Scenario matrix with requirement refs, verifiable outcomes, automation paths, and execution order
 
+## Chat Output Contract
+
+Primary: Test ID / Requirement ID / Setup / trigger / Expected result / Layer / Evidence.
+Rows represent individual test id records. Show the user decision before detail; preserve source order and explicit authority.
+Summary: Status / Decision / Evidence. Failure: Acceptance criterion / Status / Blocker / Evidence / Required action.
+Clarification: Missing acceptance criterion / Why required / Known evidence / Options. Next action: Owner / Next action / Expected evidence.
+Use PASS, FAIL, WARNING, BLOCKED, PENDING, N/A only for chat statuses; preserve native domain states.
+At most six columns, eight preview rows and 180 characters per cell; link full evidence and state omitted totals.
+No duplicate prose. Keep code, commands, commit messages and machine handoffs native.
+Apply [this skill’s schema and examples](references/chat-output.toon) before any user-facing result, warning or question.
+Use the sibling `ai-sdlc-loop-shared-runtime/scripts/chat_output.py` to render/check; [shared limits](../ai-sdlc-loop-shared-runtime/references/chat-output.md) bound repair and preserve native outputs.
+
 ## Step Selector
 
 This table is generated from `steps/manifest.toon`. The manifest and linked

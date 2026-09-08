@@ -14,6 +14,7 @@ from typing import Iterable
 
 from ai_sdlc_step_context import (
     execution_reference,
+    chat_reference,
     StepContextPack,
     compile_step_context,
     validate_step_context_pack,
@@ -602,11 +603,11 @@ def _graph_fingerprint(
     ]
     for step in manifest["steps"]:
         text = _contained_file(skill_root, str(step["path"])).read_text(encoding="utf-8")
-        reference = execution_reference(skill_root, text)
-        if reference:
-            relative, _content, path = reference
-            documents.append({"step": step["id"], "path": relative,
-                              "sha256": hashlib.sha256(path.read_bytes()).hexdigest()})
+        for reference in (execution_reference(skill_root, text), chat_reference(skill_root, text)):
+            if reference:
+                relative, _content, path = reference
+                documents.append({"step": step["id"], "path": relative,
+                                  "sha256": hashlib.sha256(path.read_bytes()).hexdigest()})
     return _digest({"manifest": manifest, "documents": documents})
 
 
@@ -834,7 +835,7 @@ def _build_card(
     step_document = _contained_file(skill_root, str(step["path"])).read_text(encoding="utf-8")
     # The cache retrieval path does not yet retain sibling mandatory references.
     # Compile preflight directly until it can prove that contract's recall.
-    if cache_root is not None and execution_reference(skill_root, step_document) is None:
+    if cache_root is not None and execution_reference(skill_root, step_document) is None and chat_reference(skill_root, step_document) is None:
         try:
             context = _cached_context(
                 root=root, cache_root=cache_root, skill=skill, step=step,

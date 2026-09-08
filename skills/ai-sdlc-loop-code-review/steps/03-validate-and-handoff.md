@@ -10,26 +10,8 @@ Enter after execution has produced the expected artifact, code, plan, decision, 
 
 ## Output Spec
 
-Use this format:
-
-```text
-Findings:
-- [CRITICAL|HIGH|MEDIUM|LOW] path:line - concise issue statement.
-  Why it matters: concrete failure, regression, or maintenance risk.
-  What should change: specific fix or test.
-
-Open questions:
-- Only blockers or assumptions that affect correctness, scope, or severity.
-
-Validation gaps:
-- Missing, failed, skipped, or stale checks.
-
-Secondary observations:
-- Deep-audit mode only; material non-blocking observations.
-
-Summary:
-- Brief change summary after findings.
-```
+For user-facing chat, use this skill’s Chat Output Contract. Preserve the
+owning artifacts, exact validation evidence, scope and unresolved risks.
 
 Quality gate:
 
@@ -40,25 +22,8 @@ Quality gate:
 
 Finding example:
 
-```text
-Findings:
-- [HIGH] internal/service/orders.go:218 - Accepted orders can be repriced after execution because the status guard excludes only cancelled orders.
-  Why it matters: A borrower could see a different rate after the lender accepted the order, violating the order contract.
-  What should change: Reject repricing unless the order is still in draft or requested state, and add a service test for accepted orders.
-```
-
-No-finding example:
-
-```text
-Findings:
-- None found.
-
-Validation gaps:
-- `go test ./internal/service` was not run, so service-level regressions remain unverified.
-
-Summary:
-- Reviewed the staged service diff against `specs/NNN-feature-name`; no material defects found.
-```
+Chat example: use the normal, warning and blocked examples in
+`references/chat-examples.md`; their evidence comes from explicit scenario fixtures.
 
 Invalid counter-example:
 
@@ -94,3 +59,7 @@ Reject this because it is not findings-first and does not mention validation.
 ## Exit
 
 Report outcome, validation evidence, unresolved risks, and the next required or optional owner directly in the active response.
+
+## Chat presentation
+
+Present the result using the owning `SKILL.md` Chat Output Contract and local [chat schema](../references/chat-output.toon). The machine handoff remains native; show its decision, evidence and owned action without dumping the journal.

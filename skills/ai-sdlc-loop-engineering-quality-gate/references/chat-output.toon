@@ -1,0 +1,18 @@
+clarification[4]: Missing implementation diff,Why required,Known evidence,Options
+example:
+  Disposition: Fixed locally
+  Evidence: TC-001
+  Finding: Duplicate callback creates charge
+  Location: "src/payments.py:84"
+  Severity: HIGH
+  Verification: PASS
+failure[5]: Implementation diff,Status,Blocker,Evidence,Required action
+hide: "Secrets, raw logs, complete journals and unneeded internal tool steps. Keep full detail in the owning native artifact."
+native_exception: "Keep machine artifacts, code, commands and diffs native; presentation does not replace validation."
+primary[6]: Severity,Location,Finding,Disposition,Verification,Evidence
+priority: Show the user decision before detail; preserve source order and explicit authority.
+required_input: Implementation diff
+rows: individual severity records
+schema: ai-sdlc-chat-contract/v1
+secondary[4]: Gate,Status,Unresolved count,Evidence
+skill: ai-sdlc-loop-engineering-quality-gate

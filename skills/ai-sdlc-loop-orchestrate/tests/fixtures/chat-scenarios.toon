@@ -1,0 +1,150 @@
+scenarios[8]:
+  - baseline_response: "Result\nStatus: PASS\nDecision: Prepared state / owning skill entities; listed evidence satisfies this skill check.\nEvidence: spec.toon\n\nprimary: Evidence: spec.toon; Gate: Schema valid; Owning skill: ai-sdlc-loop-specify; Stage: Specify; State: complete.\nactions: Owner: Engineer; Next action: Validate feature scope with its owning workflow; Expected evidence: spec.toon.\n"
+    id: happy
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-orchestrate for payment-retry delivery: happy"
+    required_facts[2]: spec.toon,Specify
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        spec.toon,Validate feature scope with its owning workflow,Engineer
+      primary[1]{Evidence,Gate,"Owning skill",Stage,State}:
+        spec.toon,Schema valid,ai-sdlc-loop-specify,Specify,complete
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: Prepared stage result; evidence supports the reported result.
+        Evidence: spec.toon
+        Status: PASS
+  - baseline_response: "Result\nStatus: WARNING\nDecision: Partial state / owning skill entities coverage; one dependency remains unverified.\nEvidence: spec.toon\n\nprimary: Evidence: spec.toon; Gate: Schema valid; Owning skill: ai-sdlc-loop-specify; Stage: Specify; State: complete.\nprimary: Evidence: spec.toon [pending case]; Gate: Schema valid; Owning skill: ai-sdlc-loop-specify; Stage: Specify; State: complete.\nactions: Owner: Engineer; Next action: Validate feature scope with its owning workflow; Expected evidence: spec.toon.\n"
+    id: partial
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-orchestrate for payment-retry delivery: partial"
+    required_facts[2]: spec.toon,Specify
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        spec.toon,Validate feature scope with its owning workflow,Engineer
+      primary[2]{Evidence,Gate,"Owning skill",Stage,State}:
+        spec.toon,Schema valid,ai-sdlc-loop-specify,Specify,complete
+        "spec.toon [pending case]",Schema valid,ai-sdlc-loop-specify,Specify,complete
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: "Partial result: second case is unverified; do not infer full coverage."
+        Evidence: spec.toon
+        Status: WARNING
+  - baseline_response: "Result\nStatus: WARNING\nDecision: Limited state / owning skill entities review; source freshness must be confirmed.\nEvidence: spec.toon\n\nprimary: Evidence: spec.toon; Gate: Schema valid; Owning skill: ai-sdlc-loop-specify; Stage: Specify; State: complete.\nactions: Owner: Engineer; Next action: Validate feature scope with its owning workflow; Expected evidence: spec.toon.\n"
+    id: warning
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-orchestrate for payment-retry delivery: warning"
+    required_facts[2]: spec.toon,Specify
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        spec.toon,Validate feature scope with its owning workflow,Engineer
+      primary[1]{Evidence,Gate,"Owning skill",Stage,State}:
+        spec.toon,Schema valid,ai-sdlc-loop-specify,Specify,complete
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: Result has limited source freshness; confirm it before downstream use.
+        Evidence: spec.toon
+        Status: WARNING
+  - baseline_response: "Result\nStatus: BLOCKED\nDecision: Feature scope is unavailable; dependent work has not run.\nEvidence: source-inventory.toon:missing\n\nfailures: Feature scope: Feature scope; Status: BLOCKED; Blocker: Required source is absent; Evidence: source-inventory.toon:missing; Required action: Provide feature scope.\nactions: Owner: Engineer; Next action: Provide feature scope; Expected evidence: Validated feature scope.\n"
+    id: blocked
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-orchestrate for payment-retry delivery: blocked"
+    required_facts[2]: "source-inventory.toon:missing",Validated feature scope
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        Validated feature scope,Provide feature scope,Engineer
+      failures[1]{Blocker,Evidence,"Feature scope","Required action",Status}:
+        Required source is absent,"source-inventory.toon:missing",Feature scope,Provide feature scope,BLOCKED
+      primary[0]:
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: Feature scope is unavailable; dependent work has not run.
+        Evidence: "source-inventory.toon:missing"
+        Status: BLOCKED
+  - baseline_response: "Result\nStatus: BLOCKED\nDecision: Feature scope is unavailable; dependent work has not run.\nEvidence: source-inventory.toon:missing\n\nfailures: Feature scope: Feature scope; Status: BLOCKED; Blocker: Required source is absent; Evidence: source-inventory.toon:missing; Required action: Provide feature scope.\nclarifications: Missing feature scope: Feature scope; Why required: Determines stage; Known evidence: No supported assumption; Options: Supply source / narrow requested scope.\nactions: Owner: Engineer; Next action: Provide feature scope; Expected evidence: Validated feature scope.\n"
+    id: missing-input
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-orchestrate for payment-retry delivery: missing-input"
+    required_facts[2]: "source-inventory.toon:missing",Validated feature scope
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        Validated feature scope,Provide feature scope,Engineer
+      clarifications[1]{"Known evidence","Missing feature scope",Options,"Why required"}:
+        No supported assumption,Feature scope,Supply source / narrow requested scope,Determines stage
+      failures[1]{Blocker,Evidence,"Feature scope","Required action",Status}:
+        Required source is absent,"source-inventory.toon:missing",Feature scope,Provide feature scope,BLOCKED
+      primary[0]:
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: Feature scope is unavailable; dependent work has not run.
+        Evidence: "source-inventory.toon:missing"
+        Status: BLOCKED
+  - baseline_response: "Result\nStatus: PASS\nDecision: 20 state / owning skill entities rows; showing the first 8; full evidence linked.\nEvidence: spec.toon\n\nprimary: Evidence: spec.toon #1; Gate: Schema valid; Owning skill: ai-sdlc-loop-specify; Stage: Specify; State: complete.\nprimary: Evidence: spec.toon #2; Gate: Schema valid; Owning skill: ai-sdlc-loop-specify; Stage: Specify; State: complete.\nprimary: Evidence: spec.toon #3; Gate: Schema valid; Owning skill: ai-sdlc-loop-specify; Stage: Specify; State: complete.\nprimary: Evidence: spec.toon #4; Gate: Schema valid; Owning skill: ai-sdlc-loop-specify; Stage: Specify; State: complete.\nprimary: Evidence: spec.toon #5; Gate: Schema valid; Owning skill: ai-sdlc-loop-specify; Stage: Specify; State: complete.\nprimary: Evidence: spec.toon #6; Gate: Schema valid; Owning skill: ai-sdlc-loop-specify; Stage: Specify; State: complete.\nprimary: Evidence: spec.toon #7; Gate: Schema valid; Owning skill: ai-sdlc-loop-specify; Stage: Specify; State: complete.\nprimary: Evidence: spec.toon #8; Gate: Schema valid; Owning skill: ai-sdlc-loop-specify; Stage: Specify; State: complete.\nprimary: Evidence: spec.toon #9; Gate: Schema valid; Owning skill: ai-sdlc-loop-specify; Stage: Specify; State: complete.\nprimary: Evidence: spec.toon #10; Gate: Schema valid; Owning skill: ai-sdlc-loop-specify; Stage: Specify; State: complete.\nprimary: Evidence: spec.toon #11; Gate: Schema valid; Owning skill: ai-sdlc-loop-specify; Stage: Specify; State: complete.\nprimary: Evidence: spec.toon #12; Gate: Schema valid; Owning skill: ai-sdlc-loop-specify; Stage: Specify; State: complete.\nprimary: Evidence: spec.toon #13; Gate: Schema valid; Owning skill: ai-sdlc-loop-specify; Stage: Specify; State: complete.\nprimary: Evidence: spec.toon #14; Gate: Schema valid; Owning skill: ai-sdlc-loop-specify; Stage: Specify; State: complete.\nprimary: Evidence: spec.toon #15; Gate: Schema valid; Owning skill: ai-sdlc-loop-specify; Stage: Specify; State: complete.\nprimary: Evidence: spec.toon #16; Gate: Schema valid; Owning skill: ai-sdlc-loop-specify; Stage: Specify; State: complete.\nprimary: Evidence: spec.toon #17; Gate: Schema valid; Owning skill: ai-sdlc-loop-specify; Stage: Specify; State: complete.\nprimary: Evidence: spec.toon #18; Gate: Schema valid; Owning skill: ai-sdlc-loop-specify; Stage: Specify; State: complete.\nprimary: Evidence: spec.toon #19; Gate: Schema valid; Owning skill: ai-sdlc-loop-specify; Stage: Specify; State: complete.\nprimary: Evidence: spec.toon #20; Gate: Schema valid; Owning skill: ai-sdlc-loop-specify; Stage: Specify; State: complete.\nactions: Owner: Engineer; Next action: Validate feature scope with its owning workflow; Expected evidence: spec.toon.\n"
+    id: large
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-orchestrate for payment-retry delivery: large"
+    required_facts[3]: spec.toon,Specify,spec.toon #1
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        spec.toon,Validate feature scope with its owning workflow,Engineer
+      full_artifact: full-result.toon
+      primary[20]{Evidence,Gate,"Owning skill",Stage,State}:
+        spec.toon #1,Schema valid,ai-sdlc-loop-specify,Specify,complete
+        spec.toon #2,Schema valid,ai-sdlc-loop-specify,Specify,complete
+        spec.toon #3,Schema valid,ai-sdlc-loop-specify,Specify,complete
+        spec.toon #4,Schema valid,ai-sdlc-loop-specify,Specify,complete
+        spec.toon #5,Schema valid,ai-sdlc-loop-specify,Specify,complete
+        spec.toon #6,Schema valid,ai-sdlc-loop-specify,Specify,complete
+        spec.toon #7,Schema valid,ai-sdlc-loop-specify,Specify,complete
+        spec.toon #8,Schema valid,ai-sdlc-loop-specify,Specify,complete
+        spec.toon #9,Schema valid,ai-sdlc-loop-specify,Specify,complete
+        spec.toon #10,Schema valid,ai-sdlc-loop-specify,Specify,complete
+        spec.toon #11,Schema valid,ai-sdlc-loop-specify,Specify,complete
+        spec.toon #12,Schema valid,ai-sdlc-loop-specify,Specify,complete
+        spec.toon #13,Schema valid,ai-sdlc-loop-specify,Specify,complete
+        spec.toon #14,Schema valid,ai-sdlc-loop-specify,Specify,complete
+        spec.toon #15,Schema valid,ai-sdlc-loop-specify,Specify,complete
+        spec.toon #16,Schema valid,ai-sdlc-loop-specify,Specify,complete
+        spec.toon #17,Schema valid,ai-sdlc-loop-specify,Specify,complete
+        spec.toon #18,Schema valid,ai-sdlc-loop-specify,Specify,complete
+        spec.toon #19,Schema valid,ai-sdlc-loop-specify,Specify,complete
+        spec.toon #20,Schema valid,ai-sdlc-loop-specify,Specify,complete
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: 20 stage records; 8 shown; inspect the linked full artifact.
+        Evidence: spec.toon
+        Status: PASS
+  - baseline_response: "Result\nStatus: PASS\nDecision: One stage result; scope and evidence are explicit.\nEvidence: spec.toon\n\nprimary: Evidence: spec.toon; Gate: Schema valid; Owning skill: ai-sdlc-loop-specify; Stage: Specify; State: complete.\nactions: Owner: Engineer; Next action: Validate feature scope with its owning workflow; Expected evidence: spec.toon.\n"
+    id: small
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-orchestrate for payment-retry delivery: small"
+    required_facts[2]: spec.toon,Specify
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        spec.toon,Validate feature scope with its owning workflow,Engineer
+      primary[1]{Evidence,Gate,"Owning skill",Stage,State}:
+        spec.toon,Schema valid,ai-sdlc-loop-specify,Specify,complete
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: One stage result; scope and evidence are explicit.
+        Evidence: spec.toon
+        Status: PASS
+  - baseline_response: "Result\nStatus: PASS\nDecision: Prepared state / owning skill entities; listed evidence satisfies this skill check.\nEvidence: spec.toon\n\nprimary: Evidence: spec.toon; Gate: Schema valid; Owning skill: ai-sdlc-loop-specify; Stage: Specify | перенос\nстроки; State: complete.\nactions: Owner: Engineer; Next action: Validate feature scope with its owning workflow; Expected evidence: spec.toon.\n\nschema: fixture/v1\nstatus: pending\nsource: \"literal | value\"\n"
+    id: edge
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-orchestrate for payment-retry delivery: edge"
+    required_facts[2]: spec.toon,"Specify | перенос\nстроки"
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        spec.toon,Validate feature scope with its owning workflow,Engineer
+      native[1]{content,language}:
+        "schema: fixture/v1\nstatus: pending\nsource: \"literal | value\"",toon
+      primary[1]{Evidence,Gate,"Owning skill",Stage,State}:
+        spec.toon,Schema valid,ai-sdlc-loop-specify,"Specify | перенос\nстроки",complete
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: Prepared state / owning skill entities; listed evidence satisfies this skill check.
+        Evidence: spec.toon
+        Status: PASS
+schema: ai-sdlc-chat-scenarios/v1
+skill: ai-sdlc-loop-orchestrate

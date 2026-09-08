@@ -10,7 +10,7 @@ Enter after execution has produced the expected artifact, code, plan, decision, 
 
 ## Output Spec
 
-Use this format:
+The native test-case artifact keeps this detailed matrix; chat uses the local Chat Output Contract:
 
 ```text
 Scope:
@@ -99,3 +99,7 @@ Reject this because it has no spec ref, the outcome is prose-only, and `Manual r
 ## Exit
 
 Report outcome, validation evidence, unresolved risks, and the next required or optional owner directly in the active response.
+
+## Chat presentation
+
+Present the result using the owning `SKILL.md` Chat Output Contract and local [chat schema](../references/chat-output.toon). The machine handoff remains native; show its decision, evidence and owned action without dumping the journal.

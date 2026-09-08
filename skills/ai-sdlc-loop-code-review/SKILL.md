@@ -20,6 +20,18 @@ description: AI SDLC code review workflow. Use when an AI assistant is asked to 
 - Purpose: Review AI SDLC code, diffs, branches, commits, or completed implementations for correctness, regressions, contract drift, missing tests, SDD drift, and material maintainability risks.
 - Output: Findings-first review with severity, path, impact, fix, validation gaps, and residual risk
 
+## Chat Output Contract
+
+Primary: Severity / Location / Finding / Evidence / Required fix; secondary: Check / Status / Evidence / Coverage gap.
+Rows represent individual severity records. Show unresolved blockers before nonblocking findings; a completed review is not delivery approval.
+Summary: Status / Decision / Evidence. Failure: Review diff / Status / Blocker / Evidence / Required action.
+Clarification: Missing review diff / Why required / Known evidence / Options. Next action: Owner / Next action / Expected evidence.
+Use PASS, FAIL, WARNING, BLOCKED, PENDING, N/A only for chat statuses; preserve native domain states.
+At most six columns, eight preview rows and 180 characters per cell; link full evidence and state omitted totals.
+No duplicate prose. Keep code, commands, commit messages and machine handoffs native.
+Apply [this skill’s schema and examples](references/chat-output.toon) before any user-facing result, warning or question.
+Use the sibling `ai-sdlc-loop-shared-runtime/scripts/chat_output.py` to render/check; [shared limits](../ai-sdlc-loop-shared-runtime/references/chat-output.md) bound repair and preserve native outputs.
+
 ## Step Selector
 
 This table is generated from `steps/manifest.toon`. The manifest and linked

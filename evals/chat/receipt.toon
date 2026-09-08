@@ -1,0 +1,2107 @@
+failed: 0
+items[21]:
+  - contract_sha256: b6d2b27e216517cb1005cfcf8d0ed4d5f69d4c44b693d5619144620dd07d52fe
+    scenarios[8]:
+      - baseline_bytes: 383
+        baseline_status: FAIL
+        baseline_words: 45
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 8
+        response_bytes: 439
+        response_sha256: 9ac23859d2fcf265b3b626edab125b25621e6c1e332ab514abd21933000bb3ee
+        response_words: 88
+        scenario: happy
+        status: PASS
+      - baseline_bytes: 519
+        baseline_status: FAIL
+        baseline_words: 59
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 9
+        response_bytes: 539
+        response_sha256: 4603b460d7462abd28e9b662435ec99282b713672aa56e33fb3fd1b660a200fb
+        response_words: 106
+        scenario: partial
+        status: PASS
+      - baseline_bytes: 384
+        baseline_status: FAIL
+        baseline_words: 45
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 8
+        response_bytes: 449
+        response_sha256: 27c08744b9176adc35086606545fb206fad8cb71626eedfb91da61f37a7b41ca
+        response_words: 90
+        scenario: warning
+        status: PASS
+      - baseline_bytes: 424
+        baseline_status: FAIL
+        baseline_words: 47
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 8
+        response_bytes: 508
+        response_sha256: a8cea0278a5060aac647097f869c76484479f78ee2ef67abb8c3af7e546d58b7
+        response_words: 97
+        scenario: blocked
+        status: PASS
+      - baseline_bytes: 606
+        baseline_status: FAIL
+        baseline_words: 69
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 11
+        response_bytes: 713
+        response_sha256: 5b630cddc8e24e1dbcaf6c89420de4f46f91631b6ca3407713e423f33460098e
+        response_words: 137
+        scenario: missing-input
+        status: PASS
+      - baseline_bytes: 2713
+        baseline_status: FAIL
+        baseline_words: 314
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 15
+        response_bytes: 1072
+        response_sha256: 1abe6c5dd9c30f8e20385b84b2b8dfc0cafb466080e4362c1e864ca13c0cc60f
+        response_words: 211
+        scenario: large
+        status: PASS
+      - baseline_bytes: 351
+        baseline_status: FAIL
+        baseline_words: 42
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 8
+        response_bytes: 428
+        response_sha256: ac8e3bb09d30658428835bdd3dc83799717626fd49e2acb69189b09c5159d455
+        response_words: 88
+        scenario: small
+        status: PASS
+      - baseline_bytes: 475
+        baseline_status: FAIL
+        baseline_words: 56
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 8
+        response_bytes: 572
+        response_sha256: 62beb9a8a9c50a3a3d3fe1f1aba53e748a5973e30efb65df1c585b1f7715b832
+        response_words: 103
+        scenario: edge
+        status: PASS
+    skill: ai-sdlc-loop-approvals-sandbox
+    status: PASS
+  - contract_sha256: 90a14f117214f159c8bbe8cda42b6c878d30f35fc2c0993b7be558733d821a3b
+    scenarios[8]:
+      - baseline_bytes: 435
+        baseline_status: FAIL
+        baseline_words: 50
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 9
+        response_bytes: 496
+        response_sha256: 9ce54d250ca8b7aa0c85668c803b6f3d2ea8b67783806545f60f9cd47d4f9cdf
+        response_words: 96
+        scenario: happy
+        status: PASS
+      - baseline_bytes: 614
+        baseline_status: FAIL
+        baseline_words: 67
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 10
+        response_bytes: 606
+        response_sha256: 35da1f04fcb453819bed8eb5a8c04a7c974a3a18114b746b6188053b3aca906c
+        response_words: 113
+        scenario: partial
+        status: PASS
+      - baseline_bytes: 436
+        baseline_status: FAIL
+        baseline_words: 50
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 9
+        response_bytes: 499
+        response_sha256: 61adff3b9029d8ed2393b7e86e1fb7bd378722930f9660d7ae1b19e8f897e3a4
+        response_words: 97
+        scenario: warning
+        status: PASS
+      - baseline_bytes: 396
+        baseline_status: FAIL
+        baseline_words: 47
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 8
+        response_bytes: 480
+        response_sha256: b60e6346d135d646f513898d18107a35736c33fc455b4e7e38d7699a90e1f64f
+        response_words: 97
+        scenario: blocked
+        status: PASS
+      - baseline_bytes: 575
+        baseline_status: FAIL
+        baseline_words: 70
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 11
+        response_bytes: 682
+        response_sha256: e0ba90f5228a02c49f6b2d92ab32de9a614ccf2e28f87dac7554f5f842f84547
+        response_words: 138
+        scenario: missing-input
+        status: PASS
+      - baseline_bytes: 3582
+        baseline_status: FAIL
+        baseline_words: 376
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 16
+        response_bytes: 1248
+        response_sha256: bd4f98e4817761be68ae220ab466ce9397fcbbe76e72ad66a52135c7c67d81c2
+        response_words: 219
+        scenario: large
+        status: PASS
+      - baseline_bytes: 400
+        baseline_status: FAIL
+        baseline_words: 46
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 9
+        response_bytes: 485
+        response_sha256: 66256019ea6677aa876b0070e6d4c0813643d349d7c53e7ea31d24d5a428ac6c
+        response_words: 96
+        scenario: small
+        status: PASS
+      - baseline_bytes: 527
+        baseline_status: FAIL
+        baseline_words: 61
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 10
+        response_bytes: 632
+        response_sha256: 979249046a3360ceba094fe49c7664f8669103ce2d4611e944ff0a8a2d4fc893
+        response_words: 112
+        scenario: edge
+        status: PASS
+    skill: ai-sdlc-loop-branching
+    status: PASS
+  - contract_sha256: a57ba588ae1c85345b956b15147f70c4bf8f1bac073d2281f061e6a32277340b
+    scenarios[8]:
+      - baseline_bytes: 825
+        baseline_status: FAIL
+        baseline_words: 104
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 14
+        response_bytes: 923
+        response_sha256: a0eadf26cc58b025e23ecfed0679ccef931e9dfe68a326e26066508c80b36564
+        response_words: 188
+        scenario: happy
+        status: PASS
+      - baseline_bytes: 863
+        baseline_status: FAIL
+        baseline_words: 106
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 13
+        response_bytes: 914
+        response_sha256: 5b8a196242c248a28e80da2c9aa48f3901955ffd0732088ba24151627e58d495
+        response_words: 178
+        scenario: partial
+        status: PASS
+      - baseline_bytes: 465
+        baseline_status: FAIL
+        baseline_words: 58
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 11
+        response_bytes: 766
+        response_sha256: e09647dbdbb4189a511e548cfcbe75c5ec98b1b126a78777c625d0cb092cb574
+        response_words: 152
+        scenario: warning
+        status: PASS
+      - baseline_bytes: 400
+        baseline_status: FAIL
+        baseline_words: 47
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 8
+        response_bytes: 484
+        response_sha256: 743a593a3fdf2abf268695172a99ca3a8fe6c69516d411341746f26023b02665
+        response_words: 97
+        scenario: blocked
+        status: PASS
+      - baseline_bytes: 575
+        baseline_status: FAIL
+        baseline_words: 69
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 11
+        response_bytes: 682
+        response_sha256: 96af3baa617760cff84118636e7b7faf2638f70a09c6f790b8d34ea915068758
+        response_words: 137
+        scenario: missing-input
+        status: PASS
+      - baseline_bytes: 4018
+        baseline_status: FAIL
+        baseline_words: 490
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 26
+        response_bytes: 1764
+        response_sha256: a38d30c89404c74ecd36936d326bec7c5b90696b0a6bbb513ac6948853d22c31
+        response_words: 333
+        scenario: large
+        status: PASS
+      - baseline_bytes: 650
+        baseline_status: FAIL
+        baseline_words: 82
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 11
+        response_bytes: 748
+        response_sha256: 418a550c47ac6a5a5eb055c73ca08d3519db4dcf68be96beb7ddc401f0505c29
+        response_words: 150
+        scenario: small
+        status: PASS
+      - baseline_bytes: 751
+        baseline_status: FAIL
+        baseline_words: 93
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 11
+        response_bytes: 869
+        response_sha256: e9a5add3ac203ca8f731d07e73dd5a9ed3d47824112fa587ddbd11011fa751b8
+        response_words: 162
+        scenario: edge
+        status: PASS
+    skill: ai-sdlc-loop-code-review
+    status: PASS
+  - contract_sha256: 820899c81c445c7026d1f734e6c071568b3498768579259f0899d24bbcfd6651
+    scenarios[8]:
+      - baseline_bytes: 564
+        baseline_status: FAIL
+        baseline_words: 64
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 11
+        response_bytes: 643
+        response_sha256: a93ee11ff0c403a492d5e24981ea519a27b2937847bb3602f71aa7b1e32c9f61
+        response_words: 123
+        scenario: happy
+        status: PASS
+      - baseline_bytes: 579
+        baseline_status: FAIL
+        baseline_words: 62
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 10
+        response_bytes: 595
+        response_sha256: 6f1b0199f6c1e2e6788df3d42fdde48b57ff154dfe1d3f4d64535407e238186a
+        response_words: 111
+        scenario: partial
+        status: PASS
+      - baseline_bytes: 422
+        baseline_status: FAIL
+        baseline_words: 47
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 9
+        response_bytes: 493
+        response_sha256: 8a8eb18d76ad0de470bcbe58e5c52f049fdeb8e52c7492dc791c55e4e69cc2fa
+        response_words: 95
+        scenario: warning
+        status: PASS
+      - baseline_bytes: 426
+        baseline_status: FAIL
+        baseline_words: 47
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 8
+        response_bytes: 510
+        response_sha256: 3d7b34dbe27ab14d139e6c148f58daaed59fb44d876a4a7487bc36c2a68ac950
+        response_words: 97
+        scenario: blocked
+        status: PASS
+      - baseline_bytes: 607
+        baseline_status: FAIL
+        baseline_words: 69
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 11
+        response_bytes: 714
+        response_sha256: b967cee7dd792507a7b3838f2b376a2fe85a4b1a19f134d5a33d37802d0b2727
+        response_words: 137
+        scenario: missing-input
+        status: PASS
+      - baseline_bytes: 3169
+        baseline_status: FAIL
+        baseline_words: 335
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 16
+        response_bytes: 1199
+        response_sha256: 82637cde6109230b5b529c50da8575da8d3300c51600613fc95e30f879cac58d
+        response_words: 216
+        scenario: large
+        status: PASS
+      - baseline_bytes: 386
+        baseline_status: FAIL
+        baseline_words: 43
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 9
+        response_bytes: 471
+        response_sha256: f355f2b3efe8587a330f9c76cd6258833b2315020a0d094eda4b864380fe0f7c
+        response_words: 93
+        scenario: small
+        status: PASS
+      - baseline_bytes: 513
+        baseline_status: FAIL
+        baseline_words: 58
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 9
+        response_bytes: 618
+        response_sha256: 61f86c318c4ae16ad0844ec1e6aeabd0aa07511bf55b898173d230c9fa52a351
+        response_words: 109
+        scenario: edge
+        status: PASS
+    skill: ai-sdlc-loop-commit
+    status: PASS
+  - contract_sha256: d70f2b345a11355980ae5c7232d6ab2a69795caefa2b86e7d1c50a9ad8637e2a
+    scenarios[8]:
+      - baseline_bytes: 567
+        baseline_status: FAIL
+        baseline_words: 68
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 11
+        response_bytes: 609
+        response_sha256: f99fa923eec7dac9570534c4e2f7a7f11df09dc973d8a4e8ead784106d993db2
+        response_words: 122
+        scenario: happy
+        status: PASS
+      - baseline_bytes: 551
+        baseline_status: FAIL
+        baseline_words: 59
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 10
+        response_bytes: 565
+        response_sha256: d908e1a3f664f9300ac459bb1f5165dcb6b4b0faf401ed16414bc3c0d8e082a5
+        response_words: 109
+        scenario: partial
+        status: PASS
+      - baseline_bytes: 401
+        baseline_status: FAIL
+        baseline_words: 45
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 9
+        response_bytes: 475
+        response_sha256: 6069d8bcf0a54667a656cd3555d92c76e156b1a76eeb38dac647ed702cb5b3ef
+        response_words: 94
+        scenario: warning
+        status: PASS
+      - baseline_bytes: 408
+        baseline_status: FAIL
+        baseline_words: 47
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 8
+        response_bytes: 492
+        response_sha256: d9d3f3018250c044775ce637fa8d1ca2ad14798899506b9e4dda489b47211c5d
+        response_words: 97
+        scenario: blocked
+        status: PASS
+      - baseline_bytes: 587
+        baseline_status: FAIL
+        baseline_words: 70
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 11
+        response_bytes: 694
+        response_sha256: 751d4d03b9f4cdd3814286ea974a0eee3d6ec193c6e6d70bf471108a4ddbcd9f
+        response_words: 138
+        scenario: missing-input
+        status: PASS
+      - baseline_bytes: 3015
+        baseline_status: FAIL
+        baseline_words: 314
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 15
+        response_bytes: 1101
+        response_sha256: 3053fac72d4c45dfef0cb73c13ed9e08638b13a53ace74b74ba5449d7c0c0686
+        response_words: 209
+        scenario: large
+        status: PASS
+      - baseline_bytes: 372
+        baseline_status: FAIL
+        baseline_words: 43
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 8
+        response_bytes: 457
+        response_sha256: 23025b18c744753b5fa89d9064346bc1317c093145b12f2d0780aa71b9e47ade
+        response_words: 93
+        scenario: small
+        status: PASS
+      - baseline_bytes: 492
+        baseline_status: FAIL
+        baseline_words: 56
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 8
+        response_bytes: 597
+        response_sha256: 6d3e7a01aa1902bd26ee2d5ff66dc036dfbc5e6e884d219565232e5a0ba1654b
+        response_words: 107
+        scenario: edge
+        status: PASS
+    skill: ai-sdlc-loop-commit-prep
+    status: PASS
+  - contract_sha256: 9f7f29211a6accf4d657f106bc8beffb4803fd06c96fb2584e56a77cfca92517
+    scenarios[8]:
+      - baseline_bytes: 423
+        baseline_status: FAIL
+        baseline_words: 47
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 8
+        response_bytes: 485
+        response_sha256: b07637332fc819914e05de4813e72bc6df94dff94ca50a539cb71a95f2059611
+        response_words: 93
+        scenario: happy
+        status: PASS
+      - baseline_bytes: 588
+        baseline_status: FAIL
+        baseline_words: 62
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 10
+        response_bytes: 601
+        response_sha256: 552c1856f99aae2fa896b2f624e75fa767d3f787b21bbc500c5b79f7566aef8d
+        response_words: 111
+        scenario: partial
+        status: PASS
+      - baseline_bytes: 424
+        baseline_status: FAIL
+        baseline_words: 47
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 9
+        response_bytes: 495
+        response_sha256: af1c9b666a7af1ec31da22b0ac84d31f753c4842b33927ffb1f408d2bf65c560
+        response_words: 95
+        scenario: warning
+        status: PASS
+      - baseline_bytes: 418
+        baseline_status: FAIL
+        baseline_words: 47
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 8
+        response_bytes: 502
+        response_sha256: b7db5e87576a4a537c5f52ca69deaf21fdd0c60f1d40bc740280d88e63dcbc7d
+        response_words: 97
+        scenario: blocked
+        status: PASS
+      - baseline_bytes: 598
+        baseline_status: FAIL
+        baseline_words: 69
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 11
+        response_bytes: 705
+        response_sha256: 34bed254577fe6b4de100d72caeea5ea82e23372040ad923feb846a45de416f2
+        response_words: 137
+        scenario: missing-input
+        status: PASS
+      - baseline_bytes: 3304
+        baseline_status: FAIL
+        baseline_words: 335
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 16
+        response_bytes: 1230
+        response_sha256: 993757b629321490c0bfc3e27f99b01d8364b62f2b7d629a6ab795de16c09b60
+        response_words: 216
+        scenario: large
+        status: PASS
+      - baseline_bytes: 389
+        baseline_status: FAIL
+        baseline_words: 43
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 8
+        response_bytes: 474
+        response_sha256: 90d4bd45446017f90248612acc19f39d28b94c24a0b8c64a059f2817022b0eff
+        response_words: 93
+        scenario: small
+        status: PASS
+      - baseline_bytes: 553
+        baseline_status: FAIL
+        baseline_words: 62
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 8
+        response_bytes: 658
+        response_sha256: 8870fe3f3246fc9e820f66f15bb6078608ff70d8830d1ccc5a58f85d4e141f7e
+        response_words: 113
+        scenario: edge
+        status: PASS
+    skill: ai-sdlc-loop-conventional-commit
+    status: PASS
+  - contract_sha256: 93d618292c911e54ac01def727b2b578d58b11e0921630b73d1eb5b0b9adfe67
+    scenarios[8]:
+      - baseline_bytes: 401
+        baseline_status: FAIL
+        baseline_words: 48
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 8
+        response_bytes: 452
+        response_sha256: f2bafa012661d7ebb5734120d8fe3cbe4b23c2d54f073b82d6982bf9e5917900
+        response_words: 93
+        scenario: happy
+        status: PASS
+      - baseline_bytes: 538
+        baseline_status: FAIL
+        baseline_words: 63
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 10
+        response_bytes: 536
+        response_sha256: 425f65227f67d2f2c7ed8aca3248e16c4410c59dc96ba0656f2bc710a27a04ce
+        response_words: 110
+        scenario: partial
+        status: PASS
+      - baseline_bytes: 402
+        baseline_status: FAIL
+        baseline_words: 48
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 9
+        response_bytes: 464
+        response_sha256: 6e129097d360600e9bbc56bbc60be244f0bd647c11cf19f9af243df1bd12ef70
+        response_words: 95
+        scenario: warning
+        status: PASS
+      - baseline_bytes: 438
+        baseline_status: FAIL
+        baseline_words: 47
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 8
+        response_bytes: 522
+        response_sha256: d038fe92bfd22b3148a9411a63616ad32d760fc620dcc069dfe96c991f86a9a4
+        response_words: 97
+        scenario: blocked
+        status: PASS
+      - baseline_bytes: 622
+        baseline_status: FAIL
+        baseline_words: 69
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 11
+        response_bytes: 729
+        response_sha256: 5a204e9e31d7b12569c5bf5d66efeb30d8061f24eccdc4bde1e3aa95b52eff51
+        response_words: 137
+        scenario: missing-input
+        status: PASS
+      - baseline_bytes: 2750
+        baseline_status: FAIL
+        baseline_words: 336
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 15
+        response_bytes: 959
+        response_sha256: 04504c0fc95555f838257a5c46870867cb817f93cc564d6c3eb8c7825dde7ca7
+        response_words: 209
+        scenario: large
+        status: PASS
+      - baseline_bytes: 356
+        baseline_status: FAIL
+        baseline_words: 43
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 8
+        response_bytes: 441
+        response_sha256: 634fba6bb88a4ede0a998f40e95f54eaf1e16464f360be9a67653f690aac9cc2
+        response_words: 93
+        scenario: small
+        status: PASS
+      - baseline_bytes: 493
+        baseline_status: FAIL
+        baseline_words: 59
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 8
+        response_bytes: 598
+        response_sha256: 3670dda93fe84c031c70ecb3261f0afa2009a571d6c43de6af8a0a56a091dff9
+        response_words: 110
+        scenario: edge
+        status: PASS
+    skill: ai-sdlc-loop-doctor
+    status: PASS
+  - contract_sha256: f13a775d3e58de064255582ca75caebeec9e30e4a7e316a6db5abab2e88a2caf
+    scenarios[8]:
+      - baseline_bytes: 563
+        baseline_status: FAIL
+        baseline_words: 68
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 11
+        response_bytes: 608
+        response_sha256: e82e2cb0f3cb77809da9be770325669b4ab988f03b3dde8cd535048a72e463e4
+        response_words: 129
+        scenario: happy
+        status: PASS
+      - baseline_bytes: 598
+        baseline_status: FAIL
+        baseline_words: 67
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 12
+        response_bytes: 632
+        response_sha256: 1ed5e5a707280bfdda52687e72c8462205ef28449cdf27b5512003d480deb73d
+        response_words: 126
+        scenario: partial
+        status: PASS
+      - baseline_bytes: 417
+        baseline_status: FAIL
+        baseline_words: 49
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 10
+        response_bytes: 501
+        response_sha256: 571aacb62e7efab8670f88e313bdfd5ab79f897f73dc65aeb12cccf288deac26
+        response_words: 102
+        scenario: warning
+        status: PASS
+      - baseline_bytes: 448
+        baseline_status: FAIL
+        baseline_words: 47
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 8
+        response_bytes: 532
+        response_sha256: f0a9cd06936931e7e0e5847e0956f659e3ea4e8212ddbb8d043f7f64f9995716
+        response_words: 97
+        scenario: blocked
+        status: PASS
+      - baseline_bytes: 639
+        baseline_status: FAIL
+        baseline_words: 69
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 11
+        response_bytes: 746
+        response_sha256: c1c925be5f8a5d5b7ed22f15b0d11a4356f2a9f62d90d2c4abdd4b0fa95345c4
+        response_words: 137
+        scenario: missing-input
+        status: PASS
+      - baseline_bytes: 3620
+        baseline_status: FAIL
+        baseline_words: 394
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 23
+        response_bytes: 1358
+        response_sha256: ae7958526ef5c505b0cd094f31b2c54d08fdd1175323b314f310ab1185c13a0e
+        response_words: 267
+        scenario: large
+        status: PASS
+      - baseline_bytes: 388
+        baseline_status: FAIL
+        baseline_words: 46
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 9
+        response_bytes: 481
+        response_sha256: 3f93ceff224922656053d83c2f04de3f67432291e92638f6f4ab600afa1990cb
+        response_words: 100
+        scenario: small
+        status: PASS
+      - baseline_bytes: 508
+        baseline_status: FAIL
+        baseline_words: 60
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 9
+        response_bytes: 621
+        response_sha256: e1a8eec029e17b398fada69e97fb9ad79cc408b7c768346d79ade1f12938f39c
+        response_words: 115
+        scenario: edge
+        status: PASS
+    skill: ai-sdlc-loop-engineering-quality-gate
+    status: PASS
+  - contract_sha256: 4cb4b0f65d5ec47a36fe4f44260abd6ea8b058d0d9e171eade5c940c467da43a
+    scenarios[8]:
+      - baseline_bytes: 665
+        baseline_status: FAIL
+        baseline_words: 76
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 10
+        response_bytes: 529
+        response_sha256: 5b718b35be292b8cda0fccf39c6a46fe17cc841b66b3d5b84d01201c488187b3
+        response_words: 98
+        scenario: happy
+        status: PASS
+      - baseline_bytes: 671
+        baseline_status: FAIL
+        baseline_words: 70
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 11
+        response_bytes: 677
+        response_sha256: 189e5b9ff3bfe318c7e6d46690a3e07901ff377c9401f541e50c1d265a94b05e
+        response_words: 118
+        scenario: partial
+        status: PASS
+      - baseline_bytes: 460
+        baseline_status: FAIL
+        baseline_words: 51
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 10
+        response_bytes: 531
+        response_sha256: 59b65af105cc041d12a2526b6b712670b621d43249aaf079040d7b57394c945a
+        response_words: 99
+        scenario: warning
+        status: PASS
+      - baseline_bytes: 400
+        baseline_status: FAIL
+        baseline_words: 47
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 8
+        response_bytes: 484
+        response_sha256: 1147cf6325fd42f128e5591c16dbeb2d5329b908c836098313d178f3749d8576
+        response_words: 97
+        scenario: blocked
+        status: PASS
+      - baseline_bytes: 573
+        baseline_status: FAIL
+        baseline_words: 69
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 11
+        response_bytes: 680
+        response_sha256: ccf93341e272ccecbfb264da928472d4db99436e433e56c90d7fe0b48f7ad9b5
+        response_words: 137
+        scenario: missing-input
+        status: PASS
+      - baseline_bytes: 4236
+        baseline_status: FAIL
+        baseline_words: 415
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 17
+        response_bytes: 1548
+        response_sha256: 5e3030f6d62dcedec6f7ae94352250e878dc005830f7405dfd3789aa11a3daa2
+        response_words: 241
+        scenario: large
+        status: PASS
+      - baseline_bytes: 427
+        baseline_status: FAIL
+        baseline_words: 47
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 10
+        response_bytes: 512
+        response_sha256: f141bd6906002a6ffcef474e953795c898b2dd88c24270a33241c28c2ec3c60b
+        response_words: 97
+        scenario: small
+        status: PASS
+      - baseline_bytes: 555
+        baseline_status: FAIL
+        baseline_words: 62
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 10
+        response_bytes: 660
+        response_sha256: 5365ebb40314a716fa102fa7946387e42574e13c453b182339743d140070799c
+        response_words: 113
+        scenario: edge
+        status: PASS
+    skill: ai-sdlc-loop-flow
+    status: PASS
+  - contract_sha256: 78572587a9faa8bfeb210edba6609b1aefb84593418506419c189edda7a3c42e
+    scenarios[8]:
+      - baseline_bytes: 517
+        baseline_status: FAIL
+        baseline_words: 61
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 10
+        response_bytes: 588
+        response_sha256: c87d8267910934f4a60ad68dc7ef52faf6ab3e08d9fe1b49f01eb83fe0e73362
+        response_words: 121
+        scenario: happy
+        status: PASS
+      - baseline_bytes: 581
+        baseline_status: FAIL
+        baseline_words: 68
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 10
+        response_bytes: 583
+        response_sha256: 4cd86c021bc84b248687e4c1286b893d1c96cdb0ad4ea03442eae4a7af983305
+        response_words: 115
+        scenario: partial
+        status: PASS
+      - baseline_bytes: 420
+        baseline_status: FAIL
+        baseline_words: 50
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 9
+        response_bytes: 491
+        response_sha256: 0d98009fd5d071aa956d80fb6a2b38c6f1562e99809e20deb74e9aa3160b8f71
+        response_words: 98
+        scenario: warning
+        status: PASS
+      - baseline_bytes: 472
+        baseline_status: FAIL
+        baseline_words: 47
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 8
+        response_bytes: 556
+        response_sha256: 9953379e4391e8971a84b7fa7e6a2b9af9e50c3af4eb130a0cc500a7097578bb
+        response_words: 97
+        scenario: blocked
+        status: PASS
+      - baseline_bytes: 679
+        baseline_status: FAIL
+        baseline_words: 71
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 11
+        response_bytes: 786
+        response_sha256: 50eb296b9585b713b8948d275c97520f45591c67c649478b6ea5de21f01ffe3f
+        response_words: 139
+        scenario: missing-input
+        status: PASS
+      - baseline_bytes: 3246
+        baseline_status: FAIL
+        baseline_words: 395
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 15
+        response_bytes: 1140
+        response_sha256: b2415219f905142b3b28eb90280584ae5a5ed8e993e911a7f252c58114040d5d
+        response_words: 228
+        scenario: large
+        status: PASS
+      - baseline_bytes: 397
+        baseline_status: FAIL
+        baseline_words: 48
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 8
+        response_bytes: 482
+        response_sha256: ecce6ae657a6a35c44965c4fb3dad744a923e5188329a13784e2ae15bf63f936
+        response_words: 98
+        scenario: small
+        status: PASS
+      - baseline_bytes: 515
+        baseline_status: FAIL
+        baseline_words: 61
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 8
+        response_bytes: 620
+        response_sha256: c14cd6e3ad8deb81a5282b8a7bb58bc908810b7676d93abe1986f7cbcd9b96fc
+        response_words: 112
+        scenario: edge
+        status: PASS
+    skill: ai-sdlc-loop-implement
+    status: PASS
+  - contract_sha256: ea5d67e91db8eaf6db1be5ec3a4022c6e697f84afd9e2d8b7866a460edc4365b
+    scenarios[8]:
+      - baseline_bytes: 372
+        baseline_status: FAIL
+        baseline_words: 46
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 9
+        response_bytes: 435
+        response_sha256: f7c6f72ad13edb6d188ce535ccc037015428fc746b0f16f2a2d33dd518ccb62c
+        response_words: 92
+        scenario: happy
+        status: PASS
+      - baseline_bytes: 508
+        baseline_status: FAIL
+        baseline_words: 60
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 10
+        response_bytes: 535
+        response_sha256: 19f0e0352c897fbb1071bb546200a77e64aabb8f558776359f89aae2d8183717
+        response_words: 109
+        scenario: partial
+        status: PASS
+      - baseline_bytes: 373
+        baseline_status: FAIL
+        baseline_words: 46
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 9
+        response_bytes: 447
+        response_sha256: 1bd6c1b2ab26517256ae05a0f86c1f1880abf205837a0dd90bea9399f3782510
+        response_words: 94
+        scenario: warning
+        status: PASS
+      - baseline_bytes: 412
+        baseline_status: FAIL
+        baseline_words: 47
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 8
+        response_bytes: 496
+        response_sha256: 67898f6f722673b1c0f0f159cde0bc66c603f12afb8cdc48a72c5f28af119f1f
+        response_words: 97
+        scenario: blocked
+        status: PASS
+      - baseline_bytes: 588
+        baseline_status: FAIL
+        baseline_words: 69
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 11
+        response_bytes: 695
+        response_sha256: fa40c48777e0fb5626f0e828b46cd57da8835c9abce8ddc02b0259e73c5e2875
+        response_words: 137
+        scenario: missing-input
+        status: PASS
+      - baseline_bytes: 2702
+        baseline_status: FAIL
+        baseline_words: 315
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 17
+        response_bytes: 1054
+        response_sha256: f5250bbc902fa0233dab30cebfc1b072211fb5b883fef0ff88f0c20b6f12c33b
+        response_words: 208
+        scenario: large
+        status: PASS
+      - baseline_bytes: 339
+        baseline_status: FAIL
+        baseline_words: 42
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 9
+        response_bytes: 424
+        response_sha256: 1ed537267ba488c9f930f24e95dcb3f74f9eaf41a5c74a128297722cf41c31fb
+        response_words: 92
+        scenario: small
+        status: PASS
+      - baseline_bytes: 464
+        baseline_status: FAIL
+        baseline_words: 57
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 9
+        response_bytes: 569
+        response_sha256: 551cfa0b1a9605a8164f9afcf99041a59175e2503d1a39f5e61d932b387c0b8c
+        response_words: 108
+        scenario: edge
+        status: PASS
+    skill: ai-sdlc-loop-orchestrate
+    status: PASS
+  - contract_sha256: 74f103fe802f2b435989d343aeb0b365e45dd37e3ca4ca94413da4c750757a84
+    scenarios[8]:
+      - baseline_bytes: 609
+        baseline_status: FAIL
+        baseline_words: 78
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 10
+        response_bytes: 660
+        response_sha256: 92085f5843d528dc47376b4ffdf252b134f141960ee7d669e0ff9555493e8b4f
+        response_words: 140
+        scenario: happy
+        status: PASS
+      - baseline_bytes: 635
+        baseline_status: FAIL
+        baseline_words: 83
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 10
+        response_bytes: 595
+        response_sha256: b82db0cf3b02f30f5010aa5e1d4d48e84df9c08592325371e35d5a523bb56ef1
+        response_words: 126
+        scenario: partial
+        status: PASS
+      - baseline_bytes: 436
+        baseline_status: FAIL
+        baseline_words: 58
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 9
+        response_bytes: 479
+        response_sha256: ed1fab3c0bd3fa7cd8448e268f8c2e2909f9dc2b1da5dbc96f10995191b589b3
+        response_words: 104
+        scenario: warning
+        status: PASS
+      - baseline_bytes: 436
+        baseline_status: FAIL
+        baseline_words: 47
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 8
+        response_bytes: 520
+        response_sha256: c4e55ba3ac45b31a53e6b447ccd0bfedf4816e0e97b9a82854e958306d86fc2f
+        response_words: 97
+        scenario: blocked
+        status: PASS
+      - baseline_bytes: 628
+        baseline_status: FAIL
+        baseline_words: 70
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 11
+        response_bytes: 735
+        response_sha256: 1f44cc81fdb712d06bd567c86cb3a57a813d9052213a63be7e685b3eba8909fc
+        response_words: 138
+        scenario: missing-input
+        status: PASS
+      - baseline_bytes: 3984
+        baseline_status: FAIL
+        baseline_words: 536
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 15
+        response_bytes: 1294
+        response_sha256: 0fee655513af7fca1046daadefad3e3c6c3e8d06a73ef217dbd6a9a6d0d7109a
+        response_words: 269
+        scenario: large
+        status: PASS
+      - baseline_bytes: 409
+        baseline_status: FAIL
+        baseline_words: 54
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 8
+        response_bytes: 465
+        response_sha256: 4233d4ea44b0d90c3fa2a28791260cf776d0d52dfa79fde74d2760e16020b4ef
+        response_words: 103
+        scenario: small
+        status: PASS
+      - baseline_bytes: 531
+        baseline_status: FAIL
+        baseline_words: 69
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 8
+        response_bytes: 607
+        response_sha256: 29ada597005b46f415fc8d62002f7ea07e4e954aebaa95cd64ac44fe3928625f
+        response_words: 119
+        scenario: edge
+        status: PASS
+    skill: ai-sdlc-loop-qa
+    status: PASS
+  - contract_sha256: 9e24496a9a4751e200fca9aa0a1c8519e354418b9f452ab73f1134d625395550
+    scenarios[8]:
+      - baseline_bytes: 518
+        baseline_status: FAIL
+        baseline_words: 65
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 9
+        response_bytes: 569
+        response_sha256: 43e0300a2be43dc16d0cf4bc249f0b389bfd83d8725e3e8d3bc10c5af46195f2
+        response_words: 125
+        scenario: happy
+        status: PASS
+      - baseline_bytes: 498
+        baseline_status: FAIL
+        baseline_words: 62
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 9
+        response_bytes: 451
+        response_sha256: 52429df5388155b8512ff45e05b733d3731e10641623dd630bef5f51a9a48989
+        response_words: 103
+        scenario: partial
+        status: PASS
+      - baseline_bytes: 371
+        baseline_status: FAIL
+        baseline_words: 47
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 8
+        response_bytes: 394
+        response_sha256: 3a5759be615b0fde6782ad0c994ef0fe771ab6cae8ed5045e1640854a9b4fced
+        response_words: 89
+        scenario: warning
+        status: PASS
+      - baseline_bytes: 430
+        baseline_status: FAIL
+        baseline_words: 47
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 8
+        response_bytes: 514
+        response_sha256: 7d57638f0cec9cdcfd13a921f15dcc34d36dcb7b84f5d787107cd64912262636
+        response_words: 97
+        scenario: blocked
+        status: PASS
+      - baseline_bytes: 619
+        baseline_status: FAIL
+        baseline_words: 70
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 11
+        response_bytes: 726
+        response_sha256: 1708bba803b19731b20efd56edf27855ce848e6488e8d0ea4ad1c2a5a4cf238d
+        response_words: 138
+        scenario: missing-input
+        status: PASS
+      - baseline_bytes: 2548
+        baseline_status: FAIL
+        baseline_words: 335
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 14
+        response_bytes: 791
+        response_sha256: 18b071f4a92080377c2c875e80edd03673f3464eccd85c6ae7fe62a811c97c5f
+        response_words: 197
+        scenario: large
+        status: PASS
+      - baseline_bytes: 339
+        baseline_status: FAIL
+        baseline_words: 44
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 7
+        response_bytes: 378
+        response_sha256: 8f4bd32da15e194ab75daa0fe94cfe7f51a7881abd2061a0186dea18f343c5ca
+        response_words: 88
+        scenario: small
+        status: PASS
+      - baseline_bytes: 462
+        baseline_status: FAIL
+        baseline_words: 58
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 7
+        response_bytes: 521
+        response_sha256: ad95a3fef2b1f09b358ab0767785f61f051fc2f443074220dabf40a847e360c5
+        response_words: 103
+        scenario: edge
+        status: PASS
+    skill: ai-sdlc-loop-release-readiness
+    status: PASS
+  - contract_sha256: 7190d4eee8f8138bea5f0aa1987fe322adcf709ffa2981203ded93da5aa04a88
+    scenarios[8]:
+      - baseline_bytes: 690
+        baseline_status: FAIL
+        baseline_words: 87
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 14
+        response_bytes: 745
+        response_sha256: f830b21e1adad648fef246a12dfc7b5b910198ae47369e262be00b274ac3bde2
+        response_words: 149
+        scenario: happy
+        status: PASS
+      - baseline_bytes: 610
+        baseline_status: FAIL
+        baseline_words: 73
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 11
+        response_bytes: 607
+        response_sha256: eea44562c10c055f51daf700b0d361c2e42d7eb5dcd5cb21827e1104d97b7a93
+        response_words: 120
+        scenario: partial
+        status: PASS
+      - baseline_bytes: 434
+        baseline_status: FAIL
+        baseline_words: 53
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 10
+        response_bytes: 501
+        response_sha256: 8e33246b91879596a812cfd5c84cf27c99e82c291c1db5b323ea2a73dc91c5b7
+        response_words: 101
+        scenario: warning
+        status: PASS
+      - baseline_bytes: 405
+        baseline_status: FAIL
+        baseline_words: 48
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 8
+        response_bytes: 489
+        response_sha256: 6fd20b2d989fa8f4e37ebcc7a4fd641a92e0dd428f6ee04db79c814c0ce682c1
+        response_words: 98
+        scenario: blocked
+        status: PASS
+      - baseline_bytes: 581
+        baseline_status: FAIL
+        baseline_words: 71
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 11
+        response_bytes: 688
+        response_sha256: 9633f676c14bae72d12e9aee77449e8e4657d58b42d837092e8b6224ba63869e
+        response_words: 139
+        scenario: missing-input
+        status: PASS
+      - baseline_bytes: 3545
+        baseline_status: FAIL
+        baseline_words: 436
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 17
+        response_bytes: 1241
+        response_sha256: 099657f77c7ac68243c91e062c4e6380cf84d6c182138f0a5de771d445d0889b
+        response_words: 244
+        scenario: large
+        status: PASS
+      - baseline_bytes: 400
+        baseline_status: FAIL
+        baseline_words: 50
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 10
+        response_bytes: 485
+        response_sha256: 298e3fcd09bedc8d8adef50ade009272da668dd40c21c4dc4ab4fae57e0e494e
+        response_words: 100
+        scenario: small
+        status: PASS
+      - baseline_bytes: 529
+        baseline_status: FAIL
+        baseline_words: 64
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 10
+        response_bytes: 634
+        response_sha256: 0f36e49db2fcc5df2f7e0e70578e891c8747a5c355937de6b40129dca60f8c02
+        response_words: 115
+        scenario: edge
+        status: PASS
+    skill: ai-sdlc-loop-requirements-discovery
+    status: PASS
+  - contract_sha256: 6def440a3b91eb333d6e9cd692ab46375222ad8d01b877cb6608f10923888b47
+    scenarios[8]:
+      - baseline_bytes: 619
+        baseline_status: FAIL
+        baseline_words: 72
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 13
+        response_bytes: 749
+        response_sha256: ed3bdebbf019bc3bc17a91fcb472c32ab1cb4951e7f79b123d6dc5096ba87fe7
+        response_words: 148
+        scenario: happy
+        status: PASS
+      - baseline_bytes: 816
+        baseline_status: FAIL
+        baseline_words: 95
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 14
+        response_bytes: 860
+        response_sha256: efdc6c6276ab7a576995ccc23676691c7bd263f58ffb63fede829d7062cae706
+        response_words: 169
+        scenario: partial
+        status: PASS
+      - baseline_bytes: 433
+        baseline_status: FAIL
+        baseline_words: 52
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 13
+        response_bytes: 758
+        response_sha256: 9edab484a2915b17d21cd0c7c20c57de1e6672b7bf49b718f3e95725da80db1b
+        response_words: 150
+        scenario: warning
+        status: PASS
+      - baseline_bytes: 453
+        baseline_status: FAIL
+        baseline_words: 48
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 8
+        response_bytes: 537
+        response_sha256: be914a04cb1fae131341de0bedefdebc5249099b415df771964bf1068e030498
+        response_words: 98
+        scenario: blocked
+        status: PASS
+      - baseline_bytes: 650
+        baseline_status: FAIL
+        baseline_words: 71
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 11
+        response_bytes: 757
+        response_sha256: e2f19f507fa62e4aac7c7f288c76e2e0929b57b50b9db7143d001b7c81e32caf
+        response_words: 139
+        scenario: missing-input
+        status: PASS
+      - baseline_bytes: 3755
+        baseline_status: FAIL
+        baseline_words: 443
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 21
+        response_bytes: 1494
+        response_sha256: d8909d2abbcf66915943bcf46385c8c329224cc7d1b36c247cdfd87f9e4652aa
+        response_words: 295
+        scenario: large
+        status: PASS
+      - baseline_bytes: 616
+        baseline_status: FAIL
+        baseline_words: 73
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 13
+        response_bytes: 746
+        response_sha256: 193cab86a84b9f3cf2c255d1a27471b7a938bc325e3d9f07bfc807a100ef3b6d
+        response_words: 149
+        scenario: small
+        status: PASS
+      - baseline_bytes: 711
+        baseline_status: FAIL
+        baseline_words: 83
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 13
+        response_bytes: 861
+        response_sha256: 837d365c20e3f8a8f1c201e6ab86c172164a9b3b9544ed766c141c6fe698386e
+        response_words: 160
+        scenario: edge
+        status: PASS
+    skill: ai-sdlc-loop-requirements-review
+    status: PASS
+  - contract_sha256: 9947bd7678bb8fff501e299e95bc015af6e4944ad76a7e6f5c19ba67741be754
+    scenarios[8]:
+      - baseline_bytes: 779
+        baseline_status: FAIL
+        baseline_words: 94
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 15
+        response_bytes: 920
+        response_sha256: ce655e536cdd8bb697456c52eb19451ba5f56fdbc1fed48391832ee2cf2735b7
+        response_words: 179
+        scenario: happy
+        status: PASS
+      - baseline_bytes: 786
+        baseline_status: FAIL
+        baseline_words: 94
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 14
+        response_bytes: 850
+        response_sha256: 8dcb175f7a21af483c3a9a4c46db16a5f9d07441d172ad1a354b622d7b603f7b
+        response_words: 169
+        scenario: partial
+        status: PASS
+      - baseline_bytes: 416
+        baseline_status: FAIL
+        baseline_words: 51
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 12
+        response_bytes: 723
+        response_sha256: d4341cdb48b53abe07bdefe822560fb20a65bc4d7cc5d1f921d8162e5d704a56
+        response_words: 145
+        scenario: warning
+        status: PASS
+      - baseline_bytes: 412
+        baseline_status: FAIL
+        baseline_words: 47
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 8
+        response_bytes: 496
+        response_sha256: bd3d17f9df0ec49b1b621df0ec63afdf4399acba20c0c14eb5f8a67147993bd7
+        response_words: 97
+        scenario: blocked
+        status: PASS
+      - baseline_bytes: 593
+        baseline_status: FAIL
+        baseline_words: 69
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 11
+        response_bytes: 700
+        response_sha256: d06058564d5282161bf638196e7dc81c6bc6678b7b8daaf63ad10fd1f753b9fa
+        response_words: 137
+        scenario: missing-input
+        status: PASS
+      - baseline_bytes: 3653
+        baseline_status: FAIL
+        baseline_words: 442
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 27
+        response_bytes: 1574
+        response_sha256: 2bca3faf085f9e1c69f6767b19168301783b04af191a0dd7be4902d4edc9fe1b
+        response_words: 312
+        scenario: large
+        status: PASS
+      - baseline_bytes: 583
+        baseline_status: FAIL
+        baseline_words: 71
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 12
+        response_bytes: 705
+        response_sha256: 615c436d8b53dc92f1ed8d2d48ea70234ee54cba668cf9e7f34ac08145f989df
+        response_words: 143
+        scenario: small
+        status: PASS
+      - baseline_bytes: 684
+        baseline_status: FAIL
+        baseline_words: 82
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 12
+        response_bytes: 826
+        response_sha256: 7e2309b7211ea9f918c7957aaf328a907f36e034c10ec3e1fc767f49bd1d3432
+        response_words: 155
+        scenario: edge
+        status: PASS
+    skill: ai-sdlc-loop-security-testing
+    status: PASS
+  - contract_sha256: 572bff231bc297b6d2b5dfa5475bb121f649baed1f964a73167c0cd6becf9559
+    scenarios[8]:
+      - baseline_bytes: 405
+        baseline_status: FAIL
+        baseline_words: 49
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 8
+        response_bytes: 479
+        response_sha256: 736b8b60a52650209d7a22cc8eed0e11d481e1b02363312349ee76e8e12839b5
+        response_words: 97
+        scenario: happy
+        status: PASS
+      - baseline_bytes: 568
+        baseline_status: FAIL
+        baseline_words: 67
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 10
+        response_bytes: 591
+        response_sha256: 877cac32271dfeac1c30973c4abca2ada64a9665fedbb7bb0996ca86e4804637
+        response_words: 117
+        scenario: partial
+        status: PASS
+      - baseline_bytes: 406
+        baseline_status: FAIL
+        baseline_words: 49
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 9
+        response_bytes: 483
+        response_sha256: 277fc763a205c35b072f904f1405f6203d625201711a09f92bcb20b2c840982b
+        response_words: 98
+        scenario: warning
+        status: PASS
+      - baseline_bytes: 432
+        baseline_status: FAIL
+        baseline_words: 47
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 8
+        response_bytes: 516
+        response_sha256: e52ec5914e064db1d79e83d60e041e4a5ddec9fc321aa22fa97e891d968a80cf
+        response_words: 97
+        scenario: blocked
+        status: PASS
+      - baseline_bytes: 622
+        baseline_status: FAIL
+        baseline_words: 70
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 11
+        response_bytes: 729
+        response_sha256: 8a24f07b94428e6428f679104be0978d2f9616b3840dc261092cc9fe4270fe55
+        response_words: 138
+        scenario: missing-input
+        status: PASS
+      - baseline_bytes: 3248
+        baseline_status: FAIL
+        baseline_words: 394
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 15
+        response_bytes: 1238
+        response_sha256: 1ad44b098ed48b22282f8f632ff12bc63641176bf1a50aa30e01a1060e14f5f4
+        response_words: 241
+        scenario: large
+        status: PASS
+      - baseline_bytes: 383
+        baseline_status: FAIL
+        baseline_words: 47
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 8
+        response_bytes: 468
+        response_sha256: e850bc97711226daaedbcae9fe833320ed310886243146c51f4ff59b3680fc72
+        response_words: 97
+        scenario: small
+        status: PASS
+      - baseline_bytes: 497
+        baseline_status: FAIL
+        baseline_words: 60
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 8
+        response_bytes: 602
+        response_sha256: 7d3538b33ee84cb827d069b5477b5232d57e6fc4a06bcfa8caa03e94f150e882
+        response_words: 111
+        scenario: edge
+        status: PASS
+    skill: ai-sdlc-loop-shared-runtime
+    status: PASS
+  - contract_sha256: ba6305e1115ad61e993e93512b811b5af24a74e8ff242866e4763f7787559708
+    scenarios[8]:
+      - baseline_bytes: 417
+        baseline_status: FAIL
+        baseline_words: 52
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 9
+        response_bytes: 478
+        response_sha256: 739236176353e9185bb89ddeb2f89a29070f3dfff1ecf4b3afdca4d24ce5582c
+        response_words: 98
+        scenario: happy
+        status: PASS
+      - baseline_bytes: 587
+        baseline_status: FAIL
+        baseline_words: 71
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 10
+        response_bytes: 577
+        response_sha256: 105106f16dcdf17d688dcfb1cb9e0ee38b6cfe46b3c52c3b2642d62d64aab43e
+        response_words: 117
+        scenario: partial
+        status: PASS
+      - baseline_bytes: 418
+        baseline_status: FAIL
+        baseline_words: 52
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 9
+        response_bytes: 481
+        response_sha256: 66520ac17101f18a3c45ac398561ecbfa84df41dc1e0b1cba55b842850e008fc
+        response_words: 99
+        scenario: warning
+        status: PASS
+      - baseline_bytes: 412
+        baseline_status: FAIL
+        baseline_words: 47
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 8
+        response_bytes: 496
+        response_sha256: 603fec988f21a9a60f4885e528a3ca536884281e9445464773b72a7b68a86769
+        response_words: 97
+        scenario: blocked
+        status: PASS
+      - baseline_bytes: 597
+        baseline_status: FAIL
+        baseline_words: 70
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 11
+        response_bytes: 704
+        response_sha256: d2bbe40b815552fdb0646d282ba28b0235ca7642428f366b578a2b6f281a2652
+        response_words: 138
+        scenario: missing-input
+        status: PASS
+      - baseline_bytes: 3393
+        baseline_status: FAIL
+        baseline_words: 416
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 16
+        response_bytes: 1153
+        response_sha256: fc48d0f335ef10035b2ae3c232aa724671758e56a608c765ead021a62d3a5ec4
+        response_words: 235
+        scenario: large
+        status: PASS
+      - baseline_bytes: 382
+        baseline_status: FAIL
+        baseline_words: 48
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 9
+        response_bytes: 467
+        response_sha256: 792b3d0d81a98a5ce39baf288cb097b40550fefc37ea4fab5883eb3e54802dba
+        response_words: 98
+        scenario: small
+        status: PASS
+      - baseline_bytes: 509
+        baseline_status: FAIL
+        baseline_words: 63
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 9
+        response_bytes: 614
+        response_sha256: 7ff74d6cc1fb162dc3293eea4f5297db10d3b2221a2fb8ba568b79a253397fca
+        response_words: 114
+        scenario: edge
+        status: PASS
+    skill: ai-sdlc-loop-specify
+    status: PASS
+  - contract_sha256: 2efb39449b026986ead09a1b16f071a3d40efbdc4a81ee2c03d4e8b4b70aecc7
+    scenarios[8]:
+      - baseline_bytes: 465
+        baseline_status: FAIL
+        baseline_words: 58
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 10
+        response_bytes: 526
+        response_sha256: 5f585d4b5262107544d6e6d72c4f126b73af11efaab4208c2dfa649c40a0f33c
+        response_words: 107
+        scenario: happy
+        status: PASS
+      - baseline_bytes: 667
+        baseline_status: FAIL
+        baseline_words: 82
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 11
+        response_bytes: 659
+        response_sha256: e94061e01acc30b709e78c3e1edfcb692f19371c06cd663834914fc74f7995e5
+        response_words: 129
+        scenario: partial
+        status: PASS
+      - baseline_bytes: 466
+        baseline_status: FAIL
+        baseline_words: 58
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 10
+        response_bytes: 536
+        response_sha256: 92b17702095b65dd11318ee8d47b2ed55c795277b53964fbde9e955ae15781df
+        response_words: 108
+        scenario: warning
+        status: PASS
+      - baseline_bytes: 448
+        baseline_status: FAIL
+        baseline_words: 47
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 8
+        response_bytes: 532
+        response_sha256: 7ef0fcb93df2121426f9799b87a20007f2fcc47ff413d1aae6467d72d259df46
+        response_words: 97
+        scenario: blocked
+        status: PASS
+      - baseline_bytes: 640
+        baseline_status: FAIL
+        baseline_words: 70
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 11
+        response_bytes: 747
+        response_sha256: e3184fb07cb935b5649006b78a77308f9966796f4d7130230bef8d6c3975e435
+        response_words: 138
+        scenario: missing-input
+        status: PASS
+      - baseline_bytes: 4049
+        baseline_status: FAIL
+        baseline_words: 517
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 18
+        response_bytes: 1390
+        response_sha256: 92973d132061b89c696bfbc63e75fe9d5ed856d5c7f85696280c67df8f362bd1
+        response_words: 265
+        scenario: large
+        status: PASS
+      - baseline_bytes: 422
+        baseline_status: FAIL
+        baseline_words: 53
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 10
+        response_bytes: 515
+        response_sha256: 784b312664c37fbb914988afd202d21dd7e00f430c0607353ead5c70160c6808
+        response_words: 107
+        scenario: small
+        status: PASS
+      - baseline_bytes: 557
+        baseline_status: FAIL
+        baseline_words: 69
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 10
+        response_bytes: 670
+        response_sha256: e568751757a6b7bf7e3521a4f491da39fa414c34bac41f9a1dcf8c4048d823c8
+        response_words: 124
+        scenario: edge
+        status: PASS
+    skill: ai-sdlc-loop-test-cases
+    status: PASS
+  - contract_sha256: de4eec5e470cd76e47d657c625b64de6300eb35f0373aba83652c1d8c7842c37
+    scenarios[8]:
+      - baseline_bytes: 396
+        baseline_status: FAIL
+        baseline_words: 47
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 8
+        response_bytes: 462
+        response_sha256: 8fe487a7f4c65c29dbf6a3928bc58c40b87de504ca7d7be81fdc0d982fc5b888
+        response_words: 94
+        scenario: happy
+        status: PASS
+      - baseline_bytes: 544
+        baseline_status: FAIL
+        baseline_words: 63
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 10
+        response_bytes: 575
+        response_sha256: 6a67919d7da1912ab596bf9269b9b4edd8e7e6acacc2ac096ef90d9c1b917e88
+        response_words: 114
+        scenario: partial
+        status: PASS
+      - baseline_bytes: 397
+        baseline_status: FAIL
+        baseline_words: 47
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 9
+        response_bytes: 474
+        response_sha256: c2fc3b2739f3bdb027cd5cfe7ebf7050cbde6971dddb23b10798276c7e1a5bf7
+        response_words: 96
+        scenario: warning
+        status: PASS
+      - baseline_bytes: 448
+        baseline_status: FAIL
+        baseline_words: 47
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 8
+        response_bytes: 532
+        response_sha256: aadd83940ead424d78b913753d1f61cf06b738a52236e173a0871f9660361305
+        response_words: 97
+        scenario: blocked
+        status: PASS
+      - baseline_bytes: 638
+        baseline_status: FAIL
+        baseline_words: 69
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 11
+        response_bytes: 745
+        response_sha256: 155ce42e3d2754d6eba6cc12d3ec15d99428ad158595dcf619d3a66517eef917
+        response_words: 137
+        scenario: missing-input
+        status: PASS
+      - baseline_bytes: 2954
+        baseline_status: FAIL
+        baseline_words: 354
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 15
+        response_bytes: 1172
+        response_sha256: c24b03349d8c0fea13b653900656ef3efe00fb2bea3b943bc0eadcd1b438790d
+        response_words: 231
+        scenario: large
+        status: PASS
+      - baseline_bytes: 366
+        baseline_status: FAIL
+        baseline_words: 44
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 8
+        response_bytes: 451
+        response_sha256: 2a071cc3c23ea66682922211947861db212142c296ec49d5203a78b558fb6aee
+        response_words: 94
+        scenario: small
+        status: PASS
+      - baseline_bytes: 488
+        baseline_status: FAIL
+        baseline_words: 58
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 8
+        response_bytes: 593
+        response_sha256: 4a1400b7066549b27719ed78dd890880c63c5b7319cbc87438190334d0504c98
+        response_words: 109
+        scenario: edge
+        status: PASS
+    skill: ai-sdlc-loop-validation
+    status: PASS
+  - contract_sha256: 0c981519ef5b2b1aa78a757d6653bda8b9b0c4d033e6184dd825a622e19c71a0
+    scenarios[8]:
+      - baseline_bytes: 532
+        baseline_status: FAIL
+        baseline_words: 64
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 10
+        response_bytes: 617
+        response_sha256: 27f275155d3a128dc1c3ccb78f5a12cafa3d908448a2f245e62b50a9e9654bb5
+        response_words: 125
+        scenario: happy
+        status: PASS
+      - baseline_bytes: 556
+        baseline_status: FAIL
+        baseline_words: 66
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 10
+        response_bytes: 587
+        response_sha256: 88f74ac63ccc993dd71bedcf475a544ebef28e48934795fad120e4ab566769f3
+        response_words: 117
+        scenario: partial
+        status: PASS
+      - baseline_bytes: 402
+        baseline_status: FAIL
+        baseline_words: 49
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 9
+        response_bytes: 479
+        response_sha256: b9c60d936bc8834e6632d9dcd4d9587b479878e5f03bfce478b8cd6c467912fe
+        response_words: 98
+        scenario: warning
+        status: PASS
+      - baseline_bytes: 472
+        baseline_status: FAIL
+        baseline_words: 53
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 8
+        response_bytes: 556
+        response_sha256: c5d86d06be50bd546263470f1083f4f544a88972a520bb560c92edb1bbea6dbe
+        response_words: 103
+        scenario: blocked
+        status: PASS
+      - baseline_bytes: 670
+        baseline_status: FAIL
+        baseline_words: 77
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 11
+        response_bytes: 777
+        response_sha256: 44da907ddb1e0a2e64f3b20f94edb12b566e0e5c1a1cfd98d0a1e9bd4acbc5ad
+        response_words: 145
+        scenario: missing-input
+        status: PASS
+      - baseline_bytes: 3092
+        baseline_status: FAIL
+        baseline_words: 375
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 15
+        response_bytes: 1226
+        response_sha256: eaf8e7bef63b290bea670e1c4b28e0796da6844709f866f4a2d2f9b57d370bb0
+        response_words: 240
+        scenario: large
+        status: PASS
+      - baseline_bytes: 371
+        baseline_status: FAIL
+        baseline_words: 46
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 8
+        response_bytes: 456
+        response_sha256: 618244047591ed8daa01dc852966eb0f92a209799a4fef04545e5a4d5fbfa094
+        response_words: 96
+        scenario: small
+        status: PASS
+      - baseline_bytes: 493
+        baseline_status: FAIL
+        baseline_words: 60
+        failures[0]:
+        iterations: 3
+        mutations_rejected[4]: WRONG_SCHEMA,NON_TABULAR,UNCLEAR_STATUS,MISSING_INFORMATION
+        required_facts: 8
+        response_bytes: 598
+        response_sha256: f09ce26ea60013cda2ce3b51909c862dcb07b006885cc8d2517f330f8dae0839
+        response_words: 111
+        scenario: edge
+        status: PASS
+    skill: ai-sdlc-loop-verify
+    status: PASS
+mode: deterministic-simulation
+scenarios: 168
+schema: ai-sdlc-chat-eval/v1
+semantic_review: separate agent review; not a live provider eval
+skills: 21

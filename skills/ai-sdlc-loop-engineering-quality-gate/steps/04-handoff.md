@@ -31,3 +31,7 @@ stage, commit, publish, or conceal a failed gate.
 Return the evidence-backed human YAML and unambiguous handoff. The next owner
 must be able to verify the canonical TOON rather than reconstructing state from
 prose.
+
+## Chat presentation
+
+Present the result using the owning `SKILL.md` Chat Output Contract and local [chat schema](../references/chat-output.toon). The machine handoff remains native; show its decision, evidence and owned action without dumping the journal.

@@ -1,0 +1,150 @@
+scenarios[8]:
+  - baseline_response: "Result\nStatus: PASS\nDecision: Prepared installed state / expected state entities; listed evidence satisfies this skill check.\nEvidence: fixture.toon:1\n\nprimary: Check: Runtime import; Expected state: Available; Installed state: Available; Remediation: None; Status: PASS.\nactions: Owner: Maintainer; Next action: Validate installation root with its owning workflow; Expected evidence: fixture.toon:1.\n"
+    id: happy
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-doctor for payment-retry delivery: happy"
+    required_facts[2]: "fixture.toon:1",Runtime import
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        "fixture.toon:1",Validate installation root with its owning workflow,Maintainer
+      primary[1]{Check,"Expected state","Installed state",Remediation,Status}:
+        Runtime import,Available,Available,None,PASS
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: Prepared check result; evidence supports the reported result.
+        Evidence: "fixture.toon:1"
+        Status: PASS
+  - baseline_response: "Result\nStatus: WARNING\nDecision: Partial installed state / expected state entities coverage; one dependency remains unverified.\nEvidence: fixture.toon:1\n\nprimary: Check: Runtime import; Expected state: Available; Installed state: Available; Remediation: None; Status: PASS.\nprimary: Check: Runtime import [pending case]; Expected state: Available; Installed state: Available; Remediation: None; Status: PASS.\nactions: Owner: Maintainer; Next action: Validate installation root with its owning workflow; Expected evidence: fixture.toon:1.\n"
+    id: partial
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-doctor for payment-retry delivery: partial"
+    required_facts[2]: "fixture.toon:1",Runtime import
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        "fixture.toon:1",Validate installation root with its owning workflow,Maintainer
+      primary[2]{Check,"Expected state","Installed state",Remediation,Status}:
+        Runtime import,Available,Available,None,PASS
+        "Runtime import [pending case]",Available,Available,None,PASS
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: "Partial result: second case is unverified; do not infer full coverage."
+        Evidence: "fixture.toon:1"
+        Status: WARNING
+  - baseline_response: "Result\nStatus: WARNING\nDecision: Limited installed state / expected state entities review; source freshness must be confirmed.\nEvidence: fixture.toon:1\n\nprimary: Check: Runtime import; Expected state: Available; Installed state: Available; Remediation: None; Status: PASS.\nactions: Owner: Maintainer; Next action: Validate installation root with its owning workflow; Expected evidence: fixture.toon:1.\n"
+    id: warning
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-doctor for payment-retry delivery: warning"
+    required_facts[2]: "fixture.toon:1",Runtime import
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        "fixture.toon:1",Validate installation root with its owning workflow,Maintainer
+      primary[1]{Check,"Expected state","Installed state",Remediation,Status}:
+        Runtime import,Available,Available,None,PASS
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: Result has limited source freshness; confirm it before downstream use.
+        Evidence: "fixture.toon:1"
+        Status: WARNING
+  - baseline_response: "Result\nStatus: BLOCKED\nDecision: Installation root is unavailable; dependent work has not run.\nEvidence: source-inventory.toon:missing\n\nfailures: Installation root: Installation root; Status: BLOCKED; Blocker: Required source is absent; Evidence: source-inventory.toon:missing; Required action: Provide installation root.\nactions: Owner: Maintainer; Next action: Provide installation root; Expected evidence: Validated installation root.\n"
+    id: blocked
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-doctor for payment-retry delivery: blocked"
+    required_facts[2]: "source-inventory.toon:missing",Validated installation root
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        Validated installation root,Provide installation root,Maintainer
+      failures[1]{Blocker,Evidence,"Installation root","Required action",Status}:
+        Required source is absent,"source-inventory.toon:missing",Installation root,Provide installation root,BLOCKED
+      primary[0]:
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: Installation root is unavailable; dependent work has not run.
+        Evidence: "source-inventory.toon:missing"
+        Status: BLOCKED
+  - baseline_response: "Result\nStatus: BLOCKED\nDecision: Installation root is unavailable; dependent work has not run.\nEvidence: source-inventory.toon:missing\n\nfailures: Installation root: Installation root; Status: BLOCKED; Blocker: Required source is absent; Evidence: source-inventory.toon:missing; Required action: Provide installation root.\nclarifications: Missing installation root: Installation root; Why required: Determines check; Known evidence: No supported assumption; Options: Supply source / narrow requested scope.\nactions: Owner: Maintainer; Next action: Provide installation root; Expected evidence: Validated installation root.\n"
+    id: missing-input
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-doctor for payment-retry delivery: missing-input"
+    required_facts[2]: "source-inventory.toon:missing",Validated installation root
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        Validated installation root,Provide installation root,Maintainer
+      clarifications[1]{"Known evidence","Missing installation root",Options,"Why required"}:
+        No supported assumption,Installation root,Supply source / narrow requested scope,Determines check
+      failures[1]{Blocker,Evidence,"Installation root","Required action",Status}:
+        Required source is absent,"source-inventory.toon:missing",Installation root,Provide installation root,BLOCKED
+      primary[0]:
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: Installation root is unavailable; dependent work has not run.
+        Evidence: "source-inventory.toon:missing"
+        Status: BLOCKED
+  - baseline_response: "Result\nStatus: PASS\nDecision: 20 installed state / expected state entities rows; showing the first 8; full evidence linked.\nEvidence: fixture.toon:1\n\nprimary: Check: Runtime import #1; Expected state: Available; Installed state: Available; Remediation: None; Status: PASS.\nprimary: Check: Runtime import #2; Expected state: Available; Installed state: Available; Remediation: None; Status: PASS.\nprimary: Check: Runtime import #3; Expected state: Available; Installed state: Available; Remediation: None; Status: PASS.\nprimary: Check: Runtime import #4; Expected state: Available; Installed state: Available; Remediation: None; Status: PASS.\nprimary: Check: Runtime import #5; Expected state: Available; Installed state: Available; Remediation: None; Status: PASS.\nprimary: Check: Runtime import #6; Expected state: Available; Installed state: Available; Remediation: None; Status: PASS.\nprimary: Check: Runtime import #7; Expected state: Available; Installed state: Available; Remediation: None; Status: PASS.\nprimary: Check: Runtime import #8; Expected state: Available; Installed state: Available; Remediation: None; Status: PASS.\nprimary: Check: Runtime import #9; Expected state: Available; Installed state: Available; Remediation: None; Status: PASS.\nprimary: Check: Runtime import #10; Expected state: Available; Installed state: Available; Remediation: None; Status: PASS.\nprimary: Check: Runtime import #11; Expected state: Available; Installed state: Available; Remediation: None; Status: PASS.\nprimary: Check: Runtime import #12; Expected state: Available; Installed state: Available; Remediation: None; Status: PASS.\nprimary: Check: Runtime import #13; Expected state: Available; Installed state: Available; Remediation: None; Status: PASS.\nprimary: Check: Runtime import #14; Expected state: Available; Installed state: Available; Remediation: None; Status: PASS.\nprimary: Check: Runtime import #15; Expected state: Available; Installed state: Available; Remediation: None; Status: PASS.\nprimary: Check: Runtime import #16; Expected state: Available; Installed state: Available; Remediation: None; Status: PASS.\nprimary: Check: Runtime import #17; Expected state: Available; Installed state: Available; Remediation: None; Status: PASS.\nprimary: Check: Runtime import #18; Expected state: Available; Installed state: Available; Remediation: None; Status: PASS.\nprimary: Check: Runtime import #19; Expected state: Available; Installed state: Available; Remediation: None; Status: PASS.\nprimary: Check: Runtime import #20; Expected state: Available; Installed state: Available; Remediation: None; Status: PASS.\nactions: Owner: Maintainer; Next action: Validate installation root with its owning workflow; Expected evidence: fixture.toon:1.\n"
+    id: large
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-doctor for payment-retry delivery: large"
+    required_facts[2]: "fixture.toon:1",Runtime import #1
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        "fixture.toon:1",Validate installation root with its owning workflow,Maintainer
+      full_artifact: full-result.toon
+      primary[20]{Check,"Expected state","Installed state",Remediation,Status}:
+        Runtime import #1,Available,Available,None,PASS
+        Runtime import #2,Available,Available,None,PASS
+        Runtime import #3,Available,Available,None,PASS
+        Runtime import #4,Available,Available,None,PASS
+        Runtime import #5,Available,Available,None,PASS
+        Runtime import #6,Available,Available,None,PASS
+        Runtime import #7,Available,Available,None,PASS
+        Runtime import #8,Available,Available,None,PASS
+        Runtime import #9,Available,Available,None,PASS
+        Runtime import #10,Available,Available,None,PASS
+        Runtime import #11,Available,Available,None,PASS
+        Runtime import #12,Available,Available,None,PASS
+        Runtime import #13,Available,Available,None,PASS
+        Runtime import #14,Available,Available,None,PASS
+        Runtime import #15,Available,Available,None,PASS
+        Runtime import #16,Available,Available,None,PASS
+        Runtime import #17,Available,Available,None,PASS
+        Runtime import #18,Available,Available,None,PASS
+        Runtime import #19,Available,Available,None,PASS
+        Runtime import #20,Available,Available,None,PASS
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: 20 check records; 8 shown; inspect the linked full artifact.
+        Evidence: "fixture.toon:1"
+        Status: PASS
+  - baseline_response: "Result\nStatus: PASS\nDecision: One check result; scope and evidence are explicit.\nEvidence: fixture.toon:1\n\nprimary: Check: Runtime import; Expected state: Available; Installed state: Available; Remediation: None; Status: PASS.\nactions: Owner: Maintainer; Next action: Validate installation root with its owning workflow; Expected evidence: fixture.toon:1.\n"
+    id: small
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-doctor for payment-retry delivery: small"
+    required_facts[2]: "fixture.toon:1",Runtime import
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        "fixture.toon:1",Validate installation root with its owning workflow,Maintainer
+      primary[1]{Check,"Expected state","Installed state",Remediation,Status}:
+        Runtime import,Available,Available,None,PASS
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: One check result; scope and evidence are explicit.
+        Evidence: "fixture.toon:1"
+        Status: PASS
+  - baseline_response: "Result\nStatus: PASS\nDecision: Prepared installed state / expected state entities; listed evidence satisfies this skill check.\nEvidence: fixture.toon:1\n\nprimary: Check: Runtime import | перенос\nстроки; Expected state: Available; Installed state: Available; Remediation: None; Status: PASS.\nactions: Owner: Maintainer; Next action: Validate installation root with its owning workflow; Expected evidence: fixture.toon:1.\n\nschema: fixture/v1\nstatus: pending\nsource: \"literal | value\"\n"
+    id: edge
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-doctor for payment-retry delivery: edge"
+    required_facts[2]: "fixture.toon:1","Runtime import | перенос\nстроки"
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        "fixture.toon:1",Validate installation root with its owning workflow,Maintainer
+      native[1]{content,language}:
+        "schema: fixture/v1\nstatus: pending\nsource: \"literal | value\"",toon
+      primary[1]{Check,"Expected state","Installed state",Remediation,Status}:
+        "Runtime import | перенос\nстроки",Available,Available,None,PASS
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: Prepared installed state / expected state entities; listed evidence satisfies this skill check.
+        Evidence: "fixture.toon:1"
+        Status: PASS
+schema: ai-sdlc-chat-scenarios/v1
+skill: ai-sdlc-loop-doctor

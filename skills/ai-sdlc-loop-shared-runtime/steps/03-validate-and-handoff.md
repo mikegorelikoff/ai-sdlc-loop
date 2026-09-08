@@ -10,15 +10,8 @@ Enter after execution has produced the expected artifact, code, plan, decision, 
 
 ## Output Spec
 
-A passing verification reports:
-
-```text
-runtime: present
-downstream helper: executable
-consumer root: preserved
-mutation: none, or disposable fixture only
-next: owning lifecycle skill
-```
+For user-facing chat, use this skill’s Chat Output Contract. Preserve the
+owning artifacts, exact validation evidence, scope and unresolved risks.
 
 Quality gate:
 
@@ -66,3 +59,7 @@ publish releases, or mutate authoritative lifecycle evidence.
 ## Exit
 
 Report outcome, validation evidence, unresolved risks, and the next required or optional owner directly in the active response.
+
+## Chat presentation
+
+Present the result using the owning `SKILL.md` Chat Output Contract and local [chat schema](../references/chat-output.toon). The machine handoff remains native; show its decision, evidence and owned action without dumping the journal.

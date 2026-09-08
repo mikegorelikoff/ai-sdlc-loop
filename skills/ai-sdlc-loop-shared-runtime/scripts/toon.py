@@ -266,6 +266,12 @@ def _split_pair(value: str) -> tuple[str, str] | None:
     return None
 
 
+def _named_header(pattern, value: str):
+    """A header name cannot consume an earlier unquoted mapping colon."""
+    match = pattern.fullmatch(value)
+    return match if match and _split_pair(match.group(1)) is None else None
+
+
 def _decode_key(value: str) -> str:
     parsed = _decode_scalar(value)
     if not isinstance(parsed, str):
@@ -322,7 +328,7 @@ class _Parser:
             if index != len(self.lines):
                 raise ToonDecodeError("unexpected data after root list")
             return values
-        if _split_pair(first) is None and not _TABLE_HEADER.fullmatch(first) and not _LIST_HEADER.fullmatch(first):
+        if _split_pair(first) is None and not _named_header(_TABLE_HEADER, first) and not _named_header(_LIST_HEADER, first):
             if len(self.lines) != 1:
                 raise ToonDecodeError("scalar TOON root has trailing data")
             return _decode_scalar(first)
@@ -363,7 +369,7 @@ class _Parser:
         text: str,
         child_depth: int,
     ) -> tuple[str, Any, int]:
-        table = _TABLE_HEADER.fullmatch(text)
+        table = _named_header(_TABLE_HEADER, text)
         if table:
             key = _decode_key(table.group(1))
             count = int(table.group(2))
@@ -385,7 +391,7 @@ class _Parser:
                 index += 1
             return key, rows, index
 
-        named_list = _LIST_HEADER.fullmatch(text)
+        named_list = _named_header(_LIST_HEADER, text)
         if named_list:
             key = _decode_key(named_list.group(1))
             count = int(named_list.group(2))
@@ -438,8 +444,8 @@ class _Parser:
                 item: Any = {}
             else:
                 anonymous = _ANON_LIST_HEADER.fullmatch(content)
-                table = _TABLE_HEADER.fullmatch(content)
-                named_list = _LIST_HEADER.fullmatch(content)
+                table = _named_header(_TABLE_HEADER, content)
+                named_list = _named_header(_LIST_HEADER, content)
                 pair = _split_pair(content)
                 if anonymous:
                     count = int(anonymous.group(1))

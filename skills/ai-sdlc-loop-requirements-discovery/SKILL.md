@@ -25,6 +25,18 @@ and [valid draft example](references/example-draft.toon) only when filling a dra
 - Purpose: Turn raw feature or task inputs into a sourced problem analysis, business options, and an actionable stakeholder elicitation plan.
 - Output: Source-bound context, validated TOON discovery packet, business options, stakeholder questions, and conditional handoff
 
+## Chat Output Contract
+
+Primary: Option ID / Business option / Precedent / Trade-off / Decision status; secondary: Question ID / Question / Owner / Evidence method / Decision impact.
+Rows represent individual option id records. Show the user decision before detail; preserve source order and explicit authority.
+Summary: Status / Decision / Evidence. Failure: Raw request / Status / Blocker / Evidence / Required action.
+Clarification: Missing raw request / Why required / Known evidence / Options. Next action: Owner / Next action / Expected evidence.
+Use PASS, FAIL, WARNING, BLOCKED, PENDING, N/A only for chat statuses; preserve native domain states.
+At most six columns, eight preview rows and 180 characters per cell; link full evidence and state omitted totals.
+No duplicate prose. Keep code, commands, commit messages and machine handoffs native.
+Apply [this skill’s schema and examples](references/chat-output.toon) before any user-facing result, warning or question.
+Use the sibling `ai-sdlc-loop-shared-runtime/scripts/chat_output.py` to render/check; [shared limits](../ai-sdlc-loop-shared-runtime/references/chat-output.md) bound repair and preserve native outputs.
+
 ## Step Selector
 
 This table is generated from `steps/manifest.toon`. The manifest and linked

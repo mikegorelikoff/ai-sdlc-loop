@@ -1,0 +1,152 @@
+scenarios[8]:
+  - baseline_response: "Result\nStatus: PASS\nDecision: Prepared location / finding entities; listed evidence satisfies this skill check.\nEvidence: TC-001\n\nprimary: Disposition: Fixed locally; Evidence: TC-001; Finding: Duplicate callback creates charge; Location: src/payments.py:84; Severity: HIGH; Verification: PASS.\nactions: Owner: Engineer; Next action: Validate implementation diff with its owning workflow; Expected evidence: TC-001.\n\nsecondary: Gate: Confirm gate for payment retry; Status: PENDING; Unresolved count: Confirm unresolved count for payment retry; Evidence: TC-001.\n"
+    id: happy
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-engineering-quality-gate for payment-retry delivery: happy"
+    required_facts[3]: TC-001,HIGH,Fixed locally
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        TC-001,Validate implementation diff with its owning workflow,Engineer
+      primary[1]{Disposition,Evidence,Finding,Location,Severity,Verification}:
+        Fixed locally,TC-001,Duplicate callback creates charge,"src/payments.py:84",HIGH,PASS
+      schema: ai-sdlc-chat-result/v1
+      secondary[1]{Evidence,Gate,Status,"Unresolved count"}:
+        TC-001,Retry acceptance,PASS,"0"
+      summary:
+        Decision: Prepared severity result; evidence supports the reported result.
+        Evidence: TC-001
+        Status: PASS
+  - baseline_response: "Result\nStatus: WARNING\nDecision: Partial location / finding entities coverage; one dependency remains unverified.\nEvidence: TC-001\n\nprimary: Disposition: Fixed locally; Evidence: TC-001; Finding: Duplicate callback creates charge; Location: src/payments.py:84; Severity: HIGH; Verification: PASS.\nprimary: Disposition: Fixed locally [pending case]; Evidence: TC-001; Finding: Duplicate callback creates charge; Location: src/payments.py:84; Severity: HIGH; Verification: PASS.\nactions: Owner: Engineer; Next action: Validate implementation diff with its owning workflow; Expected evidence: TC-001.\n"
+    id: partial
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-engineering-quality-gate for payment-retry delivery: partial"
+    required_facts[3]: TC-001,Duplicate callback creates charge (case 1),TC-001
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        TC-001,Validate implementation diff with its owning workflow,Engineer
+      primary[2]{Disposition,Evidence,Finding,Location,Severity,Verification}:
+        Fixed locally,TC-001,Duplicate callback creates charge (case 1),"src/payments.py:84",HIGH,PASS
+        "Fixed locally [pending case]",TC-001,Duplicate callback creates charge (case 2),"src/payments.py:84",HIGH,PASS
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: "Partial result: second case is unverified; do not infer full coverage."
+        Evidence: TC-001
+        Status: WARNING
+  - baseline_response: "Result\nStatus: WARNING\nDecision: Limited location / finding entities review; source freshness must be confirmed.\nEvidence: TC-001\n\nprimary: Disposition: Fixed locally; Evidence: TC-001; Finding: Duplicate callback creates charge; Location: src/payments.py:84; Severity: HIGH; Verification: PASS.\nactions: Owner: Engineer; Next action: Validate implementation diff with its owning workflow; Expected evidence: TC-001.\n"
+    id: warning
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-engineering-quality-gate for payment-retry delivery: warning"
+    required_facts[3]: TC-001,HIGH,Fixed locally
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        TC-001,Validate implementation diff with its owning workflow,Engineer
+      primary[1]{Disposition,Evidence,Finding,Location,Severity,Verification}:
+        Fixed locally,TC-001,Duplicate callback creates charge,"src/payments.py:84",HIGH,PASS
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: Result has limited source freshness; confirm it before downstream use.
+        Evidence: TC-001
+        Status: WARNING
+  - baseline_response: "Result\nStatus: BLOCKED\nDecision: Implementation diff is unavailable; dependent work has not run.\nEvidence: source-inventory.toon:missing\n\nfailures: Implementation diff: Implementation diff; Status: BLOCKED; Blocker: Required source is absent; Evidence: source-inventory.toon:missing; Required action: Provide implementation diff.\nactions: Owner: Engineer; Next action: Provide implementation diff; Expected evidence: Validated implementation diff.\n"
+    id: blocked
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-engineering-quality-gate for payment-retry delivery: blocked"
+    required_facts[2]: "source-inventory.toon:missing",Validated implementation diff
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        Validated implementation diff,Provide implementation diff,Engineer
+      failures[1]{Blocker,Evidence,"Implementation diff","Required action",Status}:
+        Required source is absent,"source-inventory.toon:missing",Implementation diff,Provide implementation diff,BLOCKED
+      primary[0]:
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: Implementation diff is unavailable; dependent work has not run.
+        Evidence: "source-inventory.toon:missing"
+        Status: BLOCKED
+  - baseline_response: "Result\nStatus: BLOCKED\nDecision: Implementation diff is unavailable; dependent work has not run.\nEvidence: source-inventory.toon:missing\n\nfailures: Implementation diff: Implementation diff; Status: BLOCKED; Blocker: Required source is absent; Evidence: source-inventory.toon:missing; Required action: Provide implementation diff.\nclarifications: Missing implementation diff: Implementation diff; Why required: Determines severity; Known evidence: No supported assumption; Options: Supply source / narrow requested scope.\nactions: Owner: Engineer; Next action: Provide implementation diff; Expected evidence: Validated implementation diff.\n"
+    id: missing-input
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-engineering-quality-gate for payment-retry delivery: missing-input"
+    required_facts[2]: "source-inventory.toon:missing",Validated implementation diff
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        Validated implementation diff,Provide implementation diff,Engineer
+      clarifications[1]{"Known evidence","Missing implementation diff",Options,"Why required"}:
+        No supported assumption,Implementation diff,Supply source / narrow requested scope,Determines severity
+      failures[1]{Blocker,Evidence,"Implementation diff","Required action",Status}:
+        Required source is absent,"source-inventory.toon:missing",Implementation diff,Provide implementation diff,BLOCKED
+      primary[0]:
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: Implementation diff is unavailable; dependent work has not run.
+        Evidence: "source-inventory.toon:missing"
+        Status: BLOCKED
+  - baseline_response: "Result\nStatus: PASS\nDecision: 20 location / finding entities rows; showing the first 8; full evidence linked.\nEvidence: TC-001\n\nprimary: Disposition: Fixed locally #1; Evidence: TC-001; Finding: Duplicate callback creates charge; Location: src/payments.py:84; Severity: HIGH; Verification: PASS.\nprimary: Disposition: Fixed locally #2; Evidence: TC-001; Finding: Duplicate callback creates charge; Location: src/payments.py:84; Severity: HIGH; Verification: PASS.\nprimary: Disposition: Fixed locally #3; Evidence: TC-001; Finding: Duplicate callback creates charge; Location: src/payments.py:84; Severity: HIGH; Verification: PASS.\nprimary: Disposition: Fixed locally #4; Evidence: TC-001; Finding: Duplicate callback creates charge; Location: src/payments.py:84; Severity: HIGH; Verification: PASS.\nprimary: Disposition: Fixed locally #5; Evidence: TC-001; Finding: Duplicate callback creates charge; Location: src/payments.py:84; Severity: HIGH; Verification: PASS.\nprimary: Disposition: Fixed locally #6; Evidence: TC-001; Finding: Duplicate callback creates charge; Location: src/payments.py:84; Severity: HIGH; Verification: PASS.\nprimary: Disposition: Fixed locally #7; Evidence: TC-001; Finding: Duplicate callback creates charge; Location: src/payments.py:84; Severity: HIGH; Verification: PASS.\nprimary: Disposition: Fixed locally #8; Evidence: TC-001; Finding: Duplicate callback creates charge; Location: src/payments.py:84; Severity: HIGH; Verification: PASS.\nprimary: Disposition: Fixed locally #9; Evidence: TC-001; Finding: Duplicate callback creates charge; Location: src/payments.py:84; Severity: HIGH; Verification: PASS.\nprimary: Disposition: Fixed locally #10; Evidence: TC-001; Finding: Duplicate callback creates charge; Location: src/payments.py:84; Severity: HIGH; Verification: PASS.\nprimary: Disposition: Fixed locally #11; Evidence: TC-001; Finding: Duplicate callback creates charge; Location: src/payments.py:84; Severity: HIGH; Verification: PASS.\nprimary: Disposition: Fixed locally #12; Evidence: TC-001; Finding: Duplicate callback creates charge; Location: src/payments.py:84; Severity: HIGH; Verification: PASS.\nprimary: Disposition: Fixed locally #13; Evidence: TC-001; Finding: Duplicate callback creates charge; Location: src/payments.py:84; Severity: HIGH; Verification: PASS.\nprimary: Disposition: Fixed locally #14; Evidence: TC-001; Finding: Duplicate callback creates charge; Location: src/payments.py:84; Severity: HIGH; Verification: PASS.\nprimary: Disposition: Fixed locally #15; Evidence: TC-001; Finding: Duplicate callback creates charge; Location: src/payments.py:84; Severity: HIGH; Verification: PASS.\nprimary: Disposition: Fixed locally #16; Evidence: TC-001; Finding: Duplicate callback creates charge; Location: src/payments.py:84; Severity: HIGH; Verification: PASS.\nprimary: Disposition: Fixed locally #17; Evidence: TC-001; Finding: Duplicate callback creates charge; Location: src/payments.py:84; Severity: HIGH; Verification: PASS.\nprimary: Disposition: Fixed locally #18; Evidence: TC-001; Finding: Duplicate callback creates charge; Location: src/payments.py:84; Severity: HIGH; Verification: PASS.\nprimary: Disposition: Fixed locally #19; Evidence: TC-001; Finding: Duplicate callback creates charge; Location: src/payments.py:84; Severity: HIGH; Verification: PASS.\nprimary: Disposition: Fixed locally #20; Evidence: TC-001; Finding: Duplicate callback creates charge; Location: src/payments.py:84; Severity: HIGH; Verification: PASS.\nactions: Owner: Engineer; Next action: Validate implementation diff with its owning workflow; Expected evidence: TC-001.\n"
+    id: large
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-engineering-quality-gate for payment-retry delivery: large"
+    required_facts[3]: TC-001,Duplicate callback creates charge (case 1),TC-001
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        TC-001,Validate implementation diff with its owning workflow,Engineer
+      full_artifact: full-result.toon
+      primary[20]{Disposition,Evidence,Finding,Location,Severity,Verification}:
+        Fixed locally #1,TC-001,Duplicate callback creates charge (case 1),"src/payments.py:84",HIGH,PASS
+        Fixed locally #2,TC-001,Duplicate callback creates charge (case 2),"src/payments.py:84",HIGH,PASS
+        Fixed locally #3,TC-001,Duplicate callback creates charge (case 3),"src/payments.py:84",HIGH,PASS
+        Fixed locally #4,TC-001,Duplicate callback creates charge (case 4),"src/payments.py:84",HIGH,PASS
+        Fixed locally #5,TC-001,Duplicate callback creates charge (case 5),"src/payments.py:84",HIGH,PASS
+        Fixed locally #6,TC-001,Duplicate callback creates charge (case 6),"src/payments.py:84",HIGH,PASS
+        Fixed locally #7,TC-001,Duplicate callback creates charge (case 7),"src/payments.py:84",HIGH,PASS
+        Fixed locally #8,TC-001,Duplicate callback creates charge (case 8),"src/payments.py:84",HIGH,PASS
+        Fixed locally #9,TC-001,Duplicate callback creates charge (case 9),"src/payments.py:84",HIGH,PASS
+        Fixed locally #10,TC-001,Duplicate callback creates charge (case 10),"src/payments.py:84",HIGH,PASS
+        Fixed locally #11,TC-001,Duplicate callback creates charge (case 11),"src/payments.py:84",HIGH,PASS
+        Fixed locally #12,TC-001,Duplicate callback creates charge (case 12),"src/payments.py:84",HIGH,PASS
+        Fixed locally #13,TC-001,Duplicate callback creates charge (case 13),"src/payments.py:84",HIGH,PASS
+        Fixed locally #14,TC-001,Duplicate callback creates charge (case 14),"src/payments.py:84",HIGH,PASS
+        Fixed locally #15,TC-001,Duplicate callback creates charge (case 15),"src/payments.py:84",HIGH,PASS
+        Fixed locally #16,TC-001,Duplicate callback creates charge (case 16),"src/payments.py:84",HIGH,PASS
+        Fixed locally #17,TC-001,Duplicate callback creates charge (case 17),"src/payments.py:84",HIGH,PASS
+        Fixed locally #18,TC-001,Duplicate callback creates charge (case 18),"src/payments.py:84",HIGH,PASS
+        Fixed locally #19,TC-001,Duplicate callback creates charge (case 19),"src/payments.py:84",HIGH,PASS
+        Fixed locally #20,TC-001,Duplicate callback creates charge (case 20),"src/payments.py:84",HIGH,PASS
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: 20 severity records; 8 shown; inspect the linked full artifact.
+        Evidence: TC-001
+        Status: PASS
+  - baseline_response: "Result\nStatus: PASS\nDecision: One severity result; scope and evidence are explicit.\nEvidence: TC-001\n\nprimary: Disposition: Fixed locally; Evidence: TC-001; Finding: Duplicate callback creates charge; Location: src/payments.py:84; Severity: HIGH; Verification: PASS.\nactions: Owner: Engineer; Next action: Validate implementation diff with its owning workflow; Expected evidence: TC-001.\n"
+    id: small
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-engineering-quality-gate for payment-retry delivery: small"
+    required_facts[3]: TC-001,HIGH,Fixed locally
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        TC-001,Validate implementation diff with its owning workflow,Engineer
+      primary[1]{Disposition,Evidence,Finding,Location,Severity,Verification}:
+        Fixed locally,TC-001,Duplicate callback creates charge,"src/payments.py:84",HIGH,PASS
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: One severity result; scope and evidence are explicit.
+        Evidence: TC-001
+        Status: PASS
+  - baseline_response: "Result\nStatus: PASS\nDecision: Prepared location / finding entities; listed evidence satisfies this skill check.\nEvidence: TC-001\n\nprimary: Disposition: Fixed locally; Evidence: TC-001; Finding: Duplicate callback creates charge; Location: src/payments.py:84; Severity: HIGH | перенос\nстроки; Verification: PASS.\nactions: Owner: Engineer; Next action: Validate implementation diff with its owning workflow; Expected evidence: TC-001.\n\nschema: fixture/v1\nstatus: pending\nsource: \"literal | value\"\n"
+    id: edge
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-engineering-quality-gate for payment-retry delivery: edge"
+    required_facts[3]: TC-001,"Duplicate callback creates charge | перенос\nстроки",TC-001
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        TC-001,Validate implementation diff with its owning workflow,Engineer
+      native[1]{content,language}:
+        "schema: fixture/v1\nstatus: pending\nsource: \"literal | value\"",toon
+      primary[1]{Disposition,Evidence,Finding,Location,Severity,Verification}:
+        Fixed locally,TC-001,"Duplicate callback creates charge | перенос\nстроки","src/payments.py:84",HIGH,PASS
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: Prepared location / finding entities; listed evidence satisfies this skill check.
+        Evidence: TC-001
+        Status: PASS
+schema: ai-sdlc-chat-scenarios/v1
+skill: ai-sdlc-loop-engineering-quality-gate

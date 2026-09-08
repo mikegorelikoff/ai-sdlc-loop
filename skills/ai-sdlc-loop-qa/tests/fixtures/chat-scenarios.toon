@@ -1,0 +1,152 @@
+scenarios[8]:
+  - baseline_response: "Result\nStatus: PENDING\nDecision: Prepared actor / setup / action entities; owner decision or execution remains pending.\nEvidence: qa.md:20\n\nprimary: Action: Replay callback; Actor / setup: Operator with failed callback; Evidence: qa.md:20; Execution status: PENDING; Expected result: One ledger entry; Scenario ID: QA-001.\nactions: Owner: QA; Next action: Validate acceptance outcome with its owning workflow; Expected evidence: qa.md:20.\n\nsecondary: Regression target: Confirm regression target for payment retry; Risk: Duplicate charge under concurrent retry; Execution status: PENDING; Evidence: qa.md:20.\n"
+    id: happy
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-qa for payment-retry delivery: happy"
+    required_facts[3]: "qa.md:20",QA-001,Replay callback
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        "qa.md:20",Replay callback,QA
+      primary[1]{Action,"Actor / setup",Evidence,"Execution status","Expected result","Scenario ID"}:
+        Replay callback,Operator with failed callback,"qa.md:20",PENDING,One ledger entry,QA-001
+      schema: ai-sdlc-chat-result/v1
+      secondary[1]{Evidence,"Execution status","Regression target",Risk}:
+        "qa.md:20",PENDING,Existing successful charge,Retry change could duplicate a charge
+      summary:
+        Decision: Prepared scenario id result; owner decision or execution remains pending.
+        Evidence: "qa.md:20"
+        Status: PENDING
+  - baseline_response: "Result\nStatus: WARNING\nDecision: Partial actor / setup / action entities coverage; one dependency remains unverified.\nEvidence: qa.md:20\n\nprimary: Action: Replay callback; Actor / setup: Operator with failed callback; Evidence: qa.md:20; Execution status: PENDING; Expected result: One ledger entry; Scenario ID: QA-001.\nprimary: Action: Replay callback [pending case]; Actor / setup: Operator with failed callback; Evidence: qa.md:20; Execution status: PENDING; Expected result: One ledger entry; Scenario ID: QA-001.\nactions: Owner: QA; Next action: Validate acceptance outcome with its owning workflow; Expected evidence: qa.md:20.\n"
+    id: partial
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-qa for payment-retry delivery: partial"
+    required_facts[3]: "qa.md:20",QA-001,Replay callback
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        "qa.md:20",Replay callback,QA
+      primary[2]{Action,"Actor / setup",Evidence,"Execution status","Expected result","Scenario ID"}:
+        Replay callback,Operator with failed callback,"qa.md:20",PENDING,One ledger entry,QA-001
+        "Replay callback [pending case]",Operator with failed callback,"qa.md:20",PENDING,One ledger entry,QA-001
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: "Partial result: second case is unverified; do not infer full coverage."
+        Evidence: "qa.md:20"
+        Status: WARNING
+  - baseline_response: "Result\nStatus: WARNING\nDecision: Limited actor / setup / action entities review; source freshness must be confirmed.\nEvidence: qa.md:20\n\nprimary: Action: Replay callback; Actor / setup: Operator with failed callback; Evidence: qa.md:20; Execution status: PENDING; Expected result: One ledger entry; Scenario ID: QA-001.\nactions: Owner: QA; Next action: Validate acceptance outcome with its owning workflow; Expected evidence: qa.md:20.\n"
+    id: warning
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-qa for payment-retry delivery: warning"
+    required_facts[3]: "qa.md:20",QA-001,Replay callback
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        "qa.md:20",Replay callback,QA
+      primary[1]{Action,"Actor / setup",Evidence,"Execution status","Expected result","Scenario ID"}:
+        Replay callback,Operator with failed callback,"qa.md:20",PENDING,One ledger entry,QA-001
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: Result has limited source freshness; confirm it before downstream use.
+        Evidence: "qa.md:20"
+        Status: WARNING
+  - baseline_response: "Result\nStatus: BLOCKED\nDecision: Acceptance outcome is unavailable; dependent work has not run.\nEvidence: source-inventory.toon:missing\n\nfailures: Acceptance outcome: Acceptance outcome; Status: BLOCKED; Blocker: Required source is absent; Evidence: source-inventory.toon:missing; Required action: Provide acceptance outcome.\nactions: Owner: QA; Next action: Provide acceptance outcome; Expected evidence: Validated acceptance outcome.\n"
+    id: blocked
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-qa for payment-retry delivery: blocked"
+    required_facts[2]: "source-inventory.toon:missing",Validated acceptance outcome
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        Validated acceptance outcome,Provide acceptance outcome,QA
+      failures[1]{"Acceptance outcome",Blocker,Evidence,"Required action",Status}:
+        Acceptance outcome,Required source is absent,"source-inventory.toon:missing",Provide acceptance outcome,BLOCKED
+      primary[0]:
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: Acceptance outcome is unavailable; dependent work has not run.
+        Evidence: "source-inventory.toon:missing"
+        Status: BLOCKED
+  - baseline_response: "Result\nStatus: BLOCKED\nDecision: Acceptance outcome is unavailable; dependent work has not run.\nEvidence: source-inventory.toon:missing\n\nfailures: Acceptance outcome: Acceptance outcome; Status: BLOCKED; Blocker: Required source is absent; Evidence: source-inventory.toon:missing; Required action: Provide acceptance outcome.\nclarifications: Missing acceptance outcome: Acceptance outcome; Why required: Determines scenario id; Known evidence: No supported assumption; Options: Supply source / narrow requested scope.\nactions: Owner: QA; Next action: Provide acceptance outcome; Expected evidence: Validated acceptance outcome.\n"
+    id: missing-input
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-qa for payment-retry delivery: missing-input"
+    required_facts[2]: "source-inventory.toon:missing",Validated acceptance outcome
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        Validated acceptance outcome,Provide acceptance outcome,QA
+      clarifications[1]{"Known evidence","Missing acceptance outcome",Options,"Why required"}:
+        No supported assumption,Acceptance outcome,Supply source / narrow requested scope,Determines scenario id
+      failures[1]{"Acceptance outcome",Blocker,Evidence,"Required action",Status}:
+        Acceptance outcome,Required source is absent,"source-inventory.toon:missing",Provide acceptance outcome,BLOCKED
+      primary[0]:
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: Acceptance outcome is unavailable; dependent work has not run.
+        Evidence: "source-inventory.toon:missing"
+        Status: BLOCKED
+  - baseline_response: "Result\nStatus: PENDING\nDecision: 20 actor / setup / action entities rows; showing the first 8; full evidence linked.\nEvidence: qa.md:20\n\nprimary: Action: Replay callback #1; Actor / setup: Operator with failed callback; Evidence: qa.md:20; Execution status: PENDING; Expected result: One ledger entry; Scenario ID: QA-001.\nprimary: Action: Replay callback #2; Actor / setup: Operator with failed callback; Evidence: qa.md:20; Execution status: PENDING; Expected result: One ledger entry; Scenario ID: QA-001.\nprimary: Action: Replay callback #3; Actor / setup: Operator with failed callback; Evidence: qa.md:20; Execution status: PENDING; Expected result: One ledger entry; Scenario ID: QA-001.\nprimary: Action: Replay callback #4; Actor / setup: Operator with failed callback; Evidence: qa.md:20; Execution status: PENDING; Expected result: One ledger entry; Scenario ID: QA-001.\nprimary: Action: Replay callback #5; Actor / setup: Operator with failed callback; Evidence: qa.md:20; Execution status: PENDING; Expected result: One ledger entry; Scenario ID: QA-001.\nprimary: Action: Replay callback #6; Actor / setup: Operator with failed callback; Evidence: qa.md:20; Execution status: PENDING; Expected result: One ledger entry; Scenario ID: QA-001.\nprimary: Action: Replay callback #7; Actor / setup: Operator with failed callback; Evidence: qa.md:20; Execution status: PENDING; Expected result: One ledger entry; Scenario ID: QA-001.\nprimary: Action: Replay callback #8; Actor / setup: Operator with failed callback; Evidence: qa.md:20; Execution status: PENDING; Expected result: One ledger entry; Scenario ID: QA-001.\nprimary: Action: Replay callback #9; Actor / setup: Operator with failed callback; Evidence: qa.md:20; Execution status: PENDING; Expected result: One ledger entry; Scenario ID: QA-001.\nprimary: Action: Replay callback #10; Actor / setup: Operator with failed callback; Evidence: qa.md:20; Execution status: PENDING; Expected result: One ledger entry; Scenario ID: QA-001.\nprimary: Action: Replay callback #11; Actor / setup: Operator with failed callback; Evidence: qa.md:20; Execution status: PENDING; Expected result: One ledger entry; Scenario ID: QA-001.\nprimary: Action: Replay callback #12; Actor / setup: Operator with failed callback; Evidence: qa.md:20; Execution status: PENDING; Expected result: One ledger entry; Scenario ID: QA-001.\nprimary: Action: Replay callback #13; Actor / setup: Operator with failed callback; Evidence: qa.md:20; Execution status: PENDING; Expected result: One ledger entry; Scenario ID: QA-001.\nprimary: Action: Replay callback #14; Actor / setup: Operator with failed callback; Evidence: qa.md:20; Execution status: PENDING; Expected result: One ledger entry; Scenario ID: QA-001.\nprimary: Action: Replay callback #15; Actor / setup: Operator with failed callback; Evidence: qa.md:20; Execution status: PENDING; Expected result: One ledger entry; Scenario ID: QA-001.\nprimary: Action: Replay callback #16; Actor / setup: Operator with failed callback; Evidence: qa.md:20; Execution status: PENDING; Expected result: One ledger entry; Scenario ID: QA-001.\nprimary: Action: Replay callback #17; Actor / setup: Operator with failed callback; Evidence: qa.md:20; Execution status: PENDING; Expected result: One ledger entry; Scenario ID: QA-001.\nprimary: Action: Replay callback #18; Actor / setup: Operator with failed callback; Evidence: qa.md:20; Execution status: PENDING; Expected result: One ledger entry; Scenario ID: QA-001.\nprimary: Action: Replay callback #19; Actor / setup: Operator with failed callback; Evidence: qa.md:20; Execution status: PENDING; Expected result: One ledger entry; Scenario ID: QA-001.\nprimary: Action: Replay callback #20; Actor / setup: Operator with failed callback; Evidence: qa.md:20; Execution status: PENDING; Expected result: One ledger entry; Scenario ID: QA-001.\nactions: Owner: QA; Next action: Validate acceptance outcome with its owning workflow; Expected evidence: qa.md:20.\n"
+    id: large
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-qa for payment-retry delivery: large"
+    required_facts[3]: "qa.md:20",QA-001,Replay callback #1
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        "qa.md:20",Replay callback #1,QA
+      full_artifact: full-result.toon
+      primary[20]{Action,"Actor / setup",Evidence,"Execution status","Expected result","Scenario ID"}:
+        Replay callback #1,Operator with failed callback,"qa.md:20",PENDING,One ledger entry,QA-001
+        Replay callback #2,Operator with failed callback,"qa.md:20",PENDING,One ledger entry,QA-001
+        Replay callback #3,Operator with failed callback,"qa.md:20",PENDING,One ledger entry,QA-001
+        Replay callback #4,Operator with failed callback,"qa.md:20",PENDING,One ledger entry,QA-001
+        Replay callback #5,Operator with failed callback,"qa.md:20",PENDING,One ledger entry,QA-001
+        Replay callback #6,Operator with failed callback,"qa.md:20",PENDING,One ledger entry,QA-001
+        Replay callback #7,Operator with failed callback,"qa.md:20",PENDING,One ledger entry,QA-001
+        Replay callback #8,Operator with failed callback,"qa.md:20",PENDING,One ledger entry,QA-001
+        Replay callback #9,Operator with failed callback,"qa.md:20",PENDING,One ledger entry,QA-001
+        Replay callback #10,Operator with failed callback,"qa.md:20",PENDING,One ledger entry,QA-001
+        Replay callback #11,Operator with failed callback,"qa.md:20",PENDING,One ledger entry,QA-001
+        Replay callback #12,Operator with failed callback,"qa.md:20",PENDING,One ledger entry,QA-001
+        Replay callback #13,Operator with failed callback,"qa.md:20",PENDING,One ledger entry,QA-001
+        Replay callback #14,Operator with failed callback,"qa.md:20",PENDING,One ledger entry,QA-001
+        Replay callback #15,Operator with failed callback,"qa.md:20",PENDING,One ledger entry,QA-001
+        Replay callback #16,Operator with failed callback,"qa.md:20",PENDING,One ledger entry,QA-001
+        Replay callback #17,Operator with failed callback,"qa.md:20",PENDING,One ledger entry,QA-001
+        Replay callback #18,Operator with failed callback,"qa.md:20",PENDING,One ledger entry,QA-001
+        Replay callback #19,Operator with failed callback,"qa.md:20",PENDING,One ledger entry,QA-001
+        Replay callback #20,Operator with failed callback,"qa.md:20",PENDING,One ledger entry,QA-001
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: 20 scenario id records; 8 shown; inspect the linked full artifact.
+        Evidence: "qa.md:20"
+        Status: PENDING
+  - baseline_response: "Result\nStatus: PENDING\nDecision: One scenario id result; scope and evidence are explicit.\nEvidence: qa.md:20\n\nprimary: Action: Replay callback; Actor / setup: Operator with failed callback; Evidence: qa.md:20; Execution status: PENDING; Expected result: One ledger entry; Scenario ID: QA-001.\nactions: Owner: QA; Next action: Validate acceptance outcome with its owning workflow; Expected evidence: qa.md:20.\n"
+    id: small
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-qa for payment-retry delivery: small"
+    required_facts[3]: "qa.md:20",QA-001,Replay callback
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        "qa.md:20",Replay callback,QA
+      primary[1]{Action,"Actor / setup",Evidence,"Execution status","Expected result","Scenario ID"}:
+        Replay callback,Operator with failed callback,"qa.md:20",PENDING,One ledger entry,QA-001
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: One scenario id result; scope and evidence are explicit.
+        Evidence: "qa.md:20"
+        Status: PENDING
+  - baseline_response: "Result\nStatus: PENDING\nDecision: Prepared actor / setup / action entities; owner decision or execution remains pending.\nEvidence: qa.md:20\n\nprimary: Action: Replay callback; Actor / setup: Operator with failed callback; Evidence: qa.md:20; Execution status: PENDING; Expected result: One ledger entry; Scenario ID: QA-001 | перенос\nстроки.\nactions: Owner: QA; Next action: Validate acceptance outcome with its owning workflow; Expected evidence: qa.md:20.\n\nschema: fixture/v1\nstatus: pending\nsource: \"literal | value\"\n"
+    id: edge
+    provenance: "authored scenario from owning output fields; baseline is a simulation, not a recorded live response"
+    request: "Simulate ai-sdlc-loop-qa for payment-retry delivery: edge"
+    required_facts[3]: "qa.md:20","QA-001 | перенос\nстроки",Replay callback
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        "qa.md:20",Replay callback,QA
+      native[1]{content,language}:
+        "schema: fixture/v1\nstatus: pending\nsource: \"literal | value\"",toon
+      primary[1]{Action,"Actor / setup",Evidence,"Execution status","Expected result","Scenario ID"}:
+        Replay callback,Operator with failed callback,"qa.md:20",PENDING,One ledger entry,"QA-001 | перенос\nстроки"
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: Prepared actor / setup / action entities; owner decision or execution remains pending.
+        Evidence: "qa.md:20"
+        Status: PENDING
+schema: ai-sdlc-chat-scenarios/v1
+skill: ai-sdlc-loop-qa

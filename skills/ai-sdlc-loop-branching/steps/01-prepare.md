@@ -27,7 +27,7 @@ Confirm the requested scope, flow mode, canonical workspace, required evidence, 
 
 ### 0.3 Output Rules
 
-- Keep output structured with headings and bullets.
+- Apply this skill’s Chat Output Contract to user-facing chat; keep native artifacts unchanged.
 - Make findings, gaps, risks, and blockers explicit.
 - Tie recommendations to evidence from the provided artifact, repository, `specs-refiniment/<feature-name>/<file.md>` workspace, or user context.
 - Include role ownership when the output creates follow-up work for BA, QA, Dev, PM, or Delivery.
@@ -95,3 +95,7 @@ the owning output contract and current evidence before completion.
 ## Exit
 
 Proceed only when inputs, authority, state prerequisites, artifact routes, and context boundaries are explicit; otherwise return the blocker or clarification.
+
+## Chat presentation
+
+Before a result, warning, blocker or question, apply the local [chat schema](../references/chat-output.toon) and the Chat Output Contract in `SKILL.md`. Preserve native artifact and tool-input formats.
