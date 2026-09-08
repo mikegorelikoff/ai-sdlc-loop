@@ -159,6 +159,16 @@ def diagnose(root, mode="quick", target=None, artifacts=()):
     reg = run("DOC-REG-001", "registry", registry, [repo])
     actual = sorted(p.name for p in (root / "skills").glob(PREFIX + "*") if p.is_dir()) if repo["status"] == "PASS" else []
     run("DOC-REG-002", "skills", lambda: require(actual == names, "missing=" + str(sorted(set(names)-set(actual))) + ";unregistered=" + str(sorted(set(actual)-set(names)))), [reg])
+    if PREFIX == "ai-sdlc-" and (root / "config/ai-sdlc-managed-skills.txt").is_file():
+        def packaged_inventory():
+            base = "skills/" + PREFIX + "shared-runtime/references/"
+            default = regular(root, base + "ai-sdlc-managed-skills.txt").read_text(encoding="utf-8").splitlines()
+            optional = regular(root, base + "ai-sdlc-opt-in-skills.txt").read_text(encoding="utf-8").splitlines()
+            managed = regular(root, "config/ai-sdlc-managed-skills.txt").read_text(encoding="utf-8").splitlines()
+            require(managed == names, "source managed inventory differs from registry")
+            require(default == sorted(set(names)-set(optional)) and set(optional) <= set(names), "packaged default/optional inventory differs from registry")
+            return "source, default and opt-in package inventories agree"
+        run("DOC-REG-002", "packaged-inventory", packaged_inventory, [reg])
     if PREFIX + "flow" in names:
         def routes():
             if PREFIX == "ai-sdlc-loop-":

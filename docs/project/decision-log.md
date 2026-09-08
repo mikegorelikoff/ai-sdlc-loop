@@ -91,3 +91,7 @@ installation verification remain explicit separate scopes.
 ## 2026-09-08 — Source-bound quality discovery
 
 Add three native hunter graphs and one shared finding engine; reuse quality-lens fields, TOON, chat validation and existing lifecycle ownership. Keep source evidence read-only, explicit reproduction separate and source-bound handoffs verifiable. Add structured test-result collection, bounded reference graphs and false-positive regression fixtures. Release 0.8.0 is additive; existing approvals remain unchanged.
+
+## 2026-09-08 — Doctor engine parity patch
+
+Backbone release installation exposed its packaged default inventory drift. Carry the shared diagnostic implementation in Loop 0.8.1 to preserve engine parity; its Backbone-specific check does not change Loop’s installation policy. Keep published v0.8.0 immutable.

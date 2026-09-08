@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.8.1 - 2026-09-08
+
+- Synchronize the shared Doctor engine with Backbone’s packaged-inventory diagnostic; Loop retains its existing installation policy.
+
 ## v0.8.0 - 2026-09-08
 
 - Add three native hunters with shared source-bound findings, deterministic evidence gates, bounded negative search, trusted test reproduction, verified handoffs and table-first output.

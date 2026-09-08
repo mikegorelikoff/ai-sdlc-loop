@@ -7,7 +7,7 @@ This is the canonical first-run path for AI SDLC Loop.
 From the project that should receive the skills, run one command:
 
 ```sh
-curl -fsSL https://raw.githubusercontent.com/mikegorelikoff/ai-sdlc-loop/v0.8.0/install.sh | sh -s -- codex-project
+curl -fsSL https://raw.githubusercontent.com/mikegorelikoff/ai-sdlc-loop/v0.8.1/install.sh | sh -s -- codex-project
 ```
 
 Then verify separately:

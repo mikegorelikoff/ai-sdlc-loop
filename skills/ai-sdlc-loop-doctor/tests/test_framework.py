@@ -72,6 +72,14 @@ class FrameworkDoctorTests(unittest.TestCase):
         value=D.decode_toon(path.read_text());value['unexpected']='drift';path.write_text(D.encode_toon(value),encoding='utf-8')
         self.finding(self.diagnose(),'HUNTER_CONTRACT_INVALID')
 
+    def test_packaged_inventory_drift(self):
+        if D.PREFIX!='ai-sdlc-':self.skipTest('Backbone packaged default inventory contract')
+        (self.root/'config').mkdir()
+        names=sorted([SKILL.name,D.PREFIX+'shared-runtime'])
+        (self.root/'config/ai-sdlc-managed-skills.txt').write_text('\n'.join(names)+'\n',encoding='utf-8')
+        report=self.diagnose()
+        self.assertTrue(any(f['code']=='INVENTORY_DRIFT' and f['component']=='packaged-inventory' for f in report['findings']))
+
     def test_invalid_python(self):
         (self.skill / 'scripts/broken.py').write_text('def broken(:\n', encoding='utf-8')
         finding = self.finding(self.diagnose(), 'PYTHON_SYNTAX_FAILED')
