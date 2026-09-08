@@ -332,10 +332,10 @@ class DiscoveryTests(unittest.TestCase):
         command = [sys.executable, str(SCRIPT), "prepare", "--root", str(self.root), "--feature", "example",
                    "--request-stdin", "--source", "pilot.md", "--quick-flow"]
         content = "Разбери запрос: $(touch unexpected) <script>execute me</script>\n"
-        first = subprocess.run(command, input=content, text=True, encoding="utf-8", capture_output=True, check=True)
-        second = subprocess.run(command, input=content, text=True, encoding="utf-8", capture_output=True, check=True)
+        first = subprocess.run(command, input=content.encode("utf-8"), capture_output=True, check=True)
+        second = subprocess.run(command, input=content.encode("utf-8"), capture_output=True, check=True)
         self.assertEqual(first.stdout, second.stdout)
-        context = discovery.codec.loads(first.stdout)
+        context = discovery.codec.loads(first.stdout.decode("utf-8"))
         snapshot = next(s for s in context["sources"] if s["kind"] == "snapshot")
         self.assertEqual(content, snapshot["content"])
         self.assertEqual("stdin:request", snapshot["path"])

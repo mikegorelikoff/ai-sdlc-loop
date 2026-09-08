@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import os
 import tempfile
 import unittest
 from pathlib import Path
@@ -113,6 +114,7 @@ class EngineeringQualityGateTests(unittest.TestCase):
             self.assertIn("invalid or stale", result.stderr)
             self.assertFalse((repo / ".ai-sdlc-loop/demo/evidence.toon").exists())
 
+    @unittest.skipIf(os.name == "nt", "Windows chmod does not implement POSIX executable bits")
     def test_tc038_file_mode_drift_blocks_verify(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             repo = init_repo(Path(tmp) / "repo")
