@@ -45,4 +45,3 @@ These simulated examples exercise the compact contract. The full domain report i
 | Owner | Next action | Expected evidence |
 | --- | --- | --- |
 | Delivery owner | Resolve missing identity decision | decomposition.toon |
-
