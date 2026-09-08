@@ -18,6 +18,9 @@ SCHEMA = "ai-sdlc-loop-flow/v1"
 APPLY_SCHEMA = "ai-sdlc-loop-flow-apply/v1"
 
 ROUTES = (
+    (("edge-case-hunter", "edge case hunter"), "quality-discovery", "ai-sdlc-loop-edge-case-hunter"),
+    (("blind-case-hunter", "blind case hunter"), "quality-discovery", "ai-sdlc-loop-blind-case-hunter"),
+    (("bug-hunter", "bug hunter"), "quality-discovery", "ai-sdlc-loop-bug-hunter"),
     (("context-cache", "context-graph", "context graph", "repository graph", "code graph", "graph explorer"), "context", "ai-sdlc-loop-context-cache"),
     (("requirements discovery", "discover requirements", "stakeholder elicitation"), "discovery", "ai-sdlc-loop-requirements-discovery"),
     (("requirements review", "review requirements", "requirement review"), "requirements-review", "ai-sdlc-loop-requirements-review"),

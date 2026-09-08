@@ -13,5 +13,5 @@ priority: Show the user decision before detail; preserve source order and explic
 required_input: Installation root
 rows: individual check records
 schema: ai-sdlc-chat-contract/v1
-secondary[0]:
+secondary[6]: ID,Severity,Component,Problem,Evidence,Repair route
 skill: ai-sdlc-loop-doctor

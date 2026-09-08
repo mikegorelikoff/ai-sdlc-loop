@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Diagnose AI SDLC Loop installations and preview local upgrade plans."""
+"""Diagnose Loop installations and upgrades; use framework --help for source health."""
 
 from __future__ import annotations
 
@@ -10,6 +10,7 @@ import sys
 from pathlib import Path
 
 _SHARED = Path(__file__).resolve().parents[2] / "ai-sdlc-loop-shared-runtime" / "scripts"
+sys.dont_write_bytecode = True
 sys.path.insert(0, str(_SHARED))
 from ai_sdlc_toon import ToonDecodeError, decode_toon, encode_toon
 
@@ -17,17 +18,32 @@ REPORT_SCHEMA = "ai-sdlc-loop-doctor-report/v1"
 PLAN_SCHEMA = "ai-sdlc-loop-upgrade-plan/v1"
 PROFILES = {"codex-project": Path(".agents/skills"), "claude-code-project": Path(".claude/skills")}
 SKILLS = (
-    "ai-sdlc-loop-flow", "ai-sdlc-loop-doctor", "ai-sdlc-loop-orchestrate",
-    "ai-sdlc-loop-specify", "ai-sdlc-loop-implement",
-    "ai-sdlc-loop-engineering-quality-gate", "ai-sdlc-loop-verify",
-    "ai-sdlc-loop-commit", "ai-sdlc-loop-approvals-sandbox", "ai-sdlc-loop-branching",
-    "ai-sdlc-loop-test-cases", "ai-sdlc-loop-qa", "ai-sdlc-loop-requirements-review",
-    "ai-sdlc-loop-requirements-discovery",
-    "ai-sdlc-loop-hierarchical-decomposition",
-    "ai-sdlc-loop-validation", "ai-sdlc-loop-code-review", "ai-sdlc-loop-security-testing",
-    "ai-sdlc-loop-commit-prep", "ai-sdlc-loop-context-cache",
-    "ai-sdlc-loop-conventional-commit",
-    "ai-sdlc-loop-release-readiness", "ai-sdlc-loop-shared-runtime",
+    'ai-sdlc-loop-approvals-sandbox',
+    'ai-sdlc-loop-blind-case-hunter',
+    'ai-sdlc-loop-branching',
+    'ai-sdlc-loop-bug-hunter',
+    'ai-sdlc-loop-code-review',
+    'ai-sdlc-loop-commit',
+    'ai-sdlc-loop-commit-prep',
+    'ai-sdlc-loop-context-cache',
+    'ai-sdlc-loop-conventional-commit',
+    'ai-sdlc-loop-doctor',
+    'ai-sdlc-loop-edge-case-hunter',
+    'ai-sdlc-loop-engineering-quality-gate',
+    'ai-sdlc-loop-flow',
+    'ai-sdlc-loop-hierarchical-decomposition',
+    'ai-sdlc-loop-implement',
+    'ai-sdlc-loop-orchestrate',
+    'ai-sdlc-loop-qa',
+    'ai-sdlc-loop-release-readiness',
+    'ai-sdlc-loop-requirements-discovery',
+    'ai-sdlc-loop-requirements-review',
+    'ai-sdlc-loop-security-testing',
+    'ai-sdlc-loop-shared-runtime',
+    'ai-sdlc-loop-specify',
+    'ai-sdlc-loop-test-cases',
+    'ai-sdlc-loop-validation',
+    'ai-sdlc-loop-verify',
 )
 
 
@@ -212,6 +228,9 @@ def parser() -> argparse.ArgumentParser:
 
 
 def main() -> int:
+    if len(sys.argv) > 1 and sys.argv[1] == "framework":
+        from framework import main as framework_main
+        return framework_main(sys.argv[2:])
     args = parser().parse_args()
     try:
         project = args.project_root.resolve(strict=True)

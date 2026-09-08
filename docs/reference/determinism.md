@@ -40,3 +40,13 @@ State serialization rejects unknown fields, duplicate stage identities, invalid 
 Each skill bounds semantic repair to two attempts and preserves the owning runtime's stricter retry policy. Validation errors do not authorize a new route or overwrite valid evidence. Native formats remain native; presentation statuses never control lifecycle transitions.
 
 The artifact writer includes its own decision journal reference on the first section write. Backbone and Loop refreshes use the shared OKF renderer, preserve original provenance on an unchanged write, and invalidate verification when the body changes. Context Guard keeps its native metadata format.
+
+## Hunter determinism and output registry
+
+| Skill | Engine | Semantic boundary | Primary chat | Native handoff |
+| --- | --- | --- | --- | --- |
+| `ai-sdlc-loop-edge-case-hunter` | `scripts/hunt.py` → shared hunter engine | Scenario expansion inside selected dimensions | Conditions / expected behavior | Source-bound TOON; no lifecycle approval |
+| `ai-sdlc-loop-blind-case-hunter` | `scripts/hunt.py` → shared hunter engine | Review scoped absence and exclusions | Missing concerns / gap evidence | Source-bound TOON; no lifecycle approval |
+| `ai-sdlc-loop-bug-hunter` | `scripts/hunt.py` → shared hunter engine | Establish contract violation and impact | Supported bugs / code and reproduction evidence | Source-bound TOON; no lifecycle approval |
+
+Each local Chat Output Contract also defines summary, blocked, clarification and next-action tables. The shared engine owns IDs, ordering, snapshots, role search, deduplication and handoff validation. OKF remains document provenance; hunters never mutate lifecycle state. See [Quality discovery](quality-discovery.md).

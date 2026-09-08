@@ -44,10 +44,12 @@ nav:
       - Diagnose an installation: guides/doctor.md
       - Prepare a release: guides/release.md
   - Reference:
+      - Quality discovery: reference/quality-discovery.md
       - reference/index.md
       - Deterministic execution: reference/determinism.md
       - Hierarchical decomposition: reference/decomposition.md
       - Context graph: reference/context-graph.md
+      - Framework Doctor: reference/framework-doctor.md
       - Skills: reference/skills.md
       - Commands: reference/commands.md
       - Contracts: reference/contracts.md

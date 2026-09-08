@@ -1,0 +1,8 @@
+"$schema": ai-sdlc-toon-contract/v1
+check_status[5]: PASS,FAIL,BLOCKED,UNKNOWN,N/A
+consumers[2]: maintainer,validation
+health[5]: HEALTHY,DEGRADED,UNHEALTHY,BLOCKED,UNKNOWN
+producer: doctor-framework
+required[9]: schema,execution,health,mode,target,checks,findings,limits,fingerprint
+schema: ai-sdlc-framework-diagnostics/v1
+validation: "scripts/framework.py:validate_report"

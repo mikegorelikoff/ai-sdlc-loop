@@ -39,6 +39,15 @@ Use the sibling `ai-sdlc-loop-shared-runtime/scripts/chat_output.py` to render/c
 - H: validate native outputs before handoff. Runtime owns IDs, counts, routing and completion; confidence/chat grants no approval.
 - Read explicit paths; reuse only current evidence. At most two repairs; then report BLOCKED with failed check, evidence and action.
 
+## Hunter Finding Handoff
+
+When a current hunter report is supplied, run the producing hunter's `verify`
+command with its source root, then `verify-handoff --input handoff.toon --report report.toon` before consuming `ai-sdlc-hunter-handoff/v1`.
+Preserve finding IDs, evidence kind, validation state and related links. Treat
+edge cases as test proposals, blind cases as requirements-review proposals,
+and only CONFIRMED bugs as reproduced defects. No hunter output grants scope,
+implementation, test-execution or approval authority.
+
 ## Step Selector
 
 This table is generated from `steps/manifest.toon`. The manifest and linked

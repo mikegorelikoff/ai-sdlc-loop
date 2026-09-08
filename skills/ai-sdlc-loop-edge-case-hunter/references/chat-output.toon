@@ -1,0 +1,18 @@
+clarification[4]: Missing input,Why required,Known evidence,Options
+example:
+  Dimension: INPUT
+  "Edge case": Boundary hypothesis
+  "Expected behavior": Expected contract
+  ID: HUNT-example
+  Impact: Source-backed impact
+  "Test mapping": PROPOSED
+failure[5]: Analysis scope,Status,Blocker,Evidence,Required action
+hide: "Secrets, raw logs and unrelated repository content."
+native_exception: Preserve TOON and code in native representations.
+primary[6]: ID,Edge case,Dimension,Impact,Expected behavior,Test mapping
+priority: Unresolved and supported findings before rejected candidates; no approval implication.
+required_input: Source inventory
+rows: source-bound edge-case-hunter findings
+schema: ai-sdlc-chat-contract/v1
+secondary[0]:
+skill: ai-sdlc-loop-edge-case-hunter

@@ -1,0 +1,151 @@
+budgets:
+  context_max_tokens: 12000
+  min_context_savings_percent: 15
+  step_max_tokens: 5000
+entrypoints:
+  clarify[1]: context
+  complete[1]: handoff
+  execute[1]: execute
+  handoff[1]: handoff
+  prepare[1]: preflight
+  route[1]: context
+  validate[1]: validate
+schema: ai-sdlc-skill-steps/v2
+skill: ai-sdlc-loop-blind-case-hunter
+steps[5]:
+  - capabilities[1]: filesystem.read
+    commit_boundary: none
+    condition:
+      actions[0]:
+      phases[1]: prepare
+      roles[4]: business-analyst,product-manager,software-engineer,qa-engineer
+    context:
+      budget_tokens: 12000
+      critical_anchors[3]: ## Entry,## Procedure,## Exit
+      fallback: direct_read
+      mandatory[1]: step_document
+      min_savings_percent: 15
+      required: true
+      selectors[4]: step,repository-instructions,feature-traces,changed-path-topology
+    depends_on[0]:
+    gates[3]: authority,inputs,path-containment
+    id: preflight
+    load: required
+    max_attempts: 1
+    max_tokens: 3000
+    on_failure: block
+    operation: bound-discovery
+    outputs[1]: preflight-evidence
+    path: steps/01-prepare.md
+    reason: Bound sources and authority
+    side_effect: none
+    type: analysis
+  - capabilities[1]: filesystem.read
+    commit_boundary: none
+    condition:
+      actions[0]:
+      phases[2]: clarify,route
+      roles[4]: business-analyst,product-manager,software-engineer,qa-engineer
+    context:
+      budget_tokens: 12000
+      critical_anchors[3]: ## Entry,## Procedure,## Exit
+      fallback: direct_read
+      mandatory[1]: step_document
+      min_savings_percent: 15
+      required: true
+      selectors[4]: step,repository-instructions,feature-traces,changed-path-topology
+    depends_on[1]: preflight
+    gates[2]: context-sufficiency,critical-anchor-recall
+    id: context
+    load: required
+    max_attempts: 1
+    max_tokens: 3000
+    on_failure: block
+    operation: compile-context
+    outputs[1]: context-evidence
+    path: steps/02-context.md
+    reason: Compile evidence context
+    side_effect: none
+    type: context
+  - capabilities[2]: filesystem.read,filesystem.write
+    commit_boundary: none
+    condition:
+      actions[0]:
+      phases[1]: execute
+      roles[4]: business-analyst,product-manager,software-engineer,qa-engineer
+    context:
+      budget_tokens: 12000
+      critical_anchors[3]: ## Entry,## Procedure,## Exit
+      fallback: direct_read
+      mandatory[1]: step_document
+      min_savings_percent: 15
+      required: true
+      selectors[4]: step,repository-instructions,feature-traces,changed-path-topology
+    depends_on[1]: context
+    gates[3]: dependencies,context-sufficiency,authorization
+    id: execute
+    load: on-demand
+    max_attempts: 1
+    max_tokens: 3000
+    on_failure: block
+    operation: evaluate-hypotheses
+    outputs[1]: execute-evidence
+    path: steps/03-execute.md
+    reason: Propose and evaluate hypotheses
+    side_effect: workspace-write
+    type: action
+  - capabilities[1]: filesystem.read
+    commit_boundary: none
+    condition:
+      actions[0]:
+      phases[1]: validate
+      roles[4]: business-analyst,product-manager,software-engineer,qa-engineer
+    context:
+      budget_tokens: 12000
+      critical_anchors[3]: ## Entry,## Procedure,## Exit
+      fallback: direct_read
+      mandatory[1]: step_document
+      min_savings_percent: 15
+      required: true
+      selectors[4]: step,repository-instructions,feature-traces,changed-path-topology
+    depends_on[1]: execute
+    gates[3]: output-evidence,acceptance,regression-risk
+    id: validate
+    load: before-completion
+    max_attempts: 1
+    max_tokens: 3000
+    on_failure: block
+    operation: verify-findings
+    outputs[1]: validate-evidence
+    path: steps/04-validate.md
+    reason: Verify source-bound findings
+    side_effect: none
+    type: validation
+  - capabilities[1]: filesystem.read
+    commit_boundary: none
+    condition:
+      actions[0]:
+      phases[2]: handoff,complete
+      roles[4]: business-analyst,product-manager,software-engineer,qa-engineer
+    context:
+      budget_tokens: 12000
+      critical_anchors[3]: ## Entry,## Procedure,## Exit
+      fallback: direct_read
+      mandatory[1]: step_document
+      min_savings_percent: 15
+      required: true
+      selectors[4]: step,repository-instructions,feature-traces,changed-path-topology
+    depends_on[1]: validate
+    gates[2]: terminal-evidence,next-owner
+    id: handoff
+    load: before-completion
+    max_attempts: 1
+    max_tokens: 3000
+    on_failure: handoff
+    operation: route-findings
+    outputs[1]: handoff-evidence
+    path: steps/05-handoff.md
+    reason: Route structured findings
+    side_effect: none
+    type: handoff
+version: 4.1.0

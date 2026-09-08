@@ -1,0 +1,150 @@
+scenarios[8]:
+  - baseline_response: "Unstructured edge-case-hunter candidate discussion; evidence and next action need a bounded table.\n"
+    id: happy
+    provenance: Authored structural simulation; not a live semantic quality score.
+    request: "Simulate ai-sdlc-loop-edge-case-hunter: happy"
+    required_facts[3]: Prepared check result; evidence supports the reported result.,"fixture.toon:1",PASS
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        "fixture.toon:1",Validate source anchors and candidate review,Maintainer
+      primary[1]{Dimension,"Edge case","Expected behavior",ID,Impact,"Test mapping"}:
+        INPUT,Boundary hypothesis,Expected behavior,HUNT-1,Source-backed impact,PROPOSED
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: Prepared check result; evidence supports the reported result.
+        Evidence: "fixture.toon:1"
+        Status: PASS
+  - baseline_response: "Unstructured edge-case-hunter candidate discussion; evidence and next action need a bounded table.\n"
+    id: partial
+    provenance: Authored structural simulation; not a live semantic quality score.
+    request: "Simulate ai-sdlc-loop-edge-case-hunter: partial"
+    required_facts[3]: "Partial result: second case is unverified; do not infer full coverage.","fixture.toon:1",WARNING
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        "fixture.toon:1",Validate source anchors and candidate review,Maintainer
+      primary[2]{Dimension,"Edge case","Expected behavior",ID,Impact,"Test mapping"}:
+        INPUT,Boundary hypothesis,Expected behavior,HUNT-1,Source-backed impact,PROPOSED
+        INPUT,Boundary hypothesis,Expected behavior,HUNT-2,Source-backed impact,PROPOSED
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: "Partial result: second case is unverified; do not infer full coverage."
+        Evidence: "fixture.toon:1"
+        Status: WARNING
+  - baseline_response: "Unstructured edge-case-hunter candidate discussion; evidence and next action need a bounded table.\n"
+    id: warning
+    provenance: Authored structural simulation; not a live semantic quality score.
+    request: "Simulate ai-sdlc-loop-edge-case-hunter: warning"
+    required_facts[3]: Result has limited source freshness; confirm it before downstream use.,"fixture.toon:1",WARNING
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        "fixture.toon:1",Validate source anchors and candidate review,Maintainer
+      primary[1]{Dimension,"Edge case","Expected behavior",ID,Impact,"Test mapping"}:
+        INPUT,Boundary hypothesis,Expected behavior,HUNT-1,Source-backed impact,PROPOSED
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: Result has limited source freshness; confirm it before downstream use.
+        Evidence: "fixture.toon:1"
+        Status: WARNING
+  - baseline_response: "Unstructured edge-case-hunter candidate discussion; evidence and next action need a bounded table.\n"
+    id: blocked
+    provenance: Authored structural simulation; not a live semantic quality score.
+    request: "Simulate ai-sdlc-loop-edge-case-hunter: blocked"
+    required_facts[3]: Source inventory is unavailable; dependent work has not run.,"source-inventory.toon:missing",BLOCKED
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        Validated source inventory,Provide source inventory,Maintainer
+      failures[1]{"Analysis scope",Blocker,Evidence,"Required action",Status}:
+        Target behavior,Required source is absent,"source-inventory.toon:missing",Provide source inventory,BLOCKED
+      primary[0]:
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: Source inventory is unavailable; dependent work has not run.
+        Evidence: "source-inventory.toon:missing"
+        Status: BLOCKED
+  - baseline_response: "Unstructured edge-case-hunter candidate discussion; evidence and next action need a bounded table.\n"
+    id: missing-input
+    provenance: Authored structural simulation; not a live semantic quality score.
+    request: "Simulate ai-sdlc-loop-edge-case-hunter: missing-input"
+    required_facts[3]: Source inventory is unavailable; dependent work has not run.,"source-inventory.toon:missing",BLOCKED
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        Validated source inventory,Provide source inventory,Maintainer
+      clarifications[1]{"Known evidence","Missing input",Options,"Why required"}:
+        Supply source / narrow requested scope,No supported assumption,Determines check,Source inventory
+      failures[1]{"Analysis scope",Blocker,Evidence,"Required action",Status}:
+        Target behavior,Required source is absent,"source-inventory.toon:missing",Provide source inventory,BLOCKED
+      primary[0]:
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: Source inventory is unavailable; dependent work has not run.
+        Evidence: "source-inventory.toon:missing"
+        Status: BLOCKED
+  - baseline_response: "Unstructured edge-case-hunter candidate discussion; evidence and next action need a bounded table.\n"
+    id: large
+    provenance: Authored structural simulation; not a live semantic quality score.
+    request: "Simulate ai-sdlc-loop-edge-case-hunter: large"
+    required_facts[3]: 20 check records; 8 shown; inspect the linked full artifact.,"fixture.toon:1",PASS
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        "fixture.toon:1",Validate source anchors and candidate review,Maintainer
+      full_artifact: full-result.toon
+      primary[20]{Dimension,"Edge case","Expected behavior",ID,Impact,"Test mapping"}:
+        INPUT,Boundary hypothesis,Expected behavior,HUNT-1,Source-backed impact,PROPOSED
+        INPUT,Boundary hypothesis,Expected behavior,HUNT-2,Source-backed impact,PROPOSED
+        INPUT,Boundary hypothesis,Expected behavior,HUNT-3,Source-backed impact,PROPOSED
+        INPUT,Boundary hypothesis,Expected behavior,HUNT-4,Source-backed impact,PROPOSED
+        INPUT,Boundary hypothesis,Expected behavior,HUNT-5,Source-backed impact,PROPOSED
+        INPUT,Boundary hypothesis,Expected behavior,HUNT-6,Source-backed impact,PROPOSED
+        INPUT,Boundary hypothesis,Expected behavior,HUNT-7,Source-backed impact,PROPOSED
+        INPUT,Boundary hypothesis,Expected behavior,HUNT-8,Source-backed impact,PROPOSED
+        INPUT,Boundary hypothesis,Expected behavior,HUNT-9,Source-backed impact,PROPOSED
+        INPUT,Boundary hypothesis,Expected behavior,HUNT-10,Source-backed impact,PROPOSED
+        INPUT,Boundary hypothesis,Expected behavior,HUNT-11,Source-backed impact,PROPOSED
+        INPUT,Boundary hypothesis,Expected behavior,HUNT-12,Source-backed impact,PROPOSED
+        INPUT,Boundary hypothesis,Expected behavior,HUNT-13,Source-backed impact,PROPOSED
+        INPUT,Boundary hypothesis,Expected behavior,HUNT-14,Source-backed impact,PROPOSED
+        INPUT,Boundary hypothesis,Expected behavior,HUNT-15,Source-backed impact,PROPOSED
+        INPUT,Boundary hypothesis,Expected behavior,HUNT-16,Source-backed impact,PROPOSED
+        INPUT,Boundary hypothesis,Expected behavior,HUNT-17,Source-backed impact,PROPOSED
+        INPUT,Boundary hypothesis,Expected behavior,HUNT-18,Source-backed impact,PROPOSED
+        INPUT,Boundary hypothesis,Expected behavior,HUNT-19,Source-backed impact,PROPOSED
+        INPUT,Boundary hypothesis,Expected behavior,HUNT-20,Source-backed impact,PROPOSED
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: 20 check records; 8 shown; inspect the linked full artifact.
+        Evidence: "fixture.toon:1"
+        Status: PASS
+  - baseline_response: "Unstructured edge-case-hunter candidate discussion; evidence and next action need a bounded table.\n"
+    id: small
+    provenance: Authored structural simulation; not a live semantic quality score.
+    request: "Simulate ai-sdlc-loop-edge-case-hunter: small"
+    required_facts[3]: One check result; scope and evidence are explicit.,"fixture.toon:1",PASS
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        "fixture.toon:1",Validate source anchors and candidate review,Maintainer
+      primary[1]{Dimension,"Edge case","Expected behavior",ID,Impact,"Test mapping"}:
+        INPUT,Boundary hypothesis,Expected behavior,HUNT-1,Source-backed impact,PROPOSED
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: One check result; scope and evidence are explicit.
+        Evidence: "fixture.toon:1"
+        Status: PASS
+  - baseline_response: "Unstructured edge-case-hunter candidate discussion; evidence and next action need a bounded table.\n"
+    id: edge
+    provenance: Authored structural simulation; not a live semantic quality score.
+    request: "Simulate ai-sdlc-loop-edge-case-hunter: edge"
+    required_facts[3]: Prepared installed state / expected state entities; listed evidence satisfies this skill check.,"fixture.toon:1",PASS
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        "fixture.toon:1",Validate source anchors and candidate review,Maintainer
+      native[1]{content,language}:
+        "schema: fixture/v1\nstatus: pending\nsource: \"literal | value\"",toon
+      primary[1]{Dimension,"Edge case","Expected behavior",ID,Impact,"Test mapping"}:
+        INPUT,Boundary hypothesis,Expected behavior,HUNT-1,Source-backed impact,PROPOSED
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: Prepared installed state / expected state entities; listed evidence satisfies this skill check.
+        Evidence: "fixture.toon:1"
+        Status: PASS
+schema: ai-sdlc-chat-scenarios/v1
+skill: ai-sdlc-loop-edge-case-hunter

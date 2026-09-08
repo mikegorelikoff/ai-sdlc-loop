@@ -1,0 +1,18 @@
+clarification[4]: Missing input,Why required,Known evidence,Options
+example:
+  Dimension: INPUT
+  "Gap evidence": Source-backed impact
+  ID: HUNT-example
+  Impact: Expected contract
+  "Missing concern": Boundary hypothesis
+  "Next action": PROPOSED
+failure[5]: Analysis scope,Status,Blocker,Evidence,Required action
+hide: "Secrets, raw logs and unrelated repository content."
+native_exception: Preserve TOON and code in native representations.
+primary[6]: ID,Missing concern,Dimension,Gap evidence,Impact,Next action
+priority: Unresolved and supported findings before rejected candidates; no approval implication.
+required_input: Source inventory
+rows: source-bound blind-case-hunter findings
+schema: ai-sdlc-chat-contract/v1
+secondary[0]:
+skill: ai-sdlc-loop-blind-case-hunter

@@ -80,3 +80,14 @@ Reuse Backbone context-cache under the Loop namespace, storage root and installe
 ## 2026-09-08 — Release 0.7.0
 
 Publish the native context-graph skill after user authorization. Pin the bootstrap installer and first-run commands to v0.7.0 so they install the current 23-skill package. Preserve lifecycle schemas, explicit parser installation and source authority. Rollback uses v0.6.0.
+
+## Framework Doctor profiles — 2026-09-08
+
+Extend the existing Doctor instead of introducing a parallel skill. Native
+validators retain authority for graphs, provenance and state. Framework modes
+never execute candidate code or mutate project state; source diagnosis and
+installation verification remain explicit separate scopes.
+
+## 2026-09-08 — Source-bound quality discovery
+
+Add three native hunter graphs and one shared finding engine; reuse quality-lens fields, TOON, chat validation and existing lifecycle ownership. Keep source evidence read-only, explicit reproduction separate and source-bound handoffs verifiable. Add structured test-result collection, bounded reference graphs and false-positive regression fixtures. Release 0.8.0 is additive; existing approvals remain unchanged.

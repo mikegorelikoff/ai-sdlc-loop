@@ -1,6 +1,10 @@
 # Changelog
 
-## Unreleased
+## v0.8.0 - 2026-09-08
+
+- Add three native hunters with shared source-bound findings, deterministic evidence gates, bounded negative search, trusted test reproduction, verified handoffs and table-first output.
+
+- Extend Doctor with read-only framework profiles, deterministic findings, native artifact adapters, isolated execution/chat evals and mutation regression tests.
 
 ## v0.7.0 - 2026-09-08
 

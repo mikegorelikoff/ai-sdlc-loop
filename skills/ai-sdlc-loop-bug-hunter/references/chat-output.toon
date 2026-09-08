@@ -1,0 +1,18 @@
+clarification[4]: Missing input,Why required,Known evidence,Options
+example:
+  Bug: Invalid retry
+  "Decision status": SUPPORTED
+  Evidence: TC-01
+  ID: HUNT-example
+  Location: "app.py:1"
+  Severity: HIGH
+failure[5]: Analysis scope,Status,Blocker,Evidence,Required action
+hide: "Secrets, raw logs and unrelated repository content."
+native_exception: Preserve TOON and code in native representations.
+primary[6]: ID,Severity,Location,Bug,Evidence,Decision status
+priority: Unresolved and supported findings before rejected candidates; no approval implication.
+required_input: Source inventory
+rows: source-bound bug-hunter findings
+schema: ai-sdlc-chat-contract/v1
+secondary[4]: Candidate,Location,Decision status,Next action
+skill: ai-sdlc-loop-bug-hunter

@@ -1,6 +1,6 @@
 ---
 name: ai-sdlc-loop-doctor
-description: Diagnose an AI SDLC Loop installation and preview a safe package upgrade plan using deterministic, read-only TOON evidence.
+description: Diagnose AI SDLC Loop framework health and installation integrity, and preview safe upgrades with deterministic read-only TOON evidence.
 ---
 
 # AI SDLC Loop Doctor
@@ -38,6 +38,7 @@ Resolve the active procedure through `steps/manifest.toon`. Durable machine outp
 
 Primary: Check / Installed state / Expected state / Status / Remediation.
 Rows represent individual check records. Show the user decision before detail; preserve source order and explicit authority.
+Secondary diagnostics: ID / Severity / Component / Problem / Evidence / Repair route.
 Summary: Status / Decision / Evidence. Failure: Installation root / Status / Blocker / Evidence / Required action.
 Clarification: Missing installation root / Why required / Known evidence / Options. Next action: Owner / Next action / Expected evidence.
 Use PASS, FAIL, WARNING, BLOCKED, PENDING, N/A only for chat statuses; preserve native domain states.
@@ -52,6 +53,33 @@ Use the sibling `ai-sdlc-loop-shared-runtime/scripts/chat_output.py` to render/c
 - S: interpret sources for the native artifact defined by this skill; cite unresolved decisions.
 - H: validate native outputs before handoff. Runtime owns IDs, counts, routing and completion; confidence/chat grants no approval.
 - Read explicit paths; reuse only current evidence. At most two repairs; then report BLOCKED with failed check, evidence and action.
+
+## Framework Diagnosis
+
+- Trigger: after installation or skill/schema/routing changes, before release,
+  or when the framework cannot execute a workflow. Application defects belong
+  to code review/testing; missing product scenarios belong to requirements/QA.
+- Required input: explicit source package root. Optional: quick/standard/deep,
+  exact skill ID and typed root-relative artifacts. Discover inventory from the
+  native module manifests or installer; never ask for discoverable paths.
+- Output: `ai-sdlc-framework-diagnostics/v1` on stdout; persist only when the
+  caller explicitly redirects it. Existing installation/upgrade modes remain.
+- Run `scripts/doctor.py framework --root <source-root> --mode quick`.
+  Use `--format markdown` for chat; TOON is the complete evidence source.
+- Complete when all requested checks are terminal and the report validates.
+  Doctor execution PASS can accompany UNHEALTHY framework health.
+- Hand off each finding to its recorded repair owner; rerun the same check
+  after authorized repair. No automatic repair; at most two repair cycles.
+- Read [diagnostic profiles and boundaries](references/framework-contract.md)
+  before choosing artifacts or interpreting coverage.
+
+## Determinism Contract
+
+The Python registry owns check IDs, severity, blocked dependencies and health.
+SHA-256 of check identity and component owns finding IDs; evidence changes do
+not rename a defect. Checks sort by ID/component; findings by severity/layer/
+component/ID. Deep compares two isolated standard runs byte-for-byte. Neither
+confidence nor explanatory prose changes status, scope or authorization.
 
 ## Step Selector
 

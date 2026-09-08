@@ -1,0 +1,36 @@
+determinism[1]:
+  - blocked_by[0]:
+    check_id: DOC-DET-001
+    code: ""
+    component: repeated-standard-diagnostics
+    evidence: two complete standard runs compared byte-for-byte
+    id: DOC-1ac890999381f30725c3
+    layer: DETERMINISM
+    repair_route: PYTHON
+    severity: HIGH
+    status: PASS
+engine_sha256: 9aa12a2bb0a82e94bbeb17cd4514e145f842faec6d220489b8e3c58da8b125cd
+execution: PASS
+findings[0]:
+health: HEALTHY
+layers[12]{blocked,checks,failed,layer,not_applicable,passed,unknown}:
+  0,46,0,CONTRACTS,0,46,0
+  0,2,0,COVERAGE,2,0,0
+  0,1,0,DETERMINISM,0,1,0
+  0,1,0,ENVIRONMENT,0,1,0
+  0,69,0,EVALS,0,69,0
+  0,118,0,PYTHON,0,118,0
+  0,3,0,REPOSITORY,0,3,0
+  0,24,0,ROUTING,0,24,0
+  0,23,0,SKILL,0,23,0
+  0,1,0,STATE,0,1,0
+  0,23,0,TESTS,0,23,0
+  0,146,0,TOON,0,146,0
+limitations[4]: No arbitrary script imports or tests,TOON round-trip is not arbitrary artifact schema validation,No inference of cross-artifact semantic compatibility,"State simulation uses Backbone lifecycle, not Loop approval state"
+mutation_not_applicable: 0
+mutation_passed: 30
+mutation_tests: 30
+product: loop
+profile: deep
+report_fingerprint: 07a6911005d60529273ab79017afc39c89954fca87328573066a9c8d1ceb18ec
+schema: ai-sdlc-doctor-reinforcement/v1

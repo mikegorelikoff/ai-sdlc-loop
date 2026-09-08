@@ -22,7 +22,7 @@ AI SDLC Loop is the focused delivery member of the AI SDLC product family. It in
 Install for a Codex project with one shell command:
 
 ```sh
-curl -fsSL https://raw.githubusercontent.com/mikegorelikoff/ai-sdlc-loop/v0.7.0/install.sh | sh -s -- codex-project
+curl -fsSL https://raw.githubusercontent.com/mikegorelikoff/ai-sdlc-loop/v0.8.0/install.sh | sh -s -- codex-project
 ```
 
 Then verify separately:
@@ -31,11 +31,11 @@ Then verify separately:
 python3 .ai-sdlc-loop/install/install.py verify codex-project
 ```
 
-For a local checkout, use `python3 install.py codex-project`. Claude Code uses `claude-code-project`; another compatible agent uses `agent-project --skills-root .agent/skills`. Immutable `v0.1.1` retains its 17-member inventory; the v0.7.0 source installs the 23-member package described below.
+For a local checkout, use `python3 install.py codex-project`. Claude Code uses `claude-code-project`; another compatible agent uses `agent-project --skills-root .agent/skills`. Immutable `v0.1.1` retains its 17-member inventory; the v0.8.0 source installs the 26-member package described below.
 
 ## Expected result
 
-The installer contributes 22 working `ai-sdlc-loop-{slug}` skills and `ai-sdlc-loop-shared-runtime`, for 23 installed directories. Each working skill has a canonical `steps/manifest.toon` and bounded step documents. The router and bounded state stages use the compact Loop v1 graph; the engineering quality gate and delivery-control skills use the strict Harness-compatible v2 graph, with Loop-local dependency adaptations rather than byte-for-byte copies. Existing unrelated skills remain untouched. The TOON install record and reusable verifier are written below `.ai-sdlc-loop/install/`. See the generated [skill catalog](https://mikegorelikoff.github.io/ai-sdlc-loop/reference/skills/) for the exact inventory.
+The installer contributes 25 working `ai-sdlc-loop-{slug}` skills and `ai-sdlc-loop-shared-runtime`, for 26 installed directories. Each working skill has a canonical `steps/manifest.toon` and bounded step documents. The router and bounded state stages use the compact Loop v1 graph; the engineering quality gate and delivery-control skills use the strict Harness-compatible v2 graph, with Loop-local dependency adaptations rather than byte-for-byte copies. Existing unrelated skills remain untouched. The TOON install record and reusable verifier are written below `.ai-sdlc-loop/install/`. See the generated [skill catalog](https://mikegorelikoff.github.io/ai-sdlc-loop/reference/skills/) for the exact inventory.
 
 ## Workflow
 

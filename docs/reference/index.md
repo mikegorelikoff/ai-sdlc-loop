@@ -83,3 +83,10 @@ Loop-owned specifications, state, approvals, engineering quality context and rep
 - `ai-sdlc-loop-hierarchical-decomposition`: evidence-backed hierarchy and verified branch packets; see [decomposition](decomposition.md).
 
 - `ai-sdlc-loop-context-cache`: repository AST graph, bounded retrieval and offline explorer; see [context graph](context-graph.md).
+
+- [Framework Doctor](framework-doctor.md): deterministic source diagnostics and repair routing.
+
+- [Quality discovery](quality-discovery.md): hunter boundaries and source-bound evidence.
+- `ai-sdlc-loop-edge-case-hunter`: deterministic quality-discovery skill.
+- `ai-sdlc-loop-blind-case-hunter`: deterministic quality-discovery skill.
+- `ai-sdlc-loop-bug-hunter`: deterministic quality-discovery skill.

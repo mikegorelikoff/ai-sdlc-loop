@@ -37,3 +37,7 @@ At most six columns, eight preview rows and 180 characters per cell; link full e
 No duplicate prose. Keep code, commands, commit messages and machine handoffs native.
 Apply [this skill’s schema and examples](references/chat-output.toon) before any user-facing result, warning or question.
 Use the sibling `ai-sdlc-loop-shared-runtime/scripts/chat_output.py` to render/check; [shared limits](../ai-sdlc-loop-shared-runtime/references/chat-output.md) bound repair and preserve native outputs.
+
+## Hunter Finding Handoff
+
+Use current blind-case findings as evidence for clarification, not accepted requirements. Run the producing hunter’s `verify` and `verify-handoff --input handoff.toon --report report.toon` before reuse. Preserve finding IDs, scoped UNKNOWN status and explicit exclusions. Only the existing Specify owner may write its lifecycle artifact.

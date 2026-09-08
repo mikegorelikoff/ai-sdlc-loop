@@ -2,7 +2,7 @@
 
 ## Status
 
-AI SDLC Loop is experimental. Release `v0.7.0` adds native repository context graphs and hierarchical decomposition alongside
+AI SDLC Loop is experimental. Release `v0.8.0` adds native repository context graphs and hierarchical decomposition alongside
 the mandatory engineering quality gate and twenty-three-member install inventory.
 Immutable `v0.1.1` retains its prior inventory. Schema changes require a new
 version and migration notes.
