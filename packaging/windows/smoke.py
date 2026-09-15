@@ -16,7 +16,7 @@ def main() -> None:
     expected = exe.with_suffix(".exe.sha256").read_text(encoding="ascii").split()[0]
     assert hashlib.sha256(exe.read_bytes()).hexdigest() == expected
     env = dict(os.environ)
-    env["PATH"] = str(Path(env["SystemRoot"]) / "System32")
+    env["PATH"] = str(Path(os.environ["SystemRoot"]) / "System32")
     env.pop("PYTHONHOME", None)
     env.pop("PYTHONPATH", None)
     with tempfile.TemporaryDirectory(prefix="Loop installer ü space ") as folder:
