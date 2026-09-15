@@ -1,0 +1,57 @@
+.github/workflows/windows-installer.yml
+  s_8788922cf6a1c9::t_ee9d0671d16bdf 1-70
+.gitignore
+  s_8788922cf6a1c9::t_e1a380d60cfe03 6-8
+CHANGELOG.md
+  s_8788922cf6a1c9::t_38e4a84f1e9d49 3-8
+README.md
+  s_8788922cf6a1c9::t_7ebbc7415a922a 25,34-36
+docs/guides/windows-install.md
+  s_8788922cf6a1c9::t_114a4aaccd13cf 1-59
+docs/index.md
+  s_8788922cf6a1c9::t_8fadd6274a6adc 24,34,47-48
+docs/project/decision-log.md
+  s_8788922cf6a1c9::t_169d498eaade5f 3-10
+docs/project/index.md
+  s_8788922cf6a1c9::t_08711641be3e04 5
+docs/reference/index.md
+  s_8788922cf6a1c9::t_922bd2a5add48d 17
+docs/scripts/validate_docs.py
+  s_8788922cf6a1c9::t_7a93d2e5a46833 13
+docs/start-here.md
+  s_8788922cf6a1c9::t_60e894ef5804dc 10,21-27,42
+install.sh
+  s_8788922cf6a1c9::t_7ac33e40c9e8df 5
+mkdocs.yml
+  s_8788922cf6a1c9::t_e0b19963a6715e 41
+packaging/windows/build.py
+  s_8788922cf6a1c9::t_5c928171cbf4bc 1-57
+packaging/windows/launcher.py
+  s_8788922cf6a1c9::t_f9309de5be5277 1-79
+packaging/windows/release-notes.md
+  s_8788922cf6a1c9::t_49e0f7039c7904 1-17
+packaging/windows/requirements.lock
+  s_8788922cf6a1c9::t_1a60761b92660e 1-8
+packaging/windows/smoke.py
+  s_8788922cf6a1c9::t_7a261ea823ea20 1-71
+tests/test_docs.py
+  s_8788922cf6a1c9::t_362334d1255716 253,258
+tests/test_windows_installer.py
+  s_8788922cf6a1c9::t_09fe1b7a9ce0fd 1-62
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.18",
+  "base_commit_sha": "30f04bee03829bc9db1fe83b01892699916298e4",
+  "prompts": {},
+  "sessions": {
+    "s_8788922cf6a1c9": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a0a4c3-c51c-7f73-8dcf-1571c9980eaf",
+        "model": "gpt-6-astra"
+      },
+      "human_author": "Test <test@example.com>"
+    }
+  }
+}
