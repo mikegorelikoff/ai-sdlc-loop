@@ -1,0 +1,59 @@
+CHANGELOG.md
+  s_8788922cf6a1c9::t_fc4c7fbf1577ae 3-9
+README.md
+  s_8788922cf6a1c9::t_f368644a5f1b37 25,34
+docs/index.md
+  s_8788922cf6a1c9::t_dd4c4bac07a685 24,34
+docs/project/decision-log.md
+  s_8788922cf6a1c9::t_24b5050ad7c03a 3-10
+docs/project/index.md
+  s_8788922cf6a1c9::t_ea6ff74b57fdf7 5
+docs/reference/contracts.md
+  s_8788922cf6a1c9::t_0debd297eacd01 14-23
+docs/scripts/validate_docs.py
+  s_8788922cf6a1c9::t_e4f5d7b4840ebe 13
+docs/start-here.md
+  s_8788922cf6a1c9::t_d6c04b41595e3b 10
+install.sh
+  s_8788922cf6a1c9::t_8ad81cb19a432f 5
+skills/ai-sdlc-loop-flow/scripts/flow.py
+  s_8788922cf6a1c9::t_21b2d53f821436 16,148-154,156
+skills/ai-sdlc-loop-orchestrate/steps/01-specify.md
+  s_8788922cf6a1c9::t_70e5442bd77617 27-46
+skills/ai-sdlc-loop-shared-runtime/references/adaptive-execution.md
+  s_8788922cf6a1c9::t_e8d790ed7445f7 1-65
+skills/ai-sdlc-loop-shared-runtime/references/execution-contract.md
+  s_8788922cf6a1c9::t_5ce5b81501e84c 86-104
+skills/ai-sdlc-loop-shared-runtime/scripts/ai_sdlc_adaptive.py
+  s_8788922cf6a1c9::t_c6643d551b1dea 1-361
+skills/ai-sdlc-loop-shared-runtime/scripts/ai_sdlc_source_reads.py
+  s_8788922cf6a1c9::t_99ffa9d2970bf8 1-53
+skills/ai-sdlc-loop-shared-runtime/scripts/ai_sdlc_step_context.py
+  s_8788922cf6a1c9::t_3e3ee8e01e0430 6-7,411,582,620,637,694
+skills/ai-sdlc-loop-shared-runtime/scripts/ai_sdlc_steps.py
+  s_8788922cf6a1c9::t_b93d5e8f4c8090 6-7,382,428,451,585,588,602,608,613,693,838,863,891,993,998,1049
+skills/ai-sdlc-loop-shared-runtime/scripts/loop.py
+  s_8788922cf6a1c9::t_2dd310514fd6ee 16-17,27,278-293,295,309-330,332,371-375,380-398,404-412,438-448,556-559,578-580,590-606,613-669,692
+skills/ai-sdlc-loop-verify/steps/02-verify.md
+  s_8788922cf6a1c9::t_8a6cc89356df76 14-26
+tests/test_adaptive.py
+  s_8788922cf6a1c9::t_0c612c00ab5ecf 1-94
+tests/test_docs.py
+  s_8788922cf6a1c9::t_63c291b5f4e3e6 253,258
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.18",
+  "base_commit_sha": "1cd29689cdedcef74429eda3ddf4a0cfb4995915",
+  "prompts": {},
+  "sessions": {
+    "s_8788922cf6a1c9": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a0a4c3-c51c-7f73-8dcf-1571c9980eaf",
+        "model": "gpt-6-astra"
+      },
+      "human_author": "Test <test@example.com>"
+    }
+  }
+}
