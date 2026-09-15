@@ -11,3 +11,13 @@
 | Promotion | `ai-sdlc-harness-promotion/v1` | Compatibility artifact only |
 
 Canonical Loop machine artifacts use deterministic TOON. Fingerprints detect drift; they do not authenticate people or bypass host policy.
+
+## Adaptive execution
+
+Specify classifies execution depth automatically; explicit mode selection is a
+minimum depth. FAST retains scope, quality and approval gates. STANDARD adds a
+compact plan; DEEP retains the full workflow. `adapt` adds context, risk signals
+and evidence without restarting the task. `next` reports remaining work.
+Verification retries are bounded and unchanged passing evidence is reusable.
+Independent verification commands can run concurrently only with an explicit
+independence declaration. Missing host call and token counts remain unknown.

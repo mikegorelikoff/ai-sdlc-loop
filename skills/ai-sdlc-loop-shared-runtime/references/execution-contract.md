@@ -83,3 +83,22 @@ The owning skill returns its handoff. A coordinator may continue only the
 already requested lifecycle/cascade after consuming that evidence and checking
 the next prerequisites. A standalone skill must not silently expand scope.
 Respect separate commit/publication and product-specific approval gates.
+
+## Adaptive delivery
+
+For a whole delivery, classify once into FAST (local, understood, reversible),
+STANDARD (compact plan), or DEEP (architecture, security, migration, broad scope
+or material uncertainty). Full flow and protected policy can only raise depth.
+FAST skips separate planning/readiness/SDD; STANDARD keeps one compact task plan;
+DEEP retains the existing lifecycle. Directly requested skills and existing
+registered stages still satisfy their own contracts; omitted stages are not done.
+
+All owners reuse the same task context and source-bound evidence. Expand only
+missing context; escalate on new risk without restarting work or retry budgets.
+Prefer deterministic checks and one relevant semantic review; activate specialists
+only for their failure class. Stop on current passing evidence; allow at most two
+changed repair cycles, never repeat an unchanged failed review. Record timings
+and actual counters, with null for unavailable host telemetry.
+
+Coordinators load [adaptive execution](adaptive-execution.md) once for the shared
+helper, context sections, specialist triggers and evidence-record contract.

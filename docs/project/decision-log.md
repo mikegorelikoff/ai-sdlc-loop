@@ -1,5 +1,13 @@
 # Decision log
 
+## 2026-09-15 — Adaptive execution depth
+
+Choose process depth from observed change risk and uncertainty. FAST uses targeted
+verification, STANDARD adds a compact plan, and DEEP retains the full lifecycle.
+Escalation reuses context and evidence. Existing approval and release authority
+remain unchanged. Unknown telemetry must not be reported as measured zero.
+
+
 ## 2026-09-08 — Deterministic execution boundaries
 
 Retain Loop's compact lifecycle manifests and interpret them through the

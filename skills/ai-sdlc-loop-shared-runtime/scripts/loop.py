@@ -13,6 +13,8 @@ import stat
 import subprocess
 import sys
 import tempfile
+import time
+from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
@@ -22,6 +24,7 @@ if not SHARED_SCRIPTS.is_dir():
     raise ImportError(f"AI SDLC Loop shared runtime is missing: {SHARED_SCRIPTS}")
 sys.path.insert(0, str(SHARED_SCRIPTS))
 from toon import ToonDecodeError, decode_toon, encode_toon
+import ai_sdlc_adaptive as adaptive
 
 SCHEMA = "ai-sdlc-loop/v1"
 PROMOTION_SCHEMA = "ai-sdlc-harness-promotion/v1"
@@ -272,7 +275,24 @@ def split_command(value: str) -> list[str]:
     return argv
 
 
+def refresh_task_context(task: dict[str, Any], root: Path, paths: list[str]) -> None:
+    """Do not turn optional packing into a ban on existing sensitive-file scopes."""
+    selected = []
+    for path in paths:
+        safe_relative(root, path)
+        if adaptive.SECRET_PATH.search(path):
+            adaptive.escalate(task, observed={"security": True})
+            note = path + ": sensitive source omitted from context; use its owning review"
+            questions = task["context_pack"]["unresolved_questions"]
+            if note not in questions:
+                questions.append(note)
+        else:
+            selected.append(path)
+    adaptive.refresh_context(task, root, selected)
+
+
 def cmd_specify(args: argparse.Namespace) -> None:
+    started = time.perf_counter()
     root = project_root(args.project_root)
     feature = validate_feature(args.feature)
     allowed = sorted(set(safe_relative(root, value) for value in args.allow))
@@ -286,8 +306,30 @@ def cmd_specify(args: argparse.Namespace) -> None:
         "trace_ids": sorted(set(args.trace)),
     }
     spec["fingerprint"] = fingerprint(spec)
+    state_file = state_path(root, feature, "state.toon")
+    state = load_toon(state_file) if state_file.exists() else {}
+    task = state.get("execution")
+    facts = adaptive.signals(args.signal)
+    if task:
+        if task["request"] != spec["request"]:
+            task["request"] = spec["request"]
+            task["context_pack"]["task"] = spec["request"]
+            task["result"] = "in-progress"
+            task["completed_stages"] = []
+        adaptive.escalate(task, allowed, facts)
+        minimum = "DEEP" if args.full_flow else args.mode
+        adaptive.raise_minimum(task, minimum)
+    else:
+        task = adaptive.new_task(spec["request"], allowed, facts, minimum=args.mode, full=args.full_flow)
+    refresh_task_context(task, root, [p for p in allowed if (root / p).is_file()])
+    if "context" not in task["completed_stages"]:
+        adaptive.complete_stage(task, "context", ["spec.toon"])
+    adaptive.stage_event(task, "classify-context", time.perf_counter() - started,
+                         skills=["ai-sdlc-loop-specify"])
+    state.update({"schema": SCHEMA, "feature": feature, "stage": "specified",
+                  "spec_fingerprint": spec["fingerprint"], "execution": task})
     atomic_toon(state_path(root, feature, "spec.toon"), spec)
-    atomic_toon(state_path(root, feature, "state.toon"), {"schema": SCHEMA, "feature": feature, "stage": "specified", "spec_fingerprint": spec["fingerprint"]})
+    atomic_toon(state_file, state)
     print(spec["fingerprint"])
 
 
@@ -326,26 +368,48 @@ def cmd_implement_check(args: argparse.Namespace) -> None:
 def cmd_verify(args: argparse.Namespace) -> None:
     root = project_root(args.project_root)
     feature = validate_feature(args.feature)
-    if args.timeout <= 0:
-        raise LoopError("verification timeout must be positive")
+    if args.timeout <= 0 or not 1 <= args.jobs <= 8:
+        raise LoopError("verification timeout must be positive and jobs must be 1..8")
+    if args.jobs > 1 and not args.independent:
+        raise LoopError("parallel checks require --independent after checking shared resources")
+    started = time.perf_counter()
     spec = current_spec(root, feature)
     require_approval(root, feature, "implement", spec["fingerprint"])
     snapshot = change_snapshot(root, spec)
     require_quality_gate(root, feature, snapshot)
-    records: list[dict[str, Any]] = []
-    ready = True
-    for command in args.command:
-        argv = split_command(command)
-        if not argv:
-            raise LoopError("verification command must not be empty")
+    state_file = state_path(root, feature, "state.toon")
+    state = load_toon(state_file)
+    task = state.get("execution") or adaptive.new_task(spec["request"], spec["allowed_paths"])
+    paths = [row["path"] for row in snapshot["files"]]
+    adaptive.escalate(task, paths)
+    refresh_task_context(task, root, paths)
+    commands = [split_command(command) for command in args.command]
+    if any(not argv for argv in commands):
+        raise LoopError("verification command must not be empty")
+    if len({tuple(argv) for argv in commands}) != len(commands):
+        raise LoopError("duplicate verification commands must be removed")
+    action = adaptive.verification_action(task, snapshot["fingerprint"], commands, condition=args.retry_condition)
+    if action == "done":
+        evidence = current_evidence(root, feature, spec)
+        print(evidence["verified_fingerprint"])
+        return
+
+    def execute(argv):
+        command_start = time.perf_counter()
         try:
             result = subprocess.run(argv, cwd=root, text=True, errors="replace", capture_output=True, timeout=args.timeout, check=False)
             record = {"argv": [redact(item) for item in argv], "exit_code": result.returncode, "timed_out": False, "stdout": redact(result.stdout[-8000:]), "stderr": redact(result.stderr[-8000:])}
-            ready = ready and result.returncode == 0
         except (OSError, subprocess.TimeoutExpired) as exc:
             record = {"argv": [redact(item) for item in argv], "exit_code": None, "timed_out": isinstance(exc, subprocess.TimeoutExpired), "stdout": "", "stderr": redact(str(exc))}
-            ready = False
-        records.append(record)
+        record["seconds"] = time.perf_counter() - command_start
+        return record
+
+    if args.jobs == 1:
+        records = [execute(argv) for argv in commands]
+    else:
+        with ThreadPoolExecutor(max_workers=args.jobs) as pool:
+            records = list(pool.map(execute, commands))
+    ready = all(row["exit_code"] == 0 for row in records)
     # A passing command may rewrite the files it checks. Never bind that success
     # to the pre-command snapshot without checking the post-command state.
     drift_reason = ""
@@ -371,7 +435,17 @@ def cmd_verify(args: argparse.Namespace) -> None:
         evidence["failure_reason"] = drift_reason
     evidence["verified_fingerprint"] = fingerprint(evidence, "verified_fingerprint")
     atomic_toon(state_path(root, feature, "evidence.toon"), evidence)
-    atomic_toon(state_path(root, feature, "state.toon"), {"schema": SCHEMA, "feature": feature, "stage": "verified" if ready else "verification-failed", "spec_fingerprint": spec["fingerprint"], "verified_fingerprint": evidence["verified_fingerprint"], "ready": ready})
+    adaptive.record_verification(task, snapshot["fingerprint"], commands, ready, condition=args.retry_condition)
+    if ready and adaptive.next_stage(task) == "verify":
+        adaptive.complete_stage(task, "verify", ["evidence.toon", "quality-gate.toon"])
+    task["changes"] = snapshot["files"]
+    adaptive.stage_event(task, "verify", time.perf_counter() - started,
+                         skills=["ai-sdlc-loop-verify"], checks=[row["argv"] for row in records],
+                         model_calls=0, tool_calls=len(records), context_tokens=0)
+    state.update({"schema": SCHEMA, "feature": feature, "stage": "verified" if ready else "verification-failed",
+                  "spec_fingerprint": spec["fingerprint"], "verified_fingerprint": evidence["verified_fingerprint"],
+                  "ready": ready, "execution": task})
+    atomic_toon(state_file, state)
     print(evidence["verified_fingerprint"])
     if not ready:
         raise LoopError(drift_reason or "one or more verification commands failed")
@@ -479,6 +553,10 @@ def parser() -> argparse.ArgumentParser:
     specify.add_argument("--request", required=True)
     specify.add_argument("--allow", action="append", required=True)
     specify.add_argument("--trace", action="append", default=[])
+    specify.add_argument("--mode", choices=adaptive.MODES, default="FAST", help="minimum execution depth; risk can raise it")
+    specify.add_argument("--signal", action="append", default=[], help="observed key=true/false or files/modules=count")
+    specify.add_argument("--full-flow", action="store_true")
+    specify.add_argument("--quick-flow", action="store_true")
     specify.set_defaults(handler=cmd_specify)
     approve = commands.add_parser("approve", help="record an explicit reviewer decision")
     approve.add_argument("--feature", required=True)
@@ -497,6 +575,9 @@ def parser() -> argparse.ArgumentParser:
     verify.add_argument("--feature", required=True)
     verify.add_argument("--command", action="append", required=True)
     verify.add_argument("--timeout", type=int, default=300)
+    verify.add_argument("--jobs", type=int, default=1)
+    verify.add_argument("--independent", action="store_true", help="assert commands have no shared mutable resources")
+    verify.add_argument("--retry-condition", default="", help="evidence of a changed environment enabling retry")
     verify.set_defaults(handler=cmd_verify)
     commit = commands.add_parser("commit", help="create one separately approved commit")
     commit.add_argument("--feature", required=True)
@@ -506,10 +587,84 @@ def parser() -> argparse.ArgumentParser:
     promote.add_argument("--feature", required=True)
     promote.add_argument("--output", required=True)
     promote.set_defaults(handler=cmd_promote)
+    adapt = commands.add_parser("adapt", help="reuse task context, record plan and escalate from new observations")
+    adapt.add_argument("--feature", required=True)
+    adapt.add_argument("--signal", action="append", default=[])
+    adapt.add_argument("--context-file", action="append", default=[])
+    adapt.add_argument("--plan-step", action="append", default=[])
+    adapt.add_argument("--complete-stage", choices=("planning", "readiness", "sdd", "implement"))
+    adapt.add_argument("--evidence", action="append", default=[])
+    adapt.add_argument("--record-stage")
+    adapt.add_argument("--elapsed", type=float)
+    adapt.add_argument("--model-calls", type=int)
+    adapt.add_argument("--tool-calls", type=int)
+    adapt.add_argument("--context-tokens", type=int)
+    adapt.add_argument("--skill", action="append", default=[])
+    adapt.set_defaults(handler=cmd_adapt)
+    advance = commands.add_parser("next", help="select missing adaptive work; never execute or approve it")
+    advance.add_argument("--feature", required=True)
+    advance.set_defaults(handler=cmd_next)
     status = commands.add_parser("status", help="show current local Loop state")
     status.add_argument("--feature", required=True)
     status.set_defaults(handler=cmd_status)
     return value
+
+
+def cmd_adapt(args: argparse.Namespace) -> None:
+    root = project_root(args.project_root)
+    feature = validate_feature(args.feature)
+    spec = current_spec(root, feature)
+    path = state_path(root, feature, "state.toon")
+    state = load_toon(path)
+    task = state.get("execution") or adaptive.new_task(spec["request"], spec["allowed_paths"])
+    # Escalation changes process depth, never the approved source scope.
+    adaptive.escalate(task, args.context_file, adaptive.signals(args.signal))
+    adaptive.refresh_context(task, root, args.context_file)
+    if args.plan_step:
+        task["plan"] = args.plan_step
+        if adaptive.next_stage(task) == "compact-plan":
+            adaptive.complete_stage(task, "compact-plan", ["state.toon:execution.plan"])
+    if args.complete_stage:
+        if args.complete_stage == "implement":
+            require_approval(root, feature, "implement", spec["fingerprint"])
+            change_snapshot(root, spec)
+        for evidence in args.evidence:
+            if not (root / safe_relative(root, evidence, allow_state=True)).is_file():
+                raise LoopError("stage evidence file is missing: " + evidence)
+        adaptive.complete_stage(task, args.complete_stage, args.evidence)
+    if args.record_stage:
+        if args.elapsed is None:
+            raise LoopError("record-stage requires measured --elapsed")
+        adaptive.stage_event(task, args.record_stage, args.elapsed, skills=args.skill,
+                             model_calls=args.model_calls, tool_calls=args.tool_calls, context_tokens=args.context_tokens)
+    state["execution"] = task
+    atomic_toon(path, state)
+    print(encode_toon(task), end="")
+
+
+def cmd_next(args: argparse.Namespace) -> None:
+    root = project_root(args.project_root)
+    feature = validate_feature(args.feature)
+    spec = current_spec(root, feature)
+    state = load_toon(state_path(root, feature, "state.toon"))
+    task = state.get("execution")
+    if task is None:
+        print(encode_toon({"next_stage": "legacy", "owning_skill": "ai-sdlc-loop-orchestrate", "authorizes_execution": False}), end="")
+        return
+    stage = adaptive.next_stage(task)
+    owner = {"context": "specify", "compact-plan": "specify", "planning": "specify",
+             "readiness": "requirements-review", "sdd": "specify", "implement": "implement",
+             "verify": "verify", "done": "", "human-diagnosis": ""}[stage]
+    if stage == "verify":
+        try:
+            require_quality_gate(root, feature, change_snapshot(root, spec))
+        except LoopError:
+            stage, owner = "quality-gate", "engineering-quality-gate"
+    if stage == "done":
+        current_evidence(root, feature, spec)
+    print(encode_toon({"mode": task["decision"]["mode"], "next_stage": stage,
+                      "owning_skill": "ai-sdlc-loop-" + owner if owner else "",
+                      "context_ref": "state.toon:execution.context_pack", "authorizes_execution": False}), end="")
 
 
 def cmd_steps(args: argparse.Namespace) -> None:
@@ -534,7 +689,7 @@ def main() -> int:
     args = parser().parse_args()
     try:
         args.handler(args)
-    except LoopError as exc:
+    except (LoopError, ValueError) as exc:
         print(f"error: {exc}", file=sys.stderr)
         return 2
     return 0
