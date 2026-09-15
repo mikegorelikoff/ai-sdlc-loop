@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.10.0 - 2026-09-15
+
+- Add a Windows x64 EXE with a project/profile picker, bundled installer Python and all 26 skills.
+- Reuse existing install/verify safety contracts; preserve the CLI and local changes.
+- Build with hash-locked dependencies and publish the EXE plus SHA-256 after a Windows smoke test without Python on PATH.
+
 ## v0.9.0 - 2026-09-15
 
 - Add automatic FAST, STANDARD and DEEP execution depth with monotonic escalation and a reusable task context pack.

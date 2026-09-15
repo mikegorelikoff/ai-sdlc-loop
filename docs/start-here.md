@@ -7,7 +7,7 @@ This is the canonical first-run path for AI SDLC Loop.
 From the project that should receive the skills, run one command:
 
 ```sh
-curl -fsSL https://raw.githubusercontent.com/mikegorelikoff/ai-sdlc-loop/v0.9.0/install.sh | sh -s -- codex-project
+curl -fsSL https://raw.githubusercontent.com/mikegorelikoff/ai-sdlc-loop/v0.10.0/install.sh | sh -s -- codex-project
 ```
 
 Then verify separately:
@@ -17,6 +17,13 @@ python3 .ai-sdlc-loop/install/install.py verify codex-project
 ```
 
 Claude Code projects use `claude-code-project`. Another compatible agent uses `agent-project --skills-root .agent/skills`.
+
+## Windows
+
+Download the [Windows x64 installer](https://github.com/mikegorelikoff/ai-sdlc-loop/releases/download/v0.10.0/ai-sdlc-loop-0.10.0-windows-x64-setup.exe), open it, and select your project folder and agent. Setup verifies the installation automatically. No separate Python installation is needed for setup.
+
+For CLI commands, runtime prerequisites and checksum verification, see
+[Install on Windows](guides/windows-install.md).
 
 ## Run the first loop
 
@@ -32,7 +39,7 @@ Ask the agent to use `ai-sdlc-loop-flow` for a bounded repository change. Provid
 
 ## Expected result
 
-A current source-checkout installation contains 21 `ai-sdlc-loop-*`
+A current source-checkout installation contains 26 `ai-sdlc-loop-*`
 directories; immutable `v0.1.1` retains its prior 17-member inventory. Local
 workflow state appears below `.ai-sdlc-loop/<feature>/` and durable machine
 artifacts use TOON. The quality gate writes its current report to

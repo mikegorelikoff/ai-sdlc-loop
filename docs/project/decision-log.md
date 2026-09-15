@@ -1,5 +1,13 @@
 # Decision log
 
+## 2026-09-15 — Windows executable installation
+
+Package the existing installer and skill inventory as a Windows x64 executable.
+Reuse its path, integrity and overwrite policy. Double-click opens a project and
+agent picker; CLI arguments retain existing automation interfaces. Bundle Python
+for setup without changing the Python requirement for later skill execution.
+Publish unsigned assets with explicit provenance, checksum and Windows smoke evidence.
+
 ## 2026-09-15 — Adaptive execution depth
 
 Choose process depth from observed change risk and uncertainty. FAST uses targeted
