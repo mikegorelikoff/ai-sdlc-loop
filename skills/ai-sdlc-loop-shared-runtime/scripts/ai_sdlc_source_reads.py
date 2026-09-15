@@ -45,7 +45,8 @@ def read_bytes(path: Path) -> bytes:
 
 
 def read_text(path: Path) -> str:
-    return read_bytes(path).decode("utf-8")
+    # Match Path.read_text(newline=None), retaining raw bytes for fingerprints.
+    return read_bytes(path).decode("utf-8").replace("\r\n", "\n").replace("\r", "\n")
 
 
 def metrics() -> dict:
