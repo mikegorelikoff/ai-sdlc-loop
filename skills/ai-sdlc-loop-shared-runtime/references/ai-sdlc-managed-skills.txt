@@ -32,7 +32,7 @@ ai-sdlc-research
 ai-sdlc-retrospective
 ai-sdlc-runtime
 ai-sdlc-scheduler
-ai-sdlc-sdd
+ai-sdlc-loop-sdd
 ai-sdlc-loop-security-testing
 ai-sdlc-loop-shared-runtime
 ai-sdlc-test-case-and-suite-synthesis

@@ -13,6 +13,7 @@ from pathlib import Path
 _SHARED = Path(__file__).resolve().parents[2] / "ai-sdlc-loop-shared-runtime" / "scripts"
 sys.path.insert(0, str(_SHARED))
 from ai_sdlc_toon import ToonDecodeError, decode_toon, encode_toon
+from ai_sdlc_adaptive import classify, strategy
 
 SCHEMA = "ai-sdlc-loop-flow/v1"
 APPLY_SCHEMA = "ai-sdlc-loop-flow-apply/v1"
@@ -140,7 +141,15 @@ def build_card(root: Path, intent: str, feature: str, rigor: str) -> dict[str, o
     if stage == "commit" and current_stage != "verified":
         blockers.append("commit-requires-current-passing-evidence")
     writes = [] if blockers or stage in {"diagnose", "review", "security"} else [f".ai-sdlc-loop/{feature}/"]
+    decision = classify(normalized, full=rigor == "full")
+    if current_stage != "not-started":
+        state = decode_toon((root / ".ai-sdlc-loop" / feature / "state.toon").read_text(encoding="utf-8"))
+        task = state.get("execution")
+        if task:
+            decision = classify(task["request"], task["decision"]["change_surface"]["paths"],
+                                task["decision"]["signals"], minimum=task["decision"]["mode"], full=rigor == "full")
     semantic: dict[str, object] = {
+        "execution": {**decision, "strategy": strategy(decision)},
         "schema": SCHEMA,
         "feature": feature,
         "intent": normalized,

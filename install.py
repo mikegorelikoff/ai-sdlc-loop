@@ -17,6 +17,7 @@ SKILLS = (
     "ai-sdlc-loop-flow",
     "ai-sdlc-loop-doctor",
     "ai-sdlc-loop-orchestrate",
+    "ai-sdlc-loop-sdd",
     "ai-sdlc-loop-specify",
     "ai-sdlc-loop-implement",
     "ai-sdlc-loop-engineering-quality-gate",

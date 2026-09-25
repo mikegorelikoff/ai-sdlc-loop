@@ -50,7 +50,7 @@ REFINEMENT_STAGES: tuple[StageDef, ...] = tuple(
 
 STAGES: tuple[StageDef, ...] = REFINEMENT_STAGES + (
     StageDef("branching", "ai-sdlc-loop-branching", "implementation", "branch-plan.md", ()),
-    StageDef("sdd", "ai-sdlc-sdd", "implementation", "specs/<feature>", ("branching",)),
+    StageDef("sdd", "ai-sdlc-loop-sdd", "implementation", ".ai-sdlc-loop/<feature>/spec.toon", ("branching",)),
     StageDef("validation", "ai-sdlc-loop-validation", "implementation", "validation.md", ("sdd",)),
     StageDef("code_review", "ai-sdlc-loop-code-review", "implementation", "code-review.md", ("validation",)),
     StageDef("security_testing", "ai-sdlc-loop-security-testing", "implementation", "security-review.md", ("sdd",), True),
@@ -321,7 +321,9 @@ def completion_artifact_errors(
     feature = str(state.get("feature", ""))
     supplied = Path(artifacts)
     expected = Path(stage.artifacts.replace("<feature>", feature))
-    if stage.stage_id == "sdd":
+    if stage.stage_id == "sdd" and stage.skill == "ai-sdlc-loop-sdd":
+        canonical = Path(".ai-sdlc-loop") / feature / "spec.toon"
+    elif stage.stage_id == "sdd":
         canonical = Path("specs") / feature
     else:
         canonical = Path(workspace_base(stage.workspace)) / feature / expected.name
@@ -347,6 +349,20 @@ def completion_artifact_errors(
         body = text.split("---", 2)[-1].strip() if text.startswith("---") else text.strip()
         if len(body) < 40 or not re.search(r"(?m)^#\s+\S", body):
             return [f"completion artifact has no meaningful review body: {label}"]
+        return []
+
+    if stage.stage_id == "sdd" and stage.skill == "ai-sdlc-loop-sdd":
+        if not normalized.is_file():
+            return [f"Loop SDD completion artifact must be a file: {artifacts}"]
+        try:
+            from toon import loads
+            payload = loads(normalized.read_text(encoding="utf-8"))
+        except (OSError, ValueError) as exc:
+            return [f"Loop SDD completion artifact is invalid TOON: {exc}"]
+        if not isinstance(payload, dict) or payload.get("schema") != "ai-sdlc-loop-spec/v1":
+            return [f"Loop SDD completion artifact has an invalid schema: {artifacts}"]
+        if payload.get("feature") != feature or not payload.get("fingerprint"):
+            return [f"Loop SDD completion artifact does not match feature or fingerprint: {artifacts}"]
         return []
 
     if stage.stage_id == "sdd":

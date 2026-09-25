@@ -1,5 +1,17 @@
 # Changelog
 
+## Unreleased
+
+## 0.8.2 - 2026-09-25
+
+- Add the installed `ai-sdlc-loop-sdd` entry point for deterministic,
+  fingerprint-bound specification-driven development. Route new Loop SDD
+  selections to it while retaining `ai-sdlc-loop-specify` for compatibility.
+- Add automatic FAST/STANDARD/DEEP depth, shared task context, incremental
+  escalation and measured execution evidence in existing state.
+- Bound verification retries, stop unchanged repeats, and support explicitly
+  independent concurrent checks while retaining approval and quality gates.
+
 ## 0.3.0 - 2026-09-08
 
 - Added read-only deterministic selection of compact Loop graphs with cycle,

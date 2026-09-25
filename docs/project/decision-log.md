@@ -34,3 +34,21 @@ Publish the 21-skill package with deterministic graph selection, current-evidenc
 gates, requirements discovery and engineering review. Pin install defaults and
 first-run commands to v0.3.0. No schema-major migration is introduced; v0.2.0
 remains an immutable rollback target.
+
+## 2026-09-15 — Adaptive depth and bounded verification
+
+Preserve the compact graph and approval/quality/evidence contracts. Add adaptive
+coordination in existing state under `execution`; `next` selects missing work and
+`adapt` records context, decisions and escalation without granting authority.
+Independent commands may run concurrently after implementation. Three attempts
+bound repair; unchanged failed checks stop. All skills consume the shared adaptive
+execution contract. Preserve existing public paths and legacy manual commands.
+
+## 2026-09-25 — Loop-native SDD entry point
+
+Add `ai-sdlc-loop-sdd` as the installed, namespaced SDD entry point. It owns the
+same deterministic TOON contract as Specify and routes through the existing
+`loop.py specify` runtime rather than importing Harness's larger Markdown SDD
+package. Keep `ai-sdlc-loop-specify` as a compatibility path and route new Loop
+SDD selections to the new skill. This makes the advertised SDD lifecycle stage
+available in every Loop installation without changing approval semantics.

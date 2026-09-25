@@ -9,7 +9,7 @@ Use this skill when a user asks to change code through AI SDLC Loop or requests 
 
 ## Contract
 
-1. Route specification work to `ai-sdlc-loop-specify`.
+1. Route specification-driven development work to `ai-sdlc-loop-sdd`.
 2. Route authorized source changes to `ai-sdlc-loop-implement`.
 3. Route every completed implementation to `ai-sdlc-loop-engineering-quality-gate`.
 4. Route evidence collection and promotion to `ai-sdlc-loop-verify` only after a current ready quality report exists.

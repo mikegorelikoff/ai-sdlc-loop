@@ -17,7 +17,7 @@ REPORT_SCHEMA = "ai-sdlc-loop-doctor-report/v1"
 PLAN_SCHEMA = "ai-sdlc-loop-upgrade-plan/v1"
 PROFILES = {"codex-project": Path(".agents/skills"), "claude-code-project": Path(".claude/skills")}
 SKILLS = (
-    "ai-sdlc-loop-flow", "ai-sdlc-loop-doctor", "ai-sdlc-loop-orchestrate",
+    "ai-sdlc-loop-flow", "ai-sdlc-loop-doctor", "ai-sdlc-loop-orchestrate", "ai-sdlc-loop-sdd",
     "ai-sdlc-loop-specify", "ai-sdlc-loop-implement",
     "ai-sdlc-loop-engineering-quality-gate", "ai-sdlc-loop-verify",
     "ai-sdlc-loop-commit", "ai-sdlc-loop-approvals-sandbox", "ai-sdlc-loop-branching",
