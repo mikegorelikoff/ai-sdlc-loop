@@ -1,0 +1,58 @@
+CHANGELOG.md
+  s_8788922cf6a1c9::t_fe54fda3c1b8ef 3-14
+docs/project/decision-log.md
+  s_8788922cf6a1c9::t_fe54fda3c1b8ef 37-45
+  s_8788922cf6a1c9::t_969fb9f720f0af 46-48
+  s_8788922cf6a1c9::t_c6fe8eeef638a9 49-51
+skills/ai-sdlc-loop-shared-runtime/scripts/ai_sdlc_steps.py
+  s_8788922cf6a1c9::t_11f0e70bff2016 6-7,380,426,449,583,586,600,606,611,674,691,836,861,889,991,996,1047
+skills/ai-sdlc-loop-shared-runtime/scripts/loop.py
+  s_8788922cf6a1c9::t_c8064234f02453 321
+  s_8788922cf6a1c9::t_1a5f047fb46049 313-318,325-326,328,439-440,595-602,604-606,625-639,643-667
+  s_8788922cf6a1c9::t_05ae231dbb414e 668-669
+  s_8788922cf6a1c9::t_4c806b7c40b83a 278-293,324,385
+  s_8788922cf6a1c9::t_e3ab0177fc1817 16-17,27,295,309-312,319-320,322-323,327,329-330,332,371-375,380-384,386-398,404-412,438,441-448,556-559,578-580,590-594,603,613-624,640-642,692
+skills/ai-sdlc-loop-flow/scripts/flow.py
+  s_8788922cf6a1c9::t_7baf84d727b27d 145-150
+  s_8788922cf6a1c9::t_e3ab0177fc1817 16,144,152
+skills/ai-sdlc-loop-verify/steps/02-verify.md
+  s_8788922cf6a1c9::t_06a122949bc2b9 14-26
+skills/ai-sdlc-loop-shared-runtime/references/adaptive-execution.md
+  s_8788922cf6a1c9::t_11f0e70bff2016 1-65
+skills/ai-sdlc-loop-orchestrate/steps/01-specify.md
+  s_8788922cf6a1c9::t_e83e7bfed895a8 23-43
+docs/reference/contracts.md
+  s_8788922cf6a1c9::t_fe54fda3c1b8ef 14-39
+skills/ai-sdlc-loop-shared-runtime/scripts/ai_sdlc_adaptive.py
+  s_8788922cf6a1c9::t_e682c6e6b80e19 16,77,133,154,160-171,186-192,196-197,312-322,327-337,339-355
+  s_8788922cf6a1c9::t_c8064234f02453 173-178,181-185,193-195,309-311,325-326,338
+  s_8788922cf6a1c9::t_f0abe77d76f344 226-233,242
+  s_8788922cf6a1c9::t_fe54fda3c1b8ef 172,179-180,252-256,293-297
+  s_8788922cf6a1c9::t_e3ab0177fc1817 1-15,17-76,78-132,134-153,155-159,198-225,234-241,243-251,257-292,298-308,323-324,356-361
+tests/test_adaptive.py
+  s_8788922cf6a1c9::t_06a122949bc2b9 1-86,93-94
+  s_8788922cf6a1c9::t_0cf0bbab24bce4 87-92
+skills/ai-sdlc-loop-shared-runtime/scripts/ai_sdlc_source_reads.py
+  s_8788922cf6a1c9::t_e3ab0177fc1817 1-53
+skills/ai-sdlc-loop-shared-runtime/references/execution-contract.md
+  s_8788922cf6a1c9::t_11f0e70bff2016 87-104
+  s_8788922cf6a1c9::t_e83e7bfed895a8 86
+skills/ai-sdlc-loop-shared-runtime/scripts/ai_sdlc_step_context.py
+  s_8788922cf6a1c9::t_0c0ef72bed52c1 6-7,411,555,593,610,644
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.18",
+  "base_commit_sha": "6c694fbf70e8534a99c554bb83044dc465e1c43b",
+  "prompts": {},
+  "sessions": {
+    "s_8788922cf6a1c9": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a0a4c3-c51c-7f73-8dcf-1571c9980eaf",
+        "model": "gpt-6-astra"
+      },
+      "human_author": "Test <test@example.com>"
+    }
+  }
+}
