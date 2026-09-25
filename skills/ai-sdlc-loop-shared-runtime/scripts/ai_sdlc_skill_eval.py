@@ -38,7 +38,7 @@ LIVE_SCENARIOS = (
     {
         "id": "step-compliance",
         "criterion": "step_compliance",
-        "skill": "ai-sdlc-sdd",
+        "skill": "ai-sdlc-loop-sdd",
         "phase": "validate",
         "required_types": ("analysis", "context", "action", "validation"),
     },

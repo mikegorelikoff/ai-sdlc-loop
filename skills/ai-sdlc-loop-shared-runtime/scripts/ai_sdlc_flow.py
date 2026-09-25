@@ -127,7 +127,7 @@ INTENT_RULES: tuple[tuple[str, tuple[str, ...], str, str, str], ...] = (
     ("story_decomposition", ("story", "backlog", "epic"), "refinement", "story_decomposition", "ai-sdlc-user-story-decomposition"),
     ("review", ("code review", "review diff", "review pr", "review code", "review"), "implementation", "code_review", "ai-sdlc-loop-code-review"),
     ("validation", ("validate", "validation", "regression", "smoke test"), "implementation", "validation", "ai-sdlc-loop-validation"),
-    ("implementation", ("implement", "fix", "bug", "refactor", "api", "architecture"), "implementation", "sdd", "ai-sdlc-sdd"),
+    ("implementation", ("implement", "fix", "bug", "refactor", "api", "architecture"), "implementation", "sdd", "ai-sdlc-loop-sdd"),
 )
 
 

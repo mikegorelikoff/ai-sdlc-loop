@@ -5,7 +5,7 @@ Loop separates lifecycle ownership from reusable delivery controls.
 ## Lifecycle
 
 1. `ai-sdlc-loop-flow` explores and fingerprints one route; `ai-sdlc-loop-orchestrate` remains the direct stage router.
-2. `ai-sdlc-loop-specify` normalizes scope and writes the specification fingerprint.
+2. `ai-sdlc-loop-sdd` normalizes scope, acceptance, and allowed paths, then writes the specification fingerprint. `ai-sdlc-loop-specify` remains a compatibility entry point.
 3. `ai-sdlc-loop-implement` checks current approval before source mutation.
 4. `ai-sdlc-loop-engineering-quality-gate` inspects the diff against bounded
    repository evidence, fixes safe significant findings, reruns checks, and
