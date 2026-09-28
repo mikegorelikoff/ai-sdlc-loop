@@ -1,5 +1,17 @@
 # Changelog
 
+## v0.11.0 - 2026-09-28
+
+- Add `ai-sdlc-loop-usage-coach`: local behavioral feedback skill analyzing workflow patterns, friction motifs, and discoverability.
+- Add append-only session event journal with strict zero-remote telemetry, sensitive token redaction, and fail-open execution.
+- Implement universal high-precision execution time tracking across all 28 skills (`track_skill`, `track_task`, task duration breakdown, per-skill profiling, and rework overhead analytics).
+- Interactive coach CLI `coach.py` with `report`, `analyze`, `suggest`, `feedback`, and `explain` subcommands.
+- Bump bundled Windows installer version to 0.11.0.
+
+## v0.10.1 - 2026-09-28
+
+- Update Windows installer build and packaging scripts for version 0.10.1.
+
 ## v0.10.0 - 2026-09-15
 
 - Add a Windows x64 EXE with a project/profile picker, bundled installer Python and all 26 skills.

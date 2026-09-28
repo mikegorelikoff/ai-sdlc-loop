@@ -25,7 +25,7 @@ def main() -> None:
             result = subprocess.run([str(exe), *args], cwd=root, env=env, capture_output=True, text=True, timeout=90)
             assert (result.returncode == 0) == success, (result.returncode, result.stdout, result.stderr)
             return result
-        assert "0.10.1" in run("--version").stdout
+        assert "0.11.0" in run("--version").stdout
         # Prove the bundled Tcl/Tk GUI opens and exits without system Python.
         user32 = ctypes.windll.user32
         user32.FindWindowW.argtypes = [ctypes.c_wchar_p, ctypes.c_wchar_p]
