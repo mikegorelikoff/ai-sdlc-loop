@@ -34,6 +34,7 @@ SKILLS = (
     'ai-sdlc-loop-release-readiness',
     'ai-sdlc-loop-requirements-discovery',
     'ai-sdlc-loop-requirements-review',
+    'ai-sdlc-loop-sdd',
     'ai-sdlc-loop-security-testing',
     'ai-sdlc-loop-shared-runtime',
     'ai-sdlc-loop-specify',

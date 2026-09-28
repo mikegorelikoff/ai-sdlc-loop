@@ -184,7 +184,7 @@ class DocumentedCommandTests(unittest.TestCase):
 
     def test_tc030_all_distributed_skills_use_loop_namespace(self) -> None:
         skills = sorted(path for path in (ROOT / "skills").iterdir() if path.is_dir())
-        self.assertEqual(26, len(skills))
+        self.assertEqual(27, len(skills))
         for skill in skills:
             with self.subTest(skill=skill.name):
                 self.assertRegex(skill.name, r"^ai-sdlc-loop-[a-z0-9]+(?:-[a-z0-9]+)*$")
@@ -244,7 +244,7 @@ class DocumentedCommandTests(unittest.TestCase):
 
         reference = (ROOT / "docs/reference/index.md").read_text(encoding="utf-8")
         skill_names = sorted(path.name for path in (ROOT / "skills").iterdir() if path.is_dir())
-        self.assertEqual(26, len(skill_names))
+        self.assertEqual(27, len(skill_names))
         for name in skill_names:
             self.assertIn(f"`{name}`", reference)
 
