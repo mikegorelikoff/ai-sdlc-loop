@@ -1311,6 +1311,34 @@ def cmd_finalize(args: argparse.Namespace) -> None:
     report["report_fingerprint"] = fingerprint(report, "report_fingerprint")
     validate_final_report(root, report, context=context)
     atomic_write(root, output, report)
+    try:
+        import usage_journal
+        summary = report.get("summary", {})
+        findings_count = {
+            "high": summary.get("high_severity_count", 0),
+            "medium": summary.get("medium_severity_count", 0),
+            "low": summary.get("low_severity_count", 0),
+        }
+        usage_journal.record_event(
+            "quality_gate.executed",
+            {
+                "feature": str(context.get("feature", "unknown")),
+                "readiness": str(report.get("readiness", "unknown")),
+                "findings": findings_count,
+            },
+            root=root,
+        )
+        usage_journal.record_event(
+            "skill.end",
+            {
+                "skill": "ai-sdlc-loop-engineering-quality-gate",
+                "status": "completed" if report.get("readiness") == "ready" else "failed",
+                "artifacts": [bounded_path(root, output).relative_to(root).as_posix()],
+            },
+            root=root,
+        )
+    except Exception:
+        pass
     print(f"{bounded_path(root, output).relative_to(root).as_posix()} {report['report_fingerprint']}")
 
 

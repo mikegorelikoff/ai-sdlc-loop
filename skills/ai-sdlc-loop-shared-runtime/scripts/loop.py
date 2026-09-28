@@ -330,6 +330,25 @@ def cmd_specify(args: argparse.Namespace) -> None:
                   "spec_fingerprint": spec["fingerprint"], "execution": task})
     atomic_toon(state_path(root, feature, "spec.toon"), spec)
     atomic_toon(state_file, state)
+    try:
+        import usage_journal
+        usage_journal.record_event(
+            "skill.start",
+            {"skill": "ai-sdlc-loop-specify", "phase": "specify", "trigger": "user", "task_kind": "feature", "feature": feature},
+            root=root,
+        )
+        usage_journal.record_event(
+            "skill.end",
+            {"skill": "ai-sdlc-loop-specify", "status": "completed", "artifacts": [f".ai-sdlc-loop/{feature}/spec.toon"]},
+            root=root,
+        )
+        usage_journal.record_event(
+            "artifact.created",
+            {"artifact_type": "spec", "artifact_ref": f".ai-sdlc-loop/{feature}/spec.toon", "owning_skill": "ai-sdlc-loop-specify"},
+            root=root,
+        )
+    except Exception:
+        pass
     print(spec["fingerprint"])
 
 
@@ -355,6 +374,15 @@ def cmd_approve(args: argparse.Namespace) -> None:
     if not receipt["reviewer"]:
         raise LoopError("reviewer must not be empty")
     atomic_toon(state_path(root, feature, "approvals", f"{args.action}.toon"), receipt)
+    try:
+        import usage_journal
+        usage_journal.record_event(
+            f"approval.{args.decision}",
+            {"feature": feature, "action": args.action, "reviewer": receipt["reviewer"], "subject_fingerprint": receipt["subject_fingerprint"]},
+            root=root,
+        )
+    except Exception:
+        pass
     print(f"{args.action}: {args.decision}")
 
 
@@ -446,6 +474,36 @@ def cmd_verify(args: argparse.Namespace) -> None:
                   "spec_fingerprint": spec["fingerprint"], "verified_fingerprint": evidence["verified_fingerprint"],
                   "ready": ready, "execution": task})
     atomic_toon(state_file, state)
+    if ready:
+        try:
+            import usage_journal
+            usage_journal.record_event(
+                "verification.passed",
+                {"feature": feature, "verified_fingerprint": evidence["verified_fingerprint"]},
+                root=root,
+            )
+            usage_journal.record_event(
+                "skill.end",
+                {"skill": "ai-sdlc-loop-verify", "status": "completed", "artifacts": [f".ai-sdlc-loop/{feature}/evidence.toon"]},
+                root=root,
+            )
+        except Exception:
+            pass
+    else:
+        try:
+            import usage_journal
+            usage_journal.record_event(
+                "verification.failed",
+                {"feature": feature, "reason": drift_reason or "command_failed"},
+                root=root,
+            )
+            usage_journal.record_event(
+                "skill.end",
+                {"skill": "ai-sdlc-loop-verify", "status": "failed"},
+                root=root,
+            )
+        except Exception:
+            pass
     print(evidence["verified_fingerprint"])
     if not ready:
         raise LoopError(drift_reason or "one or more verification commands failed")

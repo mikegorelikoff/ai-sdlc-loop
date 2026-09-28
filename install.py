@@ -39,6 +39,7 @@ SKILLS = (
     'ai-sdlc-loop-shared-runtime',
     'ai-sdlc-loop-specify',
     'ai-sdlc-loop-test-cases',
+    'ai-sdlc-loop-usage-coach',
     'ai-sdlc-loop-validation',
     'ai-sdlc-loop-verify',
 )

@@ -56,7 +56,7 @@ def main() -> None:
             run("verify", *args)
             run("install", *args)  # Same-version installation is idempotent.
             skills = project / ({"codex-project": ".agents/skills", "claude-code-project": ".claude/skills"}.get(profile, "custom/skills"))
-            assert len(list(skills.glob("ai-sdlc-loop-*"))) == 27
+            assert len(list(skills.glob("ai-sdlc-loop-*"))) == 28
             target = skills / "ai-sdlc-loop-flow/SKILL.md"
             with target.open("a", encoding="utf-8") as stream:
                 stream.write("\nlocal change\n")

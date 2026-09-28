@@ -34,6 +34,7 @@ ROUTES = (
     (("test case", "test plan", "coverage"), "test-design", "ai-sdlc-loop-test-cases"),
     (("verify", "validate", "regression", "smoke"), "verify", "ai-sdlc-loop-verify"),
     (("implement", "build", "fix", "change", "refactor"), "implement", "ai-sdlc-loop-implement"),
+    (("usage coach", "usage-coach", "coach", "behavioral feedback", "behavior feedback", "usage report"), "coaching", "ai-sdlc-loop-usage-coach"),
     (("spec", "requirement", "scope", "design"), "specify", "ai-sdlc-loop-specify"),
 )
 
@@ -227,6 +228,20 @@ def main() -> int:
             "owning_skill": current["owning_skill"],
             "owner_action_executed": False,
         }
+        if args.execute:
+            try:
+                import usage_journal
+                usage_journal.record_event(
+                    "workflow.transition",
+                    {
+                        "feature": str(current.get("feature", "")),
+                        "current_skill": str(current.get("owning_skill", "")),
+                        "transition_type": "handoff",
+                    },
+                    root=root,
+                )
+            except Exception:
+                pass
         print(encode_toon(result), end="")
         return 0
     except (OSError, ValueError, TypeError, ToonDecodeError) as exc:
