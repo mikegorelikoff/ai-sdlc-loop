@@ -42,7 +42,7 @@ def gui() -> int:
     choice = ttk.Combobox(frame, values=list(profiles), state="readonly", width=24)
     choice.set("Codex")
     choice.grid(row=4, column=0, sticky="w")
-    ttk.Label(frame, text="Installs 26 skills in this project. No administrator rights required.").grid(row=5, column=0, columnspan=2, pady=16, sticky="w")
+    ttk.Label(frame, text="Installs 27 skills in this project. No administrator rights required.").grid(row=5, column=0, columnspan=2, pady=16, sticky="w")
 
     def submit():
         if not project.get().strip():
