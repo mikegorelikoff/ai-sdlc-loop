@@ -8,7 +8,7 @@ from pathlib import Path
 sys.dont_write_bytecode = True
 import install
 
-VERSION = "0.10.0"
+VERSION = "0.10.1"
 
 
 def install_project(project: str, profile: str, skills_root: str | None = None) -> None:

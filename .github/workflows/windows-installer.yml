@@ -38,7 +38,7 @@ jobs:
       - name: Build self-contained installer
         run: python packaging/windows/build.py
       - name: Test packaged EXE without Python on PATH
-        run: python packaging/windows/smoke.py dist/ai-sdlc-loop-0.10.0-windows-x64-setup.exe
+        run: python packaging/windows/smoke.py dist/ai-sdlc-loop-0.10.1-windows-x64-setup.exe
       - uses: actions/upload-artifact@v4
         with:
           name: windows-installer
