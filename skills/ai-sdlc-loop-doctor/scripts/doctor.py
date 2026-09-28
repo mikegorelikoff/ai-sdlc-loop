@@ -11,7 +11,13 @@ from pathlib import Path
 
 _SHARED = Path(__file__).resolve().parents[2] / "ai-sdlc-loop-shared-runtime" / "scripts"
 sys.dont_write_bytecode = True
-sys.path.insert(0, str(_SHARED))
+if _SHARED.is_dir() and str(_SHARED) not in sys.path:
+    sys.path.insert(0, str(_SHARED))
+try:
+    import usage_journal
+except ImportError:
+    usage_journal = None
+
 from ai_sdlc_toon import ToonDecodeError, decode_toon, encode_toon
 
 REPORT_SCHEMA = "ai-sdlc-loop-doctor-report/v1"
@@ -247,4 +253,8 @@ def main() -> int:
 
 
 if __name__ == "__main__":
-    raise SystemExit(main())
+    if usage_journal:
+        with usage_journal.track_skill("ai-sdlc-loop-doctor", trigger="user"):
+            raise SystemExit(main())
+    else:
+        raise SystemExit(main())

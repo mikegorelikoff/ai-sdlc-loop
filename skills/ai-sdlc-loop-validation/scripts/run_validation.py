@@ -19,14 +19,17 @@ import time
 from datetime import datetime, timezone
 from pathlib import Path
 
-_TOON_RUNTIME = Path(__file__).resolve().parents[2] / "ai-sdlc-loop-shared-runtime" / "scripts"
-if str(_TOON_RUNTIME) not in sys.path:
-    sys.path.insert(0, str(_TOON_RUNTIME))
+_SHARED = Path(__file__).resolve().parents[2] / "ai-sdlc-loop-shared-runtime" / "scripts"
+if _SHARED.is_dir() and str(_SHARED) not in sys.path:
+    sys.path.insert(0, str(_SHARED))
+try:
+    import usage_journal
+except ImportError:
+    usage_journal = None
+
 import ai_sdlc_toon as toon_codec  # noqa: E402
 from typing import Any
 
-_SHARED = Path(__file__).resolve().parents[2] / "ai-sdlc-loop-shared-runtime" / "scripts"
-sys.path.insert(0, str(_SHARED))
 from ai_sdlc_state_machine import add_state_arguments, run_state_action
 from ai_sdlc_validation_receipt import (
     RECEIPT_SCHEMA,
@@ -290,4 +293,8 @@ def main() -> int:
 
 
 if __name__ == "__main__":
-    raise SystemExit(main())
+    if usage_journal:
+        with usage_journal.track_skill("ai-sdlc-loop-validation", trigger="user"):
+            raise SystemExit(main())
+    else:
+        raise SystemExit(main())

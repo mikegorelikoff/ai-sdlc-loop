@@ -16,7 +16,13 @@ from pathlib import Path
 # Resolve the shared helper relative to this skill directory so the script stays
 # portable when called from any working directory.
 _SHARED = Path(__file__).resolve().parents[2] / "ai-sdlc-loop-shared-runtime" / "scripts"
-sys.path.insert(0, str(_SHARED))
+if _SHARED.is_dir() and str(_SHARED) not in sys.path:
+    sys.path.insert(0, str(_SHARED))
+try:
+    import usage_journal
+except ImportError:
+    usage_journal = None
+
 from ai_sdlc_artifact_helper import build_parser, emit_profile_report, flow_mode
 
 
@@ -103,4 +109,8 @@ def main() -> int:
 
 
 if __name__ == "__main__":
-    raise SystemExit(main())
+    if usage_journal:
+        with usage_journal.track_skill("ai-sdlc-loop-branching", trigger="user"):
+            raise SystemExit(main())
+    else:
+        raise SystemExit(main())

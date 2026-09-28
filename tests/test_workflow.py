@@ -9,7 +9,7 @@ from tests.helpers import create_quality_gate, git, init_repo, read_toon, run_cl
 
 class WorkflowTests(unittest.TestCase):
     def test_tc004_tc005_specify_is_deterministic_and_sensitive(self) -> None:
-        with tempfile.TemporaryDirectory() as tmp:
+        with tempfile.TemporaryDirectory(ignore_cleanup_errors=True) as tmp:
             repo = init_repo(Path(tmp) / "repo")
             run_cli(repo, "specify", "--feature", "demo", "--request", "  Add   greeting ", "--allow", "app.txt")
             spec_path = repo / ".ai-sdlc-loop/demo/spec.toon"
@@ -20,7 +20,7 @@ class WorkflowTests(unittest.TestCase):
             self.assertNotEqual(first, read_toon(spec_path)["fingerprint"])
 
     def test_tc005_dot_prefixed_allowed_path_is_preserved(self) -> None:
-        with tempfile.TemporaryDirectory() as tmp:
+        with tempfile.TemporaryDirectory(ignore_cleanup_errors=True) as tmp:
             repo = init_repo(Path(tmp) / "repo")
             (repo / ".github").mkdir()
             run_cli(repo, "specify", "--feature", "demo", "--request", "Add workflow", "--allow", ".github/workflows")
@@ -30,7 +30,7 @@ class WorkflowTests(unittest.TestCase):
             )
 
     def test_tc006_tc007_implement_approval_gate(self) -> None:
-        with tempfile.TemporaryDirectory() as tmp:
+        with tempfile.TemporaryDirectory(ignore_cleanup_errors=True) as tmp:
             repo = init_repo(Path(tmp) / "repo")
             run_cli(repo, "specify", "--feature", "demo", "--request", "Change app", "--allow", "app.txt")
             before = git(repo, "status", "--porcelain")
@@ -42,7 +42,7 @@ class WorkflowTests(unittest.TestCase):
             run_cli(repo, "implement-check", "--feature", "demo")
 
     def test_tc010_tc014_verify_and_commit(self) -> None:
-        with tempfile.TemporaryDirectory() as tmp:
+        with tempfile.TemporaryDirectory(ignore_cleanup_errors=True) as tmp:
             repo = init_repo(Path(tmp) / "repo")
             run_cli(repo, "specify", "--feature", "demo", "--request", "Change app", "--allow", "app.txt")
             spec_fp = read_toon(repo / ".ai-sdlc-loop/demo/spec.toon")["fingerprint"]
@@ -58,7 +58,7 @@ class WorkflowTests(unittest.TestCase):
             self.assertIn("AI-SDLC-Loop-Feature: demo", git(repo, "show", "-s", "--format=%B"))
 
     def test_tc011_failed_command_blocks_readiness(self) -> None:
-        with tempfile.TemporaryDirectory() as tmp:
+        with tempfile.TemporaryDirectory(ignore_cleanup_errors=True) as tmp:
             repo = init_repo(Path(tmp) / "repo")
             run_cli(repo, "specify", "--feature", "demo", "--request", "Change app", "--allow", "app.txt")
             fp = read_toon(repo / ".ai-sdlc-loop/demo/spec.toon")["fingerprint"]

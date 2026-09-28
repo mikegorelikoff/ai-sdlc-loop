@@ -337,9 +337,12 @@ def cmd_specify(args: argparse.Namespace) -> None:
             {"skill": "ai-sdlc-loop-specify", "phase": "specify", "trigger": "user", "task_kind": "feature", "feature": feature},
             root=root,
         )
-        usage_journal.record_event(
-            "skill.end",
-            {"skill": "ai-sdlc-loop-specify", "status": "completed", "artifacts": [f".ai-sdlc-loop/{feature}/spec.toon"]},
+        usage_journal.record_skill_end(
+            "ai-sdlc-loop-specify",
+            status="completed",
+            duration_ms=int((time.perf_counter() - started) * 1000),
+            feature=feature,
+            artifacts=[f".ai-sdlc-loop/{feature}/spec.toon"],
             root=root,
         )
         usage_journal.record_event(
@@ -353,6 +356,7 @@ def cmd_specify(args: argparse.Namespace) -> None:
 
 
 def cmd_approve(args: argparse.Namespace) -> None:
+    started = time.perf_counter()
     root = project_root(args.project_root)
     feature = validate_feature(args.feature)
     if args.action == "implement":
@@ -381,15 +385,35 @@ def cmd_approve(args: argparse.Namespace) -> None:
             {"feature": feature, "action": args.action, "reviewer": receipt["reviewer"], "subject_fingerprint": receipt["subject_fingerprint"]},
             root=root,
         )
+        usage_journal.record_skill_end(
+            "ai-sdlc-loop-approvals-sandbox",
+            status="completed",
+            duration_ms=int((time.perf_counter() - started) * 1000),
+            feature=feature,
+            root=root,
+        )
     except Exception:
         pass
     print(f"{args.action}: {args.decision}")
 
 
 def cmd_implement_check(args: argparse.Namespace) -> None:
+    started = time.perf_counter()
     root = project_root(args.project_root)
-    spec = current_spec(root, validate_feature(args.feature))
+    feature = validate_feature(args.feature)
+    spec = current_spec(root, feature)
     require_approval(root, args.feature, "implement", spec["fingerprint"])
+    try:
+        import usage_journal
+        usage_journal.record_skill_end(
+            "ai-sdlc-loop-implement",
+            status="completed",
+            duration_ms=int((time.perf_counter() - started) * 1000),
+            feature=feature,
+            root=root,
+        )
+    except Exception:
+        pass
     print("implement eligible: " + spec["fingerprint"])
 
 
@@ -482,9 +506,12 @@ def cmd_verify(args: argparse.Namespace) -> None:
                 {"feature": feature, "verified_fingerprint": evidence["verified_fingerprint"]},
                 root=root,
             )
-            usage_journal.record_event(
-                "skill.end",
-                {"skill": "ai-sdlc-loop-verify", "status": "completed", "artifacts": [f".ai-sdlc-loop/{feature}/evidence.toon"]},
+            usage_journal.record_skill_end(
+                "ai-sdlc-loop-verify",
+                status="completed",
+                duration_ms=int((time.perf_counter() - started) * 1000),
+                feature=feature,
+                artifacts=[f".ai-sdlc-loop/{feature}/evidence.toon"],
                 root=root,
             )
         except Exception:
@@ -497,9 +524,11 @@ def cmd_verify(args: argparse.Namespace) -> None:
                 {"feature": feature, "reason": drift_reason or "command_failed"},
                 root=root,
             )
-            usage_journal.record_event(
-                "skill.end",
-                {"skill": "ai-sdlc-loop-verify", "status": "failed"},
+            usage_journal.record_skill_end(
+                "ai-sdlc-loop-verify",
+                status="failed",
+                duration_ms=int((time.perf_counter() - started) * 1000),
+                feature=feature,
                 root=root,
             )
         except Exception:
@@ -537,6 +566,7 @@ def current_evidence(root: Path, feature: str, spec: dict[str, Any]) -> dict[str
 
 
 def cmd_commit(args: argparse.Namespace) -> None:
+    started = time.perf_counter()
     root = project_root(args.project_root)
     feature = validate_feature(args.feature)
     spec = current_spec(root, feature)
@@ -552,6 +582,17 @@ def cmd_commit(args: argparse.Namespace) -> None:
     if result.returncode:
         run_git(root, "read-tree", prior_index, check=False)
         raise LoopError(result.stderr.strip() or "git commit failed")
+    try:
+        import usage_journal
+        usage_journal.record_skill_end(
+            "ai-sdlc-loop-commit",
+            status="completed",
+            duration_ms=int((time.perf_counter() - started) * 1000),
+            feature=feature,
+            root=root,
+        )
+    except Exception:
+        pass
     print(run_git(root, "rev-parse", "HEAD").stdout.strip())
 
 

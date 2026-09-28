@@ -18,6 +18,14 @@ from pathlib import Path
 SKILL_ROOT = Path(__file__).resolve().parents[1]
 PREFIX = "ai-sdlc-loop" if SKILL_ROOT.name.startswith("ai-sdlc-loop-") else "ai-sdlc"
 sys.path.insert(0, str(SKILL_ROOT.parent / (PREFIX + "-shared-runtime") / "scripts"))
+_SHARED = Path(__file__).resolve().parents[2] / "ai-sdlc-loop-shared-runtime" / "scripts"
+if _SHARED.is_dir() and str(_SHARED) not in sys.path:
+    sys.path.insert(0, str(_SHARED))
+try:
+    import usage_journal
+except ImportError:
+    usage_journal = None
+
 import ai_sdlc_toon as codec
 from ai_sdlc_safe_io import atomic_write_text, bounded_path as _bounded_path
 
@@ -606,4 +614,8 @@ def main():
 
 
 if __name__ == "__main__":
-    raise SystemExit(main())
+    if usage_journal:
+        with usage_journal.track_skill("ai-sdlc-loop-hierarchical-decomposition", trigger="user"):
+            raise SystemExit(main())
+    else:
+        raise SystemExit(main())

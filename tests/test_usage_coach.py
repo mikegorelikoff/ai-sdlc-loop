@@ -230,6 +230,84 @@ class UsageCoachTests(unittest.TestCase):
         # feedback
         self.assertEqual(0, coach.cmd_feedback("sug-1", "accepted", session_id="20260928T100000Z-test", root=self.root))
 
+    def test_tc015_duration_and_time_analytics(self):
+        """TC-015: Validate task and skill execution time tracking and formatting."""
+        sid = "20260928T100000Z-time1"
+        os.environ["AI_SDLC_LOOP_SESSION_ID"] = sid
+
+        # Specify: 500ms
+        usage_journal.record_skill_start("ai-sdlc-loop-specify", feature="feature/auth", session_id=sid, root=self.root)
+        usage_journal.record_skill_end("ai-sdlc-loop-specify", duration_ms=500, feature="feature/auth", session_id=sid, root=self.root)
+
+        # Implement run 1: 2000ms
+        usage_journal.record_skill_start("ai-sdlc-loop-implement", feature="feature/auth", session_id=sid, root=self.root)
+        usage_journal.record_skill_end("ai-sdlc-loop-implement", duration_ms=2000, feature="feature/auth", session_id=sid, root=self.root)
+
+        # Implement run 2: 4000ms
+        usage_journal.record_skill_start("ai-sdlc-loop-implement", feature="feature/auth", session_id=sid, root=self.root)
+        usage_journal.record_skill_end("ai-sdlc-loop-implement", duration_ms=4000, feature="feature/auth", session_id=sid, root=self.root)
+
+        sessions = usage_journal.scan_sessions(root=self.root)
+        signals = usage_journal.derive_signals(sessions)
+
+        self.assertIn("time_analytics", signals)
+        ta = signals["time_analytics"]
+        self.assertIn("skill_durations", ta)
+        self.assertIn("task_durations", ta)
+
+        # Check skill durations
+        impl_dur = ta["skill_durations"]["ai-sdlc-loop-implement"]
+        self.assertEqual(2, impl_dur["count"])
+        self.assertEqual(6000, impl_dur["total_ms"])
+        self.assertEqual(3000, impl_dur["avg_ms"])
+        self.assertEqual(2000, impl_dur["min_ms"])
+        self.assertEqual(4000, impl_dur["max_ms"])
+
+        # Check task durations
+        task_dur = ta["task_durations"]["feature/auth"]
+        self.assertEqual(6500, task_dur["total_ms"])
+        self.assertEqual(3, task_dur["events_count"])
+        self.assertIn("ai-sdlc-loop-specify", task_dur["skills"])
+        self.assertIn("ai-sdlc-loop-implement", task_dur["skills"])
+        self.assertEqual(6000, task_dur["skills"]["ai-sdlc-loop-implement"]["total_ms"])
+
+        # Check duration formatting helper
+        self.assertEqual("500ms", usage_journal.format_duration_ms(500))
+        self.assertEqual("2.0s", usage_journal.format_duration_ms(2000))
+        self.assertEqual("2m 5.0s", usage_journal.format_duration_ms(125000))
+
+    def test_tc016_context_manager_track_skill_and_task(self):
+        """TC-016: Track skill and task execution automatically with fail-open context managers."""
+        sid = "20260928T100000Z-time2"
+        os.environ["AI_SDLC_LOOP_SESSION_ID"] = sid
+
+        # Normal successful execution
+        with usage_journal.track_task("task-login", feature="auth", session_id=sid, root=self.root):
+            with usage_journal.track_skill("ai-sdlc-loop-bug-hunter", feature="auth", session_id=sid, root=self.root):
+                pass
+
+        # Execution with failure
+        with self.assertRaises(ValueError):
+            with usage_journal.track_skill("ai-sdlc-loop-implement", feature="auth", session_id=sid, root=self.root):
+                raise ValueError("compilation failure")
+
+        sfile = usage_journal.get_session_file_path(sid, root=self.root)
+        content = sfile.read_text(encoding="utf-8")
+        parsed = decode_toon(content)
+        events = list(parsed.get("events", {}).values())
+
+        # Assert task and skill events exist and have durations
+        types = [e.get("type") for e in events]
+        self.assertIn("task.start", types)
+        self.assertIn("task.end", types)
+        self.assertIn("skill.start", types)
+        self.assertIn("skill.end", types)
+
+        # Check the failed skill execution recorded status="failed" and duration_ms
+        failed_ends = [e for e in events if e.get("type") == "skill.end" and e.get("status") == "failed"]
+        self.assertEqual(1, len(failed_ends))
+        self.assertGreaterEqual(failed_ends[0].get("duration_ms", 0), 0)
+
 
 if __name__ == "__main__":
     unittest.main()

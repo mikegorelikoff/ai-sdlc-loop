@@ -14,6 +14,7 @@ import os
 import re
 import secrets
 import sys
+import time
 from pathlib import Path
 from typing import Any
 
@@ -325,6 +326,247 @@ def record_event(
         return 0
 
 
+def format_duration_ms(ms: int | float | None) -> str:
+    """Format milliseconds into a human-readable duration string."""
+    if ms is None or ms < 0:
+        return "0s"
+    total_sec = ms / 1000.0
+    if total_sec < 1.0:
+        return f"{int(ms)}ms"
+    if total_sec < 60.0:
+        return f"{total_sec:.1f}s"
+    minutes = int(total_sec // 60)
+    seconds = total_sec % 60
+    if minutes < 60:
+        return f"{minutes}m {seconds:.1f}s"
+    hours = int(minutes // 60)
+    minutes = minutes % 60
+    return f"{hours}h {minutes}m {int(seconds)}s"
+
+
+def record_skill_start(
+    skill: str,
+    *,
+    trigger: str = "user",
+    phase: str | None = None,
+    task_kind: str | None = None,
+    feature: str | None = None,
+    session_id: str | None = None,
+    root: Path | None = None,
+    **kwargs: Any,
+) -> int:
+    """Record a skill.start event in the session usage journal."""
+    payload = {
+        "skill": skill,
+        "trigger": trigger,
+        "phase": phase,
+        "task_kind": task_kind,
+        "feature": feature,
+        **kwargs,
+    }
+    return record_event(
+        "skill.start",
+        {k: v for k, v in payload.items() if v is not None},
+        session_id=session_id,
+        root=root,
+    )
+
+
+def record_skill_end(
+    skill: str,
+    *,
+    status: str = "completed",
+    duration_ms: int | None = None,
+    start_time: float | None = None,
+    feature: str | None = None,
+    task_kind: str | None = None,
+    phase: str | None = None,
+    artifacts: Any = None,
+    session_id: str | None = None,
+    root: Path | None = None,
+    **kwargs: Any,
+) -> int:
+    """Record a skill.end event with duration in milliseconds."""
+    calc_duration = duration_ms
+    if calc_duration is None and start_time is not None:
+        calc_duration = max(1, int((time.perf_counter() - start_time) * 1000))
+
+    payload = {
+        "skill": skill,
+        "status": status,
+        "duration_ms": calc_duration,
+        "feature": feature,
+        "task_kind": task_kind,
+        "phase": phase,
+        "artifacts": artifacts,
+        **kwargs,
+    }
+    return record_event(
+        "skill.end",
+        {k: v for k, v in payload.items() if v is not None},
+        session_id=session_id,
+        root=root,
+    )
+
+
+@contextlib.contextmanager
+def track_skill(
+    skill: str,
+    *,
+    trigger: str = "user",
+    phase: str | None = None,
+    task_kind: str | None = None,
+    feature: str | None = None,
+    session_id: str | None = None,
+    root: Path | None = None,
+    **kwargs: Any,
+):
+    """Context manager to automatically time and record skill execution fail-open."""
+    start_mono = time.perf_counter()
+    try:
+        record_skill_start(
+            skill,
+            trigger=trigger,
+            phase=phase,
+            task_kind=task_kind,
+            feature=feature,
+            session_id=session_id,
+            root=root,
+            **kwargs,
+        )
+    except Exception:
+        pass
+    status = "completed"
+    try:
+        yield
+    except KeyboardInterrupt:
+        status = "abandoned"
+        raise
+    except SystemExit as exc:
+        status = "completed" if exc.code in (0, None) else "failed"
+        raise
+    except Exception:
+        status = "failed"
+        raise
+    finally:
+        try:
+            duration_ms = max(1, int((time.perf_counter() - start_mono) * 1000))
+            record_skill_end(
+                skill,
+                status=status,
+                duration_ms=duration_ms,
+                phase=phase,
+                task_kind=task_kind,
+                feature=feature,
+                session_id=session_id,
+                root=root,
+                **kwargs,
+            )
+        except Exception:
+            pass
+
+
+def record_task_start(
+    task_id: str,
+    *,
+    feature: str | None = None,
+    task_kind: str | None = None,
+    title: str | None = None,
+    session_id: str | None = None,
+    root: Path | None = None,
+    **kwargs: Any,
+) -> int:
+    """Record the start of a logical task or feature lifecycle."""
+    payload = {
+        "task_id": task_id,
+        "feature": feature or task_id,
+        "task_kind": task_kind,
+        "title": title,
+        **kwargs,
+    }
+    return record_event(
+        "task.start",
+        {k: v for k, v in payload.items() if v is not None},
+        session_id=session_id,
+        root=root,
+    )
+
+
+def record_task_end(
+    task_id: str,
+    *,
+    status: str = "completed",
+    duration_ms: int | None = None,
+    start_time: float | None = None,
+    feature: str | None = None,
+    session_id: str | None = None,
+    root: Path | None = None,
+    **kwargs: Any,
+) -> int:
+    """Record the completion or closure of a logical task."""
+    calc_duration = duration_ms
+    if calc_duration is None and start_time is not None:
+        calc_duration = max(1, int((time.perf_counter() - start_time) * 1000))
+
+    payload = {
+        "task_id": task_id,
+        "feature": feature or task_id,
+        "status": status,
+        "duration_ms": calc_duration,
+        **kwargs,
+    }
+    return record_event(
+        "task.end",
+        {k: v for k, v in payload.items() if v is not None},
+        session_id=session_id,
+        root=root,
+    )
+
+
+@contextlib.contextmanager
+def track_task(
+    task_id: str,
+    *,
+    feature: str | None = None,
+    task_kind: str | None = None,
+    title: str | None = None,
+    session_id: str | None = None,
+    root: Path | None = None,
+    **kwargs: Any,
+):
+    """Context manager to track whole task execution duration and status."""
+    start_mono = time.perf_counter()
+    record_task_start(
+        task_id,
+        feature=feature,
+        task_kind=task_kind,
+        title=title,
+        session_id=session_id,
+        root=root,
+        **kwargs,
+    )
+    status = "completed"
+    try:
+        yield
+    except KeyboardInterrupt:
+        status = "abandoned"
+        raise
+    except Exception:
+        status = "failed"
+        raise
+    finally:
+        duration_ms = max(1, int((time.perf_counter() - start_mono) * 1000))
+        record_task_end(
+            task_id,
+            status=status,
+            duration_ms=duration_ms,
+            feature=feature,
+            session_id=session_id,
+            root=root,
+            **kwargs,
+        )
+
+
 def scan_sessions(
     root: Path | None = None,
     *,
@@ -400,6 +642,8 @@ def derive_signals(sessions: list[dict[str, Any]]) -> dict[str, Any]:
     context_switches: list[dict[str, Any]] = []
     ignored_recommendations: list[dict[str, Any]] = []
     capability_gaps: list[dict[str, Any]] = []
+    task_durations: dict[str, dict[str, Any]] = {}
+    skill_durations: dict[str, dict[str, Any]] = {}
 
     for session in sessions:
         sid = session.get("session_id", "unknown")
@@ -511,6 +755,81 @@ def derive_signals(sessions: list[dict[str, Any]]) -> dict[str, Any]:
                         }
                     )
 
+                # Duration tracking
+                dur = ev.get("duration_ms")
+                if dur is not None and isinstance(dur, (int, float)):
+                    d_ms = int(dur)
+                    if d_ms >= 0:
+                        sd = skill_durations.setdefault(
+                            skill,
+                            {
+                                "total_ms": 0,
+                                "count": 0,
+                                "min_ms": d_ms,
+                                "max_ms": d_ms,
+                                "avg_ms": 0,
+                                "formatted_total": "0s",
+                                "formatted_avg": "0s",
+                            },
+                        )
+                        sd["total_ms"] += d_ms
+                        sd["count"] += 1
+                        sd["min_ms"] = min(sd["min_ms"], d_ms)
+                        sd["max_ms"] = max(sd["max_ms"], d_ms)
+                        sd["avg_ms"] = int(sd["total_ms"] / sd["count"])
+                        sd["formatted_total"] = format_duration_ms(sd["total_ms"])
+                        sd["formatted_avg"] = format_duration_ms(sd["avg_ms"])
+
+                        task_ref = ev.get("task_id") or ev.get("feature") or (list(active_features)[0] if active_features else None)
+                        if task_ref:
+                            t_key = str(task_ref)
+                            td = task_durations.setdefault(
+                                t_key,
+                                {
+                                    "task_id": t_key,
+                                    "total_ms": 0,
+                                    "formatted_total": "0s",
+                                    "skills": {},
+                                    "events_count": 0,
+                                    "first_ts": ts,
+                                    "last_ts": ts,
+                                },
+                            )
+                            td["total_ms"] += d_ms
+                            td["formatted_total"] = format_duration_ms(td["total_ms"])
+                            td["events_count"] += 1
+                            if ts:
+                                td["last_ts"] = max(td.get("last_ts", ""), ts)
+                            sk_entry = td["skills"].setdefault(skill, {"total_ms": 0, "count": 0, "formatted": "0s"})
+                            sk_entry["total_ms"] += d_ms
+                            sk_entry["count"] += 1
+                            sk_entry["formatted"] = format_duration_ms(sk_entry["total_ms"])
+
+            # Task level lifecycle events
+            if etype in ("task.start", "task.end"):
+                t_ref = ev.get("task_id") or ev.get("feature")
+                if t_ref:
+                    t_key = str(t_ref)
+                    td = task_durations.setdefault(
+                        t_key,
+                        {
+                            "task_id": t_key,
+                            "total_ms": 0,
+                            "formatted_total": "0s",
+                            "skills": {},
+                            "events_count": 0,
+                            "first_ts": ts,
+                            "last_ts": ts,
+                        },
+                    )
+                    td["events_count"] += 1
+                    dur = ev.get("duration_ms")
+                    if dur is not None and isinstance(dur, (int, float)):
+                        d_ms = int(dur)
+                        if d_ms > 0 and td["total_ms"] == 0:
+                            td["total_ms"] = d_ms
+                            td["formatted_total"] = format_duration_ms(d_ms)
+
             # 5.3 Sequence Graph & Transitions
             if etype == "workflow.transition":
                 prev = ev.get("previous_skill")
@@ -607,6 +926,25 @@ def derive_signals(sessions: list[dict[str, Any]]) -> dict[str, Any]:
                 }
             )
 
+    # Compute rework time loss from skill durations in rework cycles
+    total_rework_ms = 0
+    for cycle in rework_cycles:
+        patt = cycle.get("pattern", "")
+        # Sum avg durations of participating skills
+        for sk in patt.split(" -> "):
+            if sk in skill_durations:
+                total_rework_ms += skill_durations[sk].get("avg_ms", 0)
+
+    time_analytics = {
+        "task_durations": task_durations,
+        "skill_durations": skill_durations,
+        "rework_time_loss": {
+            "total_rework_ms": total_rework_ms,
+            "formatted_rework": format_duration_ms(total_rework_ms),
+            "cycles_count": len(rework_cycles),
+        },
+    }
+
     return {
         "summary": {
             "total_sessions": len(sessions),
@@ -623,4 +961,5 @@ def derive_signals(sessions: list[dict[str, Any]]) -> dict[str, Any]:
         "context_switches": context_switches,
         "ignored_recommendations": ignored_recommendations,
         "capability_gaps": capability_gaps,
+        "time_analytics": time_analytics,
     }

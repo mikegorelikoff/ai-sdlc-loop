@@ -27,7 +27,13 @@ _SHARED = next(
 )
 if _SHARED is None:
     raise ImportError("trusted AI SDLC shared runtime was not found under the installed skills root")
-sys.path.insert(0, str(_SHARED))
+if str(_SHARED) not in sys.path:
+    sys.path.insert(0, str(_SHARED))
+try:
+    import usage_journal
+except ImportError:
+    usage_journal = None
+
 from ai_sdlc_state_machine import add_state_arguments, run_state_action
 
 
@@ -117,4 +123,8 @@ def main() -> int:
 
 
 if __name__ == "__main__":
-    raise SystemExit(main())
+    if usage_journal:
+        with usage_journal.track_skill("ai-sdlc-loop-conventional-commit", trigger="user"):
+            raise SystemExit(main())
+    else:
+        raise SystemExit(main())

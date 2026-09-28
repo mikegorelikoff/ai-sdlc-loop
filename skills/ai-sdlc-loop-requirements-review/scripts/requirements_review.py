@@ -8,7 +8,13 @@ import sys
 from pathlib import Path
 
 _SHARED = Path(__file__).resolve().parents[2] / "ai-sdlc-loop-shared-runtime" / "scripts"
-sys.path.insert(0, str(_SHARED))
+if _SHARED.is_dir() and str(_SHARED) not in sys.path:
+    sys.path.insert(0, str(_SHARED))
+try:
+    import usage_journal
+except ImportError:
+    usage_journal = None
+
 from review_artifact import finish, row, safe_output, validate_feature  # noqa: E402
 
 
@@ -50,4 +56,8 @@ def main() -> int:
 
 
 if __name__ == "__main__":
-    raise SystemExit(main())
+    if usage_journal:
+        with usage_journal.track_skill("ai-sdlc-loop-requirements-review", trigger="user"):
+            raise SystemExit(main())
+    else:
+        raise SystemExit(main())

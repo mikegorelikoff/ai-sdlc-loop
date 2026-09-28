@@ -15,7 +15,13 @@ import sys
 from pathlib import Path
 
 _SHARED = Path(__file__).resolve().parents[2] / "ai-sdlc-loop-shared-runtime" / "scripts"
-sys.path.insert(0, str(_SHARED))
+if _SHARED.is_dir() and str(_SHARED) not in sys.path:
+    sys.path.insert(0, str(_SHARED))
+try:
+    import usage_journal
+except ImportError:
+    usage_journal = None
+
 from ai_sdlc_paths import first_existing, legacy_plan_toon_path, plan_toon_path
 from ai_sdlc_state_machine import add_state_arguments, run_state_action
 
@@ -280,4 +286,8 @@ def main() -> int:
 
 
 if __name__ == "__main__":
-    raise SystemExit(main())
+    if usage_journal:
+        with usage_journal.track_skill("ai-sdlc-loop-code-review", trigger="user"):
+            raise SystemExit(main())
+    else:
+        raise SystemExit(main())

@@ -129,10 +129,42 @@ def cmd_report(
         print("No evidence lag samples recorded.")
     print()
 
+    time_analytics = signals.get("time_analytics", {})
+    task_durations = time_analytics.get("task_durations", {})
+    skill_durations = time_analytics.get("skill_durations", {})
+    rework_time = time_analytics.get("rework_time_loss", {})
+
+    print("## 5. Task & Workflow Time Tracking")
+    if task_durations:
+        for t_id, t_info in sorted(task_durations.items(), key=lambda x: x[1]["total_ms"], reverse=True):
+            skill_parts = []
+            for s_name, s_data in t_info.get("skills", {}).items():
+                skill_parts.append(f"{s_name}: {s_data.get('formatted', '0s')}")
+            skills_str = f" ({', '.join(skill_parts)})" if skill_parts else ""
+            print(f"- **Task `{t_id}`**: {t_info.get('formatted_total', '0s')} across {t_info.get('events_count', 0)} events{skills_str}")
+    else:
+        print("No task durations recorded yet.")
+    print()
+
+    print("## 6. Skill Execution Durations")
+    if skill_durations:
+        for s_name, s_info in sorted(skill_durations.items(), key=lambda x: x[1]["total_ms"], reverse=True):
+            print(
+                f"- **{s_name}**: total {s_info.get('formatted_total', '0s')} | "
+                f"avg {s_info.get('formatted_avg', '0s')} ({s_info.get('count', 0)} runs) | "
+                f"min: {usage_journal.format_duration_ms(s_info.get('min_ms'))} / max: {usage_journal.format_duration_ms(s_info.get('max_ms'))}"
+            )
+    else:
+        print("No skill durations recorded yet.")
+    print()
+
+    if rework_time.get("total_rework_ms", 0) > 0:
+        print(f"## 7. Rework Time Overhead: {rework_time.get('formatted_rework')} spent in {rework_time.get('cycles_count')} rework cycles\n")
+
     if ignored:
-        print(f"## 5. Ignored Recommendations: {len(ignored)} occurrences\n")
+        print(f"## 8. Ignored Recommendations: {len(ignored)} occurrences\n")
     if gaps:
-        print(f"## 6. Capability Gaps / Manual Overrides: {len(gaps)} occurrences\n")
+        print(f"## 9. Capability Gaps / Manual Overrides: {len(gaps)} occurrences\n")
 
     return 0
 
@@ -167,10 +199,12 @@ def cmd_analyze(session_id: str | None = None, root: Path | None = None) -> int:
         etype = ev.get("type", "")
         skill = ev.get("skill", "")
         status = ev.get("status", "")
+        dur = ev.get("duration_ms")
+        dur_str = f" duration={usage_journal.format_duration_ms(dur)}" if dur is not None else ""
         detail = f" skill={skill}" if skill else ""
         if status:
             detail += f" status={status}"
-        print(f"[{seq:03d}] {ts} - {etype}{detail}")
+        print(f"[{seq:03d}] {ts} - {etype}{detail}{dur_str}")
 
     return 0
 
