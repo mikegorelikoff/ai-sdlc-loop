@@ -1,0 +1,148 @@
+scenarios[8]:
+  - baseline_response: "| Status | Decision | Evidence |\n| --- | --- | --- |\n| PASS | Synchronized specification context hierarchy | .sdlc.toon:valid |\n\n| Operation | Repository ID | Status | Storage | Sync state |\n| --- | --- | --- | --- | --- |\n| fetch | payments | PASS | vestwell/agent-planning-docs:main | clean |\n\n| Owner | Next action | Expected evidence |\n| --- | --- | --- |\n| Developer | Proceed with feature specification | Bounded spec |\n"
+    id: happy
+    provenance: authored scenario from owning output fields; baseline is a simulation
+    request: "Simulate ai-sdlc-loop-spec-state: happy"
+    required_facts[3]: ".sdlc.toon:valid","vestwell/agent-planning-docs:main",clean
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        Bounded spec,Proceed with feature specification,Developer
+      primary[1]{Operation,"Repository ID",Status,Storage,"Sync state"}:
+        fetch,payments,PASS,"vestwell/agent-planning-docs:main",clean
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: Synchronized specification context hierarchy
+        Evidence: ".sdlc.toon:valid"
+        Status: PASS
+  - baseline_response: "| Status | Decision | Evidence |\n| --- | --- | --- |\n| WARNING | Index is stale (18 days old); refresh recommended | .sdlc.toon:index-stale |\n\n| Operation | Repository ID | Status | Storage | Sync state |\n| --- | --- | --- | --- | --- |\n| fetch | payments | WARNING | vestwell/agent-planning-docs:main | stale-index |\n| fetch | payments | PASS | vestwell/agent-planning-docs:main | baseline-synced |\n\n| Owner | Next action | Expected evidence |\n| --- | --- | --- |\n| Developer | Refresh repository index | Updated structural index |\n"
+    id: partial
+    provenance: authored scenario from owning output fields; baseline is a simulation
+    request: "Simulate ai-sdlc-loop-spec-state: partial"
+    required_facts[3]: ".sdlc.toon:index-stale","vestwell/agent-planning-docs:main",stale-index
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        Updated structural index,Refresh repository index,Developer
+      primary[2]{Operation,"Repository ID",Status,Storage,"Sync state"}:
+        fetch,payments,WARNING,"vestwell/agent-planning-docs:main",stale-index
+        fetch,payments,PASS,"vestwell/agent-planning-docs:main",baseline-synced
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: Index is stale (18 days old); refresh recommended
+        Evidence: ".sdlc.toon:index-stale"
+        Status: WARNING
+  - baseline_response: "| Status | Decision | Evidence |\n| --- | --- | --- |\n| WARNING | Decision log rotation threshold reached | .sdlc.toon:threshold |\n\n| Operation | Repository ID | Status | Storage | Sync state |\n| --- | --- | --- | --- | --- |\n| status | payments | WARNING | vestwell/agent-planning-docs:main | rotation-needed |\n\n| Owner | Next action | Expected evidence |\n| --- | --- | --- |\n| Developer | Run spec-state rotate | Compacted decision archive |\n"
+    id: warning
+    provenance: authored scenario from owning output fields; baseline is a simulation
+    request: "Simulate ai-sdlc-loop-spec-state: warning"
+    required_facts[3]: ".sdlc.toon:threshold","vestwell/agent-planning-docs:main",rotation-needed
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        Compacted decision archive,Run spec-state rotate,Developer
+      primary[1]{Operation,"Repository ID",Status,Storage,"Sync state"}:
+        status,payments,WARNING,"vestwell/agent-planning-docs:main",rotation-needed
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: Decision log rotation threshold reached
+        Evidence: ".sdlc.toon:threshold"
+        Status: WARNING
+  - baseline_response: "| Status | Decision | Evidence |\n| --- | --- | --- |\n| BLOCKED | Specification storage repository unreachable or invalid branch | .sdlc.toon:remote-error |\n\n| Operation | Status | Blocker | Evidence | Required action |\n| --- | --- | --- | --- | --- |\n| fetch | BLOCKED | Git remote repository unreachable | .sdlc.toon:remote-error | Verify network and repository credentials |\n\n| Owner | Next action | Expected evidence |\n| --- | --- | --- |\n| DevOps / Lead | Check git credentials and remote url | Verified remote connection |\n"
+    id: blocked
+    provenance: authored scenario from owning output fields; baseline is a simulation
+    request: "Simulate ai-sdlc-loop-spec-state: blocked"
+    required_facts[2]: ".sdlc.toon:remote-error",Verified remote connection
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        Verified remote connection,Check git credentials and remote url,DevOps / Lead
+      failures[1]{Blocker,Evidence,Operation,"Required action",Status}:
+        Git remote repository unreachable,".sdlc.toon:remote-error",fetch,Verify network and repository credentials,BLOCKED
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: Specification storage repository unreachable or invalid branch
+        Evidence: ".sdlc.toon:remote-error"
+        Status: BLOCKED
+  - baseline_response: "| Status | Decision | Evidence |\n| --- | --- | --- |\n| BLOCKED | Declarative .sdlc.toon configuration is missing | .sdlc.toon:missing |\n\n| Operation | Status | Blocker | Evidence | Required action |\n| --- | --- | --- | --- | --- |\n| fetch | BLOCKED | Configuration missing | .sdlc.toon:missing | Run wizard to scaffold .sdlc.toon |\n\n| Missing configuration | Why required | Known evidence | Options |\n| --- | --- | --- | --- |\n| .sdlc.toon | Declarative storage policy | No configuration file | Run wizard / create manually |\n\n| Owner | Next action | Expected evidence |\n| --- | --- | --- |\n| Architect / Lead | Scaffold .sdlc.toon configuration | Validated .sdlc.toon |\n"
+    id: missing-input
+    provenance: authored scenario from owning output fields; baseline is a simulation
+    request: "Simulate ai-sdlc-loop-spec-state: missing-input"
+    required_facts[2]: ".sdlc.toon:missing",Validated .sdlc.toon
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        Validated .sdlc.toon,Scaffold .sdlc.toon configuration,Architect / Lead
+      clarifications[1]{"Known evidence","Missing configuration",Options,"Why required"}:
+        No configuration file,.sdlc.toon,Run wizard / create manually,Declarative storage policy
+      failures[1]{Blocker,Evidence,Operation,"Required action",Status}:
+        Configuration missing,".sdlc.toon:missing",fetch,Run wizard to scaffold .sdlc.toon,BLOCKED
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: Declarative .sdlc.toon configuration is missing
+        Evidence: ".sdlc.toon:missing"
+        Status: BLOCKED
+  - baseline_response: "| Status | Decision | Evidence |\n| --- | --- | --- |\n| PASS | 20 spec state records synchronized; 8 shown; inspect the linked full artifact. | .sdlc.toon:synced |\n\n| Operation | Repository ID | Status | Storage | Sync state |\n| --- | --- | --- | --- | --- |\n| fetch | payments | PASS | vestwell/agent-planning-docs:main | record-1 |\n| fetch | payments | PASS | vestwell/agent-planning-docs:main | record-2 |\n| fetch | payments | PASS | vestwell/agent-planning-docs:main | record-3 |\n| fetch | payments | PASS | vestwell/agent-planning-docs:main | record-4 |\n| fetch | payments | PASS | vestwell/agent-planning-docs:main | record-5 |\n| fetch | payments | PASS | vestwell/agent-planning-docs:main | record-6 |\n| fetch | payments | PASS | vestwell/agent-planning-docs:main | record-7 |\n| fetch | payments | PASS | vestwell/agent-planning-docs:main | record-8 |\n\n| Shown | Total | Full evidence |\n| --- | --- | --- |\n| 8 | 20 | full-status.toon |\n\n| Owner | Next action | Expected evidence |\n| --- | --- | --- |\n| Developer | Proceed to implement | Implementation approval |\n"
+    id: large
+    provenance: authored scenario from owning output fields; baseline is a simulation
+    request: "Simulate ai-sdlc-loop-spec-state: large"
+    required_facts[3]: ".sdlc.toon:synced","vestwell/agent-planning-docs:main",record-1
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        Implementation approval,Proceed to implement,Developer
+      full_artifact: full-status.toon
+      primary[20]{Operation,"Repository ID",Status,Storage,"Sync state"}:
+        fetch,payments,PASS,"vestwell/agent-planning-docs:main",record-1
+        fetch,payments,PASS,"vestwell/agent-planning-docs:main",record-2
+        fetch,payments,PASS,"vestwell/agent-planning-docs:main",record-3
+        fetch,payments,PASS,"vestwell/agent-planning-docs:main",record-4
+        fetch,payments,PASS,"vestwell/agent-planning-docs:main",record-5
+        fetch,payments,PASS,"vestwell/agent-planning-docs:main",record-6
+        fetch,payments,PASS,"vestwell/agent-planning-docs:main",record-7
+        fetch,payments,PASS,"vestwell/agent-planning-docs:main",record-8
+        fetch,payments,PASS,"vestwell/agent-planning-docs:main",record-9
+        fetch,payments,PASS,"vestwell/agent-planning-docs:main",record-10
+        fetch,payments,PASS,"vestwell/agent-planning-docs:main",record-11
+        fetch,payments,PASS,"vestwell/agent-planning-docs:main",record-12
+        fetch,payments,PASS,"vestwell/agent-planning-docs:main",record-13
+        fetch,payments,PASS,"vestwell/agent-planning-docs:main",record-14
+        fetch,payments,PASS,"vestwell/agent-planning-docs:main",record-15
+        fetch,payments,PASS,"vestwell/agent-planning-docs:main",record-16
+        fetch,payments,PASS,"vestwell/agent-planning-docs:main",record-17
+        fetch,payments,PASS,"vestwell/agent-planning-docs:main",record-18
+        fetch,payments,PASS,"vestwell/agent-planning-docs:main",record-19
+        fetch,payments,PASS,"vestwell/agent-planning-docs:main",record-20
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: 20 spec state records synchronized; 8 shown; inspect the linked full artifact.
+        Evidence: ".sdlc.toon:synced"
+        Status: PASS
+  - baseline_response: "| Status | Decision | Evidence |\n| --- | --- | --- |\n| PASS | One spec state record; scope and storage are explicit. | .sdlc.toon:synced |\n\n| Operation | Repository ID | Status | Storage | Sync state |\n| --- | --- | --- | --- | --- |\n| publish | payments | PASS | vestwell/agent-planning-docs:main | published |\n\n| Owner | Next action | Expected evidence |\n| --- | --- | --- |\n| Developer | Create pull request | Branch PR |\n"
+    id: small
+    provenance: authored scenario from owning output fields; baseline is a simulation
+    request: "Simulate ai-sdlc-loop-spec-state: small"
+    required_facts[3]: ".sdlc.toon:synced","vestwell/agent-planning-docs:main",published
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        Branch PR,Create pull request,Developer
+      primary[1]{Operation,"Repository ID",Status,Storage,"Sync state"}:
+        publish,payments,PASS,"vestwell/agent-planning-docs:main",published
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: One spec state record; scope and storage are explicit.
+        Evidence: ".sdlc.toon:synced"
+        Status: PASS
+  - baseline_response: "| Status | Decision | Evidence |\n| --- | --- | --- |\n| PASS | Synchronized specification context hierarchy | .sdlc.toon:valid |\n\n| Operation | Repository ID | Status | Storage | Sync state |\n| --- | --- | --- | --- | --- |\n| fetch | payments | PASS | vestwell/agent-planning-docs:main &#124; перенос<br>строки | clean |\n\n| Owner | Next action | Expected evidence |\n| --- | --- | --- |\n| Developer | Proceed with feature specification | Bounded spec |\n\n```toon\nschema: fixture/v1\nstatus: pending\nsource: \"literal | value\"\n```\n"
+    id: edge
+    provenance: authored scenario from owning output fields; baseline is a simulation
+    request: "Simulate ai-sdlc-loop-spec-state: edge"
+    required_facts[3]: ".sdlc.toon:valid","vestwell/agent-planning-docs:main | перенос\nстроки",clean
+    result:
+      actions[1]{"Expected evidence","Next action",Owner}:
+        Bounded spec,Proceed with feature specification,Developer
+      native[1]{content,language}:
+        "schema: fixture/v1\nstatus: pending\nsource: \"literal | value\"",toon
+      primary[1]{Operation,"Repository ID",Status,Storage,"Sync state"}:
+        fetch,payments,PASS,"vestwell/agent-planning-docs:main | перенос\nстроки",clean
+      schema: ai-sdlc-chat-result/v1
+      summary:
+        Decision: Synchronized specification context hierarchy
+        Evidence: ".sdlc.toon:valid"
+        Status: PASS
+schema: ai-sdlc-chat-scenarios/v1
+skill: ai-sdlc-loop-spec-state

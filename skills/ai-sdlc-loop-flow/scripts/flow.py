@@ -35,6 +35,7 @@ ROUTES = (
     (("verify", "validate", "regression", "smoke"), "verify", "ai-sdlc-loop-verify"),
     (("implement", "build", "fix", "change", "refactor"), "implement", "ai-sdlc-loop-implement"),
     (("usage coach", "usage-coach", "coach", "behavioral feedback", "behavior feedback", "usage report"), "coaching", "ai-sdlc-loop-usage-coach"),
+    (("spec state", "spec-state", "sdlc state", "specification state", "spec rotation", "baseline spec"), "state", "ai-sdlc-loop-spec-state"),
     (("spec", "requirement", "scope", "design"), "specify", "ai-sdlc-loop-specify"),
 )
 

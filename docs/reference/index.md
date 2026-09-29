@@ -14,7 +14,7 @@ Install locally with `python3 install.py PROFILE`. Verify with `python3 install.
 
 ## Current source inventory
 
-The current source installs the 28 entries below. Immutable
+The current source installs the 29 entries below. Immutable
 `v0.1.1` retains its previous 17-member inventory.
 
 Guided entry and diagnostics:
@@ -27,6 +27,7 @@ Lifecycle skills:
 
 - `ai-sdlc-loop-orchestrate`
 - `ai-sdlc-loop-sdd`
+- `ai-sdlc-loop-spec-state`
 - `ai-sdlc-loop-specify`
 - `ai-sdlc-loop-implement`
 - `ai-sdlc-loop-engineering-quality-gate`

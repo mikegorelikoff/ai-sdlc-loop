@@ -37,6 +37,7 @@ SKILLS = (
     'ai-sdlc-loop-sdd',
     'ai-sdlc-loop-security-testing',
     'ai-sdlc-loop-shared-runtime',
+    'ai-sdlc-loop-spec-state',
     'ai-sdlc-loop-specify',
     'ai-sdlc-loop-test-cases',
     'ai-sdlc-loop-usage-coach',

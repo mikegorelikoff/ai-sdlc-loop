@@ -1,5 +1,13 @@
 # Changelog
 
+## v0.12.0 - 2026-09-28
+
+- Add `ai-sdlc-loop-spec-state`: persistent specification state synchronization, repository index freshness, baseline specifications, and decision rotation across feature development and multi-repository delivery.
+- Declarative `.sdlc.toon` configuration governing Git-backed storage, repository identity, freshness policies, and retention.
+- Zero-external dependencies: third-party integrations (Confluence) remain explicitly disabled and deferred; operates strictly on local and remote Git storage.
+- Deterministic check: automated interactive setup wizard scaffolds `.sdlc.toon` when absent, with fail-open safety for downstream skills.
+- Full compatibility and parity with AI SDLC Harness `ai-sdlc-spec-state`.
+
 ## v0.11.0 - 2026-09-28
 
 - Add `ai-sdlc-loop-usage-coach`: local behavioral feedback skill analyzing workflow patterns, friction motifs, and discoverability.
