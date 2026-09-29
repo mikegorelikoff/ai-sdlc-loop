@@ -6,6 +6,10 @@ import tempfile
 import unittest
 from pathlib import Path
 
+_LOOP_ROOT = Path(__file__).resolve().parent.parent
+if str(_LOOP_ROOT) not in sys.path:
+    sys.path.insert(0, str(_LOOP_ROOT))
+
 from tests.helpers import ROOT, read_toon
 
 

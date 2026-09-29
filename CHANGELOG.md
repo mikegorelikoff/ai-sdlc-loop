@@ -1,5 +1,14 @@
 # Changelog
 
+## v0.13.0 - 2026-09-29
+
+- Implement unified global skill execution time-series telemetry in pure TOON format (`ai_sdlc_telemetry.py`).
+- Automatic time-series event capture on every skill invocation and stage completion persisted to `.ai/telemetry/sessions.toon`.
+- Strict zero-token fabrication invariant (`usage_available: false` and empty models list when usage counters are unavailable).
+- Extend `ai-sdlc-config/v1` in-place with user identity profile (`values.user`: name, email, role, git: {name, email}).
+- Consolidate shared runtime utilities and fix path resolution in `check_commit_ready.py`.
+- Lightweight alias `toon.py` delegating to canonical `ai_sdlc_toon.py`.
+
 ## v0.12.0 - 2026-09-28
 
 - Add `ai-sdlc-loop-spec-state`: persistent specification state synchronization, repository index freshness, baseline specifications, and decision rotation across feature development and multi-repository delivery.

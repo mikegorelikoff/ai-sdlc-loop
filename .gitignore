@@ -1,4 +1,6 @@
 .ai-sdlc-loop/
+.ai/
+.ai-sdlc/
 site/
 __pycache__/
 *.py[cod]

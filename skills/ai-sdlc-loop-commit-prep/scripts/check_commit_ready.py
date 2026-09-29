@@ -22,7 +22,7 @@ except ImportError:
     usage_journal = None
 
 from ai_sdlc_state_machine import add_state_arguments, run_state_action
-from ai_sdlc_paths import repository_root_from_skills_root
+from ai_sdlc_paths import first_existing, repository_root_from_skills_root
 from ai_sdlc_validation_receipt import validate_receipt
 
 def workspace_root(script_path: Path = Path(__file__)) -> Path:
@@ -32,12 +32,26 @@ def workspace_root(script_path: Path = Path(__file__)) -> Path:
 
 ROOT = workspace_root()
 SKILLS_ROOT = Path(__file__).resolve().parents[2]
-SDD_SCRIPTS = SKILLS_ROOT / "ai-sdlc-sdd" / "scripts"
-CHECK_CLARIFY = SDD_SCRIPTS / "check_clarify.py"
-CHECK_CHECKLIST = SDD_SCRIPTS / "check_checklist.py"
-ANALYZE_SPEC = SDD_SCRIPTS / "analyze_spec.py"
-VALIDATE_SPEC = SDD_SCRIPTS / "validate_spec.py"
-PLAN_LINKS = SDD_SCRIPTS / "plan_links.py"
+
+
+def _resolve_sdd_script(name: str) -> Path:
+    """Resolve an SDD script across Loop, Backbone, or installed consumer layouts."""
+    return first_existing(
+        SKILLS_ROOT / "ai-sdlc-sdd" / "scripts" / name,
+        SKILLS_ROOT / "ai-sdlc-loop-sdd" / "scripts" / name,
+        ROOT / "skills" / "ai-sdlc-sdd" / "scripts" / name,
+        ROOT.parent / "skills" / "ai-sdlc-sdd" / "scripts" / name,
+        ROOT / ".agents" / "skills" / "ai-sdlc-sdd" / "scripts" / name,
+        ROOT / ".claude" / "skills" / "ai-sdlc-sdd" / "scripts" / name,
+    )
+
+
+VALIDATE_SPEC = _resolve_sdd_script("validate_spec.py")
+CHECK_CLARIFY = _resolve_sdd_script("check_clarify.py")
+CHECK_CHECKLIST = _resolve_sdd_script("check_checklist.py")
+ANALYZE_SPEC = _resolve_sdd_script("analyze_spec.py")
+PLAN_LINKS = _resolve_sdd_script("plan_links.py")
+SDD_SCRIPTS = VALIDATE_SPEC.parent
 
 
 def run(args: list[str]) -> subprocess.CompletedProcess[str]:

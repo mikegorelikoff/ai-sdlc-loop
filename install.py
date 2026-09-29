@@ -204,10 +204,11 @@ def install(args: argparse.Namespace) -> None:
         atomic_write(record_file, TOON.encode_toon(record).encode("utf-8"))
         atomic_write(verifier_file, Path(__file__).resolve().read_bytes())
         atomic_write(codec_file, (source_root / "ai-sdlc-loop-shared-runtime" / "scripts" / "toon.py").read_bytes())
+        atomic_write(record_file.parent / "ai_sdlc_toon.py", (source_root / "ai-sdlc-loop-shared-runtime" / "scripts" / "ai_sdlc_toon.py").read_bytes())
     except Exception:
         for target in targets.values():
             shutil.rmtree(target, ignore_errors=True)
-        for state_file in (record_file, verifier_file, codec_file):
+        for state_file in (record_file, verifier_file, codec_file, record_file.parent / "ai_sdlc_toon.py"):
             if state_file.exists() and not state_file.is_symlink():
                 state_file.unlink()
         raise

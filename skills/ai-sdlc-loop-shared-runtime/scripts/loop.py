@@ -158,7 +158,15 @@ def changed_paths(root: Path) -> list[str]:
     for args in (("diff", "--name-only", "-z"), ("diff", "--cached", "--name-only", "-z"), ("ls-files", "--others", "--exclude-standard", "-z")):
         result = run_git(root, *args)
         for path in result.stdout.split("\0"):
-            if path and not path.startswith(".ai-sdlc-loop/"):
+            if (
+                path
+                and not path == ".ai"
+                and not path.startswith(".ai/")
+                and not path == ".ai-sdlc"
+                and not path.startswith(".ai-sdlc/")
+                and not path == ".ai-sdlc-loop"
+                and not path.startswith(".ai-sdlc-loop/")
+            ):
                 paths.add(safe_relative(root, path))
     return sorted(paths)
 
@@ -291,6 +299,33 @@ def refresh_task_context(task: dict[str, Any], root: Path, paths: list[str]) -> 
     adaptive.refresh_context(task, root, selected)
 
 
+def record_stage_telemetry(
+    root: Path,
+    feature: str,
+    stage: str,
+    *,
+    status: str = "success",
+    duration_ms: int | None = None,
+    skill: str | None = None,
+    error: dict[str, str] | None = None,
+) -> None:
+    """Record telemetry event on stage completion fail-open."""
+    try:
+        import ai_sdlc_telemetry
+        skill_name = skill or f"ai-sdlc-loop-{stage}"
+        ai_sdlc_telemetry.record_telemetry_event(
+            skill=skill_name,
+            status=status,
+            duration_ms=duration_ms,
+            task={"id": feature, "type": "stage", "title": stage, "owner": ""},
+            product="ai-sdlc-loop",
+            error=error,
+            root=root,
+        )
+    except Exception:
+        pass
+
+
 def cmd_specify(args: argparse.Namespace) -> None:
     started = time.perf_counter()
     root = project_root(args.project_root)
@@ -324,6 +359,7 @@ def cmd_specify(args: argparse.Namespace) -> None:
     refresh_task_context(task, root, [p for p in allowed if (root / p).is_file()])
     if "context" not in task["completed_stages"]:
         adaptive.complete_stage(task, "context", ["spec.toon"])
+        record_stage_telemetry(root, feature, "context", skill="ai-sdlc-loop-specify", duration_ms=int((time.perf_counter() - started) * 1000))
     adaptive.stage_event(task, "classify-context", time.perf_counter() - started,
                          skills=["ai-sdlc-loop-specify"])
     state.update({"schema": SCHEMA, "feature": feature, "stage": "specified",
@@ -490,6 +526,9 @@ def cmd_verify(args: argparse.Namespace) -> None:
     adaptive.record_verification(task, snapshot["fingerprint"], commands, ready, condition=args.retry_condition)
     if ready and adaptive.next_stage(task) == "verify":
         adaptive.complete_stage(task, "verify", ["evidence.toon", "quality-gate.toon"])
+        record_stage_telemetry(root, feature, "verify", status="success", skill="ai-sdlc-loop-verify", duration_ms=int((time.perf_counter() - started) * 1000))
+    elif not ready:
+        record_stage_telemetry(root, feature, "verify", status="fail", skill="ai-sdlc-loop-verify", duration_ms=int((time.perf_counter() - started) * 1000), error={"code": "VERIFICATION_FAILED", "message": drift_reason or "command_failed"})
     task["changes"] = snapshot["files"]
     adaptive.stage_event(task, "verify", time.perf_counter() - started,
                          skills=["ai-sdlc-loop-verify"], checks=[row["argv"] for row in records],
@@ -723,6 +762,7 @@ def cmd_adapt(args: argparse.Namespace) -> None:
         task["plan"] = args.plan_step
         if adaptive.next_stage(task) == "compact-plan":
             adaptive.complete_stage(task, "compact-plan", ["state.toon:execution.plan"])
+            record_stage_telemetry(root, feature, "compact-plan", skill="ai-sdlc-loop-planning")
     if args.complete_stage:
         if args.complete_stage == "implement":
             require_approval(root, feature, "implement", spec["fingerprint"])
@@ -731,6 +771,9 @@ def cmd_adapt(args: argparse.Namespace) -> None:
             if not (root / safe_relative(root, evidence, allow_state=True)).is_file():
                 raise LoopError("stage evidence file is missing: " + evidence)
         adaptive.complete_stage(task, args.complete_stage, args.evidence)
+        stage_dur = int(args.elapsed * 1000) if getattr(args, "elapsed", None) else None
+        stage_skill = args.skill[0] if getattr(args, "skill", None) else None
+        record_stage_telemetry(root, feature, args.complete_stage, duration_ms=stage_dur, skill=stage_skill)
     if args.record_stage:
         if args.elapsed is None:
             raise LoopError("record-stage requires measured --elapsed")
