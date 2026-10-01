@@ -16,6 +16,7 @@ import re
 import secrets
 import subprocess
 import sys
+import threading
 import time
 from pathlib import Path
 from typing import Any
@@ -36,6 +37,13 @@ try:
     import fcntl
 except ImportError:
     fcntl = None  # type: ignore
+
+try:
+    import msvcrt
+except ImportError:
+    msvcrt = None  # type: ignore
+
+_TELEMETRY_THREAD_LOCK = threading.RLock()
 
 SCHEMA_VERSION = "ai-sdlc-telemetry/v1"
 DEFAULT_PRODUCT = "ai-sdlc-loop"
@@ -155,26 +163,42 @@ def get_telemetry_file_path(root: Path | str | None = None) -> Path:
     return repo_root / ".ai" / "telemetry" / "sessions.toon"
 
 
-def _acquire_lock(fd: int, timeout: float = 2.0, retry_delay: float = 0.05) -> bool:
-    """Acquire POSIX non-blocking flock with retry and timeout."""
-    if fcntl is None:
+def _acquire_lock(handle: Any, timeout: float = 2.0, retry_delay: float = 0.05) -> bool:
+    """Acquire cross-platform non-blocking file lock with retry and timeout."""
+    if fcntl is None and msvcrt is None:
         return True
     deadline = time.time() + timeout
+    fd = handle.fileno() if hasattr(handle, "fileno") else handle
     while True:
         try:
-            fcntl.flock(fd, fcntl.LOCK_EX | fcntl.LOCK_NB)
-            return True
+            if fcntl is not None:
+                fcntl.flock(fd, fcntl.LOCK_EX | fcntl.LOCK_NB)
+                return True
+            elif msvcrt is not None:
+                if hasattr(handle, "seek"):
+                    handle.seek(0, os.SEEK_END)
+                    if handle.tell() == 0:
+                        handle.write(f"schema: {SCHEMA_VERSION}\nevents:\n")
+                        handle.flush()
+                    handle.seek(0)
+                msvcrt.locking(fd, msvcrt.LK_NBLCK, 1)
+                return True
         except (BlockingIOError, OSError):
             if time.time() >= deadline:
                 return False
             time.sleep(retry_delay)
 
 
-def _release_lock(fd: int) -> None:
-    """Release POSIX lock safely."""
-    if fcntl is not None:
-        with contextlib.suppress(Exception):
+def _release_lock(handle: Any) -> None:
+    """Release cross-platform lock safely."""
+    fd = handle.fileno() if hasattr(handle, "fileno") else handle
+    with contextlib.suppress(Exception):
+        if fcntl is not None:
             fcntl.flock(fd, fcntl.LOCK_UN)
+        elif msvcrt is not None:
+            if hasattr(handle, "seek"):
+                handle.seek(0)
+            msvcrt.locking(fd, msvcrt.LK_UNLCK, 1)
 
 
 def _run_git_cmd(args: list[str], root: Path) -> str:
@@ -468,17 +492,18 @@ def _append_event_to_file(event: dict[str, Any], root: Path) -> bool:
 
         indented_chunk = "\n".join("  " + line if line else "" for line in raw_chunk.splitlines()) + "\n"
 
-        with open(telemetry_file, "a+", encoding="utf-8") as f:
-            if not _acquire_lock(f.fileno(), timeout=3.0):
-                return False
-            try:
-                f.seek(0, os.SEEK_END)
-                if f.tell() == 0:
-                    f.write(f"schema: {SCHEMA_VERSION}\nevents:\n")
-                f.write(indented_chunk)
-                f.flush()
-            finally:
-                _release_lock(f.fileno())
+        with _TELEMETRY_THREAD_LOCK:
+            with open(telemetry_file, "a+", encoding="utf-8") as f:
+                if not _acquire_lock(f, timeout=3.0):
+                    return False
+                try:
+                    f.seek(0, os.SEEK_END)
+                    if f.tell() == 0:
+                        f.write(f"schema: {SCHEMA_VERSION}\nevents:\n")
+                    f.write(indented_chunk)
+                    f.flush()
+                finally:
+                    _release_lock(f)
 
         return True
     except Exception:
