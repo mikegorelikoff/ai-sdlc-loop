@@ -13,8 +13,20 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
 import install
-from packaging.windows import build as builder
-from packaging.windows import launcher
+import importlib.util
+
+
+def _load(name: str, path: Path):
+    spec = importlib.util.spec_from_file_location(name, path)
+    if spec is None or spec.loader is None:
+        raise ImportError(f"Cannot load {path}")
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+builder = _load("loop_windows_builder", ROOT / "packaging" / "windows" / "build.py")
+launcher = _load("loop_windows_launcher", ROOT / "packaging" / "windows" / "launcher.py")
 
 
 def main() -> None:
