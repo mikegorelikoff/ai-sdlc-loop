@@ -8,7 +8,7 @@ from pathlib import Path
 sys.dont_write_bytecode = True
 import install
 
-VERSION = "0.11.0"
+VERSION = "0.13.0"
 
 
 def install_project(project: str, profile: str, skills_root: str | None = None) -> None:
@@ -42,7 +42,7 @@ def gui() -> int:
     choice = ttk.Combobox(frame, values=list(profiles), state="readonly", width=24)
     choice.set("Codex")
     choice.grid(row=4, column=0, sticky="w")
-    ttk.Label(frame, text="Installs 28 skills in this project. No administrator rights required.").grid(row=5, column=0, columnspan=2, pady=16, sticky="w")
+    ttk.Label(frame, text=f"Installs {len(install.SKILLS)} skills in this project. No administrator rights required.").grid(row=5, column=0, columnspan=2, pady=16, sticky="w")
 
     def submit():
         if not project.get().strip():

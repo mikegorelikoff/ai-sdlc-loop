@@ -12,7 +12,7 @@ ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
 import install
 
-VERSION = "0.11.0"
+VERSION = "0.13.0"
 NAME = f"ai-sdlc-loop-{VERSION}-windows-x64-setup"
 
 

@@ -57,6 +57,13 @@ class WindowsInstallerTests(unittest.TestCase):
         self.assertEqual(launcher.VERSION, builder.VERSION)
         self.assertIn(launcher.VERSION, builder.NAME)
 
+    def test_smoke_script_references_current_contracts(self):
+        smoke_content = (ROOT / "packaging/windows/smoke.py").read_text(encoding="utf-8")
+        self.assertNotIn("0.10.1", smoke_content)
+        self.assertNotIn("0.11.0", smoke_content)
+        self.assertIn("launcher.VERSION", smoke_content)
+        self.assertIn("install.SKILLS", smoke_content)
+
 
 if __name__ == "__main__":
     unittest.main()

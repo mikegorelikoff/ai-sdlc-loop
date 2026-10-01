@@ -1,6 +1,6 @@
 ## Windows installer
 
-Download **ai-sdlc-loop-0.11.0-windows-x64-setup.exe**, open it, and choose your project folder and Codex or Claude Code. The executable includes Python for installation and all 28 Loop skills; installation works offline without administrator privileges.
+Download **ai-sdlc-loop-0.13.0-windows-x64-setup.exe**, open it, and choose your project folder and Codex or Claude Code. The executable includes Python for installation and all 29 Loop skills; installation works offline without administrator privileges.
 
 Existing Python and shell installation commands remain supported. Generic agent profiles are available through the EXE command line. Existing managed installations are verified; local drift and unmanaged files are preserved and reported rather than overwritten.
 

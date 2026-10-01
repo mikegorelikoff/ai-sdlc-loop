@@ -10,9 +10,18 @@ import sys
 import tempfile
 from pathlib import Path
 
+ROOT = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(ROOT))
+import install
+from packaging.windows import build as builder
+from packaging.windows import launcher
+
 
 def main() -> None:
-    exe = Path(sys.argv[1]).resolve()
+    if len(sys.argv) > 1:
+        exe = Path(sys.argv[1]).resolve()
+    else:
+        exe = (ROOT / "dist" / f"{builder.NAME}.exe").resolve()
     expected = exe.with_suffix(".exe.sha256").read_text(encoding="ascii").split()[0]
     assert hashlib.sha256(exe.read_bytes()).hexdigest() == expected
     env = dict(os.environ)
@@ -25,7 +34,7 @@ def main() -> None:
             result = subprocess.run([str(exe), *args], cwd=root, env=env, capture_output=True, text=True, timeout=90)
             assert (result.returncode == 0) == success, (result.returncode, result.stdout, result.stderr)
             return result
-        assert "0.11.0" in run("--version").stdout
+        assert launcher.VERSION in run("--version").stdout
         # Prove the bundled Tcl/Tk GUI opens and exits without system Python.
         user32 = ctypes.windll.user32
         user32.FindWindowW.argtypes = [ctypes.c_wchar_p, ctypes.c_wchar_p]
@@ -35,12 +44,13 @@ def main() -> None:
         try:
             deadline = time.monotonic() + 45
             handle = None
+            expected_title = f"AI SDLC Loop {launcher.VERSION} Setup"
             while time.monotonic() < deadline and process.poll() is None:
-                handle = user32.FindWindowW(None, "AI SDLC Loop 0.10.1 Setup")
+                handle = user32.FindWindowW(None, expected_title)
                 if handle:
                     break
                 time.sleep(0.2)
-            assert handle, "packaged setup window did not open"
+            assert handle, f"packaged setup window '{expected_title}' did not open"
             user32.PostMessageW(handle, 0x0010, 0, 0)  # WM_CLOSE
             assert process.wait(timeout=20) == 0
         finally:
@@ -56,7 +66,7 @@ def main() -> None:
             run("verify", *args)
             run("install", *args)  # Same-version installation is idempotent.
             skills = project / ({"codex-project": ".agents/skills", "claude-code-project": ".claude/skills"}.get(profile, "custom/skills"))
-            assert len(list(skills.glob("ai-sdlc-loop-*"))) == 28
+            assert len(list(skills.glob("ai-sdlc-loop-*"))) == len(install.SKILLS)
             target = skills / "ai-sdlc-loop-flow/SKILL.md"
             with target.open("a", encoding="utf-8") as stream:
                 stream.write("\nlocal change\n")

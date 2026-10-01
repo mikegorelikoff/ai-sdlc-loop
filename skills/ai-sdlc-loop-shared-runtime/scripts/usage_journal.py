@@ -40,7 +40,7 @@ except ImportError:
     fcntl = None  # type: ignore
 
 SCHEMA_VERSION = "ai-sdlc-loop-usage/v1"
-RUNTIME_VERSION = "0.11.0"
+RUNTIME_VERSION = "0.13.0"
 
 # Regex patterns for secret redaction
 SECRET_PATTERNS = [
